@@ -1,0 +1,7 @@
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\ZigZag\ZigZag\bin\Debug\ZigZag.dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\ZigZag\ZigZag\bin\Debug\ZigZag.pdb
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\ZigZag\ZigZag\bin\Debug\cAlgo.API.dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\ZigZag\ZigZag\bin\Debug\cAlgo.API.xml
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\ZigZag\ZigZag\obj\Debug\ZigZag.dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\ZigZag\ZigZag\obj\Debug\ZigZag.pdb
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\ZigZag\ZigZag\obj\Debug\ZigZag.csprojResolveAssemblyReference.cache

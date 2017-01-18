@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scaling In", "Scaling In\Scaling In.csproj", "{A8429607-C78C-4C45-91E9-42AA36A90ADC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8429607-C78C-4C45-91E9-42AA36A90ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8429607-C78C-4C45-91E9-42AA36A90ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8429607-C78C-4C45-91E9-42AA36A90ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8429607-C78C-4C45-91E9-42AA36A90ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HeikenAshi", "..\..\Indicators\HeikenAshi\HeikenAshi\HeikenAshi.csproj", "{D49ECB74-00E7-47EC-8F22-A0E4525223A0}"
+EndProject
