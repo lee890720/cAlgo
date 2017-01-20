@@ -1,7 +1,0 @@
-﻿C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Scalper\Scalper\bin\Debug\Scalper.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Scalper\Scalper\bin\Debug\Scalper.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Scalper\Scalper\bin\Debug\cAlgo.API.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Scalper\Scalper\bin\Debug\cAlgo.API.xml
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Scalper\Scalper\obj\Debug\Scalper.csprojResolveAssemblyReference.cache
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Scalper\Scalper\obj\Debug\Scalper.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Scalper\Scalper\obj\Debug\Scalper.pdb

@@ -1,7 +1,0 @@
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\BarBreakout\BarBreakout\bin\Debug\BarBreakout.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\BarBreakout\BarBreakout\bin\Debug\BarBreakout.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\BarBreakout\BarBreakout\bin\Debug\cAlgo.API.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\BarBreakout\BarBreakout\bin\Debug\cAlgo.API.xml
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\BarBreakout\BarBreakout\obj\Debug\BarBreakout.csprojResolveAssemblyReference.cache
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\BarBreakout\BarBreakout\obj\Debug\BarBreakout.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\BarBreakout\BarBreakout\obj\Debug\BarBreakout.pdb

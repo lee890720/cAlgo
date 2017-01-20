@@ -1,7 +1,0 @@
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend_Double\Bollinger_Deviations_Trend_Double\bin\Debug\Bollinger_Deviations_Trend_Double.dll
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend_Double\Bollinger_Deviations_Trend_Double\bin\Debug\Bollinger_Deviations_Trend_Double.pdb
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend_Double\Bollinger_Deviations_Trend_Double\bin\Debug\cAlgo.API.dll
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend_Double\Bollinger_Deviations_Trend_Double\bin\Debug\cAlgo.API.xml
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend_Double\Bollinger_Deviations_Trend_Double\obj\Debug\Bollinger_Deviations_Trend_Double.dll
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend_Double\Bollinger_Deviations_Trend_Double\obj\Debug\Bollinger_Deviations_Trend_Double.pdb
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend_Double\Bollinger_Deviations_Trend_Double\obj\Debug\Bollinger_Deviations_Trend_Double.csprojResolveAssemblyReference.cache

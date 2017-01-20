@@ -1,7 +1,0 @@
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Range\Bollinger_Deviations_Range\bin\Debug\Bollinger_Deviations_Range.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Range\Bollinger_Deviations_Range\bin\Debug\Bollinger_Deviations_Range.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Range\Bollinger_Deviations_Range\bin\Debug\cAlgo.API.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Range\Bollinger_Deviations_Range\bin\Debug\cAlgo.API.xml
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Range\Bollinger_Deviations_Range\obj\Debug\Bollinger_Deviations_Range.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Range\Bollinger_Deviations_Range\obj\Debug\Bollinger_Deviations_Range.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Range\Bollinger_Deviations_Range\obj\Debug\Bollinger_Deviations_Range.csprojResolveAssemblyReference.cache

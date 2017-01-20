@@ -1,6 +1,0 @@
-﻿C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend (2)\Bollinger_Deviations_Trend (2)\bin\Debug\Bollinger_Deviations_Trend (2).dll
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend (2)\Bollinger_Deviations_Trend (2)\bin\Debug\Bollinger_Deviations_Trend (2).pdb
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend (2)\Bollinger_Deviations_Trend (2)\bin\Debug\cAlgo.API.dll
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend (2)\Bollinger_Deviations_Trend (2)\bin\Debug\cAlgo.API.xml
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend (2)\Bollinger_Deviations_Trend (2)\obj\Debug\Bollinger_Deviations_Trend (2).dll
-C:\Users\lee-lenovo-C\Documents\cAlgo\Sources\Robots\Bollinger_Deviations_Trend (2)\Bollinger_Deviations_Trend (2)\obj\Debug\Bollinger_Deviations_Trend (2).pdb

@@ -5,3 +5,6 @@
 2017.01.12 05:20:51.534 | cAlgo started
 2017.01.12 14:35:51.889 | cAlgo started
 2017.01.15 05:41:22.002 | cAlgo started
+2017.01.18 08:52:19.827 | cAlgo started
+2017.01.18 11:10:01.015 | → Order OID41192597 is FILLED at 1.06809, position PID24994262 closed (18/01/2017 11:10:00.258 UTC+0)
+2017.01.19 04:46:51.097 | cAlgo started

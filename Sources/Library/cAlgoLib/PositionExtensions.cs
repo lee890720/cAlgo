@@ -36,6 +36,11 @@ namespace cAlgo.Lib
 	/// </summary>
 	public static class PositionExtensions
 	{
+        public static Position[] GetPositions(this Robot robot,string label)
+        {
+            return robot.Positions.FindAll(label, robot.Symbol);
+
+        }
 		/// <summary>
 		/// Vérifie si une variable de type Position est en cours ou à déjà été clôturée
 		/// </summary>
