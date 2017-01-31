@@ -1,0 +1,9 @@
+﻿C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\bin\Debug\Bollinger (2).dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\bin\Debug\Bollinger (2).pdb
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\bin\Debug\cAlgo.API.dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\bin\Debug\cAlgo.Lib.dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\bin\Debug\cAlgo.Lib.pdb
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\bin\Debug\cAlgo.API.xml
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\obj\Debug\Bollinger (2).dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\obj\Debug\Bollinger (2).pdb
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\Bollinger (2)\Bollinger (2)\obj\Debug\Bollinger (2).csprojResolveAssemblyReference.cache

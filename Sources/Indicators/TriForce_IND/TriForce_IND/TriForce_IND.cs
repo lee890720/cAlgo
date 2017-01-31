@@ -5,441 +5,664 @@ using cAlgo.API.Indicators;
 
 namespace cAlgo.Indicators
 {
-    [Indicator(IsOverlay = true, TimeZone = TimeZones.GMTStandardTime)]
-    [Levels(-6, -5, -2, 0, 2, 5, 6)]
+    [Indicator(IsOverlay = true, TimeZone = TimeZones.UTC, AutoRescale = true)]
     public class TriForce_IND : Indicator
     {
-        [Parameter("TimeFrame")]
-        public TimeFrame TF { get; set; }
+        [Parameter("Période", DefaultValue = 15)]
+        public int Pe { get; set; }
 
-        [Parameter("Min Période", DefaultValue = 15)]
-        public int minPe { get; set; }
+        [Parameter("pip size", DefaultValue = 3)]
+        public int pip { get; set; }
 
-        [Parameter("Boite", DefaultValue = 5)]
-        public int bt { get; set; }
-
-        [Parameter("Multiple", DefaultValue = 3)]
-        public int mt { get; set; }
-
-        [Parameter("V%", DefaultValue = 25)]
-        public int Vx { get; set; }
-
-        [Parameter("Volume min pip", DefaultValue = 3)]
-        public int vl { get; set; }
+        [Parameter("Période Robot", DefaultValue = 20)]
+        public int PeR { get; set; }
 
         [Parameter("Candle", DefaultValue = 3)]
         public int ct { get; set; }
 
-        [Parameter("View TDN", DefaultValue = true)]
-        public bool vtdn { get; set; }
+        [Parameter("Long Timeframe")]
+        public TimeFrame LTF { get; set; }
 
-        [Parameter("View PIV", DefaultValue = true)]
-        public bool vpiv { get; set; }
+        [Parameter("Capital risk max %", DefaultValue = 5)]
+        public int CRK { get; set; }
 
-        [Parameter("View HA", DefaultValue = true)]
-        public bool vha { get; set; }
-
-        [Parameter("View P&S", DefaultValue = true)]
-        public bool vps { get; set; }
-
-        [Parameter("View volume", DefaultValue = true)]
+        [Parameter("View Timeframe", DefaultValue = true)]
         public bool vvol { get; set; }
 
-        private IndicatorDataSeries _xOpen, _xClose, Lopen;
+        [Parameter("View Positions", DefaultValue = true)]
+        public bool vpos { get; set; }
 
-        private Colors color, colorvx, colorvy, colorvz;
+        private IndicatorDataSeries _xOpen, _xClose, V;
 
-        private int dlopenx, dlopeny, dopenx, dopeny, Pe, Rx, lbar, bar, pez;
+        private Colors color, bdcolor1, lbdcolor1;
 
-        private MarketSeries MS;
+        private int ix, lix, mt;
 
-        private double PVval, HAval, LHAval;
+        private double HAval, LHAval, _xHigh, _xLow;
 
         private double actlast, actnow;
         private double dir = 0;
         private double di1, di2, di3, di4;
 
-        private bool playsound = false;
+        private Colors Cr, Co, Cg, Cdr, Cdg, EmaC;
+
+        private double O, C, H, L;
+
+        private double stoplossBuy, stoplossSell;
 
         protected override void Initialize()
         {
             _xOpen = CreateDataSeries();
             _xClose = CreateDataSeries();
-            Lopen = CreateDataSeries();
-            Rx = minPe;
-            MS = MarketData.GetSeries(TF);
+            V = CreateDataSeries();
             actnow = MarketSeries.Close.LastValue;
+            mt = 1;
+
+            Cr = Colors.Red;
+            Co = Colors.Orange;
+            Cg = Colors.YellowGreen;
+            Cdr = Colors.DarkRed;
+            Cdg = Colors.Green;
         }
 
         public override void Calculate(int i)
         {
             ChartObjects.RemoveAllObjects();
 
-            GetPeriode(i);
+            //--------------------------------------------------------Variables globales
 
-            if (vvol == true)
-                FIT(i);
-            if (vtdn == true)
-                CTD(i);
-            if (vpiv == true)
-                PIV(i);
-            if (vha == true)
-                CHA(i);
-            if (vps == true)
-                PFX(i);
+            lix = ix;
+            ix = i;
+            lbdcolor1 = bdcolor1;
+            O = MarketSeries.Open[i];
+            C = MarketSeries.Close[i];
+            H = MarketSeries.High[i];
+            L = MarketSeries.Low[i];
 
-            Alert();
+            //--------------------------------------------------------HA/MMA/PFX Début        
 
-            ChartObjects.DrawVerticalLine("Start", MS.OpenTime.LastValue, Colors.Blue);
-            ChartObjects.DrawVerticalLine("Starttdn", MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime.Last(Pe)), Colors.YellowGreen);
-            ChartObjects.DrawVerticalLine("middletdn", MarketSeries.OpenTime.Last(Pe / 2), Colors.Orange);
-            ChartObjects.DrawVerticalLine("Now", MarketSeries.OpenTime.LastValue, Colors.YellowGreen, 1, LineStyle.DotsRare);
+            ////Variables de base
 
-        }
+            double HAvaly = Symbol.PipSize;
+            string StD = "";
+            double dstD = 0;
+            bool Engl = false;
+            bool Doji = false;
+            bool FGaps = false;
+            bool Hama = false;
 
-        public void Alert()
-        {
-            if (playsound == true)
+            actnow = MarketSeries.Close[i - Pe + 1];
+            dir = di1 = di2 = di3 = di4 = 0;
+
+            double rtx = 0;
+
+            double exp;
+            string tdn4, tdn5, tdn6 = "wait";
+            int Pema = Pe;
+            Colors EmaCx;
+
+            ////Calculs de Base
+
+            if (lix != ix)
             {
-                Notifications.PlaySound("C:\\Windows\\Media\\carillons.wav");
-                playsound = false;
-            }
-        }
-
-        public void GetPeriode(int i)
-        {
-            lbar = bar;
-            bar = i;
-            if (bar != lbar)
-            {
-                var lastPe = Pe;
-                var lastRx = Rx;
                 LHAval = HAval;
-                var ix = GetIndexByDate(MS, MarketSeries.OpenTime[i]);
-                if (ix != -1)
-                    Rx = 1;
-                else
-                    Rx = lastRx + 1;
             }
 
-            Pe = (Rx <= minPe) ? minPe : Rx - 1;
-            pez = Pe / 2;
-
-            ChartObjects.DrawText("Period", "Période: " + Convert.ToString(Pe) + " / " + Convert.ToString(pez), StaticPosition.BottomLeft, Colors.White);
-        }
-
-        public void PIV(int i)
-        {
-            var phigh = MarketSeries.Close.Maximum(Pe);
-            var plow = MarketSeries.Close.Minimum(Pe);
-            var pclose = MarketSeries.Close[i - Pe + 1];
-            var nbor = 1.61803398875;
-
-            var piv = (phigh + plow + pclose) / 3;
-            var l1 = piv - ((piv - plow) / 3);
-            var l2 = piv - ((piv - l1) * nbor);
-            var l3 = l1 - ((l1 - l2) * nbor);
-
-            var h1 = piv + ((phigh - piv) / 3);
-            var h2 = piv + ((h1 - piv) * nbor);
-            var h3 = h2 + ((h2 - h1) * nbor);
-
-            ChartObjects.DrawLine("PIV", MarketSeries.OpenTime.Last(Pe), piv, MarketSeries.OpenTime.LastValue, piv, Colors.White);
-            ChartObjects.DrawLine("PIVh1", MarketSeries.OpenTime.Last(Pe), h1, MarketSeries.OpenTime.LastValue, h1, Colors.Green);
-            ChartObjects.DrawLine("PIVh2", MarketSeries.OpenTime.Last(Pe), h2, MarketSeries.OpenTime.LastValue, h2, Colors.Green);
-            ChartObjects.DrawLine("PIVh3", MarketSeries.OpenTime.Last(Pe), h3, MarketSeries.OpenTime.LastValue, h3, Colors.YellowGreen);
-
-            ChartObjects.DrawLine("PIVl1", MarketSeries.OpenTime.Last(Pe), l1, MarketSeries.OpenTime.LastValue, l1, Colors.DarkRed);
-            ChartObjects.DrawLine("PIVl2", MarketSeries.OpenTime.Last(Pe), l2, MarketSeries.OpenTime.LastValue, l2, Colors.DarkRed);
-            ChartObjects.DrawLine("PIVl3", MarketSeries.OpenTime.Last(Pe), l3, MarketSeries.OpenTime.LastValue, l3, Colors.Red);
-
-            var indextime = MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime.LastValue);
-
-            ChartObjects.DrawText("PIVTxt1x", "R1", indextime, h1, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-            ChartObjects.DrawText("PIVTxt1y", "S1", indextime, l1, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-            ChartObjects.DrawText("PIVTxt2x", "R2", indextime, h2, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-            ChartObjects.DrawText("PIVTxt2y", "S2", indextime, l2, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-            ChartObjects.DrawText("PIVTxt3x", "R3", indextime, h3, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-            ChartObjects.DrawText("PIVTxt3y", "S3", indextime, l3, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-
-            ChartObjects.DrawLine("PIVlx", MarketSeries.OpenTime.Last(Pe), plow, MarketSeries.OpenTime.LastValue, plow, Colors.Gray);
-            ChartObjects.DrawLine("PIVhx", MarketSeries.OpenTime.Last(Pe), phigh, MarketSeries.OpenTime.LastValue, phigh, Colors.Gray);
-            ChartObjects.DrawText("PIVTxtxy", "SX", indextime, plow, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-            ChartObjects.DrawText("PIVTxtxx", "RX", indextime, phigh, VerticalAlignment.Top, HorizontalAlignment.Right, Colors.Blue);
-
-            var PVvalx = (MarketSeries.Close.LastValue >= piv) ? MarketSeries.Close.LastValue - piv : piv - MarketSeries.Close.LastValue;
-            var PVvaly = (MarketSeries.Close.LastValue >= piv) ? phigh - piv : piv - plow;
-            PVval = (MarketSeries.Close.LastValue >= piv) ? (100 / 1.5) * (PVvalx / PVvaly) : -((100 / 1.5) * (PVvalx / PVvaly));
-
-            ChartObjects.DrawText("PVvx", "PV: " + Convert.ToString(Math.Round(PVval * 1.5, 2)) + " %", StaticPosition.TopCenter, Colors.Yellow);
-        }
-
-        public void CHA(int i)
-        {
-            var open = MarketSeries.Open[i];
-            var close = MarketSeries.Close[i];
-            var high = MarketSeries.High[i];
-            var low = MarketSeries.Low[i];
-
-            var xClose = (((Math.Min(open, close) + low) / 2) + ((Math.Max(open, close) + high) / 2)) / 2;
+            var xClose = (((Math.Min(O, C) + L) / 2) + ((Math.Max(O, C) + H) / 2)) / 2;
             double xOpen;
             if (i > 0)
                 xOpen = (_xOpen[i - 1] + _xClose[i - 1]) / 2;
             else
-                xOpen = (open + close) / 2;
+                xOpen = (O + C) / 2;
 
-            var _xHigh = Math.Max(Math.Max(high, xOpen), xClose);
-            var _xLow = Math.Min(Math.Min(low, xOpen), xClose);
+            _xHigh = Math.Max(Math.Max(H, xOpen), xClose);
+            _xLow = Math.Min(Math.Min(L, xOpen), xClose);
 
             _xClose[i] = xClose;
             _xOpen[i] = xOpen;
 
+
+            var emaopen = (((Math.Min(O, C) + L) / 2) + ((Math.Max(O, C) + H) / 2)) / 2;
+            exp = 8.0 / (Pema + 1);
+            var exmax = V[i - 1];
+            var exma1 = (double.IsNaN(exmax)) ? emaopen : emaopen * exp + exmax * (1 - exp);
+            V[i] = exma1;
+
+            //--------------------------------------------------------HA/MMA/PFX Boucle
+
             for (int Pex = i - Pe; Pex <= i; Pex++)
             {
-                color = (_xOpen[Pex] > _xClose[Pex] && MarketSeries.Close[Pex] < _xClose[Pex]) ? Colors.Red : (_xOpen[Pex] < _xClose[Pex] && MarketSeries.Close[Pex] > _xClose[Pex]) ? Colors.YellowGreen : Colors.Orange;
-                ChartObjects.DrawLine("candle" + Pex, Pex, MarketSeries.Open[Pex], Pex, MarketSeries.Close[Pex], color, ct, LineStyle.Solid);
-                ChartObjects.DrawLine("Line" + Pex, Pex, MarketSeries.High[Pex], Pex, MarketSeries.Low[Pex], color, 1, LineStyle.Solid);
-            }
+                //Variables de boucle
+                var ox = MarketSeries.Open[Pex];
+                var cx = MarketSeries.Close[Pex];
+                var hx = MarketSeries.High[Pex];
+                var lx = MarketSeries.Low[Pex];
+                var me = MarketSeries.Median[Pex];
+                var lcx = MarketSeries.Close[Pex - 1];
+                var lox = MarketSeries.Open[Pex - 1];
+                var lhx = MarketSeries.High[Pex - 1];
+                var llx = MarketSeries.Low[Pex - 1];
 
-            var HAvalx = Math.Max(_xClose[i], _xOpen[i]) - Math.Min(_xClose[i], _xOpen[i]);
-            var HAvaly = _xHigh - _xLow;
-            HAval = (_xClose[i] > _xOpen[i]) ? 100 * (HAvalx / HAvaly) : -(100 * (HAvalx / HAvaly));
-            ChartObjects.DrawText("HAvx", "\nHA: " + Convert.ToString(Math.Round(LHAval, 2)) + " / " + Convert.ToString(Math.Round(HAval, 2)) + " %", StaticPosition.TopCenter, color);
-        }
+                var lHAvaly = HAvaly;
+                var HAvalyx = Math.Max(_xClose[Pex], _xOpen[Pex]) - Math.Min(_xClose[Pex], _xOpen[Pex]);
+                HAvaly = (HAvalyx > lHAvaly) ? HAvalyx : lHAvaly;
+                var lval = _xClose[Pex - 1] - _xOpen[Pex - 1];
+                var val = _xClose[Pex] - _xOpen[Pex];
+                color = (_xOpen[Pex] > _xClose[Pex] && MarketSeries.Close[Pex] < _xClose[Pex] && lval < val) ? Cdr : (_xOpen[Pex] > _xClose[Pex] && MarketSeries.Close[Pex] < _xClose[Pex] && lval >= val) ? Cr : (_xOpen[Pex] < _xClose[Pex] && MarketSeries.Close[Pex] > _xClose[Pex] && lval > val) ? Cdg : (_xOpen[Pex] < _xClose[Pex] && MarketSeries.Close[Pex] > _xClose[Pex] && lval <= val) ? Cg : Co;
 
-        public void CTD(int i)
-        {
-            for (int pxe = 0; pxe <= pez; pxe++)
-            {
-                Lopen[i - pxe] = MarketSeries.Open[i - (Pe - pxe)];
-            }
+                var hlx = ((hx - lx) * 3) / 2;
+                var mxh = ((hx + lx) / 2) + (((hx - lx) / 100) * 33);
+                var mxl = ((hx + lx) / 2) - (((hx - lx) / 100) * 33);
+                var ex = 3 * (Math.Max(ox, cx) - Math.Min(ox, cx));
+                var ey = 3 * (Math.Max(lox, lcx) - Math.Min(lox, lcx));
+                Doji = ((ox == cx && ox >= mxh) || (ox == cx && ox <= mxl)) ? true : false;
+                Engl = ((Math.Max(ox, cx) > Math.Max(lox, lcx) && Math.Min(ox, cx) < Math.Min(lox, lcx)) || (Math.Max(ox, cx) > Math.Max(MarketSeries.Open[Pex - 2], MarketSeries.Close[Pex - 2]) && Math.Min(ox, cx) < Math.Min(MarketSeries.Open[Pex - 2], MarketSeries.Close[Pex - 2]))) ? true : false;
+                FGaps = ((ox < cx && lox < lcx && lcx < ox && Engl == false) || (ox > cx && lox > lcx && lcx > ox && Engl == false)) ? true : false;
+                Hama = (ex < (ey / 2) && Math.Max(ox, cx) < Math.Max(lox, lcx) && Math.Min(ox, cx) > Math.Min(lox, lcx)) ? true : false;
+                var dstup = hx + (((hx - lx) / 100) * 33);
+                var dstdn = lx - (((hx - lx) / 100) * 33);
 
-            var lopenx = Lopen.Maximum(pez);
-            var lopeny = Lopen.Minimum(pez);
-            var openx = MarketSeries.Open.Maximum(pez);
-            var openy = MarketSeries.Open.Minimum(pez);
-
-            for (int pex = 0; pex <= Pe; pex++)
-            {
-                var zopen = MarketSeries.Open[i - pex];
-
-                if (pex >= pez)
-                {
-                    var lastdlopenx = dlopenx;
-                    dlopenx = (zopen == lopenx) ? MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime[i - pex]) : lastdlopenx;
-
-                    var lastdlopeny = dlopeny;
-                    dlopeny = (zopen == lopeny) ? MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime[i - pex]) : lastdlopeny;
-                }
-                else
-                {
-                    var lastdopenx = dopenx;
-                    dopenx = (zopen == openx) ? MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime[i - pex]) : lastdopenx;
-
-                    var lastdopeny = dopeny;
-                    dopeny = (zopen == openy) ? MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime[i - pex]) : lastdopeny;
-                }
-            }
-
-            var startdtdn = MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime.Last(Pe));
-            var stopdtdn = MarketSeries.OpenTime.GetIndexByTime(MarketSeries.OpenTime.LastValue);
-
-            var middlopen = (dlopenx + dlopeny) / 2;
-            var midlopen = (lopenx + lopeny) / 2;
-            var middopen = (dopenx + dopeny) / 2;
-            var midopen = (openx + openy) / 2;
-
-            var dsttdn = (Math.Max(midlopen, midopen) - Math.Min(midlopen, midopen)) / (middopen - middlopen);
-
-            var startvaluehigh1 = (midopen > midlopen) ? lopenx - (dsttdn * (dlopenx - startdtdn)) : lopenx + (dsttdn * (dlopenx - startdtdn));
-            var stopvaluehigh1 = (midopen > midlopen) ? lopenx + (dsttdn * (stopdtdn - dlopenx)) : lopenx - (dsttdn * (stopdtdn - dlopenx));
-            var startvaluehigh2 = (midopen > midlopen) ? openx - (dsttdn * (dopenx - startdtdn)) : openx + (dsttdn * (dopenx - startdtdn));
-            var stopvaluehigh2 = (midopen > midlopen) ? openx + (dsttdn * (stopdtdn - dopenx)) : openx - (dsttdn * (stopdtdn - dopenx));
-
-            var startvaluelow1 = (midopen > midlopen) ? lopeny - (dsttdn * (dlopeny - startdtdn)) : lopeny + (dsttdn * (dlopeny - startdtdn));
-            var stopvaluelow1 = (midopen > midlopen) ? lopeny + (dsttdn * (stopdtdn - dlopeny)) : lopeny - (dsttdn * (stopdtdn - dlopeny));
-            var startvaluelow2 = (midopen > midlopen) ? openy - (dsttdn * (dopeny - startdtdn)) : openy + (dsttdn * (dopeny - startdtdn));
-            var stopvaluelow2 = (midopen > midlopen) ? openy + (dsttdn * (stopdtdn - dopeny)) : openy - (dsttdn * (stopdtdn - dopeny));
-
-            ChartObjects.DrawLine("HTDN1", startdtdn, startvaluehigh1, stopdtdn, stopvaluehigh1, Colors.YellowGreen, 1, LineStyle.DotsRare);
-            ChartObjects.DrawLine("HTDN2", startdtdn, startvaluehigh2, stopdtdn, stopvaluehigh2, Colors.YellowGreen, 1, LineStyle.DotsVeryRare);
-            ChartObjects.DrawLine("LTDN1", startdtdn, startvaluelow1, stopdtdn, stopvaluelow1, Colors.Red, 1, LineStyle.DotsRare);
-            ChartObjects.DrawLine("LTDN2", startdtdn, startvaluelow2, stopdtdn, stopvaluelow2, Colors.Red, 1, LineStyle.DotsVeryRare);
-
-            ChartObjects.DrawLine("MTDN", startdtdn, (startvaluehigh1 + startvaluelow1) / 2, stopdtdn, (stopvaluehigh1 + stopvaluelow1) / 2, Colors.Red, 1, LineStyle.Lines);
-        }
-
-        public void PFX(int i)
-        {
-            actnow = MarketSeries.Close[i - (Pe + 1)];
-            dir = di1 = di2 = di3 = di4 = 0;
-            var rt = bt * mt;
-
-            for (int pex = i - (Pe + 1); pex <= i; pex++)
-            {
-                var closex = MarketSeries.Close[pex];
                 var lastactnow = actnow;
                 var lastdir = dir;
 
-                if (closex > (actnow + (rt * Symbol.PipSize)) && dir <= -1)
+                var lEmac = EmaC;
+                EmaC = (V[Pex] < cx && V[Pex] < me) ? Cg : (V[Pex] > cx && V[Pex] > me) ? Cr : lEmac;
+                tdn6 = (EmaC == Cg) ? "Buy" : "Sell";
+
+                //Point et Figure
+
+                if (dir >= 0)
                 {
-                    di1 = di2;
-                    di2 = di3;
-                    di3 = di4;
-                    di4 = dir;
-                    actnow = lastactnow + (rt * Symbol.PipSize);
-                    actlast = lastactnow;
-                    dir = 3;
-                    playsound = true;
+                    if (cx < (actnow - ((pip * mt) * Symbol.PipSize)))
+                    {
+                        di1 = di2;
+                        di2 = di3;
+                        di3 = di4;
+                        di4 = dir;
+                        var newactnow = actnow - ((pip * mt) * Symbol.PipSize);
+                        actlast = actnow;
+                        actnow = newactnow;
+                        dir = -(pip * mt);
+
+                        var dirx = Math.Floor(((actnow - (mt * Symbol.PipSize)) - cx) / (mt * Symbol.PipSize));
+                        var newactnowx = actnow - ((mt * dirx) * Symbol.PipSize);
+                        actnow = newactnowx;
+                        dir = dir - dirx - 1;
+                    }
+
+                    if (cx > (actnow + (mt * Symbol.PipSize)))
+                    {
+                        var dirx = Math.Floor((cx - (actnow + (mt * Symbol.PipSize))) / (mt * Symbol.PipSize));
+                        var newactnowx = actnow + ((mt * dirx) * Symbol.PipSize);
+                        actnow = newactnowx;
+                        dir = lastdir + dirx;
+                    }
                 }
 
-                else if (closex < (actnow - (rt * Symbol.PipSize)) && dir >= 1)
+                else if (dir <= 0)
                 {
-                    di1 = di2;
-                    di2 = di3;
-                    di3 = di4;
-                    di4 = dir;
-                    actnow = lastactnow - (rt * Symbol.PipSize);
-                    actlast = lastactnow;
-                    dir = -3;
-                    playsound = true;
+                    if (cx > (actnow + ((pip * mt) * Symbol.PipSize)))
+                    {
+                        di1 = di2;
+                        di2 = di3;
+                        di3 = di4;
+                        di4 = dir;
+                        var newactnow = actnow + ((pip * mt) * Symbol.PipSize);
+                        actlast = actnow;
+                        actnow = newactnow;
+                        dir = (pip * mt);
+
+                        var dirx = Math.Floor((cx - (actnow + (mt * Symbol.PipSize))) / (mt * Symbol.PipSize));
+                        var newactnowx = actnow + ((mt * dirx) * Symbol.PipSize);
+                        actnow = newactnowx;
+                        dir = dir + dirx + 1;
+                    }
+
+                    if (cx < (actnow - (mt * Symbol.PipSize)))
+                    {
+                        var dirx = Math.Floor(((actnow - (mt * Symbol.PipSize)) - cx) / (mt * Symbol.PipSize));
+                        var newactnowx = actnow - ((mt * dirx) * Symbol.PipSize);
+                        actnow = newactnowx;
+                        dir = lastdir - dirx;
+                    }
                 }
 
-                else if (closex < (actnow - (bt * Symbol.PipSize)) && dir <= 0)
-                {
-                    var dirx = Math.Round((((actnow + (bt * Symbol.PipSize)) - closex) / Symbol.PipSize) / bt, 0);
-                    actnow = lastactnow - ((bt * dirx) * Symbol.PipSize);
-                    dir = lastdir - dirx;
-                    playsound = false;
-                }
+                rtx = (dir > 0) ? actnow - ((pip * mt) * Symbol.PipSize) : actnow + ((pip * mt) * Symbol.PipSize);
+                var rty = (dir > 0) ? actnow + (mt * Symbol.PipSize) : actnow - (mt * Symbol.PipSize);
 
-                else if (closex > (actnow + (bt * Symbol.PipSize)) && dir >= 0)
-                {
-                    var dirx = Math.Round(((closex - (actnow + (bt * Symbol.PipSize))) / Symbol.PipSize) / bt, 0);
-                    actnow = lastactnow + ((bt * dirx) * Symbol.PipSize);
-                    dir = lastdir + dirx;
-                    playsound = false;
-                }
+                //Création graphique
 
-                var rtx = (dir > 0) ? actnow - (rt * Symbol.PipSize) : actnow + (rt * Symbol.PipSize);
-                var rty = (dir > 0) ? actnow + (bt * Symbol.PipSize) : actnow - (bt * Symbol.PipSize);
+                ChartObjects.DrawLine("Candle" + Pex, Pex, MarketSeries.Open[Pex], Pex, MarketSeries.Close[Pex], color, ct, LineStyle.Solid);
+                ChartObjects.DrawLine("Line" + Pex, Pex, MarketSeries.High[Pex], Pex, MarketSeries.Low[Pex], color, 1, LineStyle.Solid);
+
+                StD = (Doji == true && ox < me && ox > V[Pex]) ? "D\n▼" : (Doji == true && ox > me && ox < V[Pex]) ? "▲\nD" : "";
+                dstD = (_xOpen[Pex] < _xClose[Pex]) ? dstdn : dstup;
+                ChartObjects.DrawText("Doji" + Pex, StD, Pex, dstD, VerticalAlignment.Center, HorizontalAlignment.Center, color);
+                StD = (Engl == true && ox > cx && ox > V[Pex]) ? "E\n▼" : (Engl == true && ox < cx && ox < V[Pex]) ? "▲\nE" : "";
+                dstD = (ox < cx) ? dstdn : dstup;
+                ChartObjects.DrawText("Englobant" + Pex, StD, Pex, dstD, VerticalAlignment.Center, HorizontalAlignment.Center, color);
+                StD = (FGaps == true && ox > cx && ox > V[Pex]) ? "G\n▼" : (FGaps == true && ox < cx && ox < V[Pex]) ? "▲\nG" : "";
+                dstD = (ox < cx) ? dstdn : dstup;
+                ChartObjects.DrawText("Gaps" + Pex, StD, Pex, dstD, VerticalAlignment.Center, HorizontalAlignment.Center, color);
+                StD = (Hama == true && ox > cx && lox < lcx && ox > V[Pex]) ? "H\n▼" : (Hama == true && ox < cx && lox > lcx && ox < V[Pex]) ? "▲\nH" : "";
+                dstD = (ox < cx) ? dstdn : dstup;
+                ChartObjects.DrawText("Hamari" + Pex, StD, Pex, dstD, VerticalAlignment.Center, HorizontalAlignment.Center, color);
+
                 ChartObjects.DrawLine("Rx", i - 1, rtx, i + 1, rtx, Colors.Blue);
+                ChartObjects.DrawLine("Rz", i - 1, actnow, i + 1, actnow, Colors.BlueViolet);
                 ChartObjects.DrawLine("Ry", i - 1, rty, i + 1, rty, Colors.Cyan);
+
+                ChartObjects.DrawLine("EMA" + Pex, Pex - 1, V[Pex - 1], Pex, V[Pex], EmaC, 2);
+
             }
 
-            var Colorsb = (actlast > actnow) ? Colors.Red : Colors.YellowGreen;
-            var Colors2 = (actlast < actnow) ? Colors.Red : Colors.YellowGreen;
+            //--------------------------------------------------------HA/MMA/PFX Fin
+
+            ///HeikinAshi & Chandeliers FIN
+
+            var HAvalx = Math.Max(_xClose[i], _xOpen[i]) - Math.Min(_xClose[i], _xOpen[i]);
+            HAval = (_xClose[i] > _xOpen[i]) ? 100 * (HAvalx / HAvaly) : -(100 * (HAvalx / HAvaly));
+
+            tdn5 = (color == Cg) ? "Buy" : (color == Cdg) ? "Wait on Buy" : (color == Cr) ? "Sell" : (color == Cdr) ? "Wait on Sell" : "Wait";
+
+            ///Point et Figure FIN
+
+            var Colorsb = (actlast > actnow) ? Cr : Cg;
+            var Colors2 = (actlast < actnow) ? Cr : Cg;
             var Colors3 = Colorsb;
             var Colors4 = Colors2;
             var Colors5 = Colorsb;
 
-            var bdcolor1 = (Math.Max(dir, -dir) >= Math.Max(di4, -di4)) ? Colorsb : Colors.Orange;
-            var bdcolor2 = (Math.Max(di4, -di4) >= Math.Max(di3, -di3)) ? Colors2 : Colors.Orange;
-            var bdcolor3 = (Math.Max(di3, -di3) >= Math.Max(di2, -di2)) ? Colors3 : Colors.Orange;
-            var bdcolor4 = (Math.Max(di2, -di2) >= Math.Max(di1, -di1)) ? Colors4 : Colors.Orange;
+            bdcolor1 = (Math.Max(dir, -dir) >= Math.Max(di4, -di4)) ? Colorsb : Co;
+            var bdcolor2 = (Math.Max(di4, -di4) >= Math.Max(di3, -di3)) ? Colors2 : Co;
+            var bdcolor3 = (Math.Max(di3, -di3) >= Math.Max(di2, -di2)) ? Colors3 : Co;
+            var bdcolor4 = (Math.Max(di2, -di2) >= Math.Max(di1, -di1)) ? Colors4 : Co;
 
             var mx = Math.Max(Math.Max(Math.Max(di1, di2), Math.Max(di3, di4)), dir);
             var my = Math.Min(Math.Min(Math.Min(di1, di2), Math.Min(di3, di4)), dir);
             var div = Math.Max(mx, -my);
-            var btx = bt / div;
+            var btx = (((MarketSeries.High.Maximum(Pe) - MarketSeries.Low.Minimum(Pe)) / 4) / Symbol.PipSize) / div;
 
-            var l5x = MarketSeries.Open[i] - (((di1 / 2) * btx) * Symbol.PipSize);
-            var l5y = l5x + ((di1 * btx) * Symbol.PipSize);
-            ChartObjects.DrawLine("last5", i + 3, l5x, i + 3, l5y, Colors5, ct);
+            var fpfx = Math.Max(Math.Max(Math.Max(Math.Max(dir, -dir), Math.Max(di1, -di1)), Math.Max(Math.Max(di2, -di2), Math.Max(di3, -di3))), Math.Max(di4, -di4));
+            var fpfy = Math.Min(Math.Min(Math.Min(Math.Max(dir, -dir), Math.Max(di1, -di1)), Math.Min(Math.Max(di2, -di2), Math.Max(di3, -di3))), Math.Max(di4, -di4));
+            var fpfmax = fpfx - fpfy;
+            var fpfpc = (dir > 0) ? 100 * ((dir - fpfy) / fpfmax) : -(100 * (((-dir) - fpfy) / fpfmax));
 
-            var l4x = (di1 > 0) ? l5y - (btx * Symbol.PipSize) : l5y + (btx * Symbol.PipSize);
-            var l4y = l4x + ((di2 * btx) * Symbol.PipSize);
-            ChartObjects.DrawLine("last4", i + 4, l4x, i + 4, l4y, bdcolor4, ct);
+            tdn4 = (bdcolor1 == Cg) ? "Buy" : (bdcolor1 == Cr) ? "Sell" : "Wait";
 
-            var l3x = (di2 > 0) ? l4y - (btx * Symbol.PipSize) : l4y + (btx * Symbol.PipSize);
-            var l3y = l3x + ((di3 * btx) * Symbol.PipSize);
-            ChartObjects.DrawLine("last3", i + 5, l3x, i + 5, l3y, bdcolor3, ct);
+            ///EXMA
 
-            var l2x = (di3 > 0) ? l3y - (btx * Symbol.PipSize) : l3y + (btx * Symbol.PipSize);
-            var l2y = l2x + ((di4 * btx) * Symbol.PipSize);
-            ChartObjects.DrawLine("last2", i + 6, l2x, i + 6, l2y, bdcolor2, ct);
+            EmaCx = (tdn6 == "Buy") ? Cg : (tdn6 == "Sell") ? Cr : Co;
 
-            var l1x = (di4 > 0) ? l2y - (btx * Symbol.PipSize) : l2y + (btx * Symbol.PipSize);
-            var l1y = l1x + ((dir * btx) * Symbol.PipSize);
-            ChartObjects.DrawLine("last1", i + 7, l1x, i + 7, l1y, bdcolor1, ct);
+            //Création des textes bis
 
-            ChartObjects.DrawText("Val5", "Last5: " + Convert.ToString(Math.Round(di1, 0)), StaticPosition.TopRight, Colors5);
-            ChartObjects.DrawText("Val4", "\nLast4: " + Convert.ToString(Math.Round(di2, 0)), StaticPosition.TopRight, bdcolor4);
-            ChartObjects.DrawText("Val3", "\n\nLast3: " + Convert.ToString(Math.Round(di3, 0)), StaticPosition.TopRight, bdcolor3);
-            ChartObjects.DrawText("Val2", "\n\n\nLast2: " + Convert.ToString(Math.Round(di4, 0)), StaticPosition.TopRight, bdcolor2);
-            ChartObjects.DrawText("Val1", "\n\n\n\nLast1: " + Convert.ToString(Math.Round(dir, 0)), StaticPosition.TopRight, bdcolor1);
-        }
+            ChartObjects.DrawText("Tdnha", "\n\n\n\nHeikinAshi: " + tdn5, StaticPosition.TopLeft, color);
+            ChartObjects.DrawText("HAvx", "\n\n\n\n\nHA: " + Convert.ToString(Math.Round(LHAval, 2)) + " / " + Convert.ToString(Math.Round(HAval, 2)) + " %", StaticPosition.TopLeft, color);
 
-        public void FIT(int i)
-        {
-            double volmax = 0;
-            double voldown = 0;
-            double volup = 0;
-            double dirx;
-            bool voltststart = false;
+            ChartObjects.DrawText("Tdnpf", "Point & Figure: " + tdn4, StaticPosition.TopLeft, bdcolor1);
+            ChartObjects.DrawText("pxf5", "\n" + Convert.ToString(Math.Round(di1, 0)), StaticPosition.TopLeft, Colors5);
+            ChartObjects.DrawText("pxf4", "\n        " + Convert.ToString(Math.Round(di2, 0)), StaticPosition.TopLeft, bdcolor4);
+            ChartObjects.DrawText("pxf3", "\n                " + Convert.ToString(Math.Round(di3, 0)), StaticPosition.TopLeft, bdcolor3);
+            ChartObjects.DrawText("pxf2", "\n                        " + Convert.ToString(Math.Round(di4, 0)), StaticPosition.TopLeft, bdcolor2);
+            ChartObjects.DrawText("pxf1", "\n                                " + Convert.ToString(Math.Round(dir, 0)), StaticPosition.TopLeft, bdcolor1);
+            ChartObjects.DrawText("fpfperc", "\n\nP&F: " + Convert.ToString(Math.Round(fpfpc, 2)) + " %", StaticPosition.TopLeft, bdcolor1);
 
-            for (int Pex = i - Pe; Pex <= i; Pex++)
+            ChartObjects.DrawText("Tdnema", "\n\n\n\n\n\n\nEXMA: " + tdn6, StaticPosition.TopLeft, EmaCx);
+
+            //--------------------------------------------------------Calcul Tvol
+
+            if (vvol == true)
             {
-                var open = MarketSeries.Open[Pex];
-                var close = MarketSeries.Close[Pex];
-                var lastvolmax = volmax;
-                var volmaxtst = Math.Max(MarketSeries.Open[Pex], MarketSeries.Close[Pex]) - Math.Min(MarketSeries.Open[Pex], MarketSeries.Close[Pex]);
-                volmax = (lastvolmax < volmaxtst) ? volmaxtst : lastvolmax;
-                var volmin = (volmax / 100) * Vx;
-                var volume = Math.Max(open, close) - Math.Min(open, close);
+                var rxx = TFstr(MarketSeries.TimeFrame.ToString());
 
-                dirx = (open < close) ? 1 : (open > close) ? -1 : 0;
+                double prcx = 0;
+                double pipx = 0;
+                double totx = 0;
+                string direct = "Wait";
 
-                colorvx = (dirx >= 0 && volume >= volmin) ? Colors.YellowGreen : (dirx <= 0 && volume >= volmin) ? Colors.Red : Colors.Orange;
-
-                if (voltststart == true)
+                for (int rx = rxx; rx <= 10; rx++)
                 {
-                    var lastvoldown = voldown;
-                    var lastvolup = volup;
-                    var tstvoldown = (close < open) ? (open - close) / Symbol.PipSize : lastvoldown;
-                    var tstvolup = (close > open) ? (close - open) / Symbol.PipSize : lastvolup;
-                    voldown = (tstvoldown > lastvoldown) ? tstvoldown : lastvoldown;
-                    volup = (tstvolup > lastvolup) ? tstvolup : lastvolup;
-                }
+                    var TFx = TTF(rx);
+                    var _MS = MarketData.GetSeries(TFx);
+                    var open = _MS.Open.LastValue;
+                    var close = MarketSeries.Close.LastValue;
+                    var high = _MS.High.LastValue;
+                    var low = _MS.Low.LastValue;
+                    var median = _MS.Median.LastValue;
+                    var lopen = _MS.Open.Last(1);
+                    var lclose = _MS.Close.Last(1);
+                    var llopen = _MS.Open.Last(2);
+                    var llclose = _MS.Close.Last(2);
+                    var stade1 = (lclose > lopen) ? lclose - ((Math.Max(lclose, lopen) - Math.Min(lclose, lopen)) / 3) : lclose + ((Math.Max(lclose, lopen) - Math.Min(lclose, lopen)) / 3);
+                    var stade2 = (lclose > lopen) ? lclose - (((Math.Max(lclose, lopen) - Math.Min(lclose, lopen)) / 3) * 2) : lclose + (((Math.Max(lclose, lopen) - Math.Min(lclose, lopen)) / 3) * 2);
+                    direct = ((lclose >= lopen && close > lclose) || (lclose <= lopen && close >= lopen)) ? "Buy" : ((lclose >= lopen && close <= lclose && close > stade1) || (lclose <= lopen && close >= stade2 && close < lopen)) ? "Wait Buy" : ((lclose >= lopen && close <= stade2 && close > lopen) || (lclose <= lopen && close >= lclose && close < stade1)) ? "Wait Sell" : ((lclose >= lopen && close <= lopen) || (lclose <= lopen && close < lclose)) ? "Sell" : "Wait";
+                    prcx = Math.Round(((Math.Max(open, close) - Math.Min(open, close)) / Math.Max(open, close)) * 100, 2);
+                    pipx = Math.Round((Math.Max(open, close) - Math.Min(open, close)) / Symbol.PipSize, 0);
+                    var pip = (close > open) ? pipx : -pipx;
+                    totx = (close > open) ? Math.Round((high - open) / Symbol.PipSize, 0) : Math.Round((open - low) / Symbol.PipSize, 0);
+                    var tot = Math.Round((pipx / totx) * 100, 0);
+                    var Color = (direct == "Buy") ? Colors.YellowGreen : (direct == "Wait Buy") ? Colors.DarkGreen : (direct == "Sell") ? Colors.Red : (direct == "Wait Sell") ? Colors.DarkRed : Colors.Orange;
+                    char rpl = '\n';
+                    var rpu = rx;
+                    var rll = new string(rpl, rpu);
+                    var sbl = TTS(rx);
 
-                if (voltststart == false)
-                {
-                    voldown = (close < open) ? (open - close) / Symbol.PipSize : 0;
-                    volup = (close > open) ? (close - open) / Symbol.PipSize : 0;
-                    voltststart = true;
+                    var xhlx = ((high - low) * 3) / 2;
+                    var xmxh = ((high + low) / 2) + (((high - low) / 100) * 33);
+                    var xmxl = ((high + low) / 2) - (((high - low) / 100) * 33);
+                    var xex = 3 * (Math.Max(open, close) - Math.Min(open, close));
+                    var xey = 3 * (Math.Max(lopen, lclose) - Math.Min(lopen, lclose));
+                    var Dojix = ((open == close && open >= xmxh) || (open == close && open <= xmxl)) ? true : false;
+                    var Englx = ((Math.Max(open, close) > Math.Max(lopen, lclose) && Math.Min(open, close) < Math.Min(lopen, lclose)) || (Math.Max(open, close) > Math.Max(llopen, llclose) && Math.Min(open, close) < Math.Min(llopen, llclose))) ? true : false;
+                    var FGapsx = ((open < close && lopen < lclose && lclose < open && Englx == false) || (open > close && lopen > lclose && lclose > open && Englx == false)) ? true : false;
+                    var Hamax = (xex < (xey / 2) && Math.Max(open, close) < Math.Max(lopen, lclose) && Math.Min(open, close) > Math.Min(lopen, lclose)) ? true : false;
+
+                    var LongChand = (Dojix == true && open < median) ? "DOJI ▼" : (Englx == true && open > close) ? "ENGLOBANTE ▼" : (FGapsx == true && open > close) ? "GAPS ▼" : (Hamax == true && open > close && lopen < lclose) ? "HAMARI ▼" : (Dojix == true && open > median) ? "DOJI ▲" : (Englx == true && open < close) ? "ENGLOBANTE ▲" : (FGapsx == true && open < close) ? "GAPS ▲" : (Hamax == true && open < close && lopen > lclose) ? "HAMARI ▲" : "";
+
+                    ChartObjects.DrawText("Time" + rx, rll + LongChand + " (" + Convert.ToString(tot) + "%) " + sbl, StaticPosition.TopRight, Color);
                 }
             }
 
-            var openy = MarketSeries.Open[i];
-            var closey = MarketSeries.Close[i];
+            //--------------------------------------------------------Calcul position
 
-            var volumey = Math.Max(openy, closey) - Math.Min(openy, closey);
-            var puimin = vl * Symbol.PipSize;
+            if (vpos == true)
+            {
+                var _posbuy = Positions.Find("TriForce" + Symbol.Code, Symbol, TradeType.Buy);
+                var _possell = Positions.Find("TriForce" + Symbol.Code, Symbol, TradeType.Sell);
 
-            colorvy = (voldown < volup && volumey > puimin) ? Colors.YellowGreen : (voldown > volup && volumey > puimin) ? Colors.Red : Colors.Orange;
+                Colors PosColor;
+                Colors pColor;
 
-            ChartObjects.DrawText("Volv", "Volume:", StaticPosition.TopLeft, Colors.White);
+                double netprofitpos = Symbol.PipSize;
+                double netpippos = Symbol.PipSize;
+                double pospipmax = 0;
+                int posc = 0;
 
-            colorvz = (voldown > volup) ? Colors.Red : (voldown < volup) ? Colors.YellowGreen : Colors.Orange;
-            ChartObjects.DrawText("Volvz", "\nDown: " + Convert.ToString(Math.Round(voldown, 2)) + " / Up: " + Convert.ToString(Math.Round(volup, 2)), StaticPosition.TopLeft, colorvz);
+                PosColor = (Account.UnrealizedNetProfit > 0) ? Cg : (Account.UnrealizedNetProfit < 0) ? Cr : Co;
 
-            var volact = Math.Max(openy, closey) - Math.Min(openy, closey);
-            var vlx = Math.Round(Math.Max(voldown, volup), 2);
-            ChartObjects.DrawText("Volvx", "\n\nNow: " + Convert.ToString(Math.Round((volact) / Symbol.PipSize, 2)) + "/ Min: " + Convert.ToString(vl) + " / Max: " + Convert.ToString(vlx), StaticPosition.TopLeft, colorvy);
+                var postype = (_posbuy == null && _possell == null) ? "En attente: " : (_posbuy == null && _possell != null) ? "Vente en cours: " : (_posbuy != null && _possell == null) ? "Achat en cours: " : "Multipositions: ";
 
-            var volpc = 100 * (volact / Math.Max(volup, voldown));
+                var lslb = stoplossBuy;
+                var lsls = stoplossSell;
 
-            ChartObjects.DrawText("Volvy", "\n\n\nVolume Percent: " + Convert.ToString(Math.Round(volpc / Symbol.PipSize, 2)) + "% " + " / Min: " + Convert.ToString(Vx) + "%", StaticPosition.TopLeft, colorvx);
+                stoplossBuy = (_posbuy == null) ? C - ((MarketSeries.High.Maximum(PeR) - MarketSeries.Low.Minimum(PeR)) / 2) : lslb;
+                stoplossSell = (_possell == null) ? C + ((MarketSeries.High.Maximum(PeR) - MarketSeries.Low.Minimum(PeR)) / 2) : lsls;
+
+                foreach (var _pos in Positions)
+                {
+                    var lposc = posc;
+                    var lnetpippos = netpippos;
+                    var lpospipmax = pospipmax;
+                    var lpospipmaxsell = pospipmax;
+                    double profit = 0;
+                    double onpip = 0;
+                    double startline = 0;
+
+                    if (_pos.Label == "TriForce" + Symbol.Code)
+                    {
+                        posc = lposc + 1;
+                        profit = _pos.NetProfit;
+                        onpip = _pos.Pips;
+                        startline = _pos.EntryPrice;
+                    }
+
+                    pColor = (_pos.TradeType == TradeType.Buy && profit > 0) ? Cg : (_pos.TradeType == TradeType.Sell && profit > 0) ? Cr : Co;
+                    pospipmax = (_pos.Pips > lpospipmax) ? _pos.Pips : lpospipmax;
+
+                    ChartObjects.DrawLine(Convert.ToString(_pos.EntryPrice), MarketSeries.OpenTime.GetIndexByTime(_pos.EntryTime), startline, i, C, pColor, 2);
+                }
+
+                var Cap = (posc == 0 || posc == 1) ? 2 : CalcCap(posc);
+                var pipBuy = Convert.ToInt32((Math.Max(C, stoplossBuy) - Math.Min(C, stoplossBuy)) / Symbol.PipSize);
+                var pipSell = Convert.ToInt32((Math.Max(C, stoplossSell) - Math.Min(C, stoplossSell)) / Symbol.PipSize);
+                var mise = (Account.Balance / 100) * CRK;
+                var xpipvalb = mise / (pipBuy + Symbol.Spread);
+                var xpipvals = mise / (pipSell + Symbol.Spread);
+                var volbasebuy = Convert.ToInt64(xpipvalb / Symbol.PipValue);
+                var volbasesell = Convert.ToInt64(xpipvals / Symbol.PipValue);
+                var volL = Symbol.VolumeMin;
+                var volM = Symbol.VolumeMax;
+                var volumexb = (volbasebuy < volL) ? volL : (volbasebuy > volM) ? volM : volbasebuy;
+                var volumexs = (volbasesell < volL) ? volL : (volbasesell > volM) ? volM : volbasesell;
+                var volumebuy = Convert.ToInt64(Math.Floor(Convert.ToDouble(volumexb / Symbol.VolumeMin)) * Symbol.VolumeMin);
+                var volumesell = Convert.ToInt64(Math.Floor(Convert.ToDouble(volumexs / Symbol.VolumeMin)) * Symbol.VolumeMin);
+
+                ChartObjects.DrawText("PosProfit", postype + Convert.ToString(Math.Round(Account.UnrealizedNetProfit, 2)) + " € (" + Convert.ToString(Math.Round(pospipmax, 2)) + " pip) Spread: " + Convert.ToString(Math.Round((Symbol.Ask - Symbol.Bid) / Symbol.PipSize, 2)), StaticPosition.TopCenter, PosColor);
+                ChartObjects.DrawText("InfoBuy", "\nB : " + "CRK " + Convert.ToString(CRK) + "% / CAP " + Convert.ToString(Cap) + "pip / PMax " + Convert.ToString(Math.Round(mise, 2)) + "€ / PipVal " + Convert.ToString(Math.Round(volumebuy * Symbol.PipValue, 2)) + "€ / Volume " + Convert.ToString(volumebuy) + " (" + Convert.ToString(pipBuy) + ")", StaticPosition.TopCenter, PosColor);
+                ChartObjects.DrawText("InfoSell", "\n\nS : " + "CRK " + Convert.ToString(CRK) + "% / CAP " + Convert.ToString(Cap) + "pip / PMax " + Convert.ToString(Math.Round(mise, 2)) + "€ / PipVal " + Convert.ToString(Math.Round(volumesell * Symbol.PipValue, 2)) + "€ / Volume " + Convert.ToString(volumesell) + " (" + Convert.ToString(pipSell) + ")", StaticPosition.TopCenter, PosColor);
+            }
+
+            //--------------------------------------------------------Calcul Fibonacci
+
+            var _MSx = MarketData.GetSeries(LTF);
+            var max = Math.Max(_MSx.High.Last(1), _MSx.High.LastValue) - ((Math.Max(_MSx.High.Last(1), _MSx.High.LastValue) - Math.Min(_MSx.Low.Last(1), _MSx.Low.LastValue)) / 3);
+            var min = Math.Min(_MSx.Low.Last(1), _MSx.Low.LastValue) + ((Math.Max(_MSx.High.Last(1), _MSx.High.LastValue) - Math.Min(_MSx.Low.Last(1), _MSx.Low.LastValue)) / 3);
+            var fO = _MSx.Open.Last(1);
+            var nbor = 0.61803398875;
+
+            var Pv = fO;
+            var S1 = fO - ((max - min) * nbor);
+            var S2 = fO - ((max - min) * (nbor * 2));
+            var S3 = fO - ((max - min) * (nbor * 3));
+            var S4 = fO - ((max - min) * (nbor * 4));
+            var R1 = fO + ((max - min) * nbor);
+            var R2 = fO + ((max - min) * (nbor * 2));
+            var R3 = fO + ((max - min) * (nbor * 3));
+            var R4 = fO + ((max - min) * (nbor * 4));
+
+            var dstmax = Math.Max(fO, max) - Math.Min(fO, max);
+            var dstmin = Math.Max(fO, min) - Math.Min(fO, min);
+
+            var lastix = MarketSeries.OpenTime.GetIndexByTime(_MSx.OpenTime.Last(1));
+
+            ChartObjects.DrawLine("R1x", lastix, R1, i, R1, Cdg, 1, LineStyle.DotsVeryRare);
+            ChartObjects.DrawLine("R2x", lastix, R2, i, R2, Cdg, 1, LineStyle.DotsVeryRare);
+            ChartObjects.DrawLine("R3x", lastix, R3, i, R3, Cg, 1, LineStyle.DotsVeryRare);
+            ChartObjects.DrawLine("R4x", lastix, R4, i, R4, Cg, 1, LineStyle.DotsVeryRare);
+
+            ChartObjects.DrawLine("Pvx", lastix, Pv, i, Pv, Co, 1, LineStyle.DotsVeryRare);
+
+            ChartObjects.DrawLine("S1x", lastix, S1, i, S1, Cdr, 1, LineStyle.DotsVeryRare);
+            ChartObjects.DrawLine("S2x", lastix, S2, i, S2, Cdr, 1, LineStyle.DotsVeryRare);
+            ChartObjects.DrawLine("S3x", lastix, S3, i, S3, Cr, 1, LineStyle.DotsVeryRare);
+            ChartObjects.DrawLine("S4x", lastix, S4, i, S4, Cr, 1, LineStyle.DotsVeryRare);
+
+            //--------------------------------------------------------Calcul Alerte (MODIFIER)
+
+            //if (nbring == 0)
+            //{
+            //for (int rt = 0; rt <= 3; rt++)
+            //{
+            //Notifications.PlaySound("C:\\302.wav");
+            //}
+            //nbring = 1;
+            //}
         }
 
-        private int GetIndexByDate(MarketSeries series, DateTime time)
+        public int TFstr(string TFs)
         {
-            for (int iz = series.Close.Count - 1; iz > 0; iz--)
+            switch (TFs)
             {
-                if (time == series.OpenTime[iz])
-                    return iz;
+                case "Minute1":
+                case "Minute2":
+                case "Minute3":
+                case "Minute4":
+                    return 1;
+                    break;
+                case "Minute5":
+                case "Minute6":
+                case "Minute7":
+                case "Minute8":
+                case "Minute9":
+                case "Minute10":
+                    return 2;
+                    break;
+                case "Minute15":
+                case "Minute20":
+                    return 3;
+                    break;
+                case "Minute30":
+                case "Minute45":
+                    return 4;
+                    break;
+                case "Hour":
+                    return 5;
+                    break;
+                case "Hour2":
+                case "Hour3":
+                    return 6;
+                    break;
+                case "Hour4":
+                case "Hour6":
+                case "Hour8":
+                    return 7;
+                    break;
+                case "Hour12":
+                    return 8;
+                    break;
+                case "Daily":
+                case "Day2":
+                case "Day3":
+                    return 9;
+                    break;
+                case "Weekly":
+                    return 10;
+                    break;
+                default:
+                    return 1;
+                    break;
             }
-            return -1;
+        }
+
+        public TimeFrame TTF(int rz)
+        {
+            switch (rz)
+            {
+                case 1:
+                    return TimeFrame.Minute5;
+                    break;
+                case 2:
+                    return TimeFrame.Minute15;
+                    break;
+                case 3:
+                    return TimeFrame.Minute30;
+                    break;
+                case 4:
+                    return TimeFrame.Hour;
+                    break;
+                case 5:
+                    return TimeFrame.Hour2;
+                    break;
+                case 6:
+                    return TimeFrame.Hour4;
+                    break;
+                case 7:
+                    return TimeFrame.Hour12;
+                    break;
+                case 8:
+                    return TimeFrame.Daily;
+                    break;
+                case 9:
+                    return TimeFrame.Weekly;
+                    break;
+                case 10:
+                    return TimeFrame.Monthly;
+                    break;
+                default:
+                    return TimeFrame.Minute;
+                    break;
+            }
+        }
+
+        public string TTS(int rz)
+        {
+            switch (rz)
+            {
+                case 1:
+                    return "m5";
+                    break;
+                case 2:
+                    return "m15";
+                    break;
+                case 3:
+                    return "m30";
+                    break;
+                case 4:
+                    return "h1";
+                    break;
+                case 5:
+                    return "h2";
+                    break;
+                case 6:
+                    return "h4";
+                    break;
+                case 7:
+                    return "h12";
+                    break;
+                case 8:
+                    return "D1";
+                    break;
+                case 9:
+                    return "WE";
+                    break;
+                case 10:
+                    return "MO";
+                    break;
+                default:
+                    return "m1";
+                    break;
+            }
+        }
+
+        private int CalcCap(int posCount)
+        {
+            var Cappos2 = 2;
+            var Cappos3 = Cappos2 + (Cappos2 * 2);
+            var Cappos4 = Cappos3 + (Cappos2 * 3);
+            var Cappos5 = Cappos4 + (Cappos2 * 4);
+            var Cappos6 = Cappos5 + (Cappos2 * 5);
+            var Cappos7 = Cappos6 + (Cappos2 * 6);
+            var Cappos8 = Cappos7 + (Cappos2 * 7);
+            var Cappos9 = Cappos8 + (Cappos2 * 8);
+            var Cappos10 = Cappos9 + (Cappos2 * 9);
+            var Cappos11 = Cappos10 + (Cappos2 * 10);
+
+            switch (posCount)
+            {
+                case 1:
+                    return Cappos2;
+                    break;
+                case 2:
+                    return Cappos3;
+                    break;
+                case 3:
+                    return Cappos4;
+                    break;
+                case 4:
+                    return Cappos5;
+                    break;
+                case 5:
+                    return Cappos6;
+                    break;
+                case 6:
+                    return Cappos7;
+                    break;
+                case 7:
+                    return Cappos8;
+                    break;
+                case 8:
+                    return Cappos9;
+                    break;
+                case 9:
+                    return Cappos10;
+                    break;
+                case 10:
+                    return Cappos11;
+                    break;
+                default:
+                    return Cappos11;
+                    break;
+            }
         }
     }
 }

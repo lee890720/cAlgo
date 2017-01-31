@@ -1,9 +1,0 @@
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\bin\Debug\@Bollinger_Deviations_Trend.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\bin\Debug\@Bollinger_Deviations_Trend.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\bin\Debug\cAlgo.API.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\bin\Debug\cAlgo.API.xml
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\obj\Debug\@Bollinger_Deviations_Trend.csprojResolveAssemblyReference.cache
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\obj\Debug\@Bollinger_Deviations_Trend.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\obj\Debug\@Bollinger_Deviations_Trend.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\bin\Debug\cAlgo.Lib.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\@Bollinger_Deviations_Trend\@Bollinger_Deviations_Trend\bin\Debug\cAlgo.Lib.pdb

@@ -2,6 +2,6 @@ C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.Li
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.Lib.pdb
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.API.dll
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.API.xml
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\obj\Debug\cAlgo.Lib.csprojResolveAssemblyReference.cache
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\obj\Debug\cAlgo.Lib.dll
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\obj\Debug\cAlgo.Lib.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\cAlgoLib\obj\Debug\cAlgo.Lib.csprojResolveAssemblyReference.cache

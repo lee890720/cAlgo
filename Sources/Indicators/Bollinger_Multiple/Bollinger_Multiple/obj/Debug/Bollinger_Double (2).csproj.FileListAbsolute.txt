@@ -1,0 +1,6 @@
+﻿C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\Bollinger_Double (2)\Bollinger_Double (2)\bin\Debug\Bollinger_Double (2).dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\Bollinger_Double (2)\Bollinger_Double (2)\bin\Debug\Bollinger_Double (2).pdb
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\Bollinger_Double (2)\Bollinger_Double (2)\bin\Debug\cAlgo.API.dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\Bollinger_Double (2)\Bollinger_Double (2)\bin\Debug\cAlgo.API.xml
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\Bollinger_Double (2)\Bollinger_Double (2)\obj\Debug\Bollinger_Double (2).dll
+C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\Bollinger_Double (2)\Bollinger_Double (2)\obj\Debug\Bollinger_Double (2).pdb
