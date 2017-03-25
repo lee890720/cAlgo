@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SwingZigZag")]
+[assembly: AssemblyTitle("DouBollingerTrend")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("SwingZigZag")]
+[assembly: AssemblyProduct("DouBollingerTrend")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
