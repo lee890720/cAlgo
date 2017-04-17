@@ -42,6 +42,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
     </Reference>
+    <Reference Include="cAlgo.Lib">
+      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Boll.cs" />

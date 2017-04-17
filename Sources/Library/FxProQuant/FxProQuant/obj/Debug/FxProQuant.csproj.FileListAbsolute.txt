@@ -1,5 +1,0 @@
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\FxProQuant\FxProQuant\bin\Debug\FxProQuant.Lib.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\FxProQuant\FxProQuant\bin\Debug\FxProQuant.Lib.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\FxProQuant\FxProQuant\obj\Debug\FxProQuant.csprojResolveAssemblyReference.cache
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\FxProQuant\FxProQuant\obj\Debug\FxProQuant.Lib.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Library\FxProQuant\FxProQuant\obj\Debug\FxProQuant.Lib.pdb
