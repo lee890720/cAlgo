@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using cAlgo.API;
 using cAlgo.API.Internals;
-namespace cAlgo
+namespace cAlgo.Robots
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class BarsBreakOut : Robot

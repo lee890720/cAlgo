@@ -3,7 +3,7 @@ using cAlgo.API.Internals;
 using cAlgo.API.Indicators;
 using cAlgo.Indicators;
 
-namespace cAlgo
+namespace cAlgo.Indicators
 {
     [Indicator(IsOverlay = true, TimeZone = TimeZones.UTC, AutoRescale = false, AccessRights = AccessRights.None)]
     public class Alligator : Indicator

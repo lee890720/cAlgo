@@ -1,43 +1,14 @@
-﻿#region Licence
-//The MIT License (MIT)
-//Copyright (c) 2014 abdallah HACID, https://www.facebook.com/ab.hacid
-
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-//and associated documentation files (the "Software"), to deal in the Software without restriction,
-//including without limitation the rights to use, copy, modify, merge, publish, distribute,
-//sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
-//is furnished to do so, subject to the following conditions:
-
-//The above copyright notice and this permission notice shall be included in all copies or
-//substantial portions of the Software.
-
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-//BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-//NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// Project Hosting for Open Source Software on Github : https://github.com/abhacid/cAlgoBot
-#endregion
-
-
-using System;
+﻿using System;
 using cAlgo.API.Internals;
 using cAlgo.API;
 
 namespace cAlgo.Lib
 {
 	/// <summary>
-	/// Méthodes d'extensions du type cAlgo.API.DataSeries
+    /// Extensions methods of cAlgo.API.DataSeries
 	/// </summary>
 	public static class DataSeriesExtensions
 	{
-		/// <summary>
-		/// Recherche la valeur d'un élément de dataSeries de valeur différente de NaN
-		/// </summary>
-		/// <param name="dataSeries">La série de donnée utilisée</param>
-		/// <param name="shift">le nombre-1 de valeurs différentes de NaN se trouvant après la valeur retournée</param>
-		/// <returns>La valeur correspondante au iPos élément de dataSeries différent de NaN</returns>
 		public static double lastRealValue(this DataSeries dataSeries, int shift)
 		{
 			for (var i = dataSeries.Count - 1; i >= 0; i--)
@@ -52,12 +23,6 @@ namespace cAlgo.Lib
 			return double.NaN;
 		}
 
-		/// <summary>
-		/// Recherche l'index d'un élément de dataSeries de valeur différente de NaN
-		/// </summary>
-		/// <param name="dataSeries">La série de donnée utilisée</param>
-		/// <param name="iPos">le nombre-1 de valeur différentes de NaN se trouvant après la valeur retournée</param>
-		/// <returns>L'index correspondante au iPos élément de dataSeries différent de NaN</returns>
 		public static int lastRealIndex(this DataSeries dataSeries, int nFromEnd)
 		{
 			for (var i = dataSeries.Count - 1; i >= 0; i--)

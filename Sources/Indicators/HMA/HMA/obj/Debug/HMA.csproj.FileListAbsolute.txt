@@ -5,3 +5,9 @@ C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\HMA\HMA\bin\Debug\cAlgo.
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\HMA\HMA\obj\Debug\HMA.csprojResolveAssemblyReference.cache
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\HMA\HMA\obj\Debug\HMA.dll
 C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\HMA\HMA\obj\Debug\HMA.pdb
+C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Indicators\HMA\HMA\bin\Debug\HMA.dll
+C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Indicators\HMA\HMA\bin\Debug\HMA.pdb
+C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Indicators\HMA\HMA\bin\Debug\cAlgo.API.dll
+C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Indicators\HMA\HMA\bin\Debug\cAlgo.API.xml
+C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Indicators\HMA\HMA\obj\Debug\HMA.dll
+C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Indicators\HMA\HMA\obj\Debug\HMA.pdb

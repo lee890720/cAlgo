@@ -7,7 +7,7 @@ using cAlgo.API.Internals;
 using cAlgo.Indicators;
 using cAlgo.Lib;
 
-namespace cAlgo
+namespace cAlgo.Robots
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class Bollinger : Robot
@@ -55,7 +55,7 @@ namespace cAlgo
             var uppermax = boll.Top.Last(1) > bollhalf.Top.Last(1) ? boll.Top.Last(1) : bollhalf.Top.Last(1);
             var lowermin = boll.Bottom.Last(1) < bollhalf.Bottom.Last(1) ? boll.Bottom.Last(1) : bollhalf.Bottom.Last(1);
             var lowermax = boll.Bottom.Last(1) > bollhalf.Bottom.Last(1) ? boll.Bottom.Last(1) : bollhalf.Bottom.Last(1);
-            var balancelot = this.BalanceLots(per);
+            var balancelot = 1000000;
             var b_buyposs = this.GetPositions(b_buylabel);
             var b_sellposs = this.GetPositions(b_selllabel);
             var bars = MarketSeries.Bars();

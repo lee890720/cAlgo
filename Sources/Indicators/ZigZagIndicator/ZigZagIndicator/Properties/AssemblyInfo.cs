@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Boll")]
+[assembly: AssemblyTitle("ZigZagIndicator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("Boll")]
+[assembly: AssemblyProduct("ZigZagIndicator")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

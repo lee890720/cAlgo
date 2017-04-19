@@ -7,7 +7,7 @@ using cAlgo.API.Internals;
 using cAlgo.Indicators;
 using cAlgo.Lib;
 
-namespace cAlgo
+namespace cAlgo.Robots
 {
 
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
@@ -178,7 +178,7 @@ namespace cAlgo
             var lower_increase = boll_increase.Bottom.Last(1);
             var upper_decrease = boll_decrease.Top.Last(1);
             var lower_decrease = boll_decrease.Bottom.Last(1);
-            var balancelot = this.BalanceLots(per);
+            var balancelot = 100000;
             var b_buyposs = this.GetPositions(b_buylabel);
             var b_sellposs = this.GetPositions(b_selllabel);
             #endregion

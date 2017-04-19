@@ -50,17 +50,12 @@
     <Compile Include="BooleanExtensions.cs" />
     <Compile Include="DataSeriesExtensions.cs" />
     <Compile Include="DoubleExtensions.cs" />
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IComparableExtensions.cs" />
-    <Compile Include="IndicatorDataSeriesExtensions.cs" />
     <Compile Include="IStrategy.cs" />
-    <Compile Include="LotExtensions.cs" />
     <Compile Include="MarketSeriesExtensions.cs" />
     <Compile Include="OrderParams.cs" />
     <Compile Include="PendingOrderExtensions.cs" />
     <Compile Include="PositionExtensions.cs" />
-    <Compile Include="PriceExtensions.cs" />
-    <Compile Include="ProfitExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotExtensions.cs" />
     <Compile Include="Strategy.cs" />
@@ -68,7 +63,6 @@
     <Compile Include="SymbolExtensions.cs" />
     <Compile Include="TimeFrameExtensions.cs" />
     <Compile Include="TradeTypeExtensions.cs" />
-    <Compile Include="Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,26 +1,4 @@
-﻿#region Licence
-//The MIT License (MIT)
-//Copyright (c) 2014 abdallah HACID, https://www.facebook.com/ab.hacid
-
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software
-//and associated documentation files (the "Software"), to deal in the Software without restriction,
-//including without limitation the rights to use, copy, modify, merge, publish, distribute,
-//sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
-//is furnished to do so, subject to the following conditions:
-
-//The above copyright notice and this permission notice shall be included in all copies or
-//substantial portions of the Software.
-
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
-//BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-//NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-//DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// Project Hosting for Open Source Software on Github : https://github.com/abhacid/cAlgoBot
-#endregion
-
-using cAlgo.API;
+﻿using cAlgo.API;
 using cAlgo.API.Internals;
 using System;
 using System.Text;
@@ -32,28 +10,13 @@ using System.Threading;
 
 namespace cAlgo.Lib
 {
-	/// <summary>
-	/// Méthodes d'extensions du type cAlgo.API.Robot
-	/// </summary>
 	public static class RobotExtensions
 	{
-		/// <summary>
-		/// Obtient le nom du robot
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <returns>Le nom du type dérivé de Robot et définissant une nouvelle instance de Robot</returns>
 		public static string botName(this Robot robot)
 		{
 			return robot.ToString();
 		}
 
-		/// <summary>
-		/// Calcule le volume maximum a engager en nombre de Lot en fonction du risque maximum
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="risk">le pourcentage de risque (perte) maximun accepté</param>
-		/// <param name="stopLoss">Le stop Loss en PIPS nécessaire à la position à prendre</param>
-		/// <returns></returns>
 		public static double moneyManagement(this Robot robot, double risk, double? stopLoss, bool isPips=true)
 		{
 			if (!(stopLoss.HasValue) || stopLoss.Value <=0)
@@ -70,62 +33,31 @@ namespace cAlgo.Lib
 			}
 		}
 
-		/// <summary>
-		/// Existe t-il au moins une position du type précisé
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="tradeType">type Buy ou Sell</param>
-		/// <returns>true si le robot actuel possède au moins une position du type tradeType, false sinon</returns>
 		public static bool existPositions(this Robot robot, TradeType tradeType, string label = null)
 		{
 			return (robot.Positions.Find(label, robot.Symbol, tradeType) != null);
 		}
 
-
-		/// <summary>
-		/// Existe t-il au moins une position à l'achat active
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <returns>true si le robot actuel possède au moins une position à l'achat, false sinon</returns>
 		public static bool existBuyPositions(this Robot robot, string label = null)
 		{
 			return robot.existPositions(TradeType.Buy,label);
 		}
 
-		/// <summary>
-		/// Existe t-il au moins une position à la vente active
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <returns>true si le robot actuel possède au moins une position à la vente, false sinon</returns>
 		public static bool existSellPositions(this Robot robot, string label = null)
 		{
 			return robot.existPositions(TradeType.Sell, label); 
 		}
 
-		/// <summary>
-		/// Existe t-il au moins une position à la vente active et au moins une à l'achat
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <returns>true si le robot actuel possède au moins une position à l'achat, et au moins une à la vente,false sinon</returns>
-		public static bool existBuyAndSellPositions(this Robot robot, string label = null)
+        public static bool existBuyAndSellPositions(this Robot robot, string label = null)
 		{
 			return robot.existBuyPositions(label) && robot.existSellPositions(label);
 		}
 
-		/// <summary>
-		/// Y a t-il aucune position active
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <returns>true Positions.count==0, false sinon</returns>
 		public static bool isNoPositions(this Robot robot, string label = null)
 		{
 			return !(robot.existBuyPositions(label)) && !(robot.existSellPositions(label)); 
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
 		public static double potentialGain(this Robot robot, string label=null)
 		{
 			double potential = 0;
@@ -143,11 +75,6 @@ namespace cAlgo.Lib
 			return potential;
 		}
 
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
 		public static double potentialLoss(this Robot robot, string label=null)
 		{
 			double potential = 0;
@@ -164,11 +91,6 @@ namespace cAlgo.Lib
 			return potential;
 		}
 
-		/// <summary>
-		/// Clôture une position, et gère un message d'erreur en cas d'insuccès
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="position">La position à clôturer</param>
 		public static TradeResult closePosition(this Robot robot, Position position, double volume)
 		{
 
@@ -182,11 +104,6 @@ namespace cAlgo.Lib
 			return result;
 		}
 
-		/// <summary>
-		/// Clôture une position, et gère un message d'erreur en cas d'insuccès
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="position">La position à clôturer</param>
 		public static void closePosition(this Robot robot, Position position)
 		{
 			var result = robot.ClosePosition(position);
@@ -195,11 +112,6 @@ namespace cAlgo.Lib
 				robot.Print("error : {0}", result.Error);
 		}
 		
-		/// <summary>
-		/// Cloture toute les positions de type tradeType
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="tradeType">Le type de trade à clôturer</param>
 		public static void closeAllPositions(this Robot robot, TradeType tradeType, string label = "")
 		{
 			foreach (Position position in robot.Positions.FindAll(label, robot.Symbol, tradeType))
@@ -207,39 +119,22 @@ namespace cAlgo.Lib
 
 		}
 
-		/// <summary>
-		/// Cloture toute les positions de type Buy
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
 		public static void closeAllBuyPositions(this Robot robot, string label = "")
 		{
 			closeAllPositions(robot, TradeType.Buy, label);
 		}
 
-		/// <summary>
-		/// Cloture toute les positions de type Sell
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
 		public static void closeAllSellPositions(this Robot robot, string label = "")
 		{
 			closeAllPositions(robot, TradeType.Sell, label);
 		}
 
-		/// <summary>
-		/// Clôture toutes les positions du robot
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
 		public static void closeAllPositions(this Robot robot, string label = "")
 		{
 			robot.closeAllBuyPositions(label);
 			robot.closeAllSellPositions(label);
 		}
 
-		/// <summary>
-		/// Cancel all pending orders of type 'tradeType'
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="tradeType">Tradetype to cancel</param>
 		public static void cancelAllPendingOrders(this Robot robot, TradeType tradeType, string label = "")
 		{
 			foreach (PendingOrder order in robot.PendingOrders)
@@ -247,51 +142,27 @@ namespace cAlgo.Lib
                     robot.CancelPendingOrderAsync(order);
 		}
 
-		/// <summary>
-		/// Cancel all buy pending orders
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
 		public static void cancelAllPendingBuyOrders(this Robot robot, string label = "")
 		{
 			cancelAllPendingOrders(robot, TradeType.Buy, label);
 		}
 
-		/// <summary>
-		/// Cancel all sell pending orders
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
 		public static void cancelAllPendingSellOrders(this Robot robot, string label = "")
 		{
 			cancelAllPendingOrders(robot, TradeType.Sell, label);
 		}
 
-		/// <summary>
-		/// Cancel all pending orders
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
 		public static void cancelAllPendingOrders(this Robot robot, string label = "")
 		{
 			robot.cancelAllPendingBuyOrders(label);
 			robot.cancelAllPendingSellOrders(label);
 		}
 
-		/// <summary>
-		/// Notify a message at mail address
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="headMessage"></param>
-		/// <param name="message"></param>
-		/// <param name="mailAddress"></param>
 		public static void notifyMessage(this Robot robot, string headMessage, string message, MailAddress mailAddress)
 		{
 			robot.Notifications.SendEmail("cAlgoBot@cAlgoLib.com", mailAddress.Address, headMessage, message);
 		}
 
-		/// <summary>
-		///	send email to with the balance, profit etc
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="error"></param>
 		public static void notifyError(this Robot robot, Error error, MailAddress mailAddress)
 		{
 			string errorText = robot.errorString(error);
@@ -304,12 +175,6 @@ namespace cAlgo.Lib
 
 		}
 
-		/// <summary>
-		/// transform code error to String error.
-		/// </summary>
-		/// <param name="robot">instance of the current robot</param>
-		/// <param name="error"></param>
-		/// <returns></returns>
 		public static string errorString(this Robot robot, Error error)
 		{
 			string errorText = "";
@@ -347,9 +212,6 @@ namespace cAlgo.Lib
 			return errorText;
 		}
 
-		/// <summary>
-		/// Close losses positions as the saying goes jogging leave earnings, fenced losses.
-		/// </summary>
 		public static void partialClose(this Robot robot, string label = "")
 		{
 			foreach (var position in robot.Positions.FindAll(label, robot.Symbol))
@@ -366,12 +228,6 @@ namespace cAlgo.Lib
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="tradeType"></param>
-		/// <param name="volume"></param>
-		/// <param name="label"></param>
 		public static void executeOrder(this Robot robot, OrderParams op)
 		{
 			if (op==null)
@@ -393,12 +249,6 @@ namespace cAlgo.Lib
 			}
 		}
 
-		/// <summary>
-		/// cutting an order in n orders such that the sum of the volume equal initial volume.
-		/// </summary>
-		/// <param name="tradeType"></param>
-		/// <param name="volume"></param>
-		/// <param name="prefixLabel"></param>
 		public static void splitAndExecuteOrder(this Robot robot, OrderParams op)
 		{
 			if (op == null)
@@ -421,11 +271,6 @@ namespace cAlgo.Lib
 
 		}
 
-		/// <summary>
-		/// Return a buy, sell or neutral tradeType. 
-		/// </summary>
-		/// <param name="ceilSignal"></param>
-		/// <returns>null : no tradeType (neutral), Buy or Sell</returns>
 		public static TradeType? signal(this Robot robot, List<Strategy> strategies, int? ceilSignal=null)
 		{
 			int ceil;
@@ -447,10 +292,6 @@ namespace cAlgo.Lib
 			return null;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="robot"></param>
 		public static OrderParams martingale(this Robot robot, Position position, bool inversePosition=true, double martingaleCoeff=1.5)
 		{
 			if ((position != null) && position.Pips < 0)
@@ -467,5 +308,142 @@ namespace cAlgo.Lib
 				return null;
 		}
 
+        //LabelExtensions
+        public static Position[] GetPositions(this Robot robot, string label=null)
+        {
+            return robot.Positions.FindAll(label, robot.Symbol);
+        }
+
+        public static long TotalLots(this Robot robot, string label = null)
+        {
+            var poss = robot.GetPositions(label);;
+            if (poss.Length == 0)
+                return 0;
+            long totallots = 0;
+            foreach (var pos in poss)
+                totallots += pos.Volume;
+            return totallots;
+        }
+
+        public static long MaxLot(this Robot robot, string label = null)
+        {
+            var poss = robot.GetPositions(label); ;
+            if (poss.Length == 0)
+                return 0;
+            long maxlot = 0;
+            foreach (var pos in poss)
+            {
+                if (maxlot == 0)
+                    maxlot = pos.Volume;
+                if (maxlot < pos.Volume)
+                    maxlot = pos.Volume;
+            }
+            return maxlot;
+        }
+
+        public static long MinLot(this Robot robot, string label = null)
+        {
+            var poss = robot.GetPositions(label); ;
+            if (poss.Length == 0)
+                return 0;
+            long minlot = 0;
+            foreach (var pos in poss)
+            {
+                if (minlot == 0)
+                    minlot = pos.Volume;
+                if (minlot < pos.Volume)
+                    minlot = pos.Volume;
+            }
+            return minlot;
+        }
+
+        public static long MartingaleLot(this Robot robot, string label, double goalprice)
+        {
+            var poss = robot.GetPositions(label); ;
+            if (poss.Length == 0)
+                return 0;
+            string IsBorS = "Nope";
+            int buy = 0;
+            int sell = 0;
+            if (poss.Length != 0)
+                foreach (var pos in poss)
+                {
+                    if (pos.TradeType == TradeType.Buy)
+                        buy++;
+                    if (pos.TradeType == TradeType.Sell)
+                        sell++;
+                }
+            if (buy > sell)
+                IsBorS = "buy";
+            if (sell > buy)
+                IsBorS = "sell";
+            long marlot = 0;
+            if (IsBorS == "buy" && robot.AveragePrice(label) < goalprice)
+                return 0;
+            if (IsBorS == "sell" && robot.AveragePrice(label) > goalprice)
+                return 0;
+            marlot = (long)robot.Symbol.NormalizeVolume((robot.AveragePrice(label)* robot.TotalLots(label) - goalprice * robot.TotalLots(label)) / (goalprice - robot.Symbol.Mid()), RoundingMode.ToNearest);
+            return marlot;
+        }
+
+        public static double TotalProfits(this Robot robot, string label = null)
+        {
+            var poss = robot.GetPositions(label); ;
+            if (poss.Length == 0)
+                return 0;
+            double totalprofits = 0;
+            foreach (var pos in poss)
+                totalprofits += pos.NetProfit;
+            return totalprofits;
+        }
+
+        public static double MaxPrice(this Robot robot, string label = null)
+        {
+            var poss = robot.GetPositions(label); ;
+            if (poss.Length == 0)
+                return 0;
+            double maxprice = 0;
+            foreach (var pos in poss)
+            {
+                if (maxprice == 0)
+                    maxprice = pos.EntryPrice;
+                if (maxprice < pos.EntryPrice)
+                    maxprice = pos.EntryPrice;
+            }
+            return maxprice;
+        }
+
+        public static double MinPrice(this Robot robot, string label = null)
+        {
+            var poss = robot.GetPositions(label); ;
+            if (poss.Length == 0)
+                return 0;
+            double minprice = 0;
+            foreach (var pos in poss)
+            {
+                if (minprice == 0)
+                    minprice = pos.EntryPrice;
+                if (minprice < pos.EntryPrice)
+                    minprice = pos.EntryPrice;
+            }
+            return minprice;
+        }
+
+        public static double AveragePrice(this Robot robot, string label = null)
+        {
+            var poss = robot.GetPositions(label); ;
+            if (poss.Length == 0)
+                return 0;
+            long totallots = 0;
+            double lotsprice = 0;
+            double averageprice = 0;
+            foreach (var pos in poss)
+            {
+                totallots += pos.Volume;
+                lotsprice += pos.Volume * pos.EntryPrice;
+            }
+            averageprice = lotsprice / totallots;
+            return averageprice;
+        }
 	}
 }
