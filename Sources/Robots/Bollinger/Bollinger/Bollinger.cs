@@ -1,15 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿#region 程序概要
+//通过布林带上下线下单，默认参数：40/2/0.5
+//以上下线为平均价进行加倍
+#endregion
 using cAlgo.API;
-using cAlgo.API.Indicators;
 using cAlgo.API.Internals;
-using cAlgo.Indicators;
 using cAlgo.Lib;
+using cAlgo.Strategies;
+using System.Collections.Generic;
 
 namespace cAlgo.Robots
 {
-
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class Bollinger : Robot
     {
@@ -17,216 +17,115 @@ namespace cAlgo.Robots
         [Parameter("INIT Volume", DefaultValue = 1000, MinValue = 1)]
         public int Init_Volume { get; set; }
 
-        [Parameter("Lot(s)/10000USD", DefaultValue = 5, MinValue = 0.01)]
-        public double per { get; set; }
-
-        [Parameter("IsBollDouble", DefaultValue = false)]
-        public bool IsBollDouble { get; set; }
-
-        [Parameter("IsRisingAndFalling", DefaultValue = false)]
-        public bool IsRisingAndFalling { get; set; }
-
-        [Parameter("IsClosePosAmendment", DefaultValue = false)]
-        public bool IsClosePosAmendment { get; set; }
-
-        [Parameter("Band Height (pips)", DefaultValue = 1, MinValue = 0)]
-        public double BandHeightPips { get; set; }
-
-        [Parameter("Consolidation Periods", DefaultValue = 5)]
-        public int ConsolidationPeriods { get; set; }
+        [Parameter("Consolidation", DefaultValue = 5)]
+        public int Consolidation { get; set; }
 
         [Parameter("Source")]
         public DataSeries Source { get; set; }
 
-        [Parameter("Bollinger Bands Periods", DefaultValue = 40)]
+        [Parameter("Boll Periods", DefaultValue = 40)]
         public int Periods { get; set; }
 
-        [Parameter("Bollinger Bands Deviations", DefaultValue = 2)]
+        [Parameter("Boll Deviations", DefaultValue = 2)]
         public double Deviations { get; set; }
 
-        [Parameter("Bands Deviations Amendment", DefaultValue = 0.5)]
-        public double Deviations_Amendment { get; set; }
+        [Parameter("Dev Amendment", DefaultValue = 0.5)]
+        public double D_Amendment { get; set; }
 
-        [Parameter("Bollinger Bands MA Type")]
+        [Parameter("Boll MA Type")]
         public MovingAverageType MAType { get; set; }
 
         #endregion
         #region
-        BollingerBands boll;
-        BollingerBands bollhalf;
-        BollingerBands boll_increase;
-        BollingerBands boll_decrease;
-        string b_buylabel = "Bollinger_buy";
-        string b_selllabel = "Bollinger_sell";
-        int Open_Consolidation, Close_Consolidation;
+        string buylabel = "Bollinger_buy";
+        string selllabel = "Bollinger_sell";
+        BollingerStrategy Boll_Open, Boll_Close;
+        OrderParams initBuyOP, initSellOP;
         #endregion
         protected override void OnStart()
         {
-            boll = Indicators.BollingerBands(Source, Periods, Deviations, MAType);
-            bollhalf = Indicators.BollingerBands(Source, Periods / 2, Deviations, MAType);
-            boll_increase = Indicators.BollingerBands(Source, Periods, Deviations + Deviations_Amendment, MAType);
-            boll_decrease = Indicators.BollingerBands(Source, Periods, Deviations - Deviations_Amendment, MAType);
-            Open_Consolidation = ConsolidationPeriods;
-            Close_Consolidation = ConsolidationPeriods;
+            Boll_Open = new BollingerStrategy(this, Source, Periods, Deviations, MAType);
+            Boll_Close = new BollingerStrategy(this, Source, Periods, Deviations - D_Amendment, MAType);
+            double slippage = 2;
+            // maximum slippage in point, if order execution imposes a higher slippage, the order is not executed.
+            initBuyOP = new OrderParams(TradeType.Buy, Symbol, Init_Volume, buylabel, null, null, slippage, null, null, new List<double> 
+            {
+                            });
+            initSellOP = new OrderParams(TradeType.Sell, Symbol, Init_Volume, selllabel, null, null, slippage, null, null, new List<double> 
+            {
+                            });
         }
         protected override void OnBar()
         {
-            #region parameter
-            var upper = boll.Top.Last(1);
-            var lower = boll.Bottom.Last(1);
-            var midmin = boll.Main.Last(1) < bollhalf.Main.Last(1) ? boll.Main.Last(1) : bollhalf.Main.Last(1);
-            var midmax = boll.Main.Last(1) > bollhalf.Main.Last(1) ? boll.Main.Last(1) : bollhalf.Main.Last(1);
-            var uppermin = boll.Top.Last(1) < bollhalf.Top.Last(1) ? boll.Top.Last(1) : bollhalf.Top.Last(1);
-            var uppermax = boll.Top.Last(1) > bollhalf.Top.Last(1) ? boll.Top.Last(1) : bollhalf.Top.Last(1);
-            var lowermin = boll.Bottom.Last(1) < bollhalf.Bottom.Last(1) ? boll.Bottom.Last(1) : bollhalf.Bottom.Last(1);
-            var lowermax = boll.Bottom.Last(1) > bollhalf.Bottom.Last(1) ? boll.Bottom.Last(1) : bollhalf.Bottom.Last(1);
-            var upper_increase = boll_increase.Top.Last(1);
-            var lower_increase = boll_increase.Bottom.Last(1);
-            var upper_decrease = boll_decrease.Top.Last(1);
-            var lower_decrease = boll_decrease.Bottom.Last(1);
-            var balancelot = 1000000;
-            var b_buyposs = this.GetPositions(b_buylabel);
-            var b_sellposs = this.GetPositions(b_selllabel);
-            #endregion
-            #region define open_consolidation and close_consolidation
-            if (upper - lower >= BandHeightPips * Symbol.PipSize)
+            List<Position> buypositions = new List<Position>(this.GetPositions(buylabel));
+            buypositions.Reverse();
+            List<Position> sellpositions = new List<Position>(this.GetPositions(selllabel));
+            sellpositions.Reverse();
+            #region Close
+            //Close BuyPositions
+            if (buypositions.Count != 0)
             {
-                Open_Consolidation = Open_Consolidation + 1;
-            }
-            else
-            {
-                Open_Consolidation = 0;
-            }
-            if (upper - lower >= BandHeightPips * Symbol.PipSize)
-            {
-                Close_Consolidation = Close_Consolidation + 1;
-            }
-            else
-            {
-                Close_Consolidation = 0;
-            }
-            #endregion
-            #region Close Position(b_buylabel and b_selllabel)
-            if (Close_Consolidation >= ConsolidationPeriods)
-            {
-                //Close BuyPositions
-                if (b_buyposs.Length != 0)
+                if (Boll_Close.signal().isSell())
                 {
-                    double goalprice = 0;
-                    if (!IsBollDouble)
+                    this.closeAllBuyPositions(buylabel);
+                }
+            }
+            //Close SellPositions
+            if (sellpositions.Count != 0)
+            {
+                if (Boll_Close.signal().isBuy())
+                {
+                    this.closeAllSellPositions(selllabel);
+                }
+            }
+            #endregion
+            #region Open Position(buylabel and selllabel)
+            //Open b_buylabel
+            if (Boll_Open.signal().isBuy())
+            {
+                if (buypositions.Count == 0)
+                {
+                    this.executeOrder(initBuyOP);
+                    return;
+                }
+                else if (buypositions.Count != 0 && MarketSeries.barsAgo(buypositions[0]) >= Consolidation)
+                {
+                    var goalprice = Boll_Open.boll.Top.Last(1);
+                    if (this.AveragePrice(buylabel) < goalprice)
                     {
-                        if (IsClosePosAmendment)
-                            goalprice = upper_decrease;
-                        if (!IsClosePosAmendment)
-                            goalprice = upper;
+                        this.executeOrder(initBuyOP);
+                        return;
                     }
                     else
                     {
-                        if (!IsClosePosAmendment)
-                            goalprice = uppermax;
-                        if (IsClosePosAmendment)
-                            goalprice = uppermin;
-                    }
-                    if (Symbol.Mid() > goalprice)
-                    {
-                        this.closeAllBuyPositions(b_buylabel);
-                    }
-                }
-                //Close SellPositions
-                if (b_sellposs.Length != 0)
-                {
-                    double goalprice = 0;
-                    if (!IsBollDouble)
-                    {
-                        if (IsClosePosAmendment)
-                            goalprice = lower_decrease;
-                        if (!IsClosePosAmendment)
-                            goalprice = lower;
-                    }
-                    else
-                    {
-                        if (!IsClosePosAmendment)
-                            goalprice = lowermin;
-                        if (IsClosePosAmendment)
-                            goalprice = lowermax;
-                    }
-                    if (Symbol.Mid() < goalprice)
-                    {
-                        this.closeAllSellPositions(b_selllabel);
+                        OrderParams MarBuyOP = new OrderParams(initBuyOP);
+                        MarBuyOP.Volume = this.MartingaleLot(buylabel, goalprice);
+                        this.executeOrder(MarBuyOP);
+                        return;
                     }
                 }
             }
-            #endregion
-            #region Open Position(b_buylabel and b_selllabel)
-            if (Open_Consolidation >= ConsolidationPeriods)
+            //Open b_selllabel
+            if (Boll_Open.signal().isSell())
             {
-                //Open b_selllabel
-                bool isboll_sell = Symbol.Mid() > upper && !IsRisingAndFalling && !IsBollDouble;
-                bool isbollDev_sell = Symbol.Mid() > upper_decrease && !boll.Bottom.IsFalling() && IsRisingAndFalling && !IsBollDouble;
-                bool isbollDou_sell = Symbol.Mid() > uppermax && IsBollDouble && !IsRisingAndFalling;
-                bool isboll_buy = Symbol.Mid() < lower && !IsRisingAndFalling && !IsBollDouble;
-                bool isbollDev_buy = Symbol.Mid() < lower_decrease && !boll.Top.IsRising() && IsRisingAndFalling && !IsBollDouble;
-                bool isbollDou_buy = Symbol.Mid() < lowermin && IsBollDouble && !IsRisingAndFalling;
-                if (isboll_sell || isbollDev_sell || isbollDou_sell)
+                if (sellpositions.Count == 0)
                 {
-                    double goalprice = 0;
-                    if (isboll_sell)
-                        goalprice = lower;
-                    if (isbollDev_sell)
-                        goalprice = lower_decrease;
-                    if (isbollDou_sell)
-                        goalprice = lowermax;
-                    if (b_sellposs.Length == 0)
-                    {
-                        ExecuteMarketOrder(TradeType.Sell, Symbol, Init_Volume, b_selllabel);
-                        Open_Consolidation = 0;
-                        return;
-                    }
-                    if (b_sellposs.Length != 0 && this.AveragePrice(b_selllabel) >= goalprice)
-                    {
-                        ExecuteMarketOrder(TradeType.Sell, Symbol, Init_Volume, b_selllabel);
-                        Open_Consolidation = 0;
-                        return;
-                    }
-                    if (b_sellposs.Length != 0 && this.AveragePrice(b_selllabel) < goalprice)
-                    {
-                        long volume = this.MartingaleLot(b_selllabel, goalprice);
-                        if (volume > balancelot - this.TotalLots(b_selllabel))
-                            volume = (long)(balancelot - this.TotalLots(b_selllabel));
-                        ExecuteMarketOrder(TradeType.Sell, Symbol, volume, b_selllabel);
-                        Open_Consolidation = 0;
-                        return;
-                    }
+                    this.executeOrder(initSellOP);
+                    return;
                 }
-                //Open b_buylabel
-                if (isboll_buy || isbollDev_buy || isbollDou_buy)
+                else if (sellpositions.Count != 0 && MarketSeries.barsAgo(sellpositions[0]) >= Consolidation)
                 {
-                    double goalprice = 0;
-                    if (isboll_buy)
-                        goalprice = upper;
-                    if (isbollDev_buy)
-                        goalprice = upper_decrease;
-                    if (isbollDou_buy)
-                        goalprice = uppermin;
-                    if (b_buyposs.Length == 0)
+                    var goalprice = Boll_Open.boll.Bottom.Last(1);
+                    if (this.AveragePrice(selllabel) > goalprice)
                     {
-                        ExecuteMarketOrder(TradeType.Buy, Symbol, Init_Volume, b_buylabel);
-                        Open_Consolidation = 0;
+                        this.executeOrder(initSellOP);
                         return;
                     }
-                    if (b_buyposs.Length != 0 && this.AveragePrice(b_buylabel) <= goalprice)
+                    else
                     {
-                        ExecuteMarketOrder(TradeType.Buy, Symbol, Init_Volume, b_buylabel);
-                        Open_Consolidation = 0;
-                        return;
-                    }
-                    if (b_buyposs.Length != 0 && this.AveragePrice(b_buylabel) > goalprice)
-                    {
-                        long volume = this.MartingaleLot(b_buylabel, goalprice);
-                        if (volume > balancelot - this.TotalLots(b_buylabel))
-                            volume = (long)(balancelot - this.TotalLots(b_buylabel));
-                        ExecuteMarketOrder(TradeType.Buy, Symbol, volume, b_buylabel);
-                        Open_Consolidation = 0;
+                        OrderParams MarSellOP = new OrderParams(initSellOP);
+                        MarSellOP.Volume = this.MartingaleLot(selllabel, goalprice);
+                        this.executeOrder(MarSellOP);
                         return;
                     }
                 }

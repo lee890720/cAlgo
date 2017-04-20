@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Indicators\ZigZagIndicator\ZigZagIndicator\ZigZagIndicator.csproj">
-      <Project>{417dbc9d-fde8-4de6-ba62-78274967602e}</Project>
+      <Project>{7a611b24-22f6-4e20-af96-e85c501c5108}</Project>
       <Name>ZigZagIndicator</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Library\cAlgoLib\cAlgo.Lib.csproj">

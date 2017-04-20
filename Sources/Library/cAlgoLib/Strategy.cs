@@ -5,7 +5,6 @@ namespace cAlgo.Strategies
 {
 	public abstract class Strategy : IStrategy
 	{
-
 		protected Strategy(Robot robot)
 		{
 			Robot = robot;
@@ -15,10 +14,7 @@ namespace cAlgo.Strategies
 			get;
 			private set;
 		}
-
 		public abstract TradeType? signal();
 		protected virtual void Initialize() {}
-
-
 	}
 }

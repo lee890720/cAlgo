@@ -1,7 +1,0 @@
-﻿C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\WayOfTheTurtle\WayOfTheTurtle\bin\Debug\WayOfTheTurtle.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\WayOfTheTurtle\WayOfTheTurtle\bin\Debug\WayOfTheTurtle.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\WayOfTheTurtle\WayOfTheTurtle\bin\Debug\cAlgo.API.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\WayOfTheTurtle\WayOfTheTurtle\bin\Debug\cAlgo.API.xml
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\WayOfTheTurtle\WayOfTheTurtle\obj\Debug\WayOfTheTurtle.csprojResolveAssemblyReference.cache
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\WayOfTheTurtle\WayOfTheTurtle\obj\Debug\WayOfTheTurtle.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Robots\WayOfTheTurtle\WayOfTheTurtle\obj\Debug\WayOfTheTurtle.pdb

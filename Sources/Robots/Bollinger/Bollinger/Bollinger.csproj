@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E77B407E-9213-4745-A9F4-AB6373363A5B}</ProjectGuid>
+    <ProjectGuid>{D49941C3-E4C9-4A7D-AAED-907815D70F36}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -32,18 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cAlgo.Lib">
-      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="cAlgo.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3499da3018340880, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="cAlgo.Lib">
+      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="cAlgo.API">
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
+    </Reference>
+    <Reference Include="BollingerStrategy">
+      <HintPath>..\..\..\Strategies\BollingerStrategy\bin\Debug\BollingerStrategy.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
