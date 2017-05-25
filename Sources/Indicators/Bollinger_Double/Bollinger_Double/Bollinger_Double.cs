@@ -18,19 +18,19 @@ namespace cAlgo.Indicators
         [Parameter("MA Type", DefaultValue = MovingAverageType.Simple)]
         public MovingAverageType MaType { get; set; }
 
-        [Output("MainMin", Color = Colors.White)]
+        [Output("MainMin", Color = Colors.Blue)]
         public IndicatorDataSeries MainMin { get; set; }
 
-        [Output("MainMax", Color = Colors.White)]
+        [Output("MainMax", Color = Colors.Blue)]
         public IndicatorDataSeries MainMax { get; set; }
 
         [Output("UpperMin", Color = Colors.Blue)]
         public IndicatorDataSeries UpperMin { get; set; }
 
-        [Output("UpperMax", Color = Colors.Red)]
+        [Output("UpperMax", Color = Colors.Blue)]
         public IndicatorDataSeries UpperMax { get; set; }
 
-        [Output("LowerMin", Color = Colors.Red)]
+        [Output("LowerMin", Color = Colors.Blue)]
         public IndicatorDataSeries LowerMin { get; set; }
 
         [Output("LowerMax", Color = Colors.Blue)]

@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("BollingerT")]
+[assembly: AssemblyTitle("BollCross")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("BollingerT")]
+[assembly: AssemblyProduct("BollCross")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

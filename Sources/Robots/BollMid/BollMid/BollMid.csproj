@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{56E4F54F-7A73-4A0A-8A62-353AF6D03610}</ProjectGuid>
+    <ProjectGuid>{F3D8AD7E-2804-485C-94B5-B2D14AB2B66A}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>BollingerT</AssemblyName>
+    <AssemblyName>BollMid</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cAlgo.Lib">
-      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,8 +44,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BollingerT.cs" />
+    <Compile Include="BollMid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Library\cAlgoLib\cAlgo.Lib.csproj">
+      <Project>{d3e50b06-5578-42a2-addd-42f25d5a1f4c}</Project>
+      <Name>cAlgo.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Strategies\DoubleBollStrategy\DoubleBollStrategy.csproj">
+      <Project>{b736d864-5f6e-41e0-afae-c2305b68c8b7}</Project>
+      <Name>DoubleBollStrategy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

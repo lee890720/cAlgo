@@ -62,7 +62,7 @@ namespace cAlgo.Robots
             //Close BuyPositions
             if (buypositions.Count != 0)
             {
-                if (Boll_Close.signal().isSell())
+                if (Boll_Close.signal1().isSell())
                 {
                     this.closeAllBuyPositions(buylabel);
                 }
@@ -70,7 +70,7 @@ namespace cAlgo.Robots
             //Close SellPositions
             if (sellpositions.Count != 0)
             {
-                if (Boll_Close.signal().isBuy())
+                if (Boll_Close.signal1().isBuy())
                 {
                     this.closeAllSellPositions(selllabel);
                 }
@@ -78,7 +78,7 @@ namespace cAlgo.Robots
             #endregion
             #region Open Position(buylabel and selllabel)
             //Open b_buylabel
-            if (Boll_Open.signal().isBuy())
+            if (Boll_Open.signal1().isBuy())
             {
                 if (buypositions.Count == 0)
                 {
@@ -103,7 +103,7 @@ namespace cAlgo.Robots
                 }
             }
             //Open b_selllabel
-            if (Boll_Open.signal().isSell())
+            if (Boll_Open.signal1().isSell())
             {
                 if (sellpositions.Count == 0)
                 {

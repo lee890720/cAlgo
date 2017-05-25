@@ -281,7 +281,7 @@ namespace cAlgo.Lib
 
 			int signal = 0;
 			foreach (Strategy strategy in strategies)
-				signal += strategy.signal().factor();
+				signal += strategy.signal1().factor();
 
 			if (signal >= ceil)
 				return TradeType.Buy;

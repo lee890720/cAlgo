@@ -55,6 +55,7 @@ using cAlgo.API;
 using cAlgo.API.Indicators;
 using cAlgo.API.Internals;
 using cAlgo.Lib;
+using System;
 
 namespace cAlgo.Strategies
 {
@@ -83,7 +84,7 @@ namespace cAlgo.Strategies
 		/// when 21 EMA is under 55 EMA; sell when 5 EMA crosses down 8 SMA.
 		/// </summary>
 		/// <returns></returns>
-		public override TradeType? signal()
+		public override TradeType? signal1()
 		{
 			if ((ema21.Result.LastValue > ema55.Result.LastValue) && (ema5.Result.HasCrossedAbove(sma8.Result, 0)))
 				return TradeType.Buy;
@@ -93,5 +94,13 @@ namespace cAlgo.Strategies
 
 			return null;
 		}
+        public override TradeType? signal2()
+        {
+            throw new NotImplementedException();
+        }
+        public override TradeType? signal3()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

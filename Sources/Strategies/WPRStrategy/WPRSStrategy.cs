@@ -27,6 +27,7 @@ using cAlgo.API.Indicators;
 using cAlgo.API.Internals;
 using cAlgo.Indicators;
 using cAlgo.Lib;
+using System;
 
 namespace cAlgo.Strategies
 {
@@ -68,7 +69,7 @@ namespace cAlgo.Strategies
 		/// Strategy according to Williams Percent Range indicator
 		/// </summary>
 		/// <returns></returns>
-		public override TradeType? signal()
+		public override TradeType? signal1()
 		{
 			if (wprs.IsExceedLow && wprs.IsCrossAboveOversell)
 				return TradeType.Buy;
@@ -78,6 +79,13 @@ namespace cAlgo.Strategies
 			return null;
 		}
 
-
+        public override TradeType? signal2()
+        {
+            throw new NotImplementedException();
+        }
+        public override TradeType? signal3()
+        {
+            throw new NotImplementedException();
+        }
 	}
 }

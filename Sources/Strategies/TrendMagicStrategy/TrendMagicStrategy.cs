@@ -27,6 +27,7 @@ using cAlgo.API.Indicators;
 using cAlgo.API.Internals;
 using cAlgo.Indicators;
 using cAlgo.Lib;
+using System;
 
 namespace cAlgo.Strategies
 {
@@ -61,7 +62,7 @@ namespace cAlgo.Strategies
 		///
 		/// </summary>
 		/// <returns></returns>
-		public override TradeType? signal()
+		public override TradeType? signal1()
 		{
 			if (trendMagic.BufferUpOutput.HasCrossedAbove(Robot.Symbol.Ask, 1) && _cci.Result.LastValue > 0)
 				return TradeType.Buy;
@@ -71,7 +72,14 @@ namespace cAlgo.Strategies
 
 			return null;
 		}
-
+        public override TradeType? signal2()
+        {
+            throw new NotImplementedException();
+        }
+        public override TradeType? signal3()
+        {
+            throw new NotImplementedException();
+        }
 
 	}
 }

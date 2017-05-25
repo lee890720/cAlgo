@@ -94,7 +94,7 @@ namespace cAlgo.Strategies
 		/// Signals with noise levels on indicators MACD and Parabolic SAR. 
 		/// </summary>
 		/// <returns></returns>
-		public override TradeType? signal()
+		public override TradeType? signal1()
 		{
 			_MACD_main = i_MACD_main.Histogram.Last(0);
 			_MCAD_signal = i_MCAD_signal.Signal.Last(0);
@@ -129,5 +129,13 @@ namespace cAlgo.Strategies
 
 			return tradeType;
 		}
+        public override TradeType? signal2()
+        {
+            throw new NotImplementedException();
+        }
+        public override TradeType? signal3()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

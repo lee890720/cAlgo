@@ -8695,6 +8695,7 @@
             <param name="stopLoss">Stop loss price</param>
             <param name="takeProfit">Take profit price</param>
             <param name="expirationTime">Optional Expiration date and time.</param>
+            <param name="slippageInPips">Optional Market range.</param>
             <example>
             <code>
             protected override void OnStart()

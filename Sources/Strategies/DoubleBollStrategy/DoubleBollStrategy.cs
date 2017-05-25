@@ -20,7 +20,8 @@ namespace cAlgo.Strategies
         public string Condition { get; set; }
         BollingerBands boll;
         BollingerBands bollhalf;
-        public double UpperMax, UpperMin, LowerMax, LowerMin;
+        public double upper, lower, uppermax, uppermin, lowermax, lowermin, midmax, midmin;
+        public int bars;
         public DoubleBollStrategy(Robot robot, DataSeries source, int periods, double deviations, MovingAverageType ma, string condition = null)
             : base(robot)
         {
@@ -34,29 +35,48 @@ namespace cAlgo.Strategies
         protected override void Initialize()
         {
             boll = Robot.Indicators.BollingerBands(Source, Periods, Deviations, MAType);
-            bollhalf = Robot.Indicators.BollingerBands(Source, Periods/2, Deviations, MAType);
-
+            bollhalf = Robot.Indicators.BollingerBands(Source, Periods / 2, Deviations, MAType);
+            bars = Robot.MarketSeries.Bars();
+            upper = boll.Top[bars - 2];
+            lower = boll.Bottom[bars - 2];
+            midmin = boll.Main[bars - 2] < bollhalf.Main[bars - 2] ? boll.Main[bars - 2] : bollhalf.Main[bars - 2];
+            midmax = boll.Main[bars - 2] > bollhalf.Main[bars - 2] ? boll.Main[bars - 2] : bollhalf.Main[bars - 2];
+            uppermin = boll.Top[bars - 2] < bollhalf.Top[bars - 2] ? boll.Top[bars - 2] : bollhalf.Top[bars - 2];
+            uppermax = boll.Top[bars - 2] > bollhalf.Top[bars - 2] ? boll.Top[bars - 2] : bollhalf.Top[bars - 2];
+            lowermin = boll.Bottom[bars - 2] < bollhalf.Bottom[bars - 2] ? boll.Bottom[bars - 2] : bollhalf.Bottom[bars - 2];
+            lowermax = boll.Bottom[bars - 2] > bollhalf.Bottom[bars - 2] ? boll.Bottom[bars - 2] : bollhalf.Bottom[bars - 2];
         }
-        public override TradeType? signal()
+        public override TradeType? signal1()
         {
             //throw new NotImplementedException();
-            var upper = boll.Top.Last(1);
-            var lower = boll.Bottom.Last(1);
-            var midmin = boll.Main.Last(1) < bollhalf.Main.Last(1) ? boll.Main.Last(1) : bollhalf.Main.Last(1);
-            var midmax = boll.Main.Last(1) > bollhalf.Main.Last(1) ? boll.Main.Last(1) : bollhalf.Main.Last(1);
-            var uppermin = boll.Top.Last(1) < bollhalf.Top.Last(1) ? boll.Top.Last(1) : bollhalf.Top.Last(1);
-            var uppermax = boll.Top.Last(1) > bollhalf.Top.Last(1) ? boll.Top.Last(1) : bollhalf.Top.Last(1);
-            var lowermin = boll.Bottom.Last(1) < bollhalf.Bottom.Last(1) ? boll.Bottom.Last(1) : bollhalf.Bottom.Last(1);
-            var lowermax = boll.Bottom.Last(1) > bollhalf.Bottom.Last(1) ? boll.Bottom.Last(1) : bollhalf.Bottom.Last(1);
-            UpperMax = uppermax;
-            UpperMin = uppermin;
-            LowerMax = lowermax;
-            lowermin = lowermin;
+            Initialize();
             TradeType? tradeType = null;
             if (Robot.Symbol.Mid() > uppermax)
                 tradeType = TradeType.Sell;
             if (Robot.Symbol.Mid() < lowermin)
                 tradeType = TradeType.Buy;
+            return tradeType;
+        }
+        public override TradeType? signal2()
+        {
+            //throw new NotImplementedException();
+            Initialize();
+            TradeType? tradeType = null;
+            if (Robot.MarketSeries.isBullCandle(1) == true && Robot.MarketSeries.isCandleOver(1, midmax))
+                tradeType = TradeType.Buy;
+            if (Robot.MarketSeries.isBearCandle(1) == true && Robot.MarketSeries.isCandleOver(1, midmin))
+                tradeType = TradeType.Sell;
+            return tradeType;
+        }
+        public override TradeType? signal3()
+        {
+            //throw new NotImplementedException();
+            Initialize();
+            TradeType? tradeType = null;
+            if (Robot.MarketSeries.isBearCandle(1) == true && Robot.MarketSeries.isCandleOver(1, midmax))
+                tradeType = TradeType.Buy;
+            if (Robot.MarketSeries.isBullCandle(1) == true && Robot.MarketSeries.isCandleOver(1, midmin))
+                tradeType = TradeType.Sell;
             return tradeType;
         }
     }

@@ -8,3 +8,4 @@ C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Robots\Bollinger\Bollinger\bin\Debug
 C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Robots\Bollinger\Bollinger\obj\Debug\Bollinger.dll
 C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Robots\Bollinger\Bollinger\obj\Debug\Bollinger.pdb
 C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Robots\Bollinger\Bollinger\obj\Debug\Bollinger.csprojResolveAssemblyReference.cache
+C:\Users\LEE-LENOVO\Documents\cAlgo\Sources\Robots\Bollinger\Bollinger\bin\Debug\cAlgo.Lib.pdb

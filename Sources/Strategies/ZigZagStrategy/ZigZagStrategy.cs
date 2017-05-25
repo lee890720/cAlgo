@@ -1,5 +1,6 @@
 ﻿using cAlgo.API;
 using cAlgo.Indicators;
+using System;
 
 namespace cAlgo.Strategies
 {
@@ -33,7 +34,7 @@ namespace cAlgo.Strategies
 		///
 		/// </summary>
 		/// <returns></returns>
-		public override TradeType? signal()
+		public override TradeType? signal1()
 		{
 			double lastValue = zigZag.Result.LastValue;
 
@@ -51,5 +52,13 @@ namespace cAlgo.Strategies
 
 			return tradeType;
 		}
+        public override TradeType? signal2()
+        {
+            throw new NotImplementedException();
+        }
+        public override TradeType? signal3()
+        {
+            throw new NotImplementedException();
+        }
 	}
 }

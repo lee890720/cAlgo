@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("DouBollingerTrend")]
+[assembly: AssemblyTitle("BollMid")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("DouBollingerTrend")]
+[assembly: AssemblyProduct("BollMid")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
