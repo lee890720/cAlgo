@@ -27,7 +27,7 @@ namespace cAlgo.Strategies
         {
             boll = Robot.Indicators.BollingerBands(Source, Periods, Deviations, MAType);
         }
-        public override TradeType? signal1()
+        public override TradeType? signal()
         {
             //throw new NotImplementedException();
             var upper = boll.Top.Last(1);
@@ -50,13 +50,13 @@ namespace cAlgo.Strategies
             }
             return tradeType;
         }
-        public override TradeType? signal2()
-        {
-            throw new System.NotImplementedException();
-        }
-        public override TradeType? signal3()
-        {
-            throw new System.NotImplementedException();
-        }
+        //public override bool? signalBuy()
+        //{
+        //    throw new System.NotImplementedException();
+        //}
+        //public override bool? signalSell()
+        //{
+        //    throw new System.NotImplementedException();
+        //}
     }
 }

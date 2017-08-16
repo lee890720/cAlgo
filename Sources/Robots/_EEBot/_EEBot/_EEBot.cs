@@ -4,90 +4,72 @@ using cAlgo.API;
 using cAlgo.API.Indicators;
 using cAlgo.API.Internals;
 using cAlgo.Indicators;
-
+using cAlgo.Lib;
+using cAlgo.Strategies;
+using System.Collections.Generic;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class _EEBot : Robot
     {
+        [Parameter("INIT_Volume", DefaultValue = 1000, MinValue = 1000)]
+        public int Init_Volume { get; set; }
+
         [Parameter(DefaultValue = 120)]
         public int period { get; set; }
 
         [Parameter(DefaultValue = "GBPUSD")]
         public string symbol2 { get; set; }
 
-        private _EE ee;
+        [Parameter(DefaultValue = 30)]
+        public int Distance { get; set; }
 
         Symbol symbol;
-
+        string MaAbove = "maabove";
+        string MaBelow = "mabelow";
+        OrderParams initBuyEur, initBuyGbp, initSellEur, initSellGbp;
+        EEStrategy ees;
         protected override void OnStart()
         {
-            ee = Indicators.GetIndicator<_EE>(period, symbol2);
             symbol = MarketData.GetSymbol(symbol2);
+            ees = new EEStrategy(this, period, symbol2, Distance);
+            double slippage = 2;
+            //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
+            initBuyEur = new OrderParams(TradeType.Buy, Symbol, Init_Volume, MaAbove, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            {
+                            });
+            initBuyGbp = new OrderParams(TradeType.Buy, Symbol, Init_Volume, MaBelow, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            {
+                            });
+            initSellEur = new OrderParams(TradeType.Sell, symbol, Init_Volume, MaBelow, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            {
+                            });
+            initSellGbp = new OrderParams(TradeType.Sell, symbol, Init_Volume, MaAbove, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            {
+                            });
         }
 
         protected override void OnTick()
         {
-            //if Result>Average Sell GBP and Buy EUR
-            //if Result<Average Buy GBP and Sell EUR
-            double result = ee.Result.LastValue;
-            double average = ee.Average.LastValue;
-            if (Positions.Count == 0)
+            if (ees.signal() == TradeType.Buy)
             {
-                if (result > average + 30)
-                {
-                    ExecuteMarketOrder(TradeType.Sell, symbol, 1000);
-                    ExecuteMarketOrder(TradeType.Buy, Symbol, 1000);
-                }
-                if (result < average - 30)
-                {
-                    ExecuteMarketOrder(TradeType.Buy, symbol, 1000);
-                    ExecuteMarketOrder(TradeType.Sell, Symbol, 1000);
-                }
+                this.executeOrder(initBuyEur);
+                this.executeOrder(initSellGbp);
             }
-            if (Positions.Count != 0 && DateTime.Compare(Positions[Positions.Count - 1].EntryTime, DateTime.Now.AddHours(-1)) > 0)
+            if (ees.signal() == TradeType.Sell)
             {
-                if (result > average + 30)
-                {
-                    ExecuteMarketOrder(TradeType.Sell, symbol, 1000);
-                    ExecuteMarketOrder(TradeType.Buy, Symbol, 1000);
-                }
-                if (result < average - 30)
-                {
-                    ExecuteMarketOrder(TradeType.Buy, symbol, 1000);
-                    ExecuteMarketOrder(TradeType.Sell, Symbol, 1000);
-                }
+                this.executeOrder(initSellEur);
+                this.executeOrder(initBuyGbp);
             }
-            //if (Positions.Count != 0 && Positions[Positions.Count - 1].EntryTime >= DateTime.Now.AddHours(-1))
-            //{
-            //    if (result > Math.Abs((Positions[Positions.Count - 1].EntryPrice - Positions[Positions.Count - 2].EntryPrice) / Symbol.PipSize) + 10)
-            //    {
-            //        ExecuteMarketOrder(TradeType.Sell, symbol, 1000);
-            //        ExecuteMarketOrder(TradeType.Buy, Symbol, 1000);
-            //    }
-            //    if (result < Math.Abs((Positions[Positions.Count - 1].EntryPrice - Positions[Positions.Count - 2].EntryPrice) / Symbol.PipSize) - 10)
-            //    {
-            //        ExecuteMarketOrder(TradeType.Buy, symbol, 1000);
-            //        ExecuteMarketOrder(TradeType.Sell, Symbol, 1000);
-            //    }
-            //}
             if (Positions.Count != 0)
             {
-                if (result >= average)
+                if (ees.singnalS() == "closebuy")
                 {
-                    foreach (var p in Positions)
-                    {
-                        if ((p.SymbolCode == symbol2 && p.TradeType == TradeType.Buy) || (p.SymbolCode == Symbol.Code && p.TradeType == TradeType.Sell))
-                            ClosePosition(p);
-                    }
+                    this.closeAllPositions(MaAbove);
                 }
-                if (result <= average)
+                if (ees.singnalS() == "closesell")
                 {
-                    foreach (var p in Positions)
-                    {
-                        if ((p.SymbolCode == symbol2 && p.TradeType == TradeType.Sell) || (p.SymbolCode == Symbol.Code && p.TradeType == TradeType.Buy))
-                            ClosePosition(p);
-                    }
+                    this.closeAllPositions(MaBelow);
                 }
             }
         }

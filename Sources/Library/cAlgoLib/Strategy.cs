@@ -14,9 +14,8 @@ namespace cAlgo.Strategies
 			get;
 			private set;
 		}
-		public abstract TradeType? signal1();
-        public abstract TradeType? signal2();
-        public abstract TradeType? signal3();
+		public abstract TradeType? signal();
+        public abstract string singnalS();
 		protected virtual void Initialize() {}
 	}
 }

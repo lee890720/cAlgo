@@ -1,18 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C960C18F-5831-4C0D-8B4A-B4EC08E94D82}</ProjectGuid>
-    <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{0518D3CA-544E-4F44-AF33-6AC48B1120BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>_EEBot</AssemblyName>
+    <RootNamespace>EEStrategy</RootNamespace>
+    <AssemblyName>EEStrategy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,23 +31,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EEStrategy">
-      <HintPath>..\..\..\cAlgo\EEStrategy\bin\Debug\EEStrategy.dll</HintPath>
+    <Reference Include="cAlgo.API">
+      <HintPath>..\..\..\API\cAlgo.API.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="cAlgo.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3499da3018340880, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="_EEBot.cs" />
+    <Compile Include="EEStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Indicators\_EE\_EE\_EE.csproj">
+      <Project>{e95a80a9-4e33-4d79-85d5-34ab76333c2c}</Project>
+      <Name>_EE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Library\cAlgoLib\cAlgo.Lib.csproj">
+      <Project>{d3e50b06-5578-42a2-addd-42f25d5a1f4c}</Project>
+      <Name>cAlgo.Lib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -58,14 +64,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Indicators\_EE\_EE\_EE.csproj">
-      <Project>{E95A80A9-4E33-4D79-85D5-34AB76333C2C}</Project>
-      <Name>_EE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Library\cAlgoLib\cAlgo.Lib.csproj">
-      <Project>{d3e50b06-5578-42a2-addd-42f25d5a1f4c}</Project>
-      <Name>cAlgo.Lib</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
