@@ -42,7 +42,7 @@ namespace cAlgo.Indicators
         protected override void Initialize()
         {
 
-            jawsMa = Indicators.WellesWilderSmoothing(MarketSeries.Median, JawsPeriods);
+            jawsMa = Indicators.WellesWilderSmoothing(MarketSeries.Median, TeethPeriods);
             teethMa = Indicators.WellesWilderSmoothing(MarketSeries.Median, TeethPeriods);
             lipsMa = Indicators.WellesWilderSmoothing(MarketSeries.Median, LipsPeriods);
         }

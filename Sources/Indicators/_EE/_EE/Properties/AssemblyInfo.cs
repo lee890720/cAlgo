@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("TrendMagicIndicator")]
+[assembly: AssemblyTitle("_EE")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("TrendMagicIndicator")]
+[assembly: AssemblyProduct("_EE")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
