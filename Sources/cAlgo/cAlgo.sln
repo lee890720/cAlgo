@@ -17,8 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Strategies", "Strategies", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EEStrategy", "EEStrategy\EEStrategy.csproj", "{0518D3CA-544E-4F44-AF33-6AC48B1120BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BollingerStrategy", "..\Strategies\BollingerStrategy\BollingerStrategy.csproj", "{E76157C1-EAA9-4534-B51D-6302801F2BBA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{0518D3CA-544E-4F44-AF33-6AC48B1120BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0518D3CA-544E-4F44-AF33-6AC48B1120BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0518D3CA-544E-4F44-AF33-6AC48B1120BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E76157C1-EAA9-4534-B51D-6302801F2BBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E76157C1-EAA9-4534-B51D-6302801F2BBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E76157C1-EAA9-4534-B51D-6302801F2BBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E76157C1-EAA9-4534-B51D-6302801F2BBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +47,5 @@ Global
 		{E95A80A9-4E33-4D79-85D5-34AB76333C2C} = {5DFE3331-AE79-4CDE-ABDC-F29A059BC418}
 		{C960C18F-5831-4C0D-8B4A-B4EC08E94D82} = {3D654A64-B123-4E39-BC00-029F3B3675B3}
 		{0518D3CA-544E-4F44-AF33-6AC48B1120BC} = {F21BBCCF-E647-4867-A543-422D5A538C31}
-		{E76157C1-EAA9-4534-B51D-6302801F2BBA} = {F21BBCCF-E647-4867-A543-422D5A538C31}
 	EndGlobalSection
 EndGlobal

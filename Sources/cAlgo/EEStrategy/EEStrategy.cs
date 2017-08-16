@@ -11,7 +11,7 @@ namespace cAlgo.Strategies
 
         private _EE ee;
 
-        public EEStrategy(Robot robot, int period, string symbol2,int distance)
+        public EEStrategy(Robot robot, int period, string symbol2, int distance)
             : base(robot)
         {
             this.Period = period;
@@ -37,22 +37,22 @@ namespace cAlgo.Strategies
             }
             else
             {
-                                var now = DateTime.UtcNow;
-                                if (DateTime.Compare(Robot.Positions[Robot.Positions.Count - 1].EntryTime.AddHours(1), now) < 0)
-                                {
-                                    if (result > average + Distance)
-                                        tt = TradeType.Buy;
-                                    if (result < average - Distance)
-                                        tt = TradeType.Sell;
-                                }
-                                else
-                                {
-                                    var eb=Math.Abs(Robot.Positions[Robot.Positions.Count-1].EntryPrice-Robot.Positions[Robot.Positions.Count-2].EntryPrice)/Robot.Symbol.PipSize;
-                                    if (result > average + eb + 10)
-                                        tt = TradeType.Buy;
-                                    if (result < average - eb - 10)
-                                        tt = TradeType.Sell;
-                                }
+                var now = DateTime.UtcNow;
+                if (DateTime.Compare(Robot.Positions[Robot.Positions.Count - 1].EntryTime.AddHours(1), now) < 0)
+                {
+                    if (result > average + Distance)
+                        tt = TradeType.Buy;
+                    if (result < average - Distance)
+                        tt = TradeType.Sell;
+                }
+                else
+                {
+                    var eb = Math.Abs(Robot.Positions[Robot.Positions.Count - 1].EntryPrice - Robot.Positions[Robot.Positions.Count - 2].EntryPrice) / Robot.Symbol.PipSize;
+                    if (result > average + eb + 10)
+                        tt = TradeType.Buy;
+                    if (result < average - eb - 10)
+                        tt = TradeType.Sell;
+                }
             }
             return tt;
         }
