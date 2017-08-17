@@ -32,8 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="cAlgo.Lib">
+      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
+    </Reference>
     <Reference Include="EEStrategy">
-      <HintPath>..\..\..\cAlgo\EEStrategy\bin\Debug\EEStrategy.dll</HintPath>
+      <HintPath>..\..\..\Strategies\EEStrategy\EEStrategy\bin\Debug\EEStrategy.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,6 +47,9 @@
     <Reference Include="cAlgo.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3499da3018340880, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
+    </Reference>
+    <Reference Include="_EE">
+      <HintPath>..\..\..\Indicators\_EE\_EE\bin\Debug\_EE.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -58,14 +64,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Indicators\_EE\_EE\_EE.csproj">
-      <Project>{E95A80A9-4E33-4D79-85D5-34AB76333C2C}</Project>
-      <Name>_EE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Library\cAlgoLib\cAlgo.Lib.csproj">
-      <Project>{d3e50b06-5578-42a2-addd-42f25d5a1f4c}</Project>
-      <Name>cAlgo.Lib</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

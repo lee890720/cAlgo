@@ -1,5 +1,6 @@
 ﻿using cAlgo.API;
 using System;
+using cAlgo.Indicators;
 
 namespace cAlgo.Strategies
 {

@@ -111,6 +111,11 @@ namespace cAlgo.Lib
 			if (!result.IsSuccessful)
 				robot.Print("error : {0}", result.Error);
 		}
+        public static void closeAllLabel(this Robot robot,string label="")
+        {
+            foreach (Position position in robot.Positions.FindAll(label))
+                robot.closePosition(position);
+        }
 		
 		public static void closeAllPositions(this Robot robot, TradeType tradeType, string label = "")
 		{

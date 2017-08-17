@@ -38,10 +38,10 @@ namespace cAlgo
             initBuyEur = new OrderParams(TradeType.Buy, Symbol, Init_Volume, MaAbove, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initBuyGbp = new OrderParams(TradeType.Buy, Symbol, Init_Volume, MaBelow, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initBuyGbp = new OrderParams(TradeType.Buy, symbol, Init_Volume, MaBelow, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initSellEur = new OrderParams(TradeType.Sell, symbol, Init_Volume, MaBelow, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initSellEur = new OrderParams(TradeType.Sell, Symbol, Init_Volume, MaBelow, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
             initSellGbp = new OrderParams(TradeType.Sell, symbol, Init_Volume, MaAbove, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
@@ -65,11 +65,11 @@ namespace cAlgo
             {
                 if (ees.singnalS() == "closebuy")
                 {
-                    this.closeAllPositions(MaAbove);
+                    this.closeAllLabel(MaAbove);
                 }
                 if (ees.singnalS() == "closesell")
                 {
-                    this.closeAllPositions(MaBelow);
+                    this.closeAllLabel(MaBelow);
                 }
             }
         }
