@@ -1,13 +1,11 @@
-﻿using System;
-using cAlgo.API;
+﻿using cAlgo.API;
 using cAlgo.API.Internals;
-using cAlgo.API.Indicators;
-using cAlgo.Indicators;
+using cAlgo.Lib;
 
 namespace cAlgo
 {
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
-    public class _EE : Indicator
+    public class MultiCurrency : Indicator
     {
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
@@ -15,10 +13,10 @@ namespace cAlgo
         [Parameter(DefaultValue = "GBPUSD")]
         public string Symbol2 { get; set; }
 
-        [Output("Main")]
+        [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
 
-        [Output("Average")]
+        [Output("Average", Color = Colors.Snow)]
         public IndicatorDataSeries Average { get; set; }
 
         private MarketSeries _symbol2Series;
@@ -30,9 +28,9 @@ namespace cAlgo
 
         public override void Calculate(int index)
         {
-            var totalbar = MarketSeries.Close.Count;
-            var sin = totalbar - index - 1;
-            Result[index] = (_symbol2Series.Close.Last(sin) - MarketSeries.Close[index]) / Symbol.PipSize;
+            int totalbar = MarketSeries.Bars();
+            int index2 = totalbar - index - 1;
+            Result[index] = (_symbol2Series.Close.Last(index2) - MarketSeries.Close[index]) / Symbol.PipSize;
             double totalR = 0;
             for (var i = index; i > index - Period; i--)
                 totalR += Result[i];

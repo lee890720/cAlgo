@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("_EE")]
+[assembly: AssemblyTitle("ArbitrageHedge v1.1")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("_EE")]
+[assembly: AssemblyProduct("ArbitrageHedge v1.1")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

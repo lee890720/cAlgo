@@ -4,7 +4,7 @@ using cAlgo.API.Indicators;
 
 namespace cAlgo.Indicators
 {
-    [Indicator(IsOverlay = true, AccessRights = AccessRights.None)]
+    [Indicator(IsOverlay = false, AccessRights = AccessRights.None)]
     public class RealMarketTime : Indicator
     {
 

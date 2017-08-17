@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C960C18F-5831-4C0D-8B4A-B4EC08E94D82}</ProjectGuid>
+    <ProjectGuid>{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>_EEBot</AssemblyName>
+    <AssemblyName>ArbitrageHedge v1.0</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -35,9 +35,6 @@
     <Reference Include="cAlgo.Lib">
       <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
     </Reference>
-    <Reference Include="EEStrategy">
-      <HintPath>..\..\..\Strategies\EEStrategy\EEStrategy\bin\Debug\EEStrategy.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,13 +45,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
     </Reference>
-    <Reference Include="_EE">
-      <HintPath>..\..\..\Indicators\_EE\_EE\bin\Debug\_EE.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="_EEBot.cs" />
+    <Compile Include="ArbitrageHedge v1.0.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Indicators\MultiCurrency\MultiCurrency\MultiCurrency.csproj">
+      <Project>{dc5a2bb9-cd60-411f-921e-7fa26730fc14}</Project>
+      <Name>MultiCurrency</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

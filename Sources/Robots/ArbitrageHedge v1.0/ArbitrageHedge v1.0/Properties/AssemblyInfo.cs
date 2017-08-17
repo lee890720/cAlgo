@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("_EEBot")]
+[assembly: AssemblyTitle("ArbitrageHedge v1.0")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("_EEBot")]
+[assembly: AssemblyProduct("ArbitrageHedge v1.0")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
