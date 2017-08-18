@@ -149,3 +149,40 @@
 2017.08.17 08:08:21.149 | Request to Sell £ 1k GBPUSD (Price: 1.28873, MR: 2) is sent to server
 2017.08.17 08:08:21.727 | → Request to Sell £ 1k GBPUSD (Price: 1.28873, MR: 2) is ACCEPTED, order OID54493935 created (17/08/2017 08:08:21.456 UTC+0)
 2017.08.17 08:08:22.008 | → Order OID54493935 is FILLED at 1.28873, position PID35319717 (17/08/2017 08:08:21.677 UTC+0)
+2017.08.17 09:32:50.505 | cAlgo started
+2017.08.17 09:41:06.328 | Request to Buy € 1k EURUSD (Price: 1.17269, MR: 2) is sent to server
+2017.08.17 09:41:07.125 | → Request to Buy € 1k EURUSD (Price: 1.17269, MR: 2) is ACCEPTED, order OID54500899 created (17/08/2017 09:41:06.732 UTC+0)
+2017.08.17 09:41:07.360 | → Order OID54500899 is FILLED at 1.17269, position PID35323520 (17/08/2017 09:41:06.957 UTC+0)
+2017.08.17 09:41:07.422 | Request to Sell £ 1k GBPUSD (Price: 1.28872, MR: 2) is sent to server
+2017.08.17 09:41:07.985 | → Request to Sell £ 1k GBPUSD (Price: 1.28872, MR: 2) is ACCEPTED, order OID54500900 created (17/08/2017 09:41:07.725 UTC+0)
+2017.08.17 09:41:08.250 | → Order OID54500900 is FILLED at 1.28872, position PID35323521 (17/08/2017 09:41:07.961 UTC+0)
+2017.08.17 10:42:44.015 | Request to Buy € 1k EURUSD (Price: 1.16966, MR: 2) is sent to server
+2017.08.17 10:42:44.577 | → Request to Buy € 1k EURUSD (Price: 1.16966, MR: 2) is ACCEPTED, order OID54505230 created (17/08/2017 10:42:44.314 UTC+0)
+2017.08.17 10:42:44.859 | → Order OID54505230 is FILLED at 1.16966, position PID35325656 (17/08/2017 10:42:44.593 UTC+0)
+2017.08.17 10:42:44.937 | Request to Sell £ 1k GBPUSD (Price: 1.28615, MR: 2) is sent to server
+2017.08.17 10:42:45.499 | → Request to Sell £ 1k GBPUSD (Price: 1.28615, MR: 2) is ACCEPTED, order OID54505232 created (17/08/2017 10:42:45.236 UTC+0)
+2017.08.17 10:42:45.734 | → Order OID54505232 is FILLED at 1.28613, position PID35325658 (17/08/2017 10:42:45.460 UTC+0)
+2017.08.17 11:23:57.491 | Request to close position PID35321176 is sent to server
+2017.08.17 11:23:57.491 | Request to close position PID35321179 is sent to server
+2017.08.17 11:23:57.507 | Request to close position PID35323520 is sent to server
+2017.08.17 11:23:57.507 | Request to close position PID35323521 is sent to server
+2017.08.17 11:23:57.507 | Request to close position PID35325656 is sent to server
+2017.08.17 11:23:57.522 | Request to close position PID35325658 is sent to server
+2017.08.17 11:23:58.194 | → Request to close position PID35321176 is ACCEPTED, order OID54508108 created (17/08/2017 11:23:57.858 UTC+0)
+2017.08.17 11:23:58.335 | → Request to close position PID35321179 is ACCEPTED, order OID54508109 created (17/08/2017 11:23:58.059 UTC+0)
+2017.08.17 11:23:58.350 | → Request to close position PID35323520 is ACCEPTED, order OID54508110 created (17/08/2017 11:23:58.059 UTC+0)
+2017.08.17 11:23:58.475 | → Request to close position PID35323521 is ACCEPTED, order OID54508111 created (17/08/2017 11:23:58.060 UTC+0)
+2017.08.17 11:23:58.491 | → Request to close position PID35325656 is ACCEPTED, order OID54508112 created (17/08/2017 11:23:58.060 UTC+0)
+2017.08.17 11:23:58.491 | → Request to close position PID35325658 is ACCEPTED, order OID54508113 created (17/08/2017 11:23:58.060 UTC+0)
+2017.08.17 11:23:58.694 | → Order OID54508108 is FILLED at 1.16943, position PID35321176 closed (17/08/2017 11:23:58.087 UTC+0)
+2017.08.17 11:23:58.819 | → Order OID54508109 is FILLED at 1.28656, position PID35321179 closed (17/08/2017 11:23:58.273 UTC+0)
+2017.08.17 11:23:58.835 | → Order OID54508113 is FILLED at 1.28656, position PID35325658 closed (17/08/2017 11:23:58.286 UTC+0)
+2017.08.17 11:23:58.913 | → Order OID54508110 is FILLED at 1.16944, position PID35323520 closed (17/08/2017 11:23:58.324 UTC+0)
+2017.08.17 11:23:58.960 | → Order OID54508111 is FILLED at 1.28656, position PID35323521 closed (17/08/2017 11:23:58.325 UTC+0)
+2017.08.17 11:23:59.022 | → Order OID54508112 is FILLED at 1.16943, position PID35325656 closed (17/08/2017 11:23:58.354 UTC+0)
+2017.08.17 11:24:10.663 | Request to Buy € 1k EURUSD (Price: 1.16948, MR: 2) is sent to server
+2017.08.17 11:24:11.225 | → Request to Buy € 1k EURUSD (Price: 1.16948, MR: 2) is ACCEPTED, order OID54508173 created (17/08/2017 11:24:10.951 UTC+0)
+2017.08.17 11:24:11.522 | → Order OID54508173 is FILLED at 1.16948, position PID35327220 (17/08/2017 11:24:11.231 UTC+0)
+2017.08.17 11:24:11.600 | Request to Sell £ 1k GBPUSD (Price: 1.28654, MR: 2) is sent to server
+2017.08.17 11:24:12.178 | → Request to Sell £ 1k GBPUSD (Price: 1.28654, MR: 2) is ACCEPTED, order OID54508179 created (17/08/2017 11:24:11.891 UTC+0)
+2017.08.17 11:24:12.460 | → Order OID54508179 is FILLED at 1.28654, position PID35327224 (17/08/2017 11:24:12.176 UTC+0)

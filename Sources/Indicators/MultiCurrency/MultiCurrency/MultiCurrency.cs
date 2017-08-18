@@ -16,7 +16,7 @@ namespace cAlgo
         [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
 
-        [Output("Average", Color = Colors.Snow)]
+        [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
         private MarketSeries _symbol2Series;

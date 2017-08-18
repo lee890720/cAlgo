@@ -9,6 +9,5 @@ C:\Users\lee-lenovo\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.Lib
 C:\Users\lee-lenovo\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.Lib.pdb
 C:\Users\lee-lenovo\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.API.dll
 C:\Users\lee-lenovo\Documents\cAlgo\Sources\Library\cAlgoLib\bin\Debug\cAlgo.API.xml
-C:\Users\lee-lenovo\Documents\cAlgo\Sources\Library\cAlgoLib\obj\Debug\cAlgo.Lib.csprojResolveAssemblyReference.cache
 C:\Users\lee-lenovo\Documents\cAlgo\Sources\Library\cAlgoLib\obj\Debug\cAlgo.Lib.dll
 C:\Users\lee-lenovo\Documents\cAlgo\Sources\Library\cAlgoLib\obj\Debug\cAlgo.Lib.pdb
