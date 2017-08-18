@@ -1,6 +1,7 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
 using cAlgo.Lib;
+using System;
 
 namespace cAlgo
 {
@@ -28,13 +29,15 @@ namespace cAlgo
 
         public override void Calculate(int index)
         {
-            int totalbar = MarketSeries.Bars();
-            int index2 = totalbar - index - 1;
-            Result[index] = (_symbol2Series.Close.Last(index2) - MarketSeries.Close[index]) / Symbol.PipSize;
-            double totalR = 0;
-            for (var i = index; i > index - Period; i--)
-                totalR += Result[i];
-            Average[index] = totalR / Period;
+            DateTime SymbolTime = MarketSeries.OpenTime[index];
+            int index2 = _symbol2Series.GetIndexByDate(SymbolTime);
+            Result[index] = (_symbol2Series.Close[index2] - MarketSeries.Close[index]) / Symbol.PipSize;
+            double sum = 0.0;
+            for (int i = index - Period + 1; i <= index; i++)
+            {
+                sum += Result[i];
+            }
+            Average[index] = sum / Period;
         }
     }
 }

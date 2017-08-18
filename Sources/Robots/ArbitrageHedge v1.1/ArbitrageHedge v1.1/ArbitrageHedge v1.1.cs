@@ -83,16 +83,16 @@ namespace cAlgo
             List<Position> MaBelowPos = new List<Position>(this.GetPositions(MaBelow));
             double aboveaverage = 0;
             double belowaverage = 0;
-            if(MaAbovePos.Count!=0)
+            if (MaAbovePos.Count != 0)
             {
                 double totalCom = 0;
-                foreach(var pos in MaAbovePos)
+                foreach (var pos in MaAbovePos)
                 {
                     totalCom += Convert.ToDouble(pos.Comment);
                 }
-                aboveaverage=totalCom/MaAbovePos.Count;
+                aboveaverage = totalCom / MaAbovePos.Count;
             }
-            if(MaBelowPos.Count!=0)
+            if (MaBelowPos.Count != 0)
             {
                 double totalCom = 0;
                 foreach (var pos in MaBelowPos)
