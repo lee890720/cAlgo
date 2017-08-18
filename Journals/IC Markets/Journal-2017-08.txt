@@ -200,3 +200,8 @@
 2017.08.18 01:44:25.874 | → Order OID54559363 is FILLED at 1.17302, position PID35358362 closed (18/08/2017 01:44:24.568 UTC+0)
 2017.08.18 01:44:25.952 | → Order OID54559367 is FILLED at 1.28762, position PID35358366 closed (18/08/2017 01:44:24.766 UTC+0)
 2017.08.18 01:44:56.421 | cAlgo started
+2017.08.18 14:21:04.740 | cAlgo started
+2017.08.18 15:55:45.819 | cAlgo started
+2017.08.18 15:57:37.110 | cAlgo started
+2017.08.18 15:58:33.176 | cAlgo started
+2017.08.18 16:44:18.282 | cAlgo started
