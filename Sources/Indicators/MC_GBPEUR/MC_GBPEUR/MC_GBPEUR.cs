@@ -26,18 +26,10 @@ namespace cAlgo
 
         public override void Calculate(int index)
         {
-            DateTime BigSymbolTime = _symbolbigSeries.OpenTime[index];
-            DateTime SmallSymbolTime = _symbolsmallSeries.OpenTime[index];
-            int BigIndex = _symbolbigSeries.GetIndexByDate(SmallSymbolTime);
-            int SmallIndex = _symbolsmallSeries.GetIndexByDate(BigSymbolTime);
-            if (Symbol.Code == BigSymbol)
-            {
-                Result[index] = (_symbolbigSeries.Close[index] - _symbolsmallSeries.Close[SmallIndex]) / 0.0001;
-            }
-            if (Symbol.Code == SmallSymbol)
-            {
-                Result[index] = (_symbolbigSeries.Close[BigIndex] - _symbolsmallSeries.Close[index]) / 0.0001;
-            }
+            DateTime SymbolTime = MarketSeries.OpenTime[index];
+            int BigIndex = _symbolbigSeries.GetIndexByDate(SymbolTime);
+            int SmallIndex = _symbolsmallSeries.GetIndexByDate(SymbolTime);
+            Result[index] = (_symbolbigSeries.Close[BigIndex] - _symbolsmallSeries.Close[SmallIndex]) / 0.0001;
             double sum = 0.0;
             for (int i = index - Period + 1; i <= index; i++)
             {

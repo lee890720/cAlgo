@@ -207,3 +207,5 @@
 2017.08.18 16:44:18.282 | cAlgo started
 2017.08.21 09:46:49.904 | cAlgo started
 2017.08.22 01:13:45.176 | cAlgo started
+2017.08.22 02:16:59.447 | cAlgo started
+2017.08.22 04:33:11.307 | cAlgo started
