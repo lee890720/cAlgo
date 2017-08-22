@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7A611B24-22F6-4E20-AF96-E85C501C5108}</ProjectGuid>
+    <ProjectGuid>{DC5A2BB9-CD60-411F-921E-7FA26730FC14}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>ZigZagIndicator</AssemblyName>
+    <AssemblyName>MC_EURCHF</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cAlgo.API">
-      <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
+    <Reference Include="cAlgo.Lib">
+      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,23 +41,14 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="cAlgo.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3499da3018340880, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ZigZagIndicator.cs" />
+    <Compile Include="MC_EURCHF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Library\cAlgoLib\cAlgo.Lib.csproj">
-      <Project>{d3e50b06-5578-42a2-addd-42f25d5a1f4c}</Project>
-      <Name>cAlgo.Lib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Library\MQ4Lib\cAlgo.MQ4.csproj">
-      <Project>{747044e7-4e4b-458b-94c3-3b8a9797b1a5}</Project>
-      <Name>cAlgo.MQ4</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

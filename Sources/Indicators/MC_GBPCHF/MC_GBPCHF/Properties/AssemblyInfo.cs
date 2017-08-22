@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ZigZagIndicator")]
+[assembly: AssemblyTitle("MC_GBPCHF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("ZigZagIndicator")]
+[assembly: AssemblyProduct("MC_GBPCHF")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

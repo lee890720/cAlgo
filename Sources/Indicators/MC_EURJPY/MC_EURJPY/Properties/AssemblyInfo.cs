@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("MC_EURGBP")]
+[assembly: AssemblyTitle("MC_EURJPY")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("MC_EURGBP")]
+[assembly: AssemblyProduct("MC_EURJPY")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
