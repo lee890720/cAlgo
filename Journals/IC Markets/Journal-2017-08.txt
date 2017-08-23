@@ -209,3 +209,246 @@
 2017.08.22 01:13:45.176 | cAlgo started
 2017.08.22 02:16:59.447 | cAlgo started
 2017.08.22 04:33:11.307 | cAlgo started
+2017.08.22 06:40:14.430 | cAlgo started
+2017.08.22 09:26:28.794 | cAlgo started
+2017.08.22 23:06:37.395 | cAlgo started
+2017.08.23 00:16:34.527 | Request to Buy £ 1k GBPUSD (Price: 1.28158, MR: 2) is sent to server
+2017.08.23 00:16:35.215 | → Request to Buy £ 1k GBPUSD (Price: 1.28158, MR: 2) is ACCEPTED, order OID54776250 created (23/08/2017 00:16:34.826 UTC+0)
+2017.08.23 00:16:35.402 | → Order OID54776250 is FILLED at 1.28156, position PID35479529 (23/08/2017 00:16:35.056 UTC+0)
+2017.08.23 00:16:35.434 | Request to Sell € 1k EURUSD (Price: 1.17540, MR: 2) is sent to server
+2017.08.23 00:16:35.856 | → Request to Sell € 1k EURUSD (Price: 1.17540, MR: 2) is ACCEPTED, order OID54776252 created (23/08/2017 00:16:35.644 UTC+0)
+2017.08.23 00:16:36.137 | → Order OID54776252 is FILLED at 1.17540, position PID35479531 (23/08/2017 00:16:35.874 UTC+0)
+2017.08.23 00:16:36.168 | Request to Sell $ 1k USDCHF (Price: 0.96914, MR: 2) is sent to server
+2017.08.23 00:16:36.590 | → Request to Sell $ 1k USDCHF (Price: 0.96914, MR: 2) is ACCEPTED, order OID54776254 created (23/08/2017 00:16:36.377 UTC+0)
+2017.08.23 00:16:36.840 | → Order OID54776254 is FILLED at 0.96914, position PID35479532 (23/08/2017 00:16:36.619 UTC+0)
+2017.08.23 00:16:36.856 | Request to Sell € 1k EURUSD (Price: 1.17540, MR: 2) is sent to server
+2017.08.23 00:16:37.371 | → Request to Sell € 1k EURUSD (Price: 1.17540, MR: 2) is ACCEPTED, order OID54776256 created (23/08/2017 00:16:37.157 UTC+0)
+2017.08.23 00:16:37.668 | → Order OID54776256 is FILLED at 1.17540, position PID35479534 (23/08/2017 00:16:37.441 UTC+0)
+2017.08.23 00:24:16.199 | Request to close position PID35479529 is sent to server
+2017.08.23 00:24:16.215 | Request to close position PID35479531 is sent to server
+2017.08.23 00:24:16.215 | Request to close position PID35479532 is sent to server
+2017.08.23 00:24:16.215 | Request to close position PID35479534 is sent to server
+2017.08.23 00:24:16.715 | → Request to close position PID35479529 is ACCEPTED, order OID54776815 created (23/08/2017 00:24:16.487 UTC+0)
+2017.08.23 00:24:16.809 | → Request to close position PID35479531 is ACCEPTED, order OID54776816 created (23/08/2017 00:24:16.592 UTC+0)
+2017.08.23 00:24:16.809 | → Request to close position PID35479532 is ACCEPTED, order OID54776817 created (23/08/2017 00:24:16.593 UTC+0)
+2017.08.23 00:24:16.824 | → Request to close position PID35479534 is ACCEPTED, order OID54776818 created (23/08/2017 00:24:16.593 UTC+0)
+2017.08.23 00:24:17.059 | → Order OID54776815 is FILLED at 1.28131, position PID35479529 closed (23/08/2017 00:24:16.768 UTC+0)
+2017.08.23 00:24:17.168 | → Order OID54776816 is FILLED at 1.17543, position PID35479531 closed (23/08/2017 00:24:16.823 UTC+0)
+2017.08.23 00:24:17.215 | → Order OID54776817 is FILLED at 0.96912, position PID35479532 closed (23/08/2017 00:24:16.845 UTC+0)
+2017.08.23 00:24:17.246 | → Order OID54776818 is FILLED at 1.17543, position PID35479534 closed (23/08/2017 00:24:16.856 UTC+0)
+2017.08.23 00:24:32.793 | Request to Buy £ 1k GBPUSD (Price: 1.28135, MR: 2) is sent to server
+2017.08.23 00:24:33.215 | → Request to Buy £ 1k GBPUSD (Price: 1.28135, MR: 2) is ACCEPTED, order OID54776904 created (23/08/2017 00:24:33.022 UTC+0)
+2017.08.23 00:24:33.496 | → Order OID54776904 is FILLED at 1.28139, position PID35479851 (23/08/2017 00:24:33.283 UTC+0)
+2017.08.23 00:24:33.543 | Request to Sell € 1k EURUSD (Price: 1.17541, MR: 2) is sent to server
+2017.08.23 00:24:33.981 | → Request to Sell € 1k EURUSD (Price: 1.17541, MR: 2) is ACCEPTED, order OID54776907 created (23/08/2017 00:24:33.776 UTC+0)
+2017.08.23 00:24:34.184 | → Order OID54776907 is FILLED at 1.17541, position PID35479853 (23/08/2017 00:24:33.978 UTC+0)
+2017.08.23 00:24:34.246 | Request to Sell $ 1k USDCHF (Price: 0.96904, MR: 2) is sent to server
+2017.08.23 00:24:34.668 | → Request to Sell $ 1k USDCHF (Price: 0.96904, MR: 2) is ACCEPTED, order OID54776908 created (23/08/2017 00:24:34.472 UTC+0)
+2017.08.23 00:24:34.902 | → Order OID54776908 is FILLED at 0.96904, position PID35479854 (23/08/2017 00:24:34.695 UTC+0)
+2017.08.23 00:24:34.965 | Request to Sell € 1k EURUSD (Price: 1.17541, MR: 2) is sent to server
+2017.08.23 00:24:35.387 | → Request to Sell € 1k EURUSD (Price: 1.17541, MR: 2) is ACCEPTED, order OID54776909 created (23/08/2017 00:24:35.192 UTC+0)
+2017.08.23 00:24:35.699 | → Order OID54776909 is FILLED at 1.17541, position PID35479855 (23/08/2017 00:24:35.491 UTC+0)
+2017.08.23 00:38:07.859 | Request to close position PID35479851 is sent to server
+2017.08.23 00:38:07.859 | Request to close position PID35479853 is sent to server
+2017.08.23 00:38:07.859 | Request to close position PID35479854 is sent to server
+2017.08.23 00:38:07.874 | Request to close position PID35479855 is sent to server
+2017.08.23 00:38:08.296 | → Request to close position PID35479851 is ACCEPTED, order OID54777370 created (23/08/2017 00:38:08.112 UTC+0)
+2017.08.23 00:38:08.452 | → Request to close position PID35479853 is ACCEPTED, order OID54777371 created (23/08/2017 00:38:08.256 UTC+0)
+2017.08.23 00:38:08.452 | → Request to close position PID35479854 is ACCEPTED, order OID54777372 created (23/08/2017 00:38:08.256 UTC+0)
+2017.08.23 00:38:08.484 | → Request to close position PID35479855 is ACCEPTED, order OID54777373 created (23/08/2017 00:38:08.256 UTC+0)
+2017.08.23 00:38:08.577 | → Order OID54777370 is FILLED at 1.28129, position PID35479851 closed (23/08/2017 00:38:08.374 UTC+0)
+2017.08.23 00:38:08.702 | → Order OID54777372 is FILLED at 0.96921, position PID35479854 closed (23/08/2017 00:38:08.496 UTC+0)
+2017.08.23 00:38:08.749 | → Order OID54777371 is FILLED at 1.17529, position PID35479853 closed (23/08/2017 00:38:08.511 UTC+0)
+2017.08.23 00:38:08.780 | → Order OID54777373 is FILLED at 1.17529, position PID35479855 closed (23/08/2017 00:38:08.527 UTC+0)
+2017.08.23 00:38:34.312 | Request to Buy £ 1k GBPUSD (Price: 1.28135, MR: 2) is sent to server
+2017.08.23 00:38:34.749 | → Request to Buy £ 1k GBPUSD (Price: 1.28135, MR: 2) is ACCEPTED, order OID54777376 created (23/08/2017 00:38:34.577 UTC+0)
+2017.08.23 00:38:35.062 | → Order OID54777376 is FILLED at 1.28135, position PID35480105 (23/08/2017 00:38:34.878 UTC+0)
+2017.08.23 00:38:35.109 | Request to Sell € 1k EURUSD (Price: 1.17524, MR: 2) is sent to server
+2017.08.23 00:38:35.530 | → Request to Sell € 1k EURUSD (Price: 1.17524, MR: 2) is ACCEPTED, order OID54777377 created (23/08/2017 00:38:35.364 UTC+0)
+2017.08.23 00:38:35.796 | → Order OID54777377 is FILLED at 1.17524, position PID35480106 (23/08/2017 00:38:35.611 UTC+0)
+2017.08.23 00:38:35.827 | Request to Sell $ 1k USDCHF (Price: 0.96916, MR: 2) is sent to server
+2017.08.23 00:38:36.249 | → Request to Sell $ 1k USDCHF (Price: 0.96916, MR: 2) is ACCEPTED, order OID54777378 created (23/08/2017 00:38:36.086 UTC+0)
+2017.08.23 00:38:36.515 | → Order OID54777378 is FILLED at 0.96916, position PID35480107 (23/08/2017 00:38:36.339 UTC+0)
+2017.08.23 00:38:36.562 | Request to Sell € 1k EURUSD (Price: 1.17524, MR: 2) is sent to server
+2017.08.23 00:38:36.984 | → Request to Sell € 1k EURUSD (Price: 1.17524, MR: 2) is ACCEPTED, order OID54777379 created (23/08/2017 00:38:36.811 UTC+0)
+2017.08.23 00:38:37.280 | → Order OID54777379 is FILLED at 1.17524, position PID35480108 (23/08/2017 00:38:37.100 UTC+0)
+2017.08.23 00:46:27.147 | Request to close position PID35480105 is sent to server
+2017.08.23 00:46:27.163 | Request to close position PID35480106 is sent to server
+2017.08.23 00:46:27.163 | Request to close position PID35480107 is sent to server
+2017.08.23 00:46:27.163 | Request to close position PID35480108 is sent to server
+2017.08.23 00:46:27.584 | → Request to close position PID35480105 is ACCEPTED, order OID54777523 created (23/08/2017 00:46:27.373 UTC+0)
+2017.08.23 00:46:27.741 | → Request to close position PID35480106 is ACCEPTED, order OID54777524 created (23/08/2017 00:46:27.519 UTC+0)
+2017.08.23 00:46:27.741 | → Request to close position PID35480107 is ACCEPTED, order OID54777525 created (23/08/2017 00:46:27.519 UTC+0)
+2017.08.23 00:46:27.741 | → Request to close position PID35480108 is ACCEPTED, order OID54777526 created (23/08/2017 00:46:27.519 UTC+0)
+2017.08.23 00:46:27.897 | → Order OID54777523 is FILLED at 1.28166, position PID35480105 closed (23/08/2017 00:46:27.651 UTC+0)
+2017.08.23 00:46:27.975 | → Order OID54777526 is FILLED at 1.17537, position PID35480108 closed (23/08/2017 00:46:27.722 UTC+0)
+2017.08.23 00:46:28.006 | → Order OID54777524 is FILLED at 1.17537, position PID35480106 closed (23/08/2017 00:46:27.738 UTC+0)
+2017.08.23 00:46:28.038 | → Order OID54777525 is FILLED at 0.96913, position PID35480107 closed (23/08/2017 00:46:27.771 UTC+0)
+2017.08.23 00:47:29.084 | Request to Buy £ 1k GBPUSD (Price: 1.28169, MR: 2) is sent to server
+2017.08.23 00:47:29.506 | → Request to Buy £ 1k GBPUSD (Price: 1.28169, MR: 2) is ACCEPTED, order OID54777573 created (23/08/2017 00:47:29.305 UTC+0)
+2017.08.23 00:47:29.756 | → Order OID54777573 is FILLED at 1.28171, position PID35480253 (23/08/2017 00:47:29.544 UTC+0)
+2017.08.23 00:47:29.772 | Request to Sell € 1k EURUSD (Price: 1.17535, MR: 2) is sent to server
+2017.08.23 00:47:30.194 | → Request to Sell € 1k EURUSD (Price: 1.17535, MR: 2) is ACCEPTED, order OID54777574 created (23/08/2017 00:47:29.993 UTC+0)
+2017.08.23 00:47:30.491 | → Order OID54777574 is FILLED at 1.17535, position PID35480254 (23/08/2017 00:47:30.280 UTC+0)
+2017.08.23 00:47:30.522 | Request to Sell $ 1k USDCHF (Price: 0.96919, MR: 2) is sent to server
+2017.08.23 00:47:30.959 | → Request to Sell $ 1k USDCHF (Price: 0.96919, MR: 2) is ACCEPTED, order OID54777575 created (23/08/2017 00:47:30.747 UTC+0)
+2017.08.23 00:47:31.178 | → Order OID54777575 is FILLED at 0.96919, position PID35480255 (23/08/2017 00:47:30.969 UTC+0)
+2017.08.23 00:47:31.209 | Request to Sell € 1k EURUSD (Price: 1.17534, MR: 2) is sent to server
+2017.08.23 00:47:31.647 | → Request to Sell € 1k EURUSD (Price: 1.17534, MR: 2) is ACCEPTED, order OID54777576 created (23/08/2017 00:47:31.428 UTC+0)
+2017.08.23 00:47:31.928 | → Order OID54777576 is FILLED at 1.17535, position PID35480256 (23/08/2017 00:47:31.723 UTC+0)
+2017.08.23 00:57:32.583 | Request to close position PID35480253 is sent to server
+2017.08.23 00:57:32.583 | Request to close position PID35480254 is sent to server
+2017.08.23 00:57:32.599 | Request to close position PID35480255 is sent to server
+2017.08.23 00:57:32.599 | Request to close position PID35480256 is sent to server
+2017.08.23 00:57:33.021 | → Request to close position PID35480253 is ACCEPTED, order OID54777887 created (23/08/2017 00:57:32.793 UTC+0)
+2017.08.23 00:57:33.161 | → Request to close position PID35480254 is ACCEPTED, order OID54777888 created (23/08/2017 00:57:32.941 UTC+0)
+2017.08.23 00:57:33.177 | → Request to close position PID35480255 is ACCEPTED, order OID54777889 created (23/08/2017 00:57:32.941 UTC+0)
+2017.08.23 00:57:33.177 | → Request to close position PID35480256 is ACCEPTED, order OID54777890 created (23/08/2017 00:57:32.941 UTC+0)
+2017.08.23 00:57:33.286 | → Order OID54777887 is FILLED at 1.28124, position PID35480253 closed (23/08/2017 00:57:33.038 UTC+0)
+2017.08.23 00:57:33.380 | → Order OID54777888 is FILLED at 1.17511, position PID35480254 closed (23/08/2017 00:57:33.148 UTC+0)
+2017.08.23 00:57:33.443 | → Order OID54777890 is FILLED at 1.17511, position PID35480256 closed (23/08/2017 00:57:33.169 UTC+0)
+2017.08.23 00:57:33.474 | → Order OID54777889 is FILLED at 0.96935, position PID35480255 closed (23/08/2017 00:57:33.176 UTC+0)
+2017.08.23 00:57:55.208 | Request to Buy £ 1k GBPUSD (Price: 1.28124, MR: 2) is sent to server
+2017.08.23 00:57:55.630 | → Request to Buy £ 1k GBPUSD (Price: 1.28124, MR: 2) is ACCEPTED, order OID54777916 created (23/08/2017 00:57:55.419 UTC+0)
+2017.08.23 00:57:55.911 | → Order OID54777916 is FILLED at 1.28124, position PID35480489 (23/08/2017 00:57:55.683 UTC+0)
+2017.08.23 00:57:55.927 | Request to Sell € 1k EURUSD (Price: 1.17504, MR: 2) is sent to server
+2017.08.23 00:57:56.364 | → Request to Sell € 1k EURUSD (Price: 1.17504, MR: 2) is ACCEPTED, order OID54777917 created (23/08/2017 00:57:56.139 UTC+0)
+2017.08.23 00:57:56.614 | → Order OID54777917 is FILLED at 1.17504, position PID35480490 (23/08/2017 00:57:56.379 UTC+0)
+2017.08.23 00:57:56.661 | Request to Sell $ 1k USDCHF (Price: 0.96931, MR: 2) is sent to server
+2017.08.23 00:57:57.083 | → Request to Sell $ 1k USDCHF (Price: 0.96931, MR: 2) is ACCEPTED, order OID54777918 created (23/08/2017 00:57:56.875 UTC+0)
+2017.08.23 00:57:57.411 | → Order OID54777918 is FILLED at 0.96931, position PID35480491 (23/08/2017 00:57:57.159 UTC+0)
+2017.08.23 00:57:57.427 | Request to Sell € 1k EURUSD (Price: 1.17504, MR: 2) is sent to server
+2017.08.23 00:57:57.849 | → Request to Sell € 1k EURUSD (Price: 1.17504, MR: 2) is ACCEPTED, order OID54777919 created (23/08/2017 00:57:57.633 UTC+0)
+2017.08.23 00:57:58.068 | → Order OID54777919 is FILLED at 1.17508, position PID35480492 (23/08/2017 00:57:57.848 UTC+0)
+2017.08.23 01:00:36.771 | Request to close position PID35480489 is sent to server
+2017.08.23 01:00:36.771 | Request to close position PID35480490 is sent to server
+2017.08.23 01:00:36.771 | Request to close position PID35480491 is sent to server
+2017.08.23 01:00:36.771 | Request to close position PID35480492 is sent to server
+2017.08.23 01:00:37.208 | → Request to close position PID35480489 is ACCEPTED, order OID54778082 created (23/08/2017 01:00:36.982 UTC+0)
+2017.08.23 01:00:37.333 | → Request to close position PID35480490 is ACCEPTED, order OID54778083 created (23/08/2017 01:00:37.126 UTC+0)
+2017.08.23 01:00:37.349 | → Request to close position PID35480491 is ACCEPTED, order OID54778084 created (23/08/2017 01:00:37.126 UTC+0)
+2017.08.23 01:00:37.349 | → Request to close position PID35480492 is ACCEPTED, order OID54778085 created (23/08/2017 01:00:37.126 UTC+0)
+2017.08.23 01:00:37.474 | → Order OID54778082 is FILLED at 1.28121, position PID35480489 closed (23/08/2017 01:00:37.245 UTC+0)
+2017.08.23 01:00:37.568 | → Order OID54778085 is FILLED at 1.17496, position PID35480492 closed (23/08/2017 01:00:37.333 UTC+0)
+2017.08.23 01:00:37.630 | → Order OID54778084 is FILLED at 0.96935, position PID35480491 closed (23/08/2017 01:00:37.381 UTC+0)
+2017.08.23 01:00:37.661 | → Order OID54778083 is FILLED at 1.17496, position PID35480490 closed (23/08/2017 01:00:37.392 UTC+0)
+2017.08.23 01:00:59.239 | Request to Buy £ 1k GBPUSD (Price: 1.28120, MR: 2) is sent to server
+2017.08.23 01:00:59.661 | → Request to Buy £ 1k GBPUSD (Price: 1.28120, MR: 2) is ACCEPTED, order OID54778122 created (23/08/2017 01:00:59.453 UTC+0)
+2017.08.23 01:00:59.896 | → Order OID54778122 is FILLED at 1.28119, position PID35480608 (23/08/2017 01:00:59.674 UTC+0)
+2017.08.23 01:00:59.943 | Request to Sell € 1k EURUSD (Price: 1.17480, MR: 2) is sent to server
+2017.08.23 01:01:00.364 | → Request to Sell € 1k EURUSD (Price: 1.17480, MR: 2) is ACCEPTED, order OID54778126 created (23/08/2017 01:01:00.165 UTC+0)
+2017.08.23 01:01:00.646 | → Order OID54778126 is FILLED at 1.17478, position PID35480610 (23/08/2017 01:01:00.437 UTC+0)
+2017.08.23 01:01:00.693 | Request to Sell $ 1k USDCHF (Price: 0.96944, MR: 2) is sent to server
+2017.08.23 01:01:01.130 | → Request to Sell $ 1k USDCHF (Price: 0.96944, MR: 2) is ACCEPTED, order OID54778129 created (23/08/2017 01:01:00.927 UTC+0)
+2017.08.23 01:01:01.396 | → Order OID54778129 is FILLED at 0.96944, position PID35480612 (23/08/2017 01:01:01.186 UTC+0)
+2017.08.23 01:01:01.427 | Request to Sell € 1k EURUSD (Price: 1.17478, MR: 2) is sent to server
+2017.08.23 01:01:01.849 | → Request to Sell € 1k EURUSD (Price: 1.17478, MR: 2) is ACCEPTED, order OID54778132 created (23/08/2017 01:01:01.639 UTC+0)
+2017.08.23 01:01:02.083 | → Order OID54778132 is FILLED at 1.17478, position PID35480614 (23/08/2017 01:01:01.860 UTC+0)
+2017.08.23 01:14:03.270 | Request to close position PID35480608 is sent to server
+2017.08.23 01:14:03.270 | Request to close position PID35480610 is sent to server
+2017.08.23 01:14:03.270 | Request to close position PID35480612 is sent to server
+2017.08.23 01:14:03.270 | Request to close position PID35480614 is sent to server
+2017.08.23 01:14:03.708 | → Request to close position PID35480608 is ACCEPTED, order OID54778547 created (23/08/2017 01:14:03.481 UTC+0)
+2017.08.23 01:14:03.833 | → Request to close position PID35480610 is ACCEPTED, order OID54778549 created (23/08/2017 01:14:03.609 UTC+0)
+2017.08.23 01:14:03.833 | → Request to close position PID35480612 is ACCEPTED, order OID54778550 created (23/08/2017 01:14:03.610 UTC+0)
+2017.08.23 01:14:03.833 | → Request to close position PID35480614 is ACCEPTED, order OID54778551 created (23/08/2017 01:14:03.610 UTC+0)
+2017.08.23 01:14:03.989 | → Order OID54778547 is FILLED at 1.28149, position PID35480608 closed (23/08/2017 01:14:03.742 UTC+0)
+2017.08.23 01:14:04.052 | → Order OID54778550 is FILLED at 0.96966, position PID35480612 closed (23/08/2017 01:14:03.814 UTC+0)
+2017.08.23 01:14:04.114 | → Order OID54778551 is FILLED at 1.17511, position PID35480614 closed (23/08/2017 01:14:03.822 UTC+0)
+2017.08.23 01:14:04.177 | → Order OID54778549 is FILLED at 1.17511, position PID35480610 closed (23/08/2017 01:14:03.844 UTC+0)
+2017.08.23 01:19:50.864 | Request to Buy £ 1k GBPUSD (Price: 1.28150, MR: 2) is sent to server
+2017.08.23 01:19:51.317 | → Request to Buy £ 1k GBPUSD (Price: 1.28150, MR: 2) is ACCEPTED, order OID54778725 created (23/08/2017 01:19:51.102 UTC+0)
+2017.08.23 01:19:51.614 | → Order OID54778725 is FILLED at 1.28150, position PID35480994 (23/08/2017 01:19:51.400 UTC+0)
+2017.08.23 01:19:51.661 | Request to Sell € 1k EURUSD (Price: 1.17509, MR: 2) is sent to server
+2017.08.23 01:19:52.083 | → Request to Sell € 1k EURUSD (Price: 1.17509, MR: 2) is ACCEPTED, order OID54778726 created (23/08/2017 01:19:51.886 UTC+0)
+2017.08.23 01:19:52.395 | → Order OID54778726 is FILLED at 1.17509, position PID35480995 (23/08/2017 01:19:52.166 UTC+0)
+2017.08.23 01:24:03.864 | Request to close position PID35480994 is sent to server
+2017.08.23 01:24:03.880 | Request to close position PID35480995 is sent to server
+2017.08.23 01:24:04.302 | → Request to close position PID35480994 is ACCEPTED, order OID54778808 created (23/08/2017 01:24:04.105 UTC+0)
+2017.08.23 01:24:04.458 | → Request to close position PID35480995 is ACCEPTED, order OID54778809 created (23/08/2017 01:24:04.235 UTC+0)
+2017.08.23 01:24:04.536 | → Order OID54778808 is FILLED at 1.2813, position PID35480994 closed (23/08/2017 01:24:04.313 UTC+0)
+2017.08.23 01:24:04.724 | → Order OID54778809 is FILLED at 1.17512, position PID35480995 closed (23/08/2017 01:24:04.493 UTC+0)
+2017.08.23 01:24:58.802 | Request to Buy £ 1k GBPUSD (Price: 1.28128, MR: 2) is sent to server
+2017.08.23 01:24:59.224 | → Request to Buy £ 1k GBPUSD (Price: 1.28128, MR: 2) is ACCEPTED, order OID54778819 created (23/08/2017 01:24:59.035 UTC+0)
+2017.08.23 01:24:59.458 | → Order OID54778819 is FILLED at 1.28128, position PID35481061 (23/08/2017 01:24:59.260 UTC+0)
+2017.08.23 01:24:59.520 | Request to Sell € 1k EURUSD (Price: 1.17509, MR: 2) is sent to server
+2017.08.23 01:24:59.942 | → Request to Sell € 1k EURUSD (Price: 1.17509, MR: 2) is ACCEPTED, order OID54778820 created (23/08/2017 01:24:59.762 UTC+0)
+2017.08.23 01:25:00.177 | → Order OID54778820 is FILLED at 1.17509, position PID35481062 (23/08/2017 01:24:59.977 UTC+0)
+2017.08.23 01:51:21.947 | Request to close position PID35481061 is sent to server
+2017.08.23 01:51:21.962 | Request to close position PID35481062 is sent to server
+2017.08.23 01:51:22.384 | → Request to close position PID35481061 is ACCEPTED, order OID54779366 created (23/08/2017 01:51:22.179 UTC+0)
+2017.08.23 01:51:22.478 | → Request to close position PID35481062 is ACCEPTED, order OID54779367 created (23/08/2017 01:51:22.269 UTC+0)
+2017.08.23 01:51:22.697 | → Order OID54779366 is FILLED at 1.28127, position PID35481061 closed (23/08/2017 01:51:22.447 UTC+0)
+2017.08.23 01:51:22.759 | → Order OID54779367 is FILLED at 1.17571, position PID35481062 closed (23/08/2017 01:51:22.503 UTC+0)
+2017.08.23 01:51:48.384 | Request to Buy £ 1k GBPUSD (Price: 1.28133, MR: 2) is sent to server
+2017.08.23 01:51:48.806 | → Request to Buy £ 1k GBPUSD (Price: 1.28133, MR: 2) is ACCEPTED, order OID54779376 created (23/08/2017 01:51:48.606 UTC+0)
+2017.08.23 01:51:49.072 | → Order OID54779376 is FILLED at 1.28131, position PID35481433 (23/08/2017 01:51:48.867 UTC+0)
+2017.08.23 01:51:49.087 | Request to Sell € 1k EURUSD (Price: 1.17570, MR: 2) is sent to server
+2017.08.23 01:51:49.525 | → Request to Sell € 1k EURUSD (Price: 1.17570, MR: 2) is ACCEPTED, order OID54779377 created (23/08/2017 01:51:49.323 UTC+0)
+2017.08.23 01:51:49.791 | → Order OID54779377 is FILLED at 1.17570, position PID35481434 (23/08/2017 01:51:49.575 UTC+0)
+2017.08.23 02:02:16.344 | Request to close position PID35432974 is sent to server
+2017.08.23 02:02:16.344 | Request to close position PID35432976 is sent to server
+2017.08.23 02:02:16.344 | Request to close position PID35436519 is sent to server
+2017.08.23 02:02:16.344 | Request to close position PID35436520 is sent to server
+2017.08.23 02:02:16.360 | Request to close position PID35438853 is sent to server
+2017.08.23 02:02:16.360 | Request to close position PID35438854 is sent to server
+2017.08.23 02:02:16.360 | Request to close position PID35440281 is sent to server
+2017.08.23 02:02:16.360 | Request to close position PID35440282 is sent to server
+2017.08.23 02:02:16.360 | Request to close position PID35441356 is sent to server
+2017.08.23 02:02:16.375 | Request to close position PID35441357 is sent to server
+2017.08.23 02:02:16.375 | Request to close position PID35442394 is sent to server
+2017.08.23 02:02:16.375 | Request to close position PID35442395 is sent to server
+2017.08.23 02:02:16.375 | Request to close position PID35443167 is sent to server
+2017.08.23 02:02:16.375 | Request to close position PID35443168 is sent to server
+2017.08.23 02:02:16.375 | Request to close position PID35444387 is sent to server
+2017.08.23 02:02:16.375 | Request to close position PID35444388 is sent to server
+2017.08.23 02:02:16.391 | Request to close position PID35446380 is sent to server
+2017.08.23 02:02:16.391 | Request to close position PID35446381 is sent to server
+2017.08.23 02:02:16.391 | Request to close position PID35447119 is sent to server
+2017.08.23 02:02:16.391 | Request to close position PID35447120 is sent to server
+2017.08.23 02:02:16.766 | → Request to close position PID35432974 is ACCEPTED, order OID54779638 created (23/08/2017 02:02:16.547 UTC+0)
+2017.08.23 02:02:16.813 | → Request to close position PID35432976 is ACCEPTED, order OID54779639 created (23/08/2017 02:02:16.586 UTC+0)
+2017.08.23 02:02:16.813 | → Request to close position PID35436519 is ACCEPTED, order OID54779640 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:16.813 | → Request to close position PID35436520 is ACCEPTED, order OID54779641 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:16.813 | → Request to close position PID35438853 is ACCEPTED, order OID54779642 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:16.813 | → Request to close position PID35438854 is ACCEPTED, order OID54779643 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:16.829 | → Request to close position PID35440281 is ACCEPTED, order OID54779644 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:16.829 | → Request to close position PID35440282 is ACCEPTED, order OID54779645 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:16.844 | → Request to close position PID35441356 is ACCEPTED, order OID54779646 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:16.844 | → Request to close position PID35441357 is ACCEPTED, order OID54779647 created (23/08/2017 02:02:16.587 UTC+0)
+2017.08.23 02:02:17.110 | → Order OID54779647 is FILLED at 1.28141, position PID35441357 closed (23/08/2017 02:02:16.793 UTC+0)
+2017.08.23 02:02:17.204 | → Order OID54779644 is FILLED at 1.17582, position PID35440281 closed (23/08/2017 02:02:16.802 UTC+0)
+2017.08.23 02:02:17.219 | → Order OID54779640 is FILLED at 1.17582, position PID35436519 closed (23/08/2017 02:02:16.815 UTC+0)
+2017.08.23 02:02:17.250 | → Order OID54779642 is FILLED at 1.17582, position PID35438853 closed (23/08/2017 02:02:16.815 UTC+0)
+2017.08.23 02:02:17.250 | → Order OID54779643 is FILLED at 1.28141, position PID35438854 closed (23/08/2017 02:02:16.817 UTC+0)
+2017.08.23 02:02:17.266 | → Order OID54779646 is FILLED at 1.17582, position PID35441356 closed (23/08/2017 02:02:16.823 UTC+0)
+2017.08.23 02:02:17.422 | → Order OID54779638 is FILLED at 1.17582, position PID35432974 closed (23/08/2017 02:02:16.828 UTC+0)
+2017.08.23 02:02:17.422 | → Order OID54779645 is FILLED at 1.28141, position PID35440282 closed (23/08/2017 02:02:16.831 UTC+0)
+2017.08.23 02:02:17.454 | → Order OID54779641 is FILLED at 1.28141, position PID35436520 closed (23/08/2017 02:02:16.849 UTC+0)
+2017.08.23 02:02:17.454 | → Order OID54779639 is FILLED at 1.28141, position PID35432976 closed (23/08/2017 02:02:16.873 UTC+0)
+2017.08.23 02:02:17.485 | → Request to close position PID35442394 is ACCEPTED, order OID54779648 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.485 | → Request to close position PID35442395 is ACCEPTED, order OID54779649 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.485 | → Request to close position PID35443167 is ACCEPTED, order OID54779650 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.485 | → Request to close position PID35443168 is ACCEPTED, order OID54779651 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.485 | → Request to close position PID35444387 is ACCEPTED, order OID54779652 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.500 | → Request to close position PID35444388 is ACCEPTED, order OID54779653 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.500 | → Request to close position PID35446380 is ACCEPTED, order OID54779654 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.500 | → Request to close position PID35446381 is ACCEPTED, order OID54779655 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.500 | → Request to close position PID35447119 is ACCEPTED, order OID54779656 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.500 | → Request to close position PID35447120 is ACCEPTED, order OID54779657 created (23/08/2017 02:02:16.884 UTC+0)
+2017.08.23 02:02:17.579 | → Order OID54779649 is FILLED at 1.28141, position PID35442395 closed (23/08/2017 02:02:17.086 UTC+0)
+2017.08.23 02:02:17.594 | → Order OID54779657 is FILLED at 1.28141, position PID35447120 closed (23/08/2017 02:02:17.093 UTC+0)
+2017.08.23 02:02:17.594 | → Order OID54779653 is FILLED at 1.28141, position PID35444388 closed (23/08/2017 02:02:17.100 UTC+0)
+2017.08.23 02:02:17.610 | → Order OID54779650 is FILLED at 1.17582, position PID35443167 closed (23/08/2017 02:02:17.112 UTC+0)
+2017.08.23 02:02:17.610 | → Order OID54779651 is FILLED at 1.28141, position PID35443168 closed (23/08/2017 02:02:17.116 UTC+0)
+2017.08.23 02:02:17.672 | → Order OID54779648 is FILLED at 1.17582, position PID35442394 closed (23/08/2017 02:02:17.118 UTC+0)
+2017.08.23 02:02:17.688 | → Order OID54779656 is FILLED at 1.17582, position PID35447119 closed (23/08/2017 02:02:17.131 UTC+0)
+2017.08.23 02:02:17.782 | → Order OID54779652 is FILLED at 1.17582, position PID35444387 closed (23/08/2017 02:02:17.137 UTC+0)
+2017.08.23 02:02:17.797 | → Order OID54779655 is FILLED at 1.28141, position PID35446381 closed (23/08/2017 02:02:17.150 UTC+0)
+2017.08.23 02:02:17.844 | → Order OID54779654 is FILLED at 1.17582, position PID35446380 closed (23/08/2017 02:02:17.151 UTC+0)
+2017.08.23 02:02:31.908 | Request to close position PID35481433 is sent to server
+2017.08.23 02:02:31.912 | Request to close position PID35481434 is sent to server
+2017.08.23 02:02:32.340 | → Request to close position PID35481433 is ACCEPTED, order OID54779660 created (23/08/2017 02:02:32.502 UTC+0)
+2017.08.23 02:02:32.429 | → Request to close position PID35481434 is ACCEPTED, order OID54779661 created (23/08/2017 02:02:32.590 UTC+0)
+2017.08.23 02:02:32.587 | → Order OID54779660 is FILLED at 1.28141, position PID35481433 closed (23/08/2017 02:02:32.738 UTC+0)
+2017.08.23 02:02:32.698 | → Order OID54779661 is FILLED at 1.17581, position PID35481434 closed (23/08/2017 02:02:32.841 UTC+0)
