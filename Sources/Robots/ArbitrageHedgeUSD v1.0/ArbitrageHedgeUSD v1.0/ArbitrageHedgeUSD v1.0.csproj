@@ -59,17 +59,17 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Indicators\USD_GBPEUR\USD_GBPEUR\USD_GBPEUR.csproj">
-      <Project>{DC5A2BB9-CD60-411F-921E-7FA26730FC14}</Project>
-      <Name>USD_GBPEUR</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Indicators\USD_EURCHF\USD_EURCHF\USD_EURCHF.csproj">
-      <Project>{DC5A2BB9-CD60-411F-921E-7FA26730FC14}</Project>
+      <Project>{397C5F1C-2A1B-41AD-8642-A8770B8A675C}</Project>
       <Name>USD_EURCHF</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Indicators\USD_GBPCHF\USD_GBPCHF\USD_GBPCHF.csproj">
       <Project>{DC5A2BB9-CD60-411F-921E-7FA26730FC14}</Project>
       <Name>USD_GBPCHF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Indicators\USD_GBPEUR\USD_GBPEUR\USD_GBPEUR.csproj">
+      <Project>{E716A0EF-78B1-4A0E-894D-1FAA37E76281}</Project>
+      <Name>USD_GBPEUR</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

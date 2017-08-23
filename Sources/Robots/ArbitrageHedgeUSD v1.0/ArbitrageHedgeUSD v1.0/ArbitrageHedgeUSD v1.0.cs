@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
@@ -170,7 +171,6 @@ namespace cAlgo
             double eurchf = 0;
             double gbpchf = 0;
             double gbpeur = 0;
-            var now = DateTime.UtcNow;
             var RS_eurchf = usd_eurchf.Result.LastValue;
             var AV_eurchf = usd_eurchf.Average.LastValue;
             var RS_gbpchf = usd_gbpchf.Result.LastValue;
@@ -196,12 +196,7 @@ namespace cAlgo
             Pos_gbpchfbelow.Reverse();
             Pos_gbpeurabove.Reverse();
             Pos_gbpeurbelow.Reverse();
-            double AV_eurchfabove = Distance;
-            double AV_eurchfbelow = -Distance;
-            double AV_gbpchfabove = Distance;
-            double AV_gbpchfbelow = -Distance;
-            double AV_gbpeurabove = Distance;
-            double AV_gbpeurbelow = -Distance;
+            var now = DateTime.UtcNow;
             List<DateTime> lastPosTime = new List<DateTime>();
             if (Pos_eurchfabove.Count != 0)
                 lastPosTime.Add(Pos_eurchfabove[0].EntryTime.AddHours(1));
@@ -216,6 +211,16 @@ namespace cAlgo
             if (Pos_gbpeurbelow.Count != 0)
                 lastPosTime.Add(Pos_gbpeurbelow[0].EntryTime.AddHours(1));
             var Pos_LastTime = lastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-2) : lastPosTime.Max();
+            var distance = Distance;
+            double AV_eurchfabove = distance;
+            double AV_eurchfbelow = -distance;
+            double AV_gbpchfabove = distance;
+            double AV_gbpchfbelow = -distance;
+            double AV_gbpeurabove = distance;
+            double AV_gbpeurbelow = -distance;
+            double AV_above = distance;
+            double AV_below = -distance;
+            List<double> av = new List<double>();
             #endregion
             #region EURCHF
             if (Pos_eurchfabove.Count != 0)
@@ -277,20 +282,31 @@ namespace cAlgo
                 AV_gbpeurbelow = totalCom / Pos_gbpeurbelow.Count;
             }
             #endregion
+            av.AddRange(new double[] 
+            {
+                AV_eurchfabove,
+                Math.Abs(AV_eurchfbelow),
+                AV_gbpchfabove,
+                Math.Abs(AV_gbpchfbelow),
+                AV_gbpeurabove,
+                Math.Abs(AV_gbpeurbelow)
+            });
+            AV_above = av.Max();
+            AV_below = -av.Max();
             #region Signal
             if (DateTime.Compare(Pos_LastTime, now) < 0)
             {
-                if (RS_eurchf > AV_eurchf + AV_eurchfabove)
+                if (RS_eurchf > AV_eurchf + AV_above)
                     eurchfsignal = "SellEURAndSellCHF";
-                if (RS_eurchf < AV_eurchf + AV_eurchfbelow)
+                if (RS_eurchf < AV_eurchf + AV_below)
                     eurchfsignal = "BuyEURAndBuyCHF";
-                if (RS_gbpchf > AV_gbpchf + AV_gbpchfabove)
+                if (RS_gbpchf > AV_gbpchf + AV_above)
                     gbpchfsignal = "SellGBPAndSellCHF";
-                if (RS_gbpchf < AV_gbpchf + AV_gbpchfbelow)
+                if (RS_gbpchf < AV_gbpchf + AV_below)
                     gbpchfsignal = "BuyGBPAndBuyCHF";
-                if (RS_gbpeur > AV_gbpeur + AV_gbpeurabove)
+                if (RS_gbpeur > AV_gbpeur + AV_above)
                     gbpeursignal = "SellGBPAndBuyEUR";
-                if (RS_gbpeur < AV_gbpeur + AV_gbpeurbelow)
+                if (RS_gbpeur < AV_gbpeur + AV_below)
                     gbpeursignal = "BuyGBPAndSellEUR";
             }
             if (eurchfsignal == "BuyEURAndBuyCHF")
