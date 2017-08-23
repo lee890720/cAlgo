@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("USD_EURJPY")]
+[assembly: AssemblyTitle("AUD_EURCHF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("USD_EURJPY")]
+[assembly: AssemblyProduct("AUD_EURCHF")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

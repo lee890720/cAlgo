@@ -6,7 +6,7 @@ using System;
 namespace cAlgo
 {
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
-    public class USD_EURJPY : Indicator
+    public class AUD_GBPEUR : Indicator
     {
         [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
@@ -15,8 +15,8 @@ namespace cAlgo
         public IndicatorDataSeries Average { get; set; }
 
         private int Period = 120;
-        private string BigSymbol = "EURUSD";
-        private string SmallSymbol = "USDJPY";
+        private string BigSymbol = "GBPAUD";
+        private string SmallSymbol = "EURAUD";
         private MarketSeries _symbolbigSeries, _symbolsmallSeries;
         protected override void Initialize()
         {
@@ -29,7 +29,7 @@ namespace cAlgo
             DateTime SymbolTime = MarketSeries.OpenTime[index];
             int BigIndex = _symbolbigSeries.GetIndexByDate(SymbolTime);
             int SmallIndex = _symbolsmallSeries.GetIndexByDate(SymbolTime);
-            Result[index] = (_symbolbigSeries.Close[BigIndex] - 100 / _symbolsmallSeries.Close[SmallIndex]) / 0.0001 + 10000;
+            Result[index] = (_symbolbigSeries.Close[BigIndex] - _symbolsmallSeries.Close[SmallIndex]) / 0.0001 + 10000;
             double sum = 0.0;
             for (int i = index - Period + 1; i <= index; i++)
             {
