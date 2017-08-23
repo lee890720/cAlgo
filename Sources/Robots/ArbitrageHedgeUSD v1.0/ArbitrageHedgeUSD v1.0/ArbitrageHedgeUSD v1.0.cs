@@ -17,6 +17,9 @@ namespace cAlgo
         [Parameter(DefaultValue = 30)]
         public int Distance { get; set; }
 
+        [Parameter(DefaultValue = true)]
+        public bool IsTrade { get; set; }
+
         private Symbol eurSymbol, gbpSymbol, chfSymbol;
         private string eurchfAbove, gbpchfAbove, gbpeurAbove;
         private string eurchfBelow, gbpchfBelow, gbpeurBelow;
@@ -63,93 +66,96 @@ namespace cAlgo
         protected override void OnTick()
         {
             chartdraw();
-            var RS_eurchf = usd_eurchf.Result.LastValue;
-            var AV_eurchf = usd_eurchf.Average.LastValue;
-            var RS_gbpchf = usd_gbpchf.Result.LastValue;
-            var AV_gbpchf = usd_gbpchf.Average.LastValue;
-            var RS_gbpeur = usd_gbpeur.Result.LastValue;
-            var AV_gbpeur = usd_gbpeur.Average.LastValue;
-            List<Position> Pos_eurchfabove = new List<Position>(this.GetPositions(eurchfAbove));
-            List<Position> Pos_eurchfbelow = new List<Position>(this.GetPositions(eurchfBelow));
-            List<Position> Pos_gbpchfabove = new List<Position>(this.GetPositions(gbpchfAbove));
-            List<Position> Pos_gbpchfbelow = new List<Position>(this.GetPositions(gbpchfBelow));
-            List<Position> Pos_gbpeurabove = new List<Position>(this.GetPositions(gbpeurAbove));
-            List<Position> Pos_gbpeurbelow = new List<Position>(this.GetPositions(gbpeurBelow));
-            var Sub_eurchf = Math.Round(RS_eurchf - AV_eurchf).ToString();
-            var Sub_gbpchf = Math.Round(RS_gbpchf - AV_gbpchf).ToString();
-            var Sub_gbpeur = Math.Round(RS_gbpeur - AV_gbpeur).ToString();
-            if (opensignal() == "BuyEURAndBuyCHF")
+            if (IsTrade)
             {
-                initBuyeur.Label = eurchfBelow;
-                initBuychf.Label = eurchfBelow;
-                initBuyeur.Comment = Sub_eurchf;
-                initBuychf.Comment = Sub_eurchf;
-                this.executeOrder(initBuyeur);
-                this.executeOrder(initBuychf);
+                var RS_eurchf = usd_eurchf.Result.LastValue;
+                var AV_eurchf = usd_eurchf.Average.LastValue;
+                var RS_gbpchf = usd_gbpchf.Result.LastValue;
+                var AV_gbpchf = usd_gbpchf.Average.LastValue;
+                var RS_gbpeur = usd_gbpeur.Result.LastValue;
+                var AV_gbpeur = usd_gbpeur.Average.LastValue;
+                List<Position> Pos_eurchfabove = new List<Position>(this.GetPositions(eurchfAbove));
+                List<Position> Pos_eurchfbelow = new List<Position>(this.GetPositions(eurchfBelow));
+                List<Position> Pos_gbpchfabove = new List<Position>(this.GetPositions(gbpchfAbove));
+                List<Position> Pos_gbpchfbelow = new List<Position>(this.GetPositions(gbpchfBelow));
+                List<Position> Pos_gbpeurabove = new List<Position>(this.GetPositions(gbpeurAbove));
+                List<Position> Pos_gbpeurbelow = new List<Position>(this.GetPositions(gbpeurBelow));
+                var Sub_eurchf = Math.Round(RS_eurchf - AV_eurchf).ToString();
+                var Sub_gbpchf = Math.Round(RS_gbpchf - AV_gbpchf).ToString();
+                var Sub_gbpeur = Math.Round(RS_gbpeur - AV_gbpeur).ToString();
+                if (opensignal() == "BuyEURAndBuyCHF")
+                {
+                    initBuyeur.Label = eurchfBelow;
+                    initBuychf.Label = eurchfBelow;
+                    initBuyeur.Comment = Sub_eurchf;
+                    initBuychf.Comment = Sub_eurchf;
+                    this.executeOrder(initBuyeur);
+                    this.executeOrder(initBuychf);
+                }
+                if (opensignal() == "SellEURAndSellCHF")
+                {
+                    initSelleur.Label = eurchfAbove;
+                    initSellchf.Label = eurchfAbove;
+                    initSelleur.Comment = Sub_eurchf;
+                    initSellchf.Comment = Sub_eurchf;
+                    this.executeOrder(initSelleur);
+                    this.executeOrder(initSellchf);
+                }
+                if (opensignal() == "BuyGBPAndBuyCHF")
+                {
+                    initBuygbp.Label = gbpchfBelow;
+                    initBuychf.Label = gbpchfBelow;
+                    initBuygbp.Comment = Sub_gbpchf;
+                    initBuychf.Comment = Sub_gbpchf;
+                    this.executeOrder(initBuygbp);
+                    this.executeOrder(initBuychf);
+                }
+                if (opensignal() == "SellGBPAndSellCHF")
+                {
+                    initSellgbp.Label = gbpchfAbove;
+                    initSellchf.Label = gbpchfAbove;
+                    initSellgbp.Comment = Sub_gbpchf;
+                    initSellchf.Comment = Sub_gbpchf;
+                    this.executeOrder(initSellgbp);
+                    this.executeOrder(initSellchf);
+                }
+                if (opensignal() == "BuyGBPAndSellEUR")
+                {
+                    initBuygbp.Label = gbpeurBelow;
+                    initSelleur.Label = gbpeurBelow;
+                    initBuygbp.Comment = Sub_gbpeur;
+                    initSelleur.Comment = Sub_gbpeur;
+                    this.executeOrder(initBuygbp);
+                    this.executeOrder(initSelleur);
+                }
+                if (opensignal() == "SellGBPAndBuyEUR")
+                {
+                    initSellgbp.Label = gbpeurAbove;
+                    initBuyeur.Label = gbpeurAbove;
+                    initSellgbp.Comment = Sub_gbpeur;
+                    initBuyeur.Comment = Sub_gbpeur;
+                    this.executeOrder(initSellgbp);
+                    this.executeOrder(initBuyeur);
+                }
+                if (Pos_eurchfabove.Count != 0)
+                    if (RS_eurchf <= AV_eurchf)
+                        this.closeAllLabel(eurchfAbove);
+                if (Pos_eurchfbelow.Count != 0)
+                    if (RS_eurchf >= AV_eurchf)
+                        this.closeAllLabel(eurchfBelow);
+                if (Pos_gbpchfabove.Count != 0)
+                    if (RS_gbpchf <= AV_gbpchf)
+                        this.closeAllLabel(gbpchfAbove);
+                if (Pos_gbpchfbelow.Count != 0)
+                    if (RS_gbpchf >= AV_gbpchf)
+                        this.closeAllLabel(gbpchfBelow);
+                if (Pos_gbpeurabove.Count != 0)
+                    if (RS_gbpeur <= AV_gbpeur)
+                        this.closeAllLabel(gbpeurAbove);
+                if (Pos_gbpeurbelow.Count != 0)
+                    if (RS_gbpeur >= AV_gbpeur)
+                        this.closeAllLabel(gbpeurBelow);
             }
-            if (opensignal() == "SellEURAndSellCHF")
-            {
-                initSelleur.Label = eurchfAbove;
-                initSellchf.Label = eurchfAbove;
-                initSelleur.Comment = Sub_eurchf;
-                initSellchf.Comment = Sub_eurchf;
-                this.executeOrder(initSelleur);
-                this.executeOrder(initSellchf);
-            }
-            if (opensignal() == "BuyGBPAndBuyCHF")
-            {
-                initBuygbp.Label = gbpchfBelow;
-                initBuychf.Label = gbpchfBelow;
-                initBuygbp.Comment = Sub_gbpchf;
-                initBuychf.Comment = Sub_gbpchf;
-                this.executeOrder(initBuygbp);
-                this.executeOrder(initBuychf);
-            }
-            if (opensignal() == "SellGBPAndSellCHF")
-            {
-                initSellgbp.Label = gbpchfAbove;
-                initSellchf.Label = gbpchfAbove;
-                initSellgbp.Comment = Sub_gbpchf;
-                initSellchf.Comment = Sub_gbpchf;
-                this.executeOrder(initSellgbp);
-                this.executeOrder(initSellchf);
-            }
-            if (opensignal() == "BuyGBPAndSellEUR")
-            {
-                initBuygbp.Label = gbpeurBelow;
-                initSelleur.Label = gbpeurBelow;
-                initBuygbp.Comment = Sub_gbpeur;
-                initSelleur.Comment = Sub_gbpeur;
-                this.executeOrder(initBuygbp);
-                this.executeOrder(initSelleur);
-            }
-            if (opensignal() == "SellGBPAndBuyEUR")
-            {
-                initSellgbp.Label = gbpeurAbove;
-                initBuyeur.Label = gbpeurAbove;
-                initSellgbp.Comment = Sub_gbpeur;
-                initBuyeur.Comment = Sub_gbpeur;
-                this.executeOrder(initSellgbp);
-                this.executeOrder(initBuyeur);
-            }
-            if (Pos_eurchfabove.Count != 0)
-                if (RS_eurchf <= AV_eurchf)
-                    this.closeAllLabel(eurchfAbove);
-            if (Pos_eurchfbelow.Count != 0)
-                if (RS_eurchf >= AV_eurchf)
-                    this.closeAllLabel(eurchfBelow);
-            if (Pos_gbpchfabove.Count != 0)
-                if (RS_gbpchf <= AV_gbpchf)
-                    this.closeAllLabel(gbpchfAbove);
-            if (Pos_gbpchfbelow.Count != 0)
-                if (RS_gbpchf >= AV_gbpchf)
-                    this.closeAllLabel(gbpchfBelow);
-            if (Pos_gbpeurabove.Count != 0)
-                if (RS_gbpeur <= AV_gbpeur)
-                    this.closeAllLabel(gbpeurAbove);
-            if (Pos_gbpeurbelow.Count != 0)
-                if (RS_gbpeur >= AV_gbpeur)
-                    this.closeAllLabel(gbpeurBelow);
         }
         private string opensignal()
         {
