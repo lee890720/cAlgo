@@ -468,3 +468,11 @@
 2017.08.23 04:11:14.280 | → Order OID54784522 is FILLED at 1.17597, position PID35484438 closed (23/08/2017 04:11:14.035 UTC+0)
 2017.08.23 04:19:23.225 | cAlgo started
 2017.08.23 06:02:18.244 | cAlgo started
+2017.08.23 07:34:42.075 | cAlgo started
+2017.08.24 00:45:10.458 | cAlgo started
+2017.08.24 01:13:53.936 | Request to Sell € 1k EURUSD (Price: 1.18084, MR: 2) is sent to server
+2017.08.24 01:13:54.686 | → Request to Sell € 1k EURUSD (Price: 1.18084, MR: 2) is ACCEPTED, order OID54842655 created (24/08/2017 01:13:54.299 UTC+0)
+2017.08.24 01:13:55.186 | → Order OID54842655 is FILLED at 1.18084, position PID35516886 (24/08/2017 01:13:54.560 UTC+0)
+2017.08.24 01:13:55.467 | Request to Sell $ 1k USDCHF (Price: 0.96603, MR: 2) is sent to server
+2017.08.24 01:13:55.889 | → Request to Sell $ 1k USDCHF (Price: 0.96603, MR: 2) is ACCEPTED, order OID54842656 created (24/08/2017 01:13:55.707 UTC+0)
+2017.08.24 01:13:56.170 | → Order OID54842656 is FILLED at 0.96603, position PID35516887 (24/08/2017 01:13:55.965 UTC+0)
