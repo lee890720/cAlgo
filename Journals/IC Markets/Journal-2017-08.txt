@@ -660,3 +660,6 @@
 2017.08.30 10:56:02.240 | Request to Sell £ 1k GBPCHF (Price: 1.23621, MR: 2) is sent to server
 2017.08.30 10:56:02.678 | → Request to Sell £ 1k GBPCHF (Price: 1.23621, MR: 2) is ACCEPTED, order OID55147202 created (30/08/2017 10:56:02.479 UTC+0)
 2017.08.30 10:56:02.912 | → Order OID55147202 is FILLED at 1.23621, position PID35670392 (30/08/2017 10:56:02.711 UTC+0)
+2017.08.30 11:56:06.391 | Request to Sell £ 1k GBPCHF (Price: 1.23778, MR: 2) is sent to server
+2017.08.30 11:56:07.579 | → Request to Sell £ 1k GBPCHF (Price: 1.23778, MR: 2) is ACCEPTED, order OID55149661 created (30/08/2017 11:56:07.264 UTC+0)
+2017.08.30 11:56:07.782 | → Order OID55149661 is FILLED at 1.23777, position PID35671713 (30/08/2017 11:56:07.490 UTC+0)

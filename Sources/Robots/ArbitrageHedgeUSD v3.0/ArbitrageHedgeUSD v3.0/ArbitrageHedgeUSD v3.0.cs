@@ -21,45 +21,45 @@ namespace cAlgo
         [Parameter(DefaultValue = true)]
         public bool IsTrade { get; set; }
 
-        private Symbol eurgbpSymbol, gbpchfSymbol, eurchfSymbol;
+        private Symbol eurchfSymbol, gbpchfSymbol, gbpeurSymbol;
         private string eurchfAbove, gbpchfAbove, gbpeurAbove;
         private string eurchfBelow, gbpchfBelow, gbpeurBelow;
-        private OrderParams initBuyeurgbp, initBuygbpchf, initBuyeurchf, initSelleurgbp, initSellgbpchf, initSelleurchf;
+        private OrderParams initBuyeurchf, initBuygbpchf, initBuygbpeur, initSelleurchf, initSellgbpchf, initSellgbpeur;
         private USD_EURCHF usd_eurchf;
         private USD_GBPCHF usd_gbpchf;
         private USD_GBPEUR usd_gbpeur;
         protected override void OnStart()
         {
-            eurgbpSymbol = MarketData.GetSymbol("EURGBP");
-            gbpchfSymbol = MarketData.GetSymbol("GBPCHF");
             eurchfSymbol = MarketData.GetSymbol("EURCHF");
+            gbpchfSymbol = MarketData.GetSymbol("GBPCHF");
+            gbpeurSymbol = MarketData.GetSymbol("EURGBP");
             eurchfAbove = "Above" + eurchfSymbol.Code;
             gbpchfAbove = "Above" + gbpchfSymbol.Code;
-            gbpeurAbove = "Above" + eurgbpSymbol.Code;
+            gbpeurAbove = "Above" + gbpeurSymbol.Code;
             eurchfBelow = "Below" + eurchfSymbol.Code;
             gbpchfBelow = "Below" + gbpchfSymbol.Code;
-            gbpeurBelow = "Below" + eurgbpSymbol.Code;
+            gbpeurBelow = "Below" + gbpeurSymbol.Code;
             usd_eurchf = Indicators.GetIndicator<USD_EURCHF>();
             usd_gbpchf = Indicators.GetIndicator<USD_GBPCHF>();
             usd_gbpeur = Indicators.GetIndicator<USD_GBPEUR>();
             double slippage = 2;
             //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
-            initBuyeurgbp = new OrderParams(TradeType.Buy, eurgbpSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initBuyeurchf = new OrderParams(TradeType.Buy, eurchfSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
             initBuygbpchf = new OrderParams(TradeType.Buy, gbpchfSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initBuyeurchf = new OrderParams(TradeType.Buy, eurchfSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initBuygbpeur = new OrderParams(TradeType.Buy, gbpeurSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initSelleurgbp = new OrderParams(TradeType.Sell, eurgbpSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initSelleurchf = new OrderParams(TradeType.Sell, eurchfSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
             initSellgbpchf = new OrderParams(TradeType.Sell, gbpchfSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initSelleurchf = new OrderParams(TradeType.Sell, eurchfSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initSellgbpeur = new OrderParams(TradeType.Sell, gbpeurSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
         }
@@ -108,17 +108,17 @@ namespace cAlgo
                     initSellgbpchf.Comment = Sub_gbpchf;
                     this.executeOrder(initSellgbpchf);
                 }
-                if (opensignal() == "SellEURGBP")
+                if (opensignal() == "SellGBPEUR")
                 {
-                    initSelleurgbp.Label = gbpeurBelow;
-                    initSelleurgbp.Comment = Sub_gbpeur;
-                    this.executeOrder(initSelleurgbp);
+                    initSellgbpeur.Label = gbpeurBelow;
+                    initSellgbpeur.Comment = Sub_gbpeur;
+                    this.executeOrder(initSellgbpeur);
                 }
-                if (opensignal() == "BuyEURGBP")
+                if (opensignal() == "BuyGBPEUR")
                 {
-                    initBuyeurgbp.Label = gbpeurAbove;
-                    initBuyeurgbp.Comment = Sub_gbpeur;
-                    this.executeOrder(initBuyeurgbp);
+                    initBuygbpeur.Label = gbpeurAbove;
+                    initBuygbpeur.Comment = Sub_gbpeur;
+                    this.executeOrder(initBuygbpeur);
                 }
                 if (Pos_eurchfabove.Count != 0)
                     if (RS_eurchf <= AV_eurchf)
@@ -309,9 +309,9 @@ namespace cAlgo
                 if (RS_gbpchf < AV_gbpchf + AV_below)
                     gbpchfsignal = "BuyGBPCHF";
                 if (RS_gbpeur > AV_gbpeur + AV_above)
-                    gbpeursignal = "BuyEURGBP";
+                    gbpeursignal = "BuyGBPEUR";
                 if (RS_gbpeur < AV_gbpeur + AV_below)
-                    gbpeursignal = "SellEURGBP";
+                    gbpeursignal = "SellGBPEUR";
             }
             if (eurchfsignal == "BuyEURCHF")
             {
@@ -320,8 +320,8 @@ namespace cAlgo
             }
             if (eurchfsignal == "SellEURCHF")
             {
-                usdchf--;
                 eurusd--;
+                usdchf--;
             }
             if (gbpchfsignal == "BuyGBPCHF")
             {
@@ -330,18 +330,18 @@ namespace cAlgo
             }
             if (gbpchfsignal == "SellGBPCHF")
             {
-                usdchf--;
                 gbpusd--;
+                usdchf--;
             }
-            if (gbpeursignal == "SellEURGBP")
+            if (gbpeursignal == "SellGBPEUR")
             {
                 gbpusd++;
                 eurusd--;
             }
-            if (gbpeursignal == "BuyEURGBP")
+            if (gbpeursignal == "BuyGBPEUR")
             {
-                eurusd++;
                 gbpusd--;
+                eurusd++;
             }
             if (eurusd == 0)
             {
@@ -427,7 +427,7 @@ namespace cAlgo
                     totalCom += Convert.ToDouble(pos.Comment.Substring(6, pos.Comment.Length - 6));
                 }
                 Sub_eurchfabove = Math.Round(total / Pos_eurchfabove.Count - AV_eurchf);
-                AV_eurchfabove = totalCom / Pos_eurchfabove.Count;
+                AV_eurchfabove = Math.Round(totalCom / Pos_eurchfabove.Count);
             }
             if (Pos_eurchfbelow.Count != 0)
             {
@@ -439,7 +439,7 @@ namespace cAlgo
                     totalCom += Convert.ToDouble(pos.Comment.Substring(6, pos.Comment.Length - 6));
                 }
                 Sub_eurchfbelow = Math.Round(total / Pos_eurchfbelow.Count - AV_eurchf);
-                AV_eurchfbelow = totalCom / Pos_eurchfbelow.Count;
+                AV_eurchfbelow = Math.Round(totalCom / Pos_eurchfbelow.Count);
             }
             #endregion
             #region GBPCHF
@@ -453,7 +453,7 @@ namespace cAlgo
                     totalCom += Convert.ToDouble(pos.Comment.Substring(6, pos.Comment.Length - 6));
                 }
                 Sub_gbpchfabove = Math.Round(total / Pos_gbpchfabove.Count - AV_gbpchf);
-                AV_gbpchfabove = totalCom / Pos_gbpchfabove.Count;
+                AV_gbpchfabove = Math.Round(totalCom / Pos_gbpchfabove.Count);
             }
             if (Pos_gbpchfbelow.Count != 0)
             {
@@ -466,7 +466,7 @@ namespace cAlgo
 
                 }
                 Sub_gbpchfbelow = Math.Round(total / Pos_gbpchfbelow.Count - AV_gbpchf);
-                AV_gbpchfbelow = totalCom / Pos_gbpchfbelow.Count;
+                AV_gbpchfbelow = Math.Round(totalCom / Pos_gbpchfbelow.Count);
             }
             #endregion
             #region GBPEUR
@@ -480,7 +480,7 @@ namespace cAlgo
                     totalCom += Convert.ToDouble(pos.Comment.Substring(6, pos.Comment.Length - 6));
                 }
                 Sub_gbpeurabove = Math.Round(total / Pos_gbpeurabove.Count - AV_gbpeur);
-                AV_gbpeurabove = totalCom / Pos_gbpeurabove.Count;
+                AV_gbpeurabove = Math.Round(totalCom / Pos_gbpeurabove.Count);
             }
             if (Pos_gbpeurbelow.Count != 0)
             {
@@ -492,7 +492,7 @@ namespace cAlgo
                     totalCom += Convert.ToDouble(pos.Comment.Substring(6, pos.Comment.Length - 6));
                 }
                 Sub_gbpeurbelow = Math.Round(total / Pos_gbpeurbelow.Count - AV_gbpeur);
-                AV_gbpeurbelow = totalCom / Pos_gbpeurbelow.Count;
+                AV_gbpeurbelow = Math.Round(totalCom / Pos_gbpeurbelow.Count);
             }
             ChartObjects.DrawText("signal", opensignal(), StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("eurchf", "\nSub_EURCHF\t" + Sub_eurchf.ToString() + "\tEURCHF_A\t" + Sub_eurchfabove.ToString() + "\t" + AV_eurchfabove.ToString() + "\t" + Pos_eurchfabove.Count.ToString() + "\t" + this.TotalProfits(eurchfAbove) + "\tEURCHF_B\t" + Sub_eurchfbelow.ToString() + "\t" + AV_eurchfbelow.ToString() + "\t" + Pos_eurchfbelow.Count.ToString() + "\t" + this.TotalProfits(eurchfBelow), StaticPosition.TopLeft, Colors.White);
