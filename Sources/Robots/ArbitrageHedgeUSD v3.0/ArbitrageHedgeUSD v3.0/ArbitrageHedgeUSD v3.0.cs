@@ -84,41 +84,41 @@ namespace cAlgo
                 var Sub_eurchf = string.Format("{0:000000}", Math.Round(RS_eurchf)) + Math.Round(RS_eurchf - AV_eurchf).ToString();
                 var Sub_gbpchf = string.Format("{0:000000}", Math.Round(RS_gbpchf)) + Math.Round(RS_gbpchf - AV_gbpchf).ToString();
                 var Sub_gbpeur = string.Format("{0:000000}", Math.Round(RS_gbpeur)) + Math.Round(RS_gbpeur - AV_gbpeur).ToString();
-                if (opensignal() == "BuyEURCHF")
-                {
-                    initBuyeurchf.Label = eurchfBelow;
-                    initBuyeurchf.Comment = Sub_eurchf;
-                    this.executeOrder(initBuyeurchf);
-                }
-                if (opensignal() == "SellEURCHF")
+                if (opensignal() == "Above_EURCHF")
                 {
                     initSelleurchf.Label = eurchfAbove;
                     initSelleurchf.Comment = Sub_eurchf;
                     this.executeOrder(initSelleurchf);
                 }
-                if (opensignal() == "BuyGBPCHF")
+                if (opensignal() == "Below_EURCHF")
                 {
-                    initBuygbpchf.Label = gbpchfBelow;
-                    initBuygbpchf.Comment = Sub_gbpchf;
-                    this.executeOrder(initBuygbpchf);
+                    initBuyeurchf.Label = eurchfBelow;
+                    initBuyeurchf.Comment = Sub_eurchf;
+                    this.executeOrder(initBuyeurchf);
                 }
-                if (opensignal() == "SellGBPCHF")
+                if (opensignal() == "Above_GBPCHF")
                 {
                     initSellgbpchf.Label = gbpchfAbove;
                     initSellgbpchf.Comment = Sub_gbpchf;
                     this.executeOrder(initSellgbpchf);
                 }
-                if (opensignal() == "SellGBPEUR")
+                if (opensignal() == "Below_GBPCHF")
                 {
-                    initSellgbpeur.Label = gbpeurBelow;
-                    initSellgbpeur.Comment = Sub_gbpeur;
-                    this.executeOrder(initSellgbpeur);
+                    initBuygbpchf.Label = gbpchfBelow;
+                    initBuygbpchf.Comment = Sub_gbpchf;
+                    this.executeOrder(initBuygbpchf);
                 }
-                if (opensignal() == "BuyGBPEUR")
+                if (opensignal() == "Above_GBPEUR")
                 {
                     initBuygbpeur.Label = gbpeurAbove;
                     initBuygbpeur.Comment = Sub_gbpeur;
                     this.executeOrder(initBuygbpeur);
+                }
+                if (opensignal() == "Below_GBPEUR")
+                {
+                    initSellgbpeur.Label = gbpeurBelow;
+                    initSellgbpeur.Comment = Sub_gbpeur;
+                    this.executeOrder(initSellgbpeur);
                 }
                 if (Pos_eurchfabove.Count != 0)
                     if (RS_eurchf <= AV_eurchf)
@@ -301,47 +301,47 @@ namespace cAlgo
             if (DateTime.Compare(Pos_LastTime, now) < 0)
             {
                 if (RS_eurchf > AV_eurchf + AV_above)
-                    eurchfsignal = "SellEURCHF";
+                    eurchfsignal = "Above_EURCHF";
                 if (RS_eurchf < AV_eurchf + AV_below)
-                    eurchfsignal = "BuyEURCHF";
+                    eurchfsignal = "Below_EURCHF";
                 if (RS_gbpchf > AV_gbpchf + AV_above)
-                    gbpchfsignal = "SellGBPCHF";
+                    gbpchfsignal = "Above_GBPCHF";
                 if (RS_gbpchf < AV_gbpchf + AV_below)
-                    gbpchfsignal = "BuyGBPCHF";
+                    gbpchfsignal = "Below_GBPCHF";
                 if (RS_gbpeur > AV_gbpeur + AV_above)
-                    gbpeursignal = "BuyGBPEUR";
+                    gbpeursignal = "Above_GBPEUR";
                 if (RS_gbpeur < AV_gbpeur + AV_below)
-                    gbpeursignal = "SellGBPEUR";
+                    gbpeursignal = "Below_GBPEUR";
             }
-            if (eurchfsignal == "BuyEURCHF")
-            {
-                eurusd++;
-                usdchf++;
-            }
-            if (eurchfsignal == "SellEURCHF")
+            if (eurchfsignal == "Above_EURCHF")
             {
                 eurusd--;
                 usdchf--;
             }
-            if (gbpchfsignal == "BuyGBPCHF")
+            if (eurchfsignal == "Below_EURCHF")
             {
-                gbpusd++;
+                eurusd++;
                 usdchf++;
             }
-            if (gbpchfsignal == "SellGBPCHF")
+            if (gbpchfsignal == "Above_GBPCHF")
             {
                 gbpusd--;
                 usdchf--;
             }
-            if (gbpeursignal == "SellGBPEUR")
+            if (gbpchfsignal == "Below_GBPCHF")
             {
                 gbpusd++;
-                eurusd--;
+                usdchf++;
             }
-            if (gbpeursignal == "BuyGBPEUR")
+            if (gbpeursignal == "Above_GBPEUR")
             {
                 gbpusd--;
                 eurusd++;
+            }
+            if (gbpeursignal == "Below_GBPEUR")
+            {
+                gbpusd++;
+                eurusd--;
             }
             if (eurusd == 0)
             {

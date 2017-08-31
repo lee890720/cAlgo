@@ -663,3 +663,14 @@
 2017.08.30 11:56:06.391 | Request to Sell £ 1k GBPCHF (Price: 1.23778, MR: 2) is sent to server
 2017.08.30 11:56:07.579 | → Request to Sell £ 1k GBPCHF (Price: 1.23778, MR: 2) is ACCEPTED, order OID55149661 created (30/08/2017 11:56:07.264 UTC+0)
 2017.08.30 11:56:07.782 | → Order OID55149661 is FILLED at 1.23777, position PID35671713 (30/08/2017 11:56:07.490 UTC+0)
+2017.08.31 02:53:11.446 | cAlgo started
+2017.08.31 03:08:14.189 | Request to close position PID35670392 is sent to server
+2017.08.31 03:08:14.204 | Request to close position PID35671713 is sent to server
+2017.08.31 03:08:14.892 | → Request to close position PID35670392 is ACCEPTED, order OID55202679 created (31/08/2017 03:08:14.498 UTC+0)
+2017.08.31 03:08:14.892 | → Request to close position PID35671713 is ACCEPTED, order OID55202680 created (31/08/2017 03:08:14.604 UTC+0)
+2017.08.31 03:08:15.142 | → Order OID55202679 is FILLED at 1.24472, position PID35670392 closed (31/08/2017 03:08:14.791 UTC+0)
+2017.08.31 03:08:15.267 | → Order OID55202680 is FILLED at 1.24472, position PID35671713 closed (31/08/2017 03:08:14.863 UTC+0)
+2017.08.31 03:46:33.063 | cAlgo started
+2017.08.31 03:47:24.075 | Request to Sell AUD 1k AUDJPY (Price: 87.384, MR: 2) is sent to server
+2017.08.31 03:47:24.809 | → Request to Sell AUD 1k AUDJPY (Price: 87.384, MR: 2) is ACCEPTED, order OID55203713 created (31/08/2017 03:47:24.406 UTC+0)
+2017.08.31 03:47:25.184 | → Order OID55203713 is FILLED at 87.384, position PID35700357 (31/08/2017 03:47:24.636 UTC+0)
