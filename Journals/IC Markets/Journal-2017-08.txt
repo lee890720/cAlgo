@@ -674,3 +674,4 @@
 2017.08.31 03:47:24.075 | Request to Sell AUD 1k AUDJPY (Price: 87.384, MR: 2) is sent to server
 2017.08.31 03:47:24.809 | → Request to Sell AUD 1k AUDJPY (Price: 87.384, MR: 2) is ACCEPTED, order OID55203713 created (31/08/2017 03:47:24.406 UTC+0)
 2017.08.31 03:47:25.184 | → Order OID55203713 is FILLED at 87.384, position PID35700357 (31/08/2017 03:47:24.636 UTC+0)
+2017.08.31 03:52:10.263 | cAlgo started

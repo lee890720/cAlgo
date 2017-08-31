@@ -10,7 +10,7 @@ using System.Linq;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
-    public class ArbitrageHedgeUSD : Robot
+    public class ArbitrageHedge_aud_cad_jpy : Robot
     {
         [Parameter("INIT_Volume", DefaultValue = 1000, MinValue = 1000)]
         public int Init_Volume { get; set; }

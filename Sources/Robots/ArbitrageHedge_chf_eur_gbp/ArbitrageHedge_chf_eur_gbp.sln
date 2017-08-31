@@ -2,7 +2,7 @@
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageHedgeUSD v3.0", "ArbitrageHedgeUSD v3.0\ArbitrageHedgeUSD v3.0.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageHedge_chf_eur_gbp", "ArbitrageHedge_chf_eur_gbp\ArbitrageHedge_chf_eur_gbp.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USD_EURCHF", "..\..\Indicators\USD_EURCHF\USD_EURCHF\USD_EURCHF.csproj", "{397C5F1C-2A1B-41AD-8642-A8770B8A675C}"
 EndProject

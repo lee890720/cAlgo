@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ArbitrageHedgeUSD v3.0")]
+[assembly: AssemblyTitle("ArbitrageHedge_aud_cad_jpy")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("ArbitrageHedgeUSD v3.0")]
+[assembly: AssemblyProduct("ArbitrageHedge_aud_cad_jpy")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,8 +1,8 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageHedgeUSD2 v3.0", "ArbitrageHedgeUSD2 v3.0\ArbitrageHedgeUSD2 v3.0.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageHedge_aud_cad_jpy", "ArbitrageHedge_aud_cad_jpy\ArbitrageHedge_aud_cad_jpy.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USD_JPYAUD", "..\..\Indicators\USD_JPYAUD\USD_JPYAUD\USD_JPYAUD.csproj", "{4DF95CB0-9ACD-42CD-8E12-1DAC72E06119}"
 EndProject

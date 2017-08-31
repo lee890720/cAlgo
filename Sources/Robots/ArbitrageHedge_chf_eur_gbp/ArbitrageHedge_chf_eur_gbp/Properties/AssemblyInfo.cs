@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ArbitrageHedgeUSD2 v3.0")]
+[assembly: AssemblyTitle("ArbitrageHedge_chf_eur_gbp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("ArbitrageHedgeUSD2 v3.0")]
+[assembly: AssemblyProduct("ArbitrageHedge_chf_eur_gbp")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
