@@ -321,8 +321,12 @@ namespace cAlgo.Lib
 
         public static long TotalLots(this Robot robot, string label = null)
         {
-            var poss = robot.GetPositions(label);;
-            if (poss.Length == 0)
+            List<Position> poss=new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label)) ;
+            if (poss.Count == 0)
                 return 0;
             long totallots = 0;
             foreach (var pos in poss)
@@ -332,8 +336,12 @@ namespace cAlgo.Lib
 
         public static long MaxLot(this Robot robot, string label = null)
         {
-            var poss = robot.GetPositions(label); ;
-            if (poss.Length == 0)
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
                 return 0;
             long maxlot = 0;
             foreach (var pos in poss)
@@ -348,8 +356,12 @@ namespace cAlgo.Lib
 
         public static long MinLot(this Robot robot, string label = null)
         {
-            var poss = robot.GetPositions(label); ;
-            if (poss.Length == 0)
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
                 return 0;
             long minlot = 0;
             foreach (var pos in poss)
@@ -364,13 +376,16 @@ namespace cAlgo.Lib
 
         public static long MartingaleLot(this Robot robot, string label, double goalprice)
         {
-            var poss = robot.GetPositions(label); ;
-            if (poss.Length == 0)
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
                 return 0;
             string IsBorS = "Nope";
             int buy = 0;
             int sell = 0;
-            if (poss.Length != 0)
                 foreach (var pos in poss)
                 {
                     if (pos.TradeType == TradeType.Buy)
@@ -393,8 +408,12 @@ namespace cAlgo.Lib
 
         public static double TotalProfits(this Robot robot, string label = null)
         {
-            var poss = robot.GetPositions(label); ;
-            if (poss.Length == 0)
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
                 return 0;
             double totalprofits = 0;
             foreach (var pos in poss)
@@ -404,8 +423,12 @@ namespace cAlgo.Lib
 
         public static double MaxPrice(this Robot robot, string label = null)
         {
-            var poss = robot.GetPositions(label); ;
-            if (poss.Length == 0)
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
                 return 0;
             double maxprice = 0;
             foreach (var pos in poss)
@@ -420,8 +443,12 @@ namespace cAlgo.Lib
 
         public static double MinPrice(this Robot robot, string label = null)
         {
-            var poss = robot.GetPositions(label); ;
-            if (poss.Length == 0)
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
                 return 0;
             double minprice = 0;
             foreach (var pos in poss)
@@ -436,8 +463,12 @@ namespace cAlgo.Lib
 
         public static double AveragePrice(this Robot robot, string label = null)
         {
-            var poss = robot.GetPositions(label); ;
-            if (poss.Length == 0)
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
                 return 0;
             long totallots = 0;
             double lotsprice = 0;

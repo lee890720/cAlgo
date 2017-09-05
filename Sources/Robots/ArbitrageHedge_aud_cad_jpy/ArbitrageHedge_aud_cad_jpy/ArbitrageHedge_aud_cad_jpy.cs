@@ -494,11 +494,11 @@ namespace cAlgo
                 Sub_jpycadbelow = Math.Round(total / Pos_jpycadbelow.Count - AV_jpycad);
                 AV_jpycadbelow = Math.Round(totalCom / Pos_jpycadbelow.Count);
             }
-            ChartObjects.DrawText("signal", opensignal(), StaticPosition.TopLeft, Colors.White);
+            #endregion
+            ChartObjects.DrawText("info", this.Account.Number + "-" + Symbol.VolumeToQuantity(this.TotalLots()) + "\t\tEquity\t" + this.Account.Equity + "\t\tMargin\t" + this.Account.Margin + "\t\tLevel\t" + Math.Round((double)this.Account.MarginLevel) + "%\t\tProfit\t" + Math.Round(this.Account.UnrealizedNetProfit, 2), StaticPosition.TopLeft, Colors.Red);
             ChartObjects.DrawText("cadaud", "\nSub_CADAUD\t" + Sub_cadaud.ToString() + "\tCADAUD_A\t" + Sub_cadaudabove.ToString() + "\t" + AV_cadaudabove.ToString() + "\t" + Pos_cadaudabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(cadaudAbove), 2) + "\tCADAUD_B\t" + Sub_cadaudbelow.ToString() + "\t" + AV_cadaudbelow.ToString() + "\t" + Pos_cadaudbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(cadaudBelow), 2), StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("jpyaud", "\n\nSub_JPYAUD\t" + Sub_jpyaud.ToString() + "\tJPYAUD_A\t" + Sub_jpyaudabove.ToString() + "\t" + AV_jpyaudabove.ToString() + "\t" + Pos_jpyaudabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpyaudAbove), 2) + "\tJPYAUD_B\t" + Sub_jpyaudbelow.ToString() + "\t" + AV_jpyaudbelow.ToString() + "\t" + Pos_jpyaudbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpyaudBelow), 2), StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("jpycad", "\n\n\nSub_JPYCAD\t" + Sub_jpycad.ToString() + "\tJPYCAD_A\t" + Sub_jpycadabove.ToString() + "\t" + AV_jpycadabove.ToString() + "\t" + Pos_jpycadabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpycadAbove), 2) + "\tJPYCAD_B\t" + Sub_jpycadbelow.ToString() + "\t" + AV_jpycadbelow.ToString() + "\t" + Pos_jpycadbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpycadBelow), 2), StaticPosition.TopLeft, Colors.White);
-            #endregion
         }
     }
 }
