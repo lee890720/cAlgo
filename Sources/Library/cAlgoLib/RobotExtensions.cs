@@ -314,9 +314,9 @@ namespace cAlgo.Lib
 		}
 
         //LabelExtensions
-        public static Position[] GetPositions(this Robot robot, string label=null)
+        public static Position[] GetPositions(this Robot robot, string label)
         {
-            return robot.Positions.FindAll(label);
+                return robot.Positions.FindAll(label);
         }
 
         public static long TotalLots(this Robot robot, string label = null)
