@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F9DDE63B-CFF8-4762-B206-6F5F75FAD6A8}</ProjectGuid>
+    <ProjectGuid>{DC5A2BB9-CD60-411F-921E-7FA26730FC14}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>USD_GBPEUR</AssemblyName>
+    <AssemblyName>USD_GBPCHF_L</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -47,7 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="USD_GBPEUR.cs" />
+    <Compile Include="USD_GBPCHF_L.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -58,4 +58,18 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\USD_EURCHF\USD_EURCHF\USD_EURCHF.csproj">
+      <Project>{397C5F1C-2A1B-41AD-8642-A8770B8A675C}</Project>
+      <Name>USD_EURCHF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\USD_GBPCHF\USD_GBPCHF\USD_GBPCHF.csproj">
+      <Project>{DC5A2BB9-CD60-411F-921E-7FA26730FC14}</Project>
+      <Name>USD_GBPCHF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\USD_GBPEUR\USD_GBPEUR\USD_GBPEUR.csproj">
+      <Project>{F9DDE63B-CFF8-4762-B206-6F5F75FAD6A8}</Project>
+      <Name>USD_GBPEUR</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

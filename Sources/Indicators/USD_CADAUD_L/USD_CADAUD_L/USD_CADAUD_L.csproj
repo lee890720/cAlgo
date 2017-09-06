@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F9DDE63B-CFF8-4762-B206-6F5F75FAD6A8}</ProjectGuid>
+    <ProjectGuid>{E716A0EF-78B1-4A0E-894D-1FAA37E76281}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>USD_GBPEUR</AssemblyName>
+    <AssemblyName>USD_CADAUD_L</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -47,7 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="USD_GBPEUR.cs" />
+    <Compile Include="USD_CADAUD_L.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -58,4 +58,18 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\USD_CADAUD\USD_CADAUD\USD_CADAUD.csproj">
+      <Project>{E716A0EF-78B1-4A0E-894D-1FAA37E76281}</Project>
+      <Name>USD_CADAUD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\USD_JPYAUD\USD_JPYAUD\USD_JPYAUD.csproj">
+      <Project>{4DF95CB0-9ACD-42CD-8E12-1DAC72E06119}</Project>
+      <Name>USD_JPYAUD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\USD_JPYCAD\USD_JPYCAD\USD_JPYCAD.csproj">
+      <Project>{8A9E611C-C06B-430B-8B3C-8B4D878E17E3}</Project>
+      <Name>USD_JPYCAD</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
