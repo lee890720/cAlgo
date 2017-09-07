@@ -1,7 +1,0 @@
-﻿C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\@_Bollinger\@_Bollinger\bin\Debug\@_Bollinger.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\@_Bollinger\@_Bollinger\bin\Debug\@_Bollinger.pdb
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\@_Bollinger\@_Bollinger\bin\Debug\cAlgo.API.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\@_Bollinger\@_Bollinger\bin\Debug\cAlgo.API.xml
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\@_Bollinger\@_Bollinger\obj\Debug\@_Bollinger.csprojResolveAssemblyReference.cache
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\@_Bollinger\@_Bollinger\obj\Debug\@_Bollinger.dll
-C:\Users\LEE-SURFACE\Documents\cAlgo\Sources\Indicators\@_Bollinger\@_Bollinger\obj\Debug\@_Bollinger.pdb

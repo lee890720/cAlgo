@@ -5,7 +5,7 @@
 2017.09.05 03:59:41.730 | cAlgo started
 2017.09.06 00:25:07.079 | cAlgo started
 2017.09.06 02:41:42.192 | cAlgo started
-2017.09.06 10:57:31.185 | cAlgo started
-2017.09.06 15:19:30.779 | cAlgo started
-2017.09.07 01:15:44.417 | cAlgo started
-2017.09.07 01:22:49.237 | cAlgo started
+2017.09.06 09:33:36.820 | cAlgo started
+2017.09.06 09:59:17.212 | cAlgo started
+2017.09.06 10:13:27.508 | cAlgo started
+2017.09.06 15:18:02.070 | cAlgo started
