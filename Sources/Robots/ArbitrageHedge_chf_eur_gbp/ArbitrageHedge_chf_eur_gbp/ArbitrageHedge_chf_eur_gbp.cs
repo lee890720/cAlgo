@@ -400,6 +400,12 @@ namespace cAlgo
             List<Position> Pos_gbpchfbelow = new List<Position>(this.GetPositions(gbpchfBelow));
             List<Position> Pos_gbpeurabove = new List<Position>(this.GetPositions(gbpeurAbove));
             List<Position> Pos_gbpeurbelow = new List<Position>(this.GetPositions(gbpeurBelow));
+            Pos_eurchfabove.Reverse();
+            Pos_eurchfbelow.Reverse();
+            Pos_gbpchfabove.Reverse();
+            Pos_gbpchfbelow.Reverse();
+            Pos_gbpeurabove.Reverse();
+            Pos_gbpeurbelow.Reverse();
             var Sub_eurchf = Math.Round(RS_eurchf - AV_eurchf).ToString();
             var Sub_gbpchf = Math.Round(RS_gbpchf - AV_gbpchf).ToString();
             var Sub_gbpeur = Math.Round(RS_gbpeur - AV_gbpeur).ToString();
@@ -416,6 +422,20 @@ namespace cAlgo
             double AV_gbpchfbelow = -distance;
             double AV_gbpeurabove = distance;
             double AV_gbpeurbelow = -distance;
+            List<DateTime> lastPosTime = new List<DateTime>();
+            if (Pos_eurchfabove.Count != 0)
+                lastPosTime.Add(Pos_eurchfabove[0].EntryTime.AddHours(1));
+            if (Pos_eurchfbelow.Count != 0)
+                lastPosTime.Add(Pos_eurchfbelow[0].EntryTime.AddHours(1));
+            if (Pos_gbpchfabove.Count != 0)
+                lastPosTime.Add(Pos_gbpchfabove[0].EntryTime.AddHours(1));
+            if (Pos_gbpchfbelow.Count != 0)
+                lastPosTime.Add(Pos_gbpchfbelow[0].EntryTime.AddHours(1));
+            if (Pos_gbpeurabove.Count != 0)
+                lastPosTime.Add(Pos_gbpeurabove[0].EntryTime.AddHours(1));
+            if (Pos_gbpeurbelow.Count != 0)
+                lastPosTime.Add(Pos_gbpeurbelow[0].EntryTime.AddHours(1));
+            var Pos_LastTime = lastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-2) : lastPosTime.Max();
             #region EURCHF
             if (Pos_eurchfabove.Count != 0)
             {
@@ -498,7 +518,7 @@ namespace cAlgo
             double marginlevel = 0;
             if (this.Account.MarginLevel.HasValue)
                 marginlevel = Math.Round((double)this.Account.MarginLevel);
-            ChartObjects.DrawText("info", this.Account.Number + "-" + Symbol.VolumeToQuantity(this.TotalLots()) + "\t\tEquity\t" + this.Account.Equity + "\t\tMargin\t" + this.Account.Margin + "\t\tLevel\t" + marginlevel + "%\t\tProfit\t" + Math.Round(this.Account.UnrealizedNetProfit, 2), StaticPosition.TopLeft, Colors.Red);
+            ChartObjects.DrawText("info", this.Account.Number + "-" + Symbol.VolumeToQuantity(this.TotalLots()) + "\t\tEquity\t" + this.Account.Equity + "\t\tMargin\t" + this.Account.Margin + "\t\tLevel\t" + marginlevel + "%\t\tProfit\t" + Math.Round(this.Account.UnrealizedNetProfit, 2) + "\t" + Pos_LastTime, StaticPosition.TopLeft, Colors.Red);
             ChartObjects.DrawText("eurchf", "\nSub_EURCHF\t" + Sub_eurchf.ToString() + "\tEURCHF_A\t" + Sub_eurchfabove.ToString() + "\t" + AV_eurchfabove.ToString() + "\t" + Pos_eurchfabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(eurchfAbove), 2) + "\tEURCHF_B\t" + Sub_eurchfbelow.ToString() + "\t" + AV_eurchfbelow.ToString() + "\t" + Pos_eurchfbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(eurchfBelow), 2), StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("gbpchf", "\n\nSub_GBPCHF\t" + Sub_gbpchf.ToString() + "\tGBPCHF_A\t" + Sub_gbpchfabove.ToString() + "\t" + AV_gbpchfabove.ToString() + "\t" + Pos_gbpchfabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(gbpchfAbove), 2) + "\tGBPCHF_B\t" + Sub_gbpchfbelow.ToString() + "\t" + AV_gbpchfbelow.ToString() + "\t" + Pos_gbpchfbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(gbpchfBelow), 2), StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("gbpeur", "\n\n\nSub_GBPEUR\t" + Sub_gbpeur.ToString() + "\tGBPEUR_A\t" + Sub_gbpeurabove.ToString() + "\t" + AV_gbpeurabove.ToString() + "\t" + Pos_gbpeurabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(gbpeurAbove), 2) + "\tGBPEUR_B\t" + Sub_gbpeurbelow.ToString() + "\t" + AV_gbpeurbelow.ToString() + "\t" + Pos_gbpeurbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(gbpeurBelow), 2), StaticPosition.TopLeft, Colors.White);

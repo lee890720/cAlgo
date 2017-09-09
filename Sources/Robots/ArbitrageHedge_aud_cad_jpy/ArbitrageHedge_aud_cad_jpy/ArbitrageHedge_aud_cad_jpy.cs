@@ -400,6 +400,12 @@ namespace cAlgo
             List<Position> Pos_jpyaudbelow = new List<Position>(this.GetPositions(jpyaudBelow));
             List<Position> Pos_jpycadabove = new List<Position>(this.GetPositions(jpycadAbove));
             List<Position> Pos_jpycadbelow = new List<Position>(this.GetPositions(jpycadBelow));
+            Pos_cadaudabove.Reverse();
+            Pos_cadaudbelow.Reverse();
+            Pos_jpyaudabove.Reverse();
+            Pos_jpyaudbelow.Reverse();
+            Pos_jpycadabove.Reverse();
+            Pos_jpycadbelow.Reverse();
             var Sub_cadaud = Math.Round(RS_cadaud - AV_cadaud).ToString();
             var Sub_jpyaud = Math.Round(RS_jpyaud - AV_jpyaud).ToString();
             var Sub_jpycad = Math.Round(RS_jpycad - AV_jpycad).ToString();
@@ -416,6 +422,21 @@ namespace cAlgo
             double AV_jpyaudbelow = -distance;
             double AV_jpycadabove = distance;
             double AV_jpycadbelow = -distance;
+            List<DateTime> lastPosTime = new List<DateTime>();
+            if (Pos_cadaudabove.Count != 0)
+                lastPosTime.Add(Pos_cadaudabove[0].EntryTime.AddHours(1));
+            if (Pos_cadaudbelow.Count != 0)
+                lastPosTime.Add(Pos_cadaudbelow[0].EntryTime.AddHours(1));
+            if (Pos_jpyaudabove.Count != 0)
+                lastPosTime.Add(Pos_jpyaudabove[0].EntryTime.AddHours(1));
+            if (Pos_jpyaudbelow.Count != 0)
+                lastPosTime.Add(Pos_jpyaudbelow[0].EntryTime.AddHours(1));
+            if (Pos_jpycadabove.Count != 0)
+                lastPosTime.Add(Pos_jpycadabove[0].EntryTime.AddHours(1));
+            if (Pos_jpycadbelow.Count != 0)
+                lastPosTime.Add(Pos_jpycadbelow[0].EntryTime.AddHours(1));
+            var Pos_LastTime = lastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-2) : lastPosTime.Max();
+
             #region CADAUD
             if (Pos_cadaudabove.Count != 0)
             {
@@ -498,7 +519,7 @@ namespace cAlgo
             double marginlevel = 0;
             if (this.Account.MarginLevel.HasValue)
                 marginlevel = Math.Round((double)this.Account.MarginLevel);
-            ChartObjects.DrawText("info", this.Account.Number + "-" + Symbol.VolumeToQuantity(this.TotalLots()) + "\t\tEquity\t" + this.Account.Equity + "\t\tMargin\t" + this.Account.Margin + "\t\tLevel\t" + marginlevel + "%\t\tProfit\t" + Math.Round(this.Account.UnrealizedNetProfit, 2), StaticPosition.TopLeft, Colors.Red);
+            ChartObjects.DrawText("info", this.Account.Number + "-" + Symbol.VolumeToQuantity(this.TotalLots()) + "\t\tEquity\t" + this.Account.Equity + "\t\tMargin\t" + this.Account.Margin + "\t\tLevel\t" + marginlevel + "%\t\tProfit\t" + Math.Round(this.Account.UnrealizedNetProfit, 2) + "\t" + Pos_LastTime, StaticPosition.TopLeft, Colors.Red);
             ChartObjects.DrawText("cadaud", "\nSub_CADAUD\t" + Sub_cadaud.ToString() + "\tCADAUD_A\t" + Sub_cadaudabove.ToString() + "\t" + AV_cadaudabove.ToString() + "\t" + Pos_cadaudabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(cadaudAbove), 2) + "\tCADAUD_B\t" + Sub_cadaudbelow.ToString() + "\t" + AV_cadaudbelow.ToString() + "\t" + Pos_cadaudbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(cadaudBelow), 2), StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("jpyaud", "\n\nSub_JPYAUD\t" + Sub_jpyaud.ToString() + "\tJPYAUD_A\t" + Sub_jpyaudabove.ToString() + "\t" + AV_jpyaudabove.ToString() + "\t" + Pos_jpyaudabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpyaudAbove), 2) + "\tJPYAUD_B\t" + Sub_jpyaudbelow.ToString() + "\t" + AV_jpyaudbelow.ToString() + "\t" + Pos_jpyaudbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpyaudBelow), 2), StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("jpycad", "\n\n\nSub_JPYCAD\t" + Sub_jpycad.ToString() + "\tJPYCAD_A\t" + Sub_jpycadabove.ToString() + "\t" + AV_jpycadabove.ToString() + "\t" + Pos_jpycadabove.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpycadAbove), 2) + "\tJPYCAD_B\t" + Sub_jpycadbelow.ToString() + "\t" + AV_jpycadbelow.ToString() + "\t" + Pos_jpycadbelow.Count.ToString() + "\t" + Math.Round(this.TotalProfits(jpycadBelow), 2), StaticPosition.TopLeft, Colors.White);
