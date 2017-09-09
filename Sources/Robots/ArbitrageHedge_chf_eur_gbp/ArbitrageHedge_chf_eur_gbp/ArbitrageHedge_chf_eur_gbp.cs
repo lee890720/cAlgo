@@ -1,6 +1,5 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
-using cAlgo.Indicators;
 using cAlgo.Lib;
 using System;
 using System.Collections.Generic;
@@ -69,6 +68,7 @@ namespace cAlgo
             chartdraw();
             if (IsTrade)
             {
+                #region Parameter
                 var RS_eurchf = usd_eurchf.Result.LastValue;
                 var AV_eurchf = usd_eurchf.Average.LastValue;
                 var RS_gbpchf = usd_gbpchf.Result.LastValue;
@@ -84,6 +84,8 @@ namespace cAlgo
                 var Sub_eurchf = string.Format("{0:000000}", Math.Round(RS_eurchf)) + Math.Round(RS_eurchf - AV_eurchf).ToString();
                 var Sub_gbpchf = string.Format("{0:000000}", Math.Round(RS_gbpchf)) + Math.Round(RS_gbpchf - AV_gbpchf).ToString();
                 var Sub_gbpeur = string.Format("{0:000000}", Math.Round(RS_gbpeur)) + Math.Round(RS_gbpeur - AV_gbpeur).ToString();
+                #endregion
+                #region Open
                 if (opensignal() == "Above_EURCHF")
                 {
                     initSelleurchf.Label = eurchfAbove;
@@ -120,6 +122,8 @@ namespace cAlgo
                     initSellgbpeur.Comment = Sub_gbpeur;
                     this.executeOrder(initSellgbpeur);
                 }
+                #endregion
+                #region Close
                 if (Pos_eurchfabove.Count != 0)
                     if (RS_eurchf <= AV_eurchf)
                         this.closeAllLabel(eurchfAbove);
@@ -138,6 +142,7 @@ namespace cAlgo
                 if (Pos_gbpeurbelow.Count != 0)
                     if (RS_gbpeur >= AV_gbpeur)
                         this.closeAllLabel(gbpeurBelow);
+                #endregion
             }
         }
         private string opensignal()
@@ -165,19 +170,19 @@ namespace cAlgo
             List<Position> Pos_gbpchfbelow = new List<Position>(this.GetPositions(gbpchfBelow));
             List<Position> Pos_gbpeurabove = new List<Position>(this.GetPositions(gbpeurAbove));
             List<Position> Pos_gbpeurbelow = new List<Position>(this.GetPositions(gbpeurBelow));
-            List<Position> Pos_all = new List<Position>();
-            Pos_all.AddRange(Pos_eurchfabove);
-            Pos_all.AddRange(Pos_eurchfbelow);
-            Pos_all.AddRange(Pos_gbpchfabove);
-            Pos_all.AddRange(Pos_gbpchfbelow);
-            Pos_all.AddRange(Pos_gbpeurabove);
-            Pos_all.AddRange(Pos_gbpeurbelow);
             Pos_eurchfabove.Reverse();
             Pos_eurchfbelow.Reverse();
             Pos_gbpchfabove.Reverse();
             Pos_gbpchfbelow.Reverse();
             Pos_gbpeurabove.Reverse();
             Pos_gbpeurbelow.Reverse();
+            //List<Position> Pos_all = new List<Position>();
+            //Pos_all.AddRange(Pos_eurchfabove);
+            //Pos_all.AddRange(Pos_eurchfbelow);
+            //Pos_all.AddRange(Pos_gbpchfabove);
+            //Pos_all.AddRange(Pos_gbpchfbelow);
+            //Pos_all.AddRange(Pos_gbpeurabove);
+            //Pos_all.AddRange(Pos_gbpeurbelow);
             var now = DateTime.UtcNow;
             List<DateTime> lastPosTime = new List<DateTime>();
             if (Pos_eurchfabove.Count != 0)
@@ -264,6 +269,7 @@ namespace cAlgo
                 AV_gbpeurbelow = totalCom / Pos_gbpeurbelow.Count;
             }
             #endregion
+            #region Signal
             av.AddRange(new double[] 
             {
                 AV_eurchfabove,
@@ -297,7 +303,6 @@ namespace cAlgo
                 AV_above = 10000;
             if (Open_A == 1 && Open_B == 2)
                 AV_below = -10000;
-            #region Signal
             if (DateTime.Compare(Pos_LastTime, now) < 0)
             {
                 if (RS_eurchf > AV_eurchf + AV_above)
@@ -388,6 +393,7 @@ namespace cAlgo
         }
         private void chartdraw()
         {
+            #region Parameter
             var RS_eurchf = usd_eurchf.Result.LastValue;
             var AV_eurchf = usd_eurchf.Average.LastValue;
             var RS_gbpchf = usd_gbpchf.Result.LastValue;
@@ -436,6 +442,7 @@ namespace cAlgo
             if (Pos_gbpeurbelow.Count != 0)
                 lastPosTime.Add(Pos_gbpeurbelow[0].EntryTime.AddHours(1));
             var Pos_LastTime = lastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-2) : lastPosTime.Max();
+            #endregion
             #region EURCHF
             if (Pos_eurchfabove.Count != 0)
             {

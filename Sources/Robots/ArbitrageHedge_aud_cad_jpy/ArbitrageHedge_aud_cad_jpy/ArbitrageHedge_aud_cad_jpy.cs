@@ -1,6 +1,5 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
-using cAlgo.Indicators;
 using cAlgo.Lib;
 using System;
 using System.Collections.Generic;
@@ -69,6 +68,7 @@ namespace cAlgo
             chartdraw();
             if (IsTrade)
             {
+                #region Parameter
                 var RS_cadaud = usd_cadaud.Result.LastValue;
                 var AV_cadaud = usd_cadaud.Average.LastValue;
                 var RS_jpyaud = usd_jpyaud.Result.LastValue;
@@ -84,6 +84,8 @@ namespace cAlgo
                 var Sub_cadaud = string.Format("{0:000000}", Math.Round(RS_cadaud)) + Math.Round(RS_cadaud - AV_cadaud).ToString();
                 var Sub_jpyaud = string.Format("{0:000000}", Math.Round(RS_jpyaud)) + Math.Round(RS_jpyaud - AV_jpyaud).ToString();
                 var Sub_jpycad = string.Format("{0:000000}", Math.Round(RS_jpycad)) + Math.Round(RS_jpycad - AV_jpycad).ToString();
+                #endregion
+                #region Open
                 if (opensignal() == "Above_CADAUD")
                 {
                     initBuycadaud.Label = cadaudAbove;
@@ -120,6 +122,8 @@ namespace cAlgo
                     initSelljpycad.Comment = Sub_jpycad;
                     this.executeOrder(initSelljpycad);
                 }
+                #endregion
+                #region Close
                 if (Pos_cadaudabove.Count != 0)
                     if (RS_cadaud <= AV_cadaud)
                         this.closeAllLabel(cadaudAbove);
@@ -138,6 +142,7 @@ namespace cAlgo
                 if (Pos_jpycadbelow.Count != 0)
                     if (RS_jpycad >= AV_jpycad)
                         this.closeAllLabel(jpycadBelow);
+                #endregion
             }
         }
         private string opensignal()
@@ -165,19 +170,19 @@ namespace cAlgo
             List<Position> Pos_jpyaudbelow = new List<Position>(this.GetPositions(jpyaudBelow));
             List<Position> Pos_jpycadabove = new List<Position>(this.GetPositions(jpycadAbove));
             List<Position> Pos_jpycadbelow = new List<Position>(this.GetPositions(jpycadBelow));
-            List<Position> Pos_all = new List<Position>();
-            Pos_all.AddRange(Pos_cadaudabove);
-            Pos_all.AddRange(Pos_cadaudbelow);
-            Pos_all.AddRange(Pos_jpyaudabove);
-            Pos_all.AddRange(Pos_jpyaudbelow);
-            Pos_all.AddRange(Pos_jpycadabove);
-            Pos_all.AddRange(Pos_jpycadbelow);
             Pos_cadaudabove.Reverse();
             Pos_cadaudbelow.Reverse();
             Pos_jpyaudabove.Reverse();
             Pos_jpyaudbelow.Reverse();
             Pos_jpycadabove.Reverse();
             Pos_jpycadbelow.Reverse();
+            //List<Position> Pos_all = new List<Position>();
+            //Pos_all.AddRange(Pos_cadaudabove);
+            //Pos_all.AddRange(Pos_cadaudbelow);
+            //Pos_all.AddRange(Pos_jpyaudabove);
+            //Pos_all.AddRange(Pos_jpyaudbelow);
+            //Pos_all.AddRange(Pos_jpycadabove);
+            //Pos_all.AddRange(Pos_jpycadbelow);
             var now = DateTime.UtcNow;
             List<DateTime> lastPosTime = new List<DateTime>();
             if (Pos_cadaudabove.Count != 0)
@@ -264,6 +269,7 @@ namespace cAlgo
                 AV_jpycadbelow = totalCom / Pos_jpycadbelow.Count;
             }
             #endregion
+            #region Signal
             av.AddRange(new double[] 
             {
                 AV_cadaudabove,
@@ -297,7 +303,6 @@ namespace cAlgo
                 AV_above = 10000;
             if (Open_A == 1 && Open_B == 2)
                 AV_below = -10000;
-            #region Signal
             if (DateTime.Compare(Pos_LastTime, now) < 0)
             {
                 if (RS_cadaud > AV_cadaud + AV_above)
@@ -388,6 +393,7 @@ namespace cAlgo
         }
         private void chartdraw()
         {
+            #region Parameter
             var RS_cadaud = usd_cadaud.Result.LastValue;
             var AV_cadaud = usd_cadaud.Average.LastValue;
             var RS_jpyaud = usd_jpyaud.Result.LastValue;
@@ -436,7 +442,7 @@ namespace cAlgo
             if (Pos_jpycadbelow.Count != 0)
                 lastPosTime.Add(Pos_jpycadbelow[0].EntryTime.AddHours(1));
             var Pos_LastTime = lastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-2) : lastPosTime.Max();
-
+            #endregion
             #region CADAUD
             if (Pos_cadaudabove.Count != 0)
             {
