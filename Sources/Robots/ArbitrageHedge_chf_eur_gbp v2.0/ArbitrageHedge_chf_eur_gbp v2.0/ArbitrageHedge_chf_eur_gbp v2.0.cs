@@ -16,7 +16,7 @@ namespace cAlgo
         [Parameter(DefaultValue = 30)]
         public int Distance { get; set; }
 
-        [Parameter(DefaultValue = true)]
+        [Parameter(DefaultValue = false)]
         public bool IsTrade { get; set; }
 
         private Symbol eurchfSymbol, gbpchfSymbol, gbpeurSymbol;
