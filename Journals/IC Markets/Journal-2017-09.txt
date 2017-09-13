@@ -23,3 +23,29 @@
 2017.09.12 11:23:49.705 | cAlgo started
 2017.09.12 11:40:25.747 | cAlgo started
 2017.09.12 11:45:11.241 | cAlgo started
+2017.09.12 14:20:02.914 | cAlgo started
+2017.09.12 14:29:50.148 | cAlgo started
+2017.09.12 14:39:00.254 | Demo account 3293540 successfully created
+2017.09.12 14:40:14.343 | Request to Sell £ 1k GBPCHF (Price: 1.27128, MR: 2) is sent to server
+2017.09.12 14:40:15.202 | → Request to Sell £ 1k GBPCHF (Price: 1.27128, MR: 2) is ACCEPTED, order OID55890371 created (12/09/2017 14:40:14.613 UTC+0)
+2017.09.12 14:40:15.608 | → Order OID55890371 is FILLED at 1.27127, position PID36110101 (12/09/2017 14:40:14.896 UTC+0)
+2017.09.12 15:14:14.857 | cAlgo started
+2017.09.12 16:04:10.190 | Request to close position PID36110101 is sent to server
+2017.09.12 16:04:10.940 | → Request to close position PID36110101 is ACCEPTED, order OID55895399 created (12/09/2017 16:04:10.527 UTC+0)
+2017.09.12 16:04:11.144 | → Order OID55895399 is FILLED at 1.27409, position PID36110101 closed (12/09/2017 16:04:10.739 UTC+0)
+2017.09.12 16:04:13.659 | Request to Sell £ 1k GBPCHF (Price: 1.27403, MR: 2) is sent to server
+2017.09.12 16:04:14.128 | → Request to Sell £ 1k GBPCHF (Price: 1.27403, MR: 2) is ACCEPTED, order OID55895402 created (12/09/2017 16:04:13.935 UTC+0)
+2017.09.12 16:04:14.456 | → Order OID55895402 is FILLED at 1.27401, position PID36113040 (12/09/2017 16:04:14.233 UTC+0)
+2017.09.12 16:04:24.909 | Request to close position PID36113040 is sent to server
+2017.09.12 16:04:25.300 | → Request to close position PID36113040 is ACCEPTED, order OID55895404 created (12/09/2017 16:04:25.102 UTC+0)
+2017.09.12 16:04:25.565 | → Order OID55895404 is FILLED at 1.274, position PID36113040 closed (12/09/2017 16:04:25.358 UTC+0)
+2017.09.12 16:04:25.769 | Request to Sell £ 1k GBPCHF (Price: 1.27398, MR: 2) is sent to server
+2017.09.12 16:04:26.159 | → Request to Sell £ 1k GBPCHF (Price: 1.27398, MR: 2) is ACCEPTED, order OID55895405 created (12/09/2017 16:04:25.967 UTC+0)
+2017.09.12 16:04:26.378 | → Order OID55895405 is FILLED at 1.27398, position PID36113042 (12/09/2017 16:04:26.191 UTC+0)
+2017.09.12 16:04:34.659 | Request to close position PID36113042 is sent to server
+2017.09.12 16:04:35.034 | → Request to close position PID36113042 is ACCEPTED, order OID55895407 created (12/09/2017 16:04:34.853 UTC+0)
+2017.09.12 16:04:35.300 | → Order OID55895407 is FILLED at 1.27398, position PID36113042 closed (12/09/2017 16:04:35.066 UTC+0)
+2017.09.12 23:30:10.254 | cAlgo started
+2017.09.12 23:32:30.176 | cAlgo started
+2017.09.12 23:37:02.512 | cAlgo started
+2017.09.13 05:38:40.126 | cAlgo started
