@@ -2,11 +2,13 @@
 using cAlgo.API.Internals;
 using cAlgo.Lib;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace cAlgo
 {
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
-    public class USD_EURCHF : Indicator
+    public class Sub_EURCHF : Indicator
     {
         [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
@@ -17,21 +19,16 @@ namespace cAlgo
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
 
-        private string BigSymbol = "EURUSD";
-        private string SmallSymbol = "USDCHF";
-        private MarketSeries _symbolbigSeries, _symbolsmallSeries;
+        private USD_EURCHF usd_eurchf;
+
         protected override void Initialize()
         {
-            _symbolbigSeries = MarketData.GetSeries(BigSymbol, TimeFrame);
-            _symbolsmallSeries = MarketData.GetSeries(SmallSymbol, TimeFrame);
+            usd_eurchf = Indicators.GetIndicator<USD_EURCHF>(Period);
         }
 
         public override void Calculate(int index)
         {
-            DateTime SymbolTime = MarketSeries.OpenTime[index];
-            int BigIndex = _symbolbigSeries.GetIndexByDate(SymbolTime);
-            int SmallIndex = _symbolsmallSeries.GetIndexByDate(SymbolTime);
-            Result[index] = (_symbolbigSeries.Close[BigIndex] - 1 / _symbolsmallSeries.Close[SmallIndex]) / 0.0001 + 10000;
+            Result[index] = usd_eurchf.Result[index] - usd_eurchf.Average[index];
             double sum = 0.0;
             for (int i = index - Period + 1; i <= index; i++)
             {

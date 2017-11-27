@@ -18,9 +18,9 @@ namespace cAlgo.Lib
 
 			if (index >= 0 && index < count)
 			{
-				double open = marketSeries.Open[count - 1 - index];
-				double close = marketSeries.Close[count - 1 - index];
-				double median = marketSeries.Median[count - 1 - index];
+				double open = marketSeries.Open[index];
+				double close = marketSeries.Close[index];
+				double median = marketSeries.Median[index];
 				double variation;
 
 				if (double.IsNaN(close))

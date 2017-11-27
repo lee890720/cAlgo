@@ -49,3 +49,274 @@
 2017.09.12 23:32:30.176 | cAlgo started
 2017.09.12 23:37:02.512 | cAlgo started
 2017.09.13 05:38:40.126 | cAlgo started
+2017.09.14 08:39:24.918 | cAlgo started
+2017.09.14 09:15:55.528 | cAlgo started
+2017.09.14 10:04:17.598 | cAlgo started
+2017.09.15 02:53:21.112 | cAlgo started
+2017.09.15 05:37:58.765 | cAlgo started
+2017.09.15 07:09:51.815 | → Order OID3931866 is FILLED at 0.79971, position PID1887656 closed (15/09/2017 07:09:51.500 UTC+0)
+2017.09.15 09:30:13.344 | cAlgo started
+2017.09.15 13:40:40.768 | cAlgo started
+2017.09.15 16:23:53.220 | cAlgo started
+2017.09.16 03:28:01.320 | cAlgo started
+2017.09.16 10:56:54.391 | cAlgo started
+2017.09.17 05:16:34.325 | cAlgo started
+2017.09.18 13:07:51.901 | cAlgo started
+2017.09.18 13:15:40.594 | cAlgo started
+2017.09.19 01:52:03.702 | → Order OID3976971 is FILLED at 1.0971, position PID1901340 closed (19/09/2017 01:52:03.362 UTC+0)
+2017.09.19 02:42:23.377 | cAlgo started
+2017.09.19 13:12:25.974 | cAlgo started
+2017.09.19 14:01:59.214 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:01:59.745 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292434 created (19/09/2017 14:01:59.538 UTC+0)
+2017.09.19 14:02:00.245 | → Order OID56292434 is FILLED at 1.19844, position PID36337668 (19/09/2017 14:01:59.756 UTC+0)
+2017.09.19 14:02:00.292 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:02:00.683 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292439 created (19/09/2017 14:02:00.510 UTC+0)
+2017.09.19 14:02:00.964 | → Order OID56292439 is FILLED at 1.19844, position PID36337671 (19/09/2017 14:02:00.768 UTC+0)
+2017.09.19 14:02:01.245 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:02:01.651 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292440 created (19/09/2017 14:02:01.448 UTC+0)
+2017.09.19 14:02:01.854 | → Order OID56292440 is FILLED at 1.19846, position PID36337672 (19/09/2017 14:02:01.661 UTC+0)
+2017.09.19 14:02:01.886 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:02:02.276 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292441 created (19/09/2017 14:02:02.103 UTC+0)
+2017.09.19 14:02:02.495 | → Order OID56292441 is FILLED at 1.19846, position PID36337673 (19/09/2017 14:02:02.306 UTC+0)
+2017.09.19 14:02:02.511 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:02:04.151 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292443 created (19/09/2017 14:02:02.758 UTC+0)
+2017.09.19 14:02:04.167 | → Order OID56292443 is FILLED at 1.19845, position PID36337675 (19/09/2017 14:02:03.016 UTC+0)
+2017.09.19 14:02:04.167 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:02:04.683 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292449 created (19/09/2017 14:02:04.390 UTC+0)
+2017.09.19 14:02:04.870 | → Order OID56292449 is FILLED at 1.19845, position PID36337679 (19/09/2017 14:02:04.671 UTC+0)
+2017.09.19 14:03:07.921 | Request to close position PID36138559 is sent to server
+2017.09.19 14:03:07.937 | Request to close position PID36138584 is sent to server
+2017.09.19 14:03:07.952 | Request to close position PID36337668 is sent to server
+2017.09.19 14:03:07.952 | Request to close position PID36337671 is sent to server
+2017.09.19 14:03:07.952 | Request to close position PID36337672 is sent to server
+2017.09.19 14:03:07.952 | Request to close position PID36337673 is sent to server
+2017.09.19 14:03:07.952 | Request to close position PID36337675 is sent to server
+2017.09.19 14:03:07.952 | Request to close position PID36337679 is sent to server
+2017.09.19 14:03:08.452 | → Request to close position PID36138559 is ACCEPTED, order OID56292538 created (19/09/2017 14:03:08.232 UTC+0)
+2017.09.19 14:03:08.577 | → Request to close position PID36138584 is ACCEPTED, order OID56292539 created (19/09/2017 14:03:08.386 UTC+0)
+2017.09.19 14:03:08.577 | → Request to close position PID36337668 is ACCEPTED, order OID56292540 created (19/09/2017 14:03:08.386 UTC+0)
+2017.09.19 14:03:08.577 | → Request to close position PID36337671 is ACCEPTED, order OID56292541 created (19/09/2017 14:03:08.386 UTC+0)
+2017.09.19 14:03:08.608 | → Request to close position PID36337672 is ACCEPTED, order OID56292542 created (19/09/2017 14:03:08.386 UTC+0)
+2017.09.19 14:03:08.608 | → Request to close position PID36337673 is ACCEPTED, order OID56292543 created (19/09/2017 14:03:08.388 UTC+0)
+2017.09.19 14:03:08.640 | → Request to close position PID36337675 is ACCEPTED, order OID56292544 created (19/09/2017 14:03:08.388 UTC+0)
+2017.09.19 14:03:08.640 | → Request to close position PID36337679 is ACCEPTED, order OID56292545 created (19/09/2017 14:03:08.388 UTC+0)
+2017.09.19 14:03:08.812 | → Order OID56292538 is FILLED at 1.2995, position PID36138559 closed (19/09/2017 14:03:08.511 UTC+0)
+2017.09.19 14:03:08.968 | → Order OID56292541 is FILLED at 1.19831, position PID36337671 closed (19/09/2017 14:03:08.599 UTC+0)
+2017.09.19 14:03:09.030 | → Order OID56292540 is FILLED at 1.19831, position PID36337668 closed (19/09/2017 14:03:08.635 UTC+0)
+2017.09.19 14:03:09.077 | → Order OID56292544 is FILLED at 1.19831, position PID36337675 closed (19/09/2017 14:03:08.644 UTC+0)
+2017.09.19 14:03:09.140 | → Order OID56292542 is FILLED at 1.19831, position PID36337672 closed (19/09/2017 14:03:08.650 UTC+0)
+2017.09.19 14:03:09.187 | → Order OID56292545 is FILLED at 1.19831, position PID36337679 closed (19/09/2017 14:03:08.668 UTC+0)
+2017.09.19 14:03:09.233 | → Order OID56292539 is FILLED at 90.629, position PID36138584 closed (19/09/2017 14:03:08.669 UTC+0)
+2017.09.19 14:03:09.296 | → Order OID56292543 is FILLED at 1.19831, position PID36337673 closed (19/09/2017 14:03:08.689 UTC+0)
+2017.09.19 14:05:47.327 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:47.718 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292931 created (19/09/2017 14:05:47.550 UTC+0)
+2017.09.19 14:05:47.999 | → Order OID56292931 is FILLED at 1.19801, position PID36337933 (19/09/2017 14:05:47.791 UTC+0)
+2017.09.19 14:05:48.124 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:48.515 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292936 created (19/09/2017 14:05:48.338 UTC+0)
+2017.09.19 14:05:48.796 | → Order OID56292936 is FILLED at 1.19796, position PID36337937 (19/09/2017 14:05:48.617 UTC+0)
+2017.09.19 14:05:48.905 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:49.374 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292939 created (19/09/2017 14:05:49.116 UTC+0)
+2017.09.19 14:05:49.562 | → Order OID56292939 is FILLED at 1.19792, position PID36337938 (19/09/2017 14:05:49.389 UTC+0)
+2017.09.19 14:05:49.671 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:50.062 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292940 created (19/09/2017 14:05:49.882 UTC+0)
+2017.09.19 14:05:50.374 | → Order OID56292940 is FILLED at 1.19792, position PID36337939 (19/09/2017 14:05:50.175 UTC+0)
+2017.09.19 14:05:50.452 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:50.843 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292944 created (19/09/2017 14:05:50.672 UTC+0)
+2017.09.19 14:05:51.077 | → Order OID56292944 is FILLED at 1.19792, position PID36337943 (19/09/2017 14:05:50.885 UTC+0)
+2017.09.19 14:05:51.187 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:51.593 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292945 created (19/09/2017 14:05:51.412 UTC+0)
+2017.09.19 14:05:51.827 | → Order OID56292945 is FILLED at 1.19792, position PID36337944 (19/09/2017 14:05:51.629 UTC+0)
+2017.09.19 14:05:52.968 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:53.374 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292949 created (19/09/2017 14:05:53.197 UTC+0)
+2017.09.19 14:05:53.687 | → Order OID56292949 is FILLED at 1.19793, position PID36337945 (19/09/2017 14:05:53.488 UTC+0)
+2017.09.19 14:05:53.874 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:54.265 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292950 created (19/09/2017 14:05:54.090 UTC+0)
+2017.09.19 14:05:54.577 | → Order OID56292950 is FILLED at 1.19788, position PID36337946 (19/09/2017 14:05:54.384 UTC+0)
+2017.09.19 14:05:54.608 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:54.999 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292954 created (19/09/2017 14:05:54.822 UTC+0)
+2017.09.19 14:05:55.249 | → Order OID56292954 is FILLED at 1.19789, position PID36337950 (19/09/2017 14:05:55.056 UTC+0)
+2017.09.19 14:05:55.296 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:55.687 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292955 created (19/09/2017 14:05:55.510 UTC+0)
+2017.09.19 14:05:55.921 | → Order OID56292955 is FILLED at 1.19788, position PID36337951 (19/09/2017 14:05:55.749 UTC+0)
+2017.09.19 14:05:55.968 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:56.358 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292958 created (19/09/2017 14:05:56.187 UTC+0)
+2017.09.19 14:05:56.608 | → Order OID56292958 is FILLED at 1.19794, position PID36337952 (19/09/2017 14:05:56.404 UTC+0)
+2017.09.19 14:05:56.640 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:57.046 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292959 created (19/09/2017 14:05:56.867 UTC+0)
+2017.09.19 14:05:57.343 | → Order OID56292959 is FILLED at 1.19794, position PID36337953 (19/09/2017 14:05:57.130 UTC+0)
+2017.09.19 14:05:57.390 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:57.796 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292960 created (19/09/2017 14:05:57.606 UTC+0)
+2017.09.19 14:05:58.093 | → Order OID56292960 is FILLED at 1.19792, position PID36337954 (19/09/2017 14:05:57.884 UTC+0)
+2017.09.19 14:05:58.124 | Request to Sell € 1k EURUSD is sent to server
+2017.09.19 14:05:58.546 | → Request to Sell € 1k EURUSD is ACCEPTED, order OID56292962 created (19/09/2017 14:05:58.359 UTC+0)
+2017.09.19 14:05:58.749 | → Order OID56292962 is FILLED at 1.19792, position PID36337956 (19/09/2017 14:05:58.571 UTC+0)
+2017.09.19 14:11:36.113 | Request to close position PID36337933 is sent to server
+2017.09.19 14:11:36.113 | Request to close position PID36337937 is sent to server
+2017.09.19 14:11:36.113 | Request to close position PID36337938 is sent to server
+2017.09.19 14:11:36.113 | Request to close position PID36337939 is sent to server
+2017.09.19 14:11:36.113 | Request to close position PID36337943 is sent to server
+2017.09.19 14:11:36.113 | Request to close position PID36337944 is sent to server
+2017.09.19 14:11:36.128 | Request to close position PID36337945 is sent to server
+2017.09.19 14:11:36.128 | Request to close position PID36337946 is sent to server
+2017.09.19 14:11:36.128 | Request to close position PID36337950 is sent to server
+2017.09.19 14:11:36.128 | Request to close position PID36337951 is sent to server
+2017.09.19 14:11:36.128 | Request to close position PID36337952 is sent to server
+2017.09.19 14:11:36.128 | Request to close position PID36337953 is sent to server
+2017.09.19 14:11:36.128 | Request to close position PID36337954 is sent to server
+2017.09.19 14:11:36.144 | Request to close position PID36337956 is sent to server
+2017.09.19 14:11:36.566 | → Request to close position PID36337933 is ACCEPTED, order OID56293536 created (19/09/2017 14:11:36.350 UTC+0)
+2017.09.19 14:11:36.613 | → Request to close position PID36337937 is ACCEPTED, order OID56293537 created (19/09/2017 14:11:36.385 UTC+0)
+2017.09.19 14:11:36.628 | → Request to close position PID36337938 is ACCEPTED, order OID56293538 created (19/09/2017 14:11:36.385 UTC+0)
+2017.09.19 14:11:36.628 | → Request to close position PID36337939 is ACCEPTED, order OID56293539 created (19/09/2017 14:11:36.385 UTC+0)
+2017.09.19 14:11:36.628 | → Request to close position PID36337943 is ACCEPTED, order OID56293540 created (19/09/2017 14:11:36.385 UTC+0)
+2017.09.19 14:11:36.644 | → Request to close position PID36337944 is ACCEPTED, order OID56293541 created (19/09/2017 14:11:36.385 UTC+0)
+2017.09.19 14:11:36.644 | → Request to close position PID36337945 is ACCEPTED, order OID56293542 created (19/09/2017 14:11:36.386 UTC+0)
+2017.09.19 14:11:36.660 | → Request to close position PID36337946 is ACCEPTED, order OID56293543 created (19/09/2017 14:11:36.386 UTC+0)
+2017.09.19 14:11:36.660 | → Request to close position PID36337950 is ACCEPTED, order OID56293544 created (19/09/2017 14:11:36.386 UTC+0)
+2017.09.19 14:11:36.707 | → Request to close position PID36337951 is ACCEPTED, order OID56293545 created (19/09/2017 14:11:36.386 UTC+0)
+2017.09.19 14:11:36.894 | → Order OID56293536 is FILLED at 1.1978, position PID36337933 closed (19/09/2017 14:11:36.588 UTC+0)
+2017.09.19 14:11:36.941 | → Order OID56293538 is FILLED at 1.1978, position PID36337938 closed (19/09/2017 14:11:36.595 UTC+0)
+2017.09.19 14:11:37.019 | → Order OID56293542 is FILLED at 1.1978, position PID36337945 closed (19/09/2017 14:11:36.605 UTC+0)
+2017.09.19 14:11:37.128 | → Order OID56293545 is FILLED at 1.1978, position PID36337951 closed (19/09/2017 14:11:36.625 UTC+0)
+2017.09.19 14:11:37.207 | → Order OID56293539 is FILLED at 1.1978, position PID36337939 closed (19/09/2017 14:11:36.627 UTC+0)
+2017.09.19 14:11:37.222 | → Request to close position PID36337952 is ACCEPTED, order OID56293546 created (19/09/2017 14:11:36.632 UTC+0)
+2017.09.19 14:11:37.222 | → Request to close position PID36337953 is ACCEPTED, order OID56293547 created (19/09/2017 14:11:36.632 UTC+0)
+2017.09.19 14:11:37.238 | → Request to close position PID36337954 is ACCEPTED, order OID56293548 created (19/09/2017 14:11:36.632 UTC+0)
+2017.09.19 14:11:37.253 | → Request to close position PID36337956 is ACCEPTED, order OID56293549 created (19/09/2017 14:11:36.632 UTC+0)
+2017.09.19 14:11:37.363 | → Order OID56293544 is FILLED at 1.1978, position PID36337950 closed (19/09/2017 14:11:36.633 UTC+0)
+2017.09.19 14:11:37.410 | → Order OID56293543 is FILLED at 1.1978, position PID36337946 closed (19/09/2017 14:11:36.647 UTC+0)
+2017.09.19 14:11:37.488 | → Order OID56293541 is FILLED at 1.1978, position PID36337944 closed (19/09/2017 14:11:36.668 UTC+0)
+2017.09.19 14:11:37.519 | → Order OID56293540 is FILLED at 1.1978, position PID36337943 closed (19/09/2017 14:11:36.669 UTC+0)
+2017.09.19 14:11:37.582 | → Order OID56293537 is FILLED at 1.1978, position PID36337937 closed (19/09/2017 14:11:36.677 UTC+0)
+2017.09.19 14:11:37.722 | → Order OID56293548 is FILLED at 1.1978, position PID36337954 closed (19/09/2017 14:11:36.845 UTC+0)
+2017.09.19 14:11:37.800 | → Order OID56293547 is FILLED at 1.1978, position PID36337953 closed (19/09/2017 14:11:36.861 UTC+0)
+2017.09.19 14:11:37.847 | → Order OID56293549 is FILLED at 1.1978, position PID36337956 closed (19/09/2017 14:11:36.908 UTC+0)
+2017.09.19 14:11:37.925 | → Order OID56293546 is FILLED at 1.1978, position PID36337952 closed (19/09/2017 14:11:36.922 UTC+0)
+2017.09.19 14:13:17.378 | Request to Buy € 1k EURUSD is sent to server
+2017.09.19 14:13:17.769 | → Request to Buy € 1k EURUSD is ACCEPTED, order OID56293733 created (19/09/2017 14:13:17.595 UTC+0)
+2017.09.19 14:13:18.003 | → Order OID56293733 is FILLED at 1.19778, position PID36338365 (19/09/2017 14:13:17.800 UTC+0)
+2017.09.19 14:13:18.707 | Request to Buy € 1k EURUSD is sent to server
+2017.09.19 14:13:19.082 | → Request to Buy € 1k EURUSD is ACCEPTED, order OID56293734 created (19/09/2017 14:13:18.911 UTC+0)
+2017.09.19 14:13:19.332 | → Order OID56293734 is FILLED at 1.19779, position PID36338366 (19/09/2017 14:13:19.145 UTC+0)
+2017.09.19 14:13:19.363 | Request to Buy € 1k EURUSD is sent to server
+2017.09.19 14:13:19.753 | → Request to Buy € 1k EURUSD is ACCEPTED, order OID56293735 created (19/09/2017 14:13:19.576 UTC+0)
+2017.09.19 14:13:20.050 | → Order OID56293735 is FILLED at 1.19778, position PID36338367 (19/09/2017 14:13:19.848 UTC+0)
+2017.09.19 14:13:20.082 | Request to Buy € 1k EURUSD is sent to server
+2017.09.19 14:13:20.488 | → Request to Buy € 1k EURUSD is ACCEPTED, order OID56293737 created (19/09/2017 14:13:20.292 UTC+0)
+2017.09.19 14:13:20.707 | → Order OID56293737 is FILLED at 1.19778, position PID36338368 (19/09/2017 14:13:20.514 UTC+0)
+2017.09.19 14:13:21.238 | Request to Buy € 1k EURUSD is sent to server
+2017.09.19 14:13:21.691 | → Request to Buy € 1k EURUSD is ACCEPTED, order OID56293738 created (19/09/2017 14:13:21.462 UTC+0)
+2017.09.19 14:13:21.863 | → Order OID56293738 is FILLED at 1.19777, position PID36338369 (19/09/2017 14:13:21.669 UTC+0)
+2017.09.19 14:14:19.019 | Request to close position PID36338365 is sent to server
+2017.09.19 14:14:19.035 | Request to close position PID36338366 is sent to server
+2017.09.19 14:14:19.035 | Request to close position PID36338367 is sent to server
+2017.09.19 14:14:19.035 | Request to close position PID36338368 is sent to server
+2017.09.19 14:14:19.035 | Request to close position PID36338369 is sent to server
+2017.09.19 14:14:19.410 | → Request to close position PID36338365 is ACCEPTED, order OID56293796 created (19/09/2017 14:14:19.231 UTC+0)
+2017.09.19 14:14:19.550 | → Request to close position PID36338366 is ACCEPTED, order OID56293798 created (19/09/2017 14:14:19.365 UTC+0)
+2017.09.19 14:14:19.550 | → Request to close position PID36338367 is ACCEPTED, order OID56293799 created (19/09/2017 14:14:19.365 UTC+0)
+2017.09.19 14:14:19.566 | → Request to close position PID36338368 is ACCEPTED, order OID56293800 created (19/09/2017 14:14:19.365 UTC+0)
+2017.09.19 14:14:19.566 | → Request to close position PID36338369 is ACCEPTED, order OID56293801 created (19/09/2017 14:14:19.365 UTC+0)
+2017.09.19 14:14:19.738 | → Order OID56293796 is FILLED at 1.19793, position PID36338365 closed (19/09/2017 14:14:19.478 UTC+0)
+2017.09.19 14:14:19.863 | → Order OID56293798 is FILLED at 1.19796, position PID36338366 closed (19/09/2017 14:14:19.598 UTC+0)
+2017.09.19 14:14:19.925 | → Order OID56293799 is FILLED at 1.19796, position PID36338367 closed (19/09/2017 14:14:19.612 UTC+0)
+2017.09.19 14:14:20.082 | → Order OID56293800 is FILLED at 1.19796, position PID36338368 closed (19/09/2017 14:14:19.637 UTC+0)
+2017.09.19 14:14:20.160 | → Order OID56293801 is FILLED at 1.19796, position PID36338369 closed (19/09/2017 14:14:19.651 UTC+0)
+2017.09.19 14:15:59.097 | Request to Buy £ 1k GBPUSD is sent to server
+2017.09.19 14:15:59.519 | → Request to Buy £ 1k GBPUSD is ACCEPTED, order OID56293944 created (19/09/2017 14:15:59.326 UTC+0)
+2017.09.19 14:15:59.722 | → Order OID56293944 is FILLED at 1.34999, position PID36338488 (19/09/2017 14:15:59.546 UTC+0)
+2017.09.19 14:15:59.832 | Request to Buy £ 1k GBPUSD is sent to server
+2017.09.19 14:16:00.222 | → Request to Buy £ 1k GBPUSD is ACCEPTED, order OID56293945 created (19/09/2017 14:16:00.042 UTC+0)
+2017.09.19 14:16:00.675 | → Order OID56293945 is FILLED at 1.34999, position PID36338489 (19/09/2017 14:16:00.331 UTC+0)
+2017.09.19 14:16:00.722 | Request to Buy £ 1k GBPUSD is sent to server
+2017.09.19 14:16:01.144 | → Request to Buy £ 1k GBPUSD is ACCEPTED, order OID56293947 created (19/09/2017 14:16:00.960 UTC+0)
+2017.09.19 14:16:01.378 | → Order OID56293947 is FILLED at 1.34999, position PID36338491 (19/09/2017 14:16:01.199 UTC+0)
+2017.09.19 14:17:21.722 | Request to Sell AUD 1k AUDUSD is sent to server
+2017.09.19 14:17:22.191 | → Request to Sell AUD 1k AUDUSD is ACCEPTED, order OID56294072 created (19/09/2017 14:17:21.978 UTC+0)
+2017.09.19 14:17:22.378 | → Order OID56294072 is FILLED at 0.79944, position PID36338564 (19/09/2017 14:17:22.194 UTC+0)
+2017.09.19 14:17:22.472 | Request to Sell AUD 1k AUDUSD is sent to server
+2017.09.19 14:17:22.863 | → Request to Sell AUD 1k AUDUSD is ACCEPTED, order OID56294077 created (19/09/2017 14:17:22.692 UTC+0)
+2017.09.19 14:17:23.082 | → Order OID56294077 is FILLED at 0.79944, position PID36338566 (19/09/2017 14:17:22.908 UTC+0)
+2017.09.19 14:17:23.191 | Request to Sell AUD 1k AUDUSD is sent to server
+2017.09.19 14:17:23.566 | → Request to Sell AUD 1k AUDUSD is ACCEPTED, order OID56294080 created (19/09/2017 14:17:23.406 UTC+0)
+2017.09.19 14:17:24.050 | → Order OID56294080 is FILLED at 0.79944, position PID36338568 (19/09/2017 14:17:23.614 UTC+0)
+2017.09.19 14:19:01.472 | Request to close position PID36338488 is sent to server
+2017.09.19 14:19:01.472 | Request to close position PID36338489 is sent to server
+2017.09.19 14:19:01.472 | Request to close position PID36338491 is sent to server
+2017.09.19 14:19:01.472 | Request to close position PID36338564 is sent to server
+2017.09.19 14:19:01.472 | Request to close position PID36338566 is sent to server
+2017.09.19 14:19:01.472 | Request to close position PID36338568 is sent to server
+2017.09.19 14:19:01.910 | → Request to close position PID36338488 is ACCEPTED, order OID56294219 created (19/09/2017 14:19:01.684 UTC+0)
+2017.09.19 14:19:01.957 | → Request to close position PID36338489 is ACCEPTED, order OID56294220 created (19/09/2017 14:19:01.778 UTC+0)
+2017.09.19 14:19:01.972 | → Request to close position PID36338491 is ACCEPTED, order OID56294221 created (19/09/2017 14:19:01.778 UTC+0)
+2017.09.19 14:19:01.988 | → Request to close position PID36338564 is ACCEPTED, order OID56294222 created (19/09/2017 14:19:01.779 UTC+0)
+2017.09.19 14:19:01.988 | → Request to close position PID36338566 is ACCEPTED, order OID56294223 created (19/09/2017 14:19:01.779 UTC+0)
+2017.09.19 14:19:02.003 | → Request to close position PID36338568 is ACCEPTED, order OID56294224 created (19/09/2017 14:19:01.779 UTC+0)
+2017.09.19 14:19:02.160 | → Order OID56294219 is FILLED at 1.34988, position PID36338488 closed (19/09/2017 14:19:01.936 UTC+0)
+2017.09.19 14:19:02.238 | → Order OID56294224 is FILLED at 0.79935, position PID36338568 closed (19/09/2017 14:19:01.986 UTC+0)
+2017.09.19 14:19:02.347 | → Order OID56294223 is FILLED at 0.79935, position PID36338566 closed (19/09/2017 14:19:01.992 UTC+0)
+2017.09.19 14:19:02.410 | → Order OID56294221 is FILLED at 1.34988, position PID36338491 closed (19/09/2017 14:19:01.996 UTC+0)
+2017.09.19 14:19:02.503 | → Order OID56294222 is FILLED at 0.79935, position PID36338564 closed (19/09/2017 14:19:02.009 UTC+0)
+2017.09.19 14:19:02.582 | → Order OID56294220 is FILLED at 1.34988, position PID36338489 closed (19/09/2017 14:19:02.033 UTC+0)
+2017.09.19 14:20:07.235 | Request to Sell AUD 1k AUDUSD is sent to server
+2017.09.19 14:20:07.641 | → Request to Sell AUD 1k AUDUSD is ACCEPTED, order OID56294354 created (19/09/2017 14:20:07.457 UTC+0)
+2017.09.19 14:20:07.875 | → Order OID56294354 is FILLED at 0.79970, position PID36338696 (19/09/2017 14:20:07.683 UTC+0)
+2017.09.19 14:20:07.906 | Request to Sell AUD 1k AUDUSD is sent to server
+2017.09.19 14:20:08.313 | → Request to Sell AUD 1k AUDUSD is ACCEPTED, order OID56294370 created (19/09/2017 14:20:08.124 UTC+0)
+2017.09.19 14:20:08.563 | → Order OID56294370 is FILLED at 0.79973, position PID36338704 (19/09/2017 14:20:08.352 UTC+0)
+2017.09.19 14:22:34.420 | Request to close position PID36338696 is sent to server
+2017.09.19 14:22:34.422 | Request to close position PID36338704 is sent to server
+2017.09.19 14:22:34.942 | → Request to close position PID36338696 is ACCEPTED, order OID56294901 created (19/09/2017 14:22:35.119 UTC+0)
+2017.09.19 14:22:34.947 | → Request to close position PID36338704 is ACCEPTED, order OID56294902 created (19/09/2017 14:22:35.119 UTC+0)
+2017.09.19 14:22:35.218 | → Order OID56294901 is FILLED at 0.79987, position PID36338696 closed (19/09/2017 14:22:35.362 UTC+0)
+2017.09.19 14:22:35.283 | → Order OID56294902 is FILLED at 0.79987, position PID36338704 closed (19/09/2017 14:22:35.391 UTC+0)
+2017.09.19 14:22:37.199 | Request to Buy AUD 1k AUDUSD is sent to server
+2017.09.19 14:22:37.632 | → Request to Buy AUD 1k AUDUSD is ACCEPTED, order OID56294906 created (19/09/2017 14:22:37.850 UTC+0)
+2017.09.19 14:22:37.905 | → Order OID56294906 is FILLED at 0.79986, position PID36339012 (19/09/2017 14:22:38.128 UTC+0)
+2017.09.19 14:22:38.485 | Request to Buy AUD 1k AUDUSD is sent to server
+2017.09.19 14:22:38.890 | → Request to Buy AUD 1k AUDUSD is ACCEPTED, order OID56294909 created (19/09/2017 14:22:39.123 UTC+0)
+2017.09.19 14:22:39.586 | → Order OID56294909 is FILLED at 0.79985, position PID36339014 (19/09/2017 14:22:39.377 UTC+0)
+2017.09.19 14:22:39.649 | Request to Buy AUD 1k AUDUSD is sent to server
+2017.09.19 14:22:40.039 | → Request to Buy AUD 1k AUDUSD is ACCEPTED, order OID56294910 created (19/09/2017 14:22:39.841 UTC+0)
+2017.09.19 14:22:40.274 | → Order OID56294910 is FILLED at 0.79981, position PID36339015 (19/09/2017 14:22:40.051 UTC+0)
+2017.09.19 14:22:57.368 | Request to Buy AUD 1k AUDUSD is sent to server
+2017.09.19 14:22:57.914 | → Request to Buy AUD 1k AUDUSD is ACCEPTED, order OID56294964 created (19/09/2017 14:22:57.560 UTC+0)
+2017.09.19 14:22:58.039 | → Order OID56294964 is FILLED at 0.79987, position PID36339045 (19/09/2017 14:22:57.825 UTC+0)
+2017.09.19 14:23:37.680 | Request to Sell $ 1k USDJPY is sent to server
+2017.09.19 14:23:38.086 | → Request to Sell $ 1k USDJPY is ACCEPTED, order OID56295021 created (19/09/2017 14:23:37.885 UTC+0)
+2017.09.19 14:23:39.586 | → Order OID56295021 is FILLED at 111.322, position PID36339074 (19/09/2017 14:23:38.123 UTC+0)
+2017.09.19 14:23:39.696 | Request to Sell $ 1k USDJPY is sent to server
+2017.09.19 14:23:40.133 | → Request to Sell $ 1k USDJPY is ACCEPTED, order OID56295029 created (19/09/2017 14:23:39.907 UTC+0)
+2017.09.19 14:23:40.352 | → Order OID56295029 is FILLED at 111.320, position PID36339075 (19/09/2017 14:23:40.112 UTC+0)
+2017.09.19 14:23:40.461 | Request to Sell $ 1k USDJPY is sent to server
+2017.09.19 14:23:40.883 | → Request to Sell $ 1k USDJPY is ACCEPTED, order OID56295034 created (19/09/2017 14:23:40.676 UTC+0)
+2017.09.19 14:23:41.149 | → Order OID56295034 is FILLED at 111.319, position PID36339078 (19/09/2017 14:23:40.953 UTC+0)
+2017.09.19 14:23:41.164 | Request to Sell $ 1k USDJPY is sent to server
+2017.09.19 14:23:41.586 | → Request to Sell $ 1k USDJPY is ACCEPTED, order OID56295035 created (19/09/2017 14:23:41.369 UTC+0)
+2017.09.19 14:23:41.789 | → Order OID56295035 is FILLED at 111.323, position PID36339079 (19/09/2017 14:23:41.582 UTC+0)
+2017.09.19 14:24:22.039 | Request to close position PID36339012 is sent to server
+2017.09.19 14:24:22.055 | Request to close position PID36339014 is sent to server
+2017.09.19 14:24:22.055 | Request to close position PID36339015 is sent to server
+2017.09.19 14:24:22.055 | Request to close position PID36339045 is sent to server
+2017.09.19 14:24:22.055 | Request to close position PID36339074 is sent to server
+2017.09.19 14:24:22.055 | Request to close position PID36339075 is sent to server
+2017.09.19 14:24:22.055 | Request to close position PID36339078 is sent to server
+2017.09.19 14:24:22.055 | Request to close position PID36339079 is sent to server
+2017.09.19 14:24:22.493 | → Request to close position PID36339012 is ACCEPTED, order OID56295110 created (19/09/2017 14:24:22.242 UTC+0)
+2017.09.19 14:24:22.586 | → Request to close position PID36339014 is ACCEPTED, order OID56295111 created (19/09/2017 14:24:22.386 UTC+0)
+2017.09.19 14:24:22.602 | → Request to close position PID36339015 is ACCEPTED, order OID56295112 created (19/09/2017 14:24:22.386 UTC+0)
+2017.09.19 14:24:22.602 | → Request to close position PID36339045 is ACCEPTED, order OID56295113 created (19/09/2017 14:24:22.386 UTC+0)
+2017.09.19 14:24:22.602 | → Request to close position PID36339074 is ACCEPTED, order OID56295114 created (19/09/2017 14:24:22.386 UTC+0)
+2017.09.19 14:24:22.618 | → Request to close position PID36339075 is ACCEPTED, order OID56295115 created (19/09/2017 14:24:22.387 UTC+0)
+2017.09.19 14:24:22.633 | → Request to close position PID36339078 is ACCEPTED, order OID56295116 created (19/09/2017 14:24:22.387 UTC+0)
+2017.09.19 14:24:22.633 | → Request to close position PID36339079 is ACCEPTED, order OID56295117 created (19/09/2017 14:24:22.387 UTC+0)
+2017.09.19 14:24:22.727 | → Order OID56295110 is FILLED at 0.79992, position PID36339012 closed (19/09/2017 14:24:22.443 UTC+0)
+2017.09.19 14:24:22.868 | → Order OID56295117 is FILLED at 111.338, position PID36339079 closed (19/09/2017 14:24:22.621 UTC+0)
+2017.09.19 14:24:22.977 | → Order OID56295115 is FILLED at 111.338, position PID36339075 closed (19/09/2017 14:24:22.629 UTC+0)
+2017.09.19 14:24:23.055 | → Order OID56295113 is FILLED at 0.79992, position PID36339045 closed (19/09/2017 14:24:22.634 UTC+0)
+2017.09.19 14:24:23.102 | → Order OID56295114 is FILLED at 111.338, position PID36339074 closed (19/09/2017 14:24:22.641 UTC+0)
+2017.09.19 14:24:23.149 | → Order OID56295112 is FILLED at 0.79992, position PID36339015 closed (19/09/2017 14:24:22.659 UTC+0)
+2017.09.19 14:24:23.211 | → Order OID56295111 is FILLED at 0.79992, position PID36339014 closed (19/09/2017 14:24:22.669 UTC+0)
+2017.09.19 14:24:23.274 | → Order OID56295116 is FILLED at 111.338, position PID36339078 closed (19/09/2017 14:24:22.680 UTC+0)
+2017.09.27 09:14:25.677 | cAlgo started
+2017.09.28 01:35:00.149 | cAlgo started
