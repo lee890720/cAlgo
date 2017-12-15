@@ -1,17 +1,13 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageHedge_EURCHF_H", "ArbitrageHedge_EURCHF_H\ArbitrageHedge_EURCHF_H.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Highlight_Sub_EURCHF", "..\..\Indicators\Highlight_Sub_EURCHF\Highlight_Sub_EURCHF\Highlight_Sub_EURCHF.csproj", "{D3CF9E4F-0969-4AFA-BA21-F355F754A1E1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Highlight_USD_EURCHF", "..\..\Indicators\Highlight_USD_EURCHF\Highlight_USD_EURCHF\Highlight_USD_EURCHF.csproj", "{001A403F-E95A-466D-B98E-F07F9F91AA3D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sub_EURCHF", "..\..\Indicators\Sub_EURCHF\Sub_EURCHF\Sub_EURCHF.csproj", "{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USD_EURCHF", "..\..\Indicators\USD_EURCHF\USD_EURCHF\USD_EURCHF.csproj", "{397C5F1C-2A1B-41AD-8642-A8770B8A675C}"
-EndProject
+
+
+
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

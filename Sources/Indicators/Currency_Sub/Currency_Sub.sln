@@ -2,30 +2,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbitrageHedge_EURCHF", "ArbitrageHedge_EURCHF\ArbitrageHedge_EURCHF.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency_Sub", "Currency_Sub\Currency_Sub.csproj", "{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}"
 EndProject
-
-
-
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Currency", "..\Currency\Currency\Currency.csproj", "{397C5F1C-2A1B-41AD-8642-A8770B8A675C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3CF9E4F-0969-4AFA-BA21-F355F754A1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3CF9E4F-0969-4AFA-BA21-F355F754A1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3CF9E4F-0969-4AFA-BA21-F355F754A1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3CF9E4F-0969-4AFA-BA21-F355F754A1E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{001A403F-E95A-466D-B98E-F07F9F91AA3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{001A403F-E95A-466D-B98E-F07F9F91AA3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{001A403F-E95A-466D-B98E-F07F9F91AA3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{001A403F-E95A-466D-B98E-F07F9F91AA3D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}</ProjectGuid>
+    <ProjectGuid>{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>ArbitrageHedge_EURCHF_H</AssemblyName>
+    <AssemblyName>Currency_Sub</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cAlgo.Lib">
-      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,20 +42,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
     </Reference>
+    <Reference Include="cAlgo.Lib">
+      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArbitrageHedge_EURCHF_H.cs" />
+    <Compile Include="Currency_Sub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Indicators\EURCHF_Highlight\EURCHF_Highlight\EURCHF_Highlight.csproj">
-      <Project>{001A403F-E95A-466D-B98E-F07F9F91AA3D}</Project>
-      <Name>EURCHF_Highlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Indicators\EURCHF_Sub_Highlight\EURCHF_Sub_Highlight\EURCHF_Sub_Highlight.csproj">
-      <Project>{D3CF9E4F-0969-4AFA-BA21-F355F754A1E1}</Project>
-      <Name>EURCHF_Sub_Highlight</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -68,4 +58,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Currency\Currency\Currency.csproj">
+      <Project>{397C5F1C-2A1B-41AD-8642-A8770B8A675C}</Project>
+      <Name>Currency</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
