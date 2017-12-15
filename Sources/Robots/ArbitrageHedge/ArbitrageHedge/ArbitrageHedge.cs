@@ -46,7 +46,8 @@ namespace cAlgo
             BelowCross = false;
             currency = Indicators.GetIndicator<Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance);
             currency_sub = Indicators.GetIndicator<Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance);
-            string currencysymbol = FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3, 3) : FirstSymbol.Substring(0, 3) + SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3, 3) : SecondSymbol.Substring(0, 3);
+            string currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
+            Print("The currency of the current transaction is : " + currencysymbol + ".");
             symbol = MarketData.GetSymbol(currencysymbol);
             AboveLabel = "Above" + symbol.Code;
             BelowLabel = "Below" + symbol.Code;
@@ -132,7 +133,7 @@ namespace cAlgo
                 if (cross > crossago)
                     crossago = cross;
             if (pos.Count != 0)
-                crossago = Convert.ToInt16(pos[0].Comment.Substring(6, pos[0].Comment.Length - 6)) + 5;
+                crossago = Convert.ToInt16(pos[0].Comment.Substring(6)) + 5;
             return crossago;
         }
 

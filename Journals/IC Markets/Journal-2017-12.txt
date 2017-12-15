@@ -7,3 +7,5 @@
 2017.12.14 16:30:43.855 | cAlgo started
 2017.12.15 12:15:36.804 | cAlgo started
 2017.12.15 14:19:17.388 | cAlgo started
+2017.12.15 16:36:44.364 | cAlgo started
+2017.12.15 16:37:52.587 | cAlgo started
