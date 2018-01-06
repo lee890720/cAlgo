@@ -44,13 +44,15 @@ namespace cAlgo
         {
             AboveCross = false;
             BelowCross = false;
+            // Currency_Highlight has a public parameter that it's BarsAgo.
             currency = Indicators.GetIndicator<Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance);
+            // Currency_Sub_Highlight has a public parameter that it's SIG.
             currency_sub = Indicators.GetIndicator<Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance);
             string currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
             Print("The currency of the current transaction is : " + currencysymbol + ".");
             symbol = MarketData.GetSymbol(currencysymbol);
-            AboveLabel = "Above" + symbol.Code;
-            BelowLabel = "Below" + symbol.Code;
+            AboveLabel = "Above" + "-" + symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
+            BelowLabel = "Below" + "-" + symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
             double slippage = 2;
             //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
             initBuy = new OrderParams(TradeType.Buy, symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
@@ -59,6 +61,16 @@ namespace cAlgo
             initSell = new OrderParams(TradeType.Sell, symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
             {
                             });
+            // Symbol.Pipsize
+            Symbol sym1 = MarketData.GetSymbol("EURUSD");
+            Symbol sym2 = MarketData.GetSymbol("GBPUSD");
+            Symbol sym3 = MarketData.GetSymbol("USDCHF");
+            Symbol sym4 = MarketData.GetSymbol("USDJPY");
+            Symbol sym5 = MarketData.GetSymbol("AUDUSD");
+            Symbol sym6 = MarketData.GetSymbol("NZDUSD");
+            Symbol sym7 = MarketData.GetSymbol("USDCAD");
+            Symbol sym8 = MarketData.GetSymbol("XAUUSD");
+            Print(sym1.PipSize + "-" + sym2.PipSize + "-" + sym3.PipSize + "-" + sym4.PipSize + "-" + sym5.PipSize + "-" + sym6.PipSize + "-" + sym7.PipSize + "-" + sym8.PipSize);
         }
 
         protected override void OnTick()
@@ -83,7 +95,7 @@ namespace cAlgo
                 {
                     initSell.Volume = Init_Volume * Math.Pow(2, Pos_above.Count);
                     initSell.Label = AboveLabel;
-                    initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + CrossAgo(Pos_above).ToString();
+                    initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1);
                     this.executeOrder(initSell);
                     AboveCross = false;
                 }
@@ -91,7 +103,7 @@ namespace cAlgo
                 {
                     initBuy.Volume = Init_Volume * Math.Pow(2, Pos_below.Count);
                     initBuy.Label = BelowLabel;
-                    initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + CrossAgo(Pos_below).ToString();
+                    initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
                     this.executeOrder(initBuy);
                     BelowCross = false;
                 }
@@ -133,7 +145,7 @@ namespace cAlgo
                 if (cross > crossago)
                     crossago = cross;
             if (pos.Count != 0)
-                crossago = Convert.ToInt16(pos[0].Comment.Substring(6)) + 5;
+                crossago = Convert.ToInt16(pos[0].Comment.Substring(7, 3)) + 5;
             return crossago;
         }
 
@@ -212,9 +224,25 @@ namespace cAlgo
             double marginlevel = 0;
             if (this.Account.MarginLevel.HasValue)
                 marginlevel = Math.Round((double)this.Account.MarginLevel);
-            ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime + "    " + opensignal(), StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("info2", "\nEquity\t" + this.Account.Equity + "\t\tProfit\t" + Math.Round(this.Account.UnrealizedNetProfit) + "\t\tMargin\t" + Math.Round(this.Account.Margin) + "\t\tLevel\t" + marginlevel + "%", StaticPosition.TopLeft, Colors.Red);
-            ChartObjects.DrawText("eurchf", "\n\nSub_Currency\t" + Math.Round(SR).ToString(), StaticPosition.TopLeft, Colors.White);
+            List<string> _currency = new List<string>();
+            if (Positions.Count != 0)
+                foreach (var pos in Positions)
+                    if (!_currency.Contains(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label))))
+                        _currency.Add(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label)));
+            ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA), StaticPosition.TopLeft, Colors.White);
+            int i = 0;
+            string si = null;
+            string t = null;
+            string tt = "\t\t";
+            foreach (string c in _currency)
+            {
+                i++;
+                si = "_C" + i.ToString();
+                ChartObjects.DrawText(si, "\n\n" + t + c, StaticPosition.TopLeft, Colors.White);
+                t += tt;
+            }
+            //ChartObjects.DrawText("info2", "\nEq-" + Math.Round(this.Account.Equity) + "\tPr-" + Math.Round(this.Account.UnrealizedNetProfit) + "\tMa-" + Math.Round(this.Account.Margin) + "\tLe-" + marginlevel + "%", StaticPosition.TopLeft, Colors.White);
         }
     }
 }

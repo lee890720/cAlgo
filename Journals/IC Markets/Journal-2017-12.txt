@@ -9,3 +9,32 @@
 2017.12.15 14:19:17.388 | cAlgo started
 2017.12.15 16:36:44.364 | cAlgo started
 2017.12.15 16:37:52.587 | cAlgo started
+2017.12.15 23:59:12.889 | cAlgo started
+2017.12.17 18:28:32.730 | cAlgo started
+2017.12.18 12:31:46.562 | cAlgo started
+2017.12.19 22:34:30.885 | cAlgo started
+2017.12.19 23:36:35.693 | Request to Sell AUD 1k AUDCAD (Price: 0.98608, MR: 2) is sent to server
+2017.12.19 23:36:36.397 | → Request to Sell AUD 1k AUDCAD (Price: 0.98608, MR: 2) is ACCEPTED, order OID61903885 created (19/12/2017 23:36:36.040 UTC+0)
+2017.12.19 23:36:37.287 | → Order OID61903885 is FILLED at 0.98608, position PID39938958 (19/12/2017 23:36:36.335 UTC+0)
+2017.12.19 23:38:33.022 | Request to close position PID39938958 is sent to server
+2017.12.19 23:38:33.537 | → Request to close position PID39938958 is ACCEPTED, order OID61903922 created (19/12/2017 23:38:33.328 UTC+0)
+2017.12.19 23:38:33.912 | → Order OID61903922 is FILLED at 0.98616, position PID39938958 closed (19/12/2017 23:38:33.610 UTC+0)
+2017.12.19 23:38:40.334 | Request to Sell AUD 1k AUDCAD (Price: 0.98603, MR: 2) is sent to server
+2017.12.19 23:38:40.787 | → Request to Sell AUD 1k AUDCAD (Price: 0.98603, MR: 2) is ACCEPTED, order OID61903923 created (19/12/2017 23:38:40.583 UTC+0)
+2017.12.19 23:38:41.037 | → Order OID61903923 is FILLED at 0.98603, position PID39938977 (19/12/2017 23:38:40.845 UTC+0)
+2017.12.20 00:10:12.346 | Request to Buy € 1k EURUSD is sent to server
+2017.12.20 00:10:12.784 | → Request to Buy € 1k EURUSD is ACCEPTED, order OID61904923 created (20/12/2017 00:10:12.553 UTC+0)
+2017.12.20 00:10:13.065 | → Order OID61904923 is FILLED at 1.18386, position PID39939558 (20/12/2017 00:10:12.830 UTC+0)
+2017.12.20 00:42:31.528 | Request to Sell AUD 1k AUDUSD is sent to server
+2017.12.20 00:42:33.324 | → Request to Sell AUD 1k AUDUSD is ACCEPTED, order OID61905835 created (20/12/2017 00:42:31.778 UTC+0)
+2017.12.20 00:42:33.324 | → Order OID61905835 is FILLED at 0.76574, position PID39940073 (20/12/2017 00:42:32.018 UTC+0)
+2017.12.20 14:37:11.346 | cAlgo started
+2017.12.20 19:38:44.177 | Request to close position PID39954608 is sent to server
+2017.12.20 19:38:44.818 | → Request to close position PID39954608 is ACCEPTED, order OID61951219 created (20/12/2017 19:38:44.442 UTC+0)
+2017.12.20 19:38:45.021 | → Order OID61951219 is FILLED at 64.69, position PID39954608 closed (20/12/2017 19:38:44.731 UTC+0)
+2017.12.20 19:38:49.880 | cAlgo started
+2017.12.20 19:44:16.717 | cAlgo started
+2017.12.20 19:46:57.240 | cAlgo started
+2017.12.20 22:52:35.438 | cAlgo started
+2017.12.29 12:34:27.087 | cAlgo started
+2017.12.29 17:56:03.791 | cAlgo started

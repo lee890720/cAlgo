@@ -34,10 +34,9 @@ namespace cAlgo
         [Parameter(DefaultValue = 30)]
         public int Sub { get; set; }
 
-        public string SIG;
-
         private Currency currency;
         private Currency_Sub currency_sub;
+        public string SIG;
 
         protected override void Initialize()
         {
@@ -60,6 +59,10 @@ namespace cAlgo
                 sig_Result_A[index] = currency_sub.Result[index];
             else
                 sig_Result_A[index] = 0;
+            if (SIG == null)
+                ChartObjects.DrawText("sig", "NO Signal", StaticPosition.TopRight, Colors.Red);
+            else
+                ChartObjects.DrawText("sig", "Signal: " + SIG, StaticPosition.TopRight, Colors.Red);
         }
 
         private string signal(int index)
