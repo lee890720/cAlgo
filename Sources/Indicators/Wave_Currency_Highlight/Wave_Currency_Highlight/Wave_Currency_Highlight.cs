@@ -1,9 +1,5 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
-using cAlgo.Lib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace cAlgo
 {
@@ -61,7 +57,7 @@ namespace cAlgo
                 sig_Result_A[index] = currency.Result[index];
             BarsAgo = barsago(index);
             ChartObjects.DrawText("barsago", "Cross: " + BarsAgo.ToString(), StaticPosition.TopRight, Colors.Red);
-            ChartObjects.DrawText("Ratio", "\nRatio: " + currency.Ratio.ToString(), StaticPosition.TopRight, Colors.Red);
+            ChartObjects.DrawText("Ratio", "\n_ratio: " + currency._ratio.ToString() + " - Ratio: " + Ratio.ToString(), StaticPosition.TopRight, Colors.Red);
         }
 
         private string signal(int index)

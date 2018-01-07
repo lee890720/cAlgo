@@ -37,8 +37,8 @@ namespace cAlgo
         [Parameter(DefaultValue = false)]
         public bool IsTrade { get; set; }
 
-        private Symbol symbol;
-        bool SymbolExist;
+        private Symbol _symbol, _firstsymbol, _secondsymbol;
+        private bool SymbolExist;
         private string AboveLabel;
         private string BelowLabel;
         private OrderParams initBuy, initSell;
@@ -58,40 +58,38 @@ namespace cAlgo
             currency_sub = Indicators.GetIndicator<Wave_Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, IsRatio, Ratio);
             string currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
             Print("The currency of the current transaction is : " + currencysymbol + ".");
+            AboveLabel = "Above" + "-" + _symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
+            BelowLabel = "Below" + "-" + _symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
+            _firstsymbol = MarketData.GetSymbol(FirstSymbol);
+            _secondsymbol = MarketData.GetSymbol(SecondSymbol);
             if (Symbol.Code == currencysymbol)
             {
                 SymbolExist = true;
-                symbol = MarketData.GetSymbol(currencysymbol);
-                AboveLabel = "Above" + "-" + symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
-                BelowLabel = "Below" + "-" + symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
+                _symbol = MarketData.GetSymbol(currencysymbol);
                 double slippage = 2;
                 //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
-                initBuy = new OrderParams(TradeType.Buy, symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initBuy = new OrderParams(TradeType.Buy, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
-                initSell = new OrderParams(TradeType.Sell, symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initSell = new OrderParams(TradeType.Sell, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
             }
             else
             {
                 SymbolExist = false;
-                Symbol firstSymbol = MarketData.GetSymbol(FirstSymbol);
-                Symbol secondSymbol = MarketData.GetSymbol(SecondSymbol);
-                AboveLabel = "Above" + "-" + currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
-                BelowLabel = "Below" + "-" + currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
                 double slippage = 2;
                 //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
-                initBuyF = new OrderParams(TradeType.Buy, firstSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initBuyF = new OrderParams(TradeType.Buy, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
-                initSellF = new OrderParams(TradeType.Sell, firstSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initSellF = new OrderParams(TradeType.Sell, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
-                initBuyS = new OrderParams(TradeType.Buy, secondSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initBuyS = new OrderParams(TradeType.Buy, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
-                initSellS = new OrderParams(TradeType.Sell, secondSymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initSellS = new OrderParams(TradeType.Sell, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
             }
@@ -119,7 +117,7 @@ namespace cAlgo
                 {
                     if (opensignal() == "above")
                     {
-                        initSell.Volume = Init_Volume * Math.Pow(2, Pos_above.Count);
+                        initSell.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Count), RoundingMode.ToNearest);
                         initSell.Label = AboveLabel;
                         initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1);
                         this.executeOrder(initSell);
@@ -127,7 +125,7 @@ namespace cAlgo
                     }
                     if (opensignal() == "below")
                     {
-                        initBuy.Volume = Init_Volume * Math.Pow(2, Pos_below.Count);
+                        initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Count), RoundingMode.ToNearest);
                         initBuy.Label = BelowLabel;
                         initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
                         this.executeOrder(initBuy);
@@ -136,8 +134,6 @@ namespace cAlgo
                 }
                 else
                 {
-                    Symbol firstsymbol = MarketData.GetSymbol(FirstSymbol);
-                    Symbol secondsymbol = MarketData.GetSymbol(SecondSymbol);
                     List<string> _metalssymbol = new List<string>();
                     List<string> _oilsymbol = new List<string>();
                     _metalssymbol.Add("XAUUSD");
@@ -154,39 +150,39 @@ namespace cAlgo
                         first_R = 10;
                     if (_oilsymbol.Contains(SecondSymbol))
                         second_R = 10;
-                    double firstvolume = Init_Volume / first_R;
-                    double secondvolume = Init_Volume / second_R;
+                    double _firstvolume = Init_Volume / first_R;
+                    double _secondvolume = Init_Volume / second_R;
                     if (Ratio >= 1)
                     {
-                        firstvolume = firstsymbol.NormalizeVolume(Init_Volume / first_R, RoundingMode.ToNearest);
-                        secondvolume = secondsymbol.NormalizeVolume(Init_Volume * Ratio / second_R, RoundingMode.ToNearest);
+                        _firstvolume = _firstsymbol.NormalizeVolume(Init_Volume / first_R, RoundingMode.ToNearest);
+                        _secondvolume = _secondsymbol.NormalizeVolume(Init_Volume * Ratio / second_R, RoundingMode.ToNearest);
                     }
                     else
                     {
-                        firstvolume = firstsymbol.NormalizeVolume(Init_Volume / Ratio / first_R, RoundingMode.ToNearest);
-                        secondvolume = secondsymbol.NormalizeVolume(Init_Volume / second_R, RoundingMode.ToNearest);
+                        _firstvolume = _firstsymbol.NormalizeVolume(Init_Volume / Ratio / first_R, RoundingMode.ToNearest);
+                        _secondvolume = _secondsymbol.NormalizeVolume(Init_Volume / second_R, RoundingMode.ToNearest);
                     }
                     if (opensignal() == "above")
                     {
-                        initSellF.Volume = firstvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
+                        initSellF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
                         initSellF.Label = AboveLabel;
                         initSellF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1);
                         this.executeOrder(initSellF);
-                        initBuyS.Volume = secondvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
+                        initBuyS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
                         initBuyS.Label = AboveLabel;
-                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
+                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2);
                         this.executeOrder(initBuyS);
                         AboveCross = false;
                     }
                     if (opensignal() == "below")
                     {
-                        initBuyF.Volume = firstvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
+                        initBuyF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
                         initBuyF.Label = BelowLabel;
                         initBuyF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
                         this.executeOrder(initBuyF);
-                        initSellS.Volume = secondvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
+                        initSellS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
                         initSellS.Label = BelowLabel;
-                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
+                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2);
                         this.executeOrder(initSellS);
                         BelowCross = false;
                     }
@@ -314,7 +310,7 @@ namespace cAlgo
                     if (!_currency.Contains(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label))))
                         _currency.Add(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label)));
             ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA), StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio, StaticPosition.TopLeft, Colors.White);
             int i = 0;
             string si = null;
             string t = null;
@@ -326,7 +322,6 @@ namespace cAlgo
                 ChartObjects.DrawText(si, "\n\n" + t + c, StaticPosition.TopLeft, Colors.White);
                 t += tt;
             }
-            //ChartObjects.DrawText("info2", "\nEq-" + Math.Round(this.Account.Equity) + "\tPr-" + Math.Round(this.Account.UnrealizedNetProfit) + "\tMa-" + Math.Round(this.Account.Margin) + "\tLe-" + marginlevel + "%", StaticPosition.TopLeft, Colors.White);
         }
     }
 }

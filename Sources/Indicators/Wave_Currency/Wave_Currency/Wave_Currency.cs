@@ -4,9 +4,6 @@ using cAlgo.Lib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Collections;
-using System.Data;
 
 namespace cAlgo
 {
@@ -34,23 +31,56 @@ namespace cAlgo
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
 
+        public double _ratio;
         private MarketSeries _symbolFirstSeries, _symbolSecondSeries;
+        private DateTime SymbolTime;
+        private Symbol _firstsymbol, _secondsymbol;
+        private int FirstIndex, SecondIndex;
         protected override void Initialize()
         {
             _symbolFirstSeries = MarketData.GetSeries(FirstSymbol, TimeFrame);
             _symbolSecondSeries = MarketData.GetSeries(SecondSymbol, TimeFrame);
+            _firstsymbol = MarketData.GetSymbol(FirstSymbol);
+            _secondsymbol = MarketData.GetSymbol(SecondSymbol);
+            _ratio = 1;
         }
 
         public override void Calculate(int index)
         {
-            DateTime SymbolTime = MarketSeries.OpenTime[index];
-            int FirstIndex = _symbolFirstSeries.GetIndexByDate(SymbolTime);
-            int SecondIndex = _symbolSecondSeries.GetIndexByDate(SymbolTime);
-            Symbol firstsymbol = MarketData.GetSymbol(FirstSymbol);
-            Symbol secondsymbol = MarketData.GetSymbol(SecondSymbol);
+            SymbolTime = MarketSeries.OpenTime[index];
+            FirstIndex = _symbolFirstSeries.GetIndexByDate(SymbolTime);
+            SecondIndex = _symbolSecondSeries.GetIndexByDate(SymbolTime);
+            GetRatio();
+            //FirstClose
+            double FirstClose = 0;
+            if (FirstSymbol.Substring(0, 3) == "USD")
+                FirstClose = 1 / _symbolFirstSeries.Close[FirstIndex] * (_firstsymbol.PipSize / 0.0001);
+            if (FirstSymbol.Substring(3, 3) == "USD")
+                FirstClose = _symbolFirstSeries.Close[FirstIndex] / (_firstsymbol.PipSize / 0.0001);
 
+            //SecondClose
+            double SecondClose = 0;
+            if (SecondSymbol.Substring(0, 3) == "USD")
+                SecondClose = 1 / _symbolSecondSeries.Close[SecondIndex] * (_secondsymbol.PipSize / 0.0001);
+            if (SecondSymbol.Substring(3, 3) == "USD")
+                SecondClose = _symbolSecondSeries.Close[SecondIndex] / (_secondsymbol.PipSize / 0.0001);
+            if (Ratio > 1)
+                Result[index] = (FirstClose / Ratio - SecondClose) / 0.0001 + 10000;
+            if (Ratio < 1)
+                Result[index] = (FirstClose - SecondClose * Ratio) / 0.0001 + 10000;
+            if (Ratio == 1)
+                Result[index] = (FirstClose - SecondClose) / 0.0001 + 10000;
+            double sum = 0.0;
+            for (int i = index - Period + 1; i <= index; i++)
+            {
+                sum += Result[i];
+            }
+            Average[index] = sum / Period;
+        }
+
+        private void GetRatio()
+        {
             #region Ratio
-            double _ratio = 1;
             double _ratio0 = 1;
             double _ratio1 = 1;
             double _ratio2 = 1;
@@ -69,18 +99,18 @@ namespace cAlgo
             {
                 double FC = 0;
                 if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (firstsymbol.PipSize / 0.0001);
+                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
                 if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (firstsymbol.PipSize / 0.0001);
+                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
                 firsttotal0 += FC;
             }
             for (int i = SecondIndex - Period; i < SecondIndex; i++)
             {
                 double SC = 0;
                 if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (secondsymbol.PipSize / 0.0001);
+                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
                 if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (secondsymbol.PipSize / 0.0001);
+                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
                 secondtotal0 += SC;
             }
             _ratio0 = Math.Round(firsttotal0 / secondtotal0, 2);
@@ -90,18 +120,18 @@ namespace cAlgo
             {
                 double FC = 0;
                 if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (firstsymbol.PipSize / 0.0001);
+                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
                 if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (firstsymbol.PipSize / 0.0001);
+                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
                 firsttotal1 += FC;
             }
             for (int i = SecondIndex - Period * 2; i < SecondIndex - Period; i++)
             {
                 double SC = 0;
                 if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (secondsymbol.PipSize / 0.0001);
+                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
                 if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (secondsymbol.PipSize / 0.0001);
+                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
                 secondtotal1 += SC;
             }
             _ratio1 = Math.Round(firsttotal1 / secondtotal1, 2);
@@ -111,18 +141,18 @@ namespace cAlgo
             {
                 double FC = 0;
                 if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (firstsymbol.PipSize / 0.0001);
+                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
                 if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (firstsymbol.PipSize / 0.0001);
+                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
                 firsttotal2 += FC;
             }
             for (int i = SecondIndex - Period * 3; i < SecondIndex - Period * 2; i++)
             {
                 double SC = 0;
                 if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (secondsymbol.PipSize / 0.0001);
+                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
                 if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (secondsymbol.PipSize / 0.0001);
+                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
                 secondtotal2 += SC;
             }
             _ratio2 = Math.Round(firsttotal2 / secondtotal2, 2);
@@ -132,18 +162,18 @@ namespace cAlgo
             {
                 double FC = 0;
                 if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (firstsymbol.PipSize / 0.0001);
+                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
                 if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (firstsymbol.PipSize / 0.0001);
+                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
                 firsttotal3 += FC;
             }
             for (int i = SecondIndex - Period * 4; i < SecondIndex - Period * 3; i++)
             {
                 double SC = 0;
                 if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (secondsymbol.PipSize / 0.0001);
+                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
                 if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (secondsymbol.PipSize / 0.0001);
+                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
                 secondtotal3 += SC;
             }
             _ratio3 = Math.Round(firsttotal3 / secondtotal3, 2);
@@ -178,33 +208,8 @@ namespace cAlgo
             }
             if (IsRatio)
                 Ratio = _ratio;
-            ChartObjects.DrawText("Ratio", "Ratio: " + _ratio.ToString() + "-" + Ratio.ToString(), StaticPosition.TopRight, Colors.Red);
+            ChartObjects.DrawText("Ratio", "_ratio: " + _ratio.ToString() + " - Ratio: " + Ratio.ToString(), StaticPosition.TopRight, Colors.Red);
             #endregion
-            //FirstClose
-            double FirstClose = 0;
-            if (FirstSymbol.Substring(0, 3) == "USD")
-                FirstClose = 1 / _symbolFirstSeries.Close[FirstIndex] * (firstsymbol.PipSize / 0.0001);
-            if (FirstSymbol.Substring(3, 3) == "USD")
-                FirstClose = _symbolFirstSeries.Close[FirstIndex] / (firstsymbol.PipSize / 0.0001);
-
-            //SecondClose
-            double SecondClose = 0;
-            if (SecondSymbol.Substring(0, 3) == "USD")
-                SecondClose = 1 / _symbolSecondSeries.Close[SecondIndex] * (secondsymbol.PipSize / 0.0001);
-            if (SecondSymbol.Substring(3, 3) == "USD")
-                SecondClose = _symbolSecondSeries.Close[SecondIndex] / (secondsymbol.PipSize / 0.0001);
-            if (Ratio > 1)
-                Result[index] = (FirstClose / Ratio - SecondClose) / 0.0001 + 10000;
-            if (Ratio < 1)
-                Result[index] = (FirstClose - SecondClose * Ratio) / 0.0001 + 10000;
-            if (Ratio == 1)
-                Result[index] = (FirstClose - SecondClose) / 0.0001 + 10000;
-            double sum = 0.0;
-            for (int i = index - Period + 1; i <= index; i++)
-            {
-                sum += Result[i];
-            }
-            Average[index] = sum / Period;
         }
     }
 }

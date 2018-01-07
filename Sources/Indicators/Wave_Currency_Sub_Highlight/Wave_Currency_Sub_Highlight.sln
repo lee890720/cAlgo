@@ -4,8 +4,10 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wave_Currency_Sub_Highlight", "Wave_Currency_Sub_Highlight\Wave_Currency_Sub_Highlight.csproj", "{D3CF9E4F-0969-4AFA-BA21-F355F754A1E1}"
 EndProject
-
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wave_Currency", "..\Wave_Currency\Wave_Currency\Wave_Currency.csproj", "{397C5F1C-2A1B-41AD-8642-A8770B8A675C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wave_Currency_Sub", "..\Wave_Currency_Sub\Wave_Currency_Sub\Wave_Currency_Sub.csproj", "{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +31,3 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
-
-
-
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wave_Currency", "..\Wave_Currency\Wave_Currency\Wave_Currency.csproj", "{397C5F1C-2A1B-41AD-8642-A8770B8A675C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wave_Currency_Sub", "..\Wave_Currency_Sub\Wave_Currency_Sub\Wave_Currency_Sub.csproj", "{53F67DA0-0FDA-4EBF-90B6-7C6CF3ABEEF0}"
-EndProject
