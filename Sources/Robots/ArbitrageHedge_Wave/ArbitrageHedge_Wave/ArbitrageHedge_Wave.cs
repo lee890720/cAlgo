@@ -56,16 +56,17 @@ namespace cAlgo
             currency = Indicators.GetIndicator<Wave_Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, IsRatio, Ratio);
             // Currency_Sub_Highlight has a public parameter that it's SIG.
             currency_sub = Indicators.GetIndicator<Wave_Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, IsRatio, Ratio);
-            string currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
-            Print("The currency of the current transaction is : " + currencysymbol + ".");
-            AboveLabel = "Above" + "-" + _symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
-            BelowLabel = "Below" + "-" + _symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
+            string _currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
+            Print("The currency of the current transaction is : " + _currencysymbol + ".");
+            AboveLabel = "Above" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
+            BelowLabel = "Below" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
             _firstsymbol = MarketData.GetSymbol(FirstSymbol);
             _secondsymbol = MarketData.GetSymbol(SecondSymbol);
-            if (Symbol.Code == currencysymbol)
+            if (Symbol.Code == _currencysymbol)
             {
                 SymbolExist = true;
-                _symbol = MarketData.GetSymbol(currencysymbol);
+                Print(_currencysymbol + " exists.");
+                _symbol = MarketData.GetSymbol(_currencysymbol);
                 double slippage = 2;
                 //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
                 initBuy = new OrderParams(TradeType.Buy, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
@@ -78,6 +79,7 @@ namespace cAlgo
             else
             {
                 SymbolExist = false;
+                Print(_currencysymbol + " doesn't exist.");
                 double slippage = 2;
                 //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
                 initBuyF = new OrderParams(TradeType.Buy, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
