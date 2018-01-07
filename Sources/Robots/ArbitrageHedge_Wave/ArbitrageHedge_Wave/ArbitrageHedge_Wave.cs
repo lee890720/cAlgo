@@ -8,7 +8,7 @@ using System.Linq;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
-    public class Wave_ArbitrageHedge : Robot
+    public class ArbitrageHedge_Wave : Robot
     {
         [Parameter("INIT_Volume", DefaultValue = 1000, MinValue = 1000)]
         public double Init_Volume { get; set; }

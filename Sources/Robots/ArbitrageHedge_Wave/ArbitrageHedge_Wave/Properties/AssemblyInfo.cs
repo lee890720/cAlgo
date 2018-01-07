@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Wave_ArbitrageHedge")]
+[assembly: AssemblyTitle("ArbitrageHedge_Wave")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("Wave_ArbitrageHedge")]
+[assembly: AssemblyProduct("ArbitrageHedge_Wave")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
