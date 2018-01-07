@@ -25,11 +25,11 @@ namespace cAlgo
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
 
-        [Parameter(DefaultValue = false)]
-        public bool IsRatio { get; set; }
-
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
 
         public double _ratio;
         private MarketSeries _symbolFirstSeries, _symbolSecondSeries;
@@ -64,12 +64,9 @@ namespace cAlgo
                 SecondClose = 1 / _symbolSecondSeries.Close[SecondIndex] * (_secondsymbol.PipSize / 0.0001);
             if (SecondSymbol.Substring(3, 3) == "USD")
                 SecondClose = _symbolSecondSeries.Close[SecondIndex] / (_secondsymbol.PipSize / 0.0001);
-            if (Ratio > 1)
-                Result[index] = (FirstClose / Ratio - SecondClose) / 0.0001 + 10000;
-            if (Ratio < 1)
-                Result[index] = (FirstClose - SecondClose * Ratio) / 0.0001 + 10000;
-            if (Ratio == 1)
-                Result[index] = (FirstClose - SecondClose) / 0.0001 + 10000;
+
+            Result[index] = (FirstClose / Ratio - SecondClose) * Magnify / 0.0001 + 10000;
+
             double sum = 0.0;
             for (int i = index - Period + 1; i <= index; i++)
             {
@@ -206,9 +203,7 @@ namespace cAlgo
             {
                 _ratio = item.num;
             }
-            if (IsRatio)
-                Ratio = _ratio;
-            ChartObjects.DrawText("Ratio", "_ratio: " + _ratio.ToString() + " - Ratio: " + Ratio.ToString(), StaticPosition.TopRight, Colors.Red);
+            ChartObjects.DrawText("Ratio", "Ratio-" + Ratio.ToString() + "_ratio-" + _ratio.ToString() + "_magnify-" + Magnify.ToString(), StaticPosition.TopRight, Colors.Red);
             #endregion
         }
     }

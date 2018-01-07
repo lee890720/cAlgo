@@ -28,11 +28,11 @@ namespace cAlgo
         [Parameter(DefaultValue = 1)]
         public int timer { get; set; }
 
-        [Parameter(DefaultValue = false)]
-        public bool IsRatio { get; set; }
-
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
 
         [Parameter(DefaultValue = false)]
         public bool IsTrade { get; set; }
@@ -53,9 +53,9 @@ namespace cAlgo
             AboveCross = false;
             BelowCross = false;
             // Currency_Highlight has a public parameter that it's BarsAgo.
-            currency = Indicators.GetIndicator<Wave_Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, IsRatio, Ratio);
+            currency = Indicators.GetIndicator<Wave_Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
             // Currency_Sub_Highlight has a public parameter that it's SIG.
-            currency_sub = Indicators.GetIndicator<Wave_Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, IsRatio, Ratio);
+            currency_sub = Indicators.GetIndicator<Wave_Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
             string _currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
             Print("The currency of the current transaction is : " + _currencysymbol + ".");
             AboveLabel = "Above" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
@@ -312,7 +312,7 @@ namespace cAlgo
                     if (!_currency.Contains(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label))))
                         _currency.Add(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label)));
             ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio + "\t\tMagnify-" + Magnify, StaticPosition.TopLeft, Colors.White);
             int i = 0;
             string si = null;
             string t = null;

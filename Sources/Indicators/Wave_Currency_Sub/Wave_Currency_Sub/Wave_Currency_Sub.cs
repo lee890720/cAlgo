@@ -20,17 +20,17 @@ namespace cAlgo
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
 
-        [Parameter(DefaultValue = false)]
-        public bool IsRatio { get; set; }
-
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
 
         private Wave_Currency currency;
 
         protected override void Initialize()
         {
-            currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, IsRatio, Ratio);
+            currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
         }
 
         public override void Calculate(int index)

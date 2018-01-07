@@ -30,20 +30,21 @@ namespace cAlgo
         [Parameter(DefaultValue = 30)]
         public int Sub { get; set; }
 
-        [Parameter(DefaultValue = false)]
-        public bool IsRatio { get; set; }
-
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
 
         private Wave_Currency currency;
         private Wave_Currency_Sub currency_sub;
         public int BarsAgo;
+        public double _ratio;
 
         protected override void Initialize()
         {
-            currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, IsRatio, Ratio);
-            currency_sub = Indicators.GetIndicator<Wave_Currency_Sub>(FirstSymbol, SecondSymbol, Period, IsRatio, Ratio);
+            currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
+            currency_sub = Indicators.GetIndicator<Wave_Currency_Sub>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
         }
 
         public override void Calculate(int index)
@@ -56,8 +57,9 @@ namespace cAlgo
             if (sig == "above")
                 sig_Result_A[index] = currency.Result[index];
             BarsAgo = barsago(index);
-            ChartObjects.DrawText("barsago", "Cross: " + BarsAgo.ToString(), StaticPosition.TopRight, Colors.Red);
-            ChartObjects.DrawText("Ratio", "\n_ratio: " + currency._ratio.ToString() + " - Ratio: " + Ratio.ToString(), StaticPosition.TopRight, Colors.Red);
+            _ratio = currency._ratio;
+            ChartObjects.DrawText("barsago", "Cross-" + BarsAgo.ToString(), StaticPosition.TopRight, Colors.Red);
+            ChartObjects.DrawText("Ratio", "\nRatio-" + Ratio.ToString() + "_ratio-" + _ratio.ToString() + "_magnify-" + Magnify.ToString(), StaticPosition.TopRight, Colors.Red);
         }
 
         private string signal(int index)

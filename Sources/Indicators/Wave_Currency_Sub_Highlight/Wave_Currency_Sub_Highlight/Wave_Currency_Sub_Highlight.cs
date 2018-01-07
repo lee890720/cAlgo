@@ -30,11 +30,11 @@ namespace cAlgo
         [Parameter(DefaultValue = 30)]
         public int Sub { get; set; }
 
-        [Parameter(DefaultValue = false)]
-        public bool IsRatio { get; set; }
-
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
 
         private Wave_Currency currency;
         private Wave_Currency_Sub currency_sub;
@@ -42,8 +42,8 @@ namespace cAlgo
 
         protected override void Initialize()
         {
-            currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, IsRatio, Ratio);
-            currency_sub = Indicators.GetIndicator<Wave_Currency_Sub>(FirstSymbol, SecondSymbol, Period, IsRatio, Ratio);
+            currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
+            currency_sub = Indicators.GetIndicator<Wave_Currency_Sub>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
             SIG = null;
         }
 
