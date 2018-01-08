@@ -59,7 +59,8 @@ namespace cAlgo
             BarsAgo = barsago(index);
             _ratio = currency._ratio;
             ChartObjects.DrawText("barsago", "Cross-" + BarsAgo.ToString(), StaticPosition.TopRight, Colors.Red);
-            ChartObjects.DrawText("Ratio", "\nRatio-" + Ratio.ToString() + "_ratio-" + _ratio.ToString() + "_magnify-" + Magnify.ToString(), StaticPosition.TopRight, Colors.Red);
+            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio.ToString(), StaticPosition.TopRight, Colors.Red);
+            ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopRight, Colors.Red);
         }
 
         private string signal(int index)

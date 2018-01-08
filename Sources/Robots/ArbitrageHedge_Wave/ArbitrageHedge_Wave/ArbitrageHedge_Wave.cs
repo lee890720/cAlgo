@@ -47,6 +47,7 @@ namespace cAlgo
         private Wave_Currency_Sub_Highlight currency_sub;
         private bool AboveCross;
         private bool BelowCross;
+        private List<string> list_mark = new List<string>();
 
         protected override void OnStart()
         {
@@ -56,7 +57,7 @@ namespace cAlgo
             currency = Indicators.GetIndicator<Wave_Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
             // Currency_Sub_Highlight has a public parameter that it's SIG.
             currency_sub = Indicators.GetIndicator<Wave_Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
-            string _currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
+            string _currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3, 3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3, 3) : SecondSymbol.Substring(0, 3));
             Print("The currency of the current transaction is : " + _currencysymbol + ".");
             AboveLabel = "Above" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
             BelowLabel = "Below" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
@@ -100,6 +101,13 @@ namespace cAlgo
         protected override void OnTick()
         {
             chartdraw();
+            foreach (var p in Positions)
+            {
+                if (!list_mark.Contains(p.Comment.Substring(15)))
+                    list_mark.Add(p.Comment.Substring(15));
+            }
+            if (list_mark.Count != 0)
+                Print(list_mark[0]);
             if (IsTrade)
             {
                 #region Parameter
@@ -121,7 +129,7 @@ namespace cAlgo
                     {
                         initSell.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Count), RoundingMode.ToNearest);
                         initSell.Label = AboveLabel;
-                        initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1);
+                        initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
                         this.executeOrder(initSell);
                         AboveCross = false;
                     }
@@ -129,7 +137,7 @@ namespace cAlgo
                     {
                         initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Count), RoundingMode.ToNearest);
                         initBuy.Label = BelowLabel;
-                        initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
+                        initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
                         this.executeOrder(initBuy);
                         BelowCross = false;
                     }
@@ -168,11 +176,11 @@ namespace cAlgo
                     {
                         initSellF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
                         initSellF.Label = AboveLabel;
-                        initSellF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1);
+                        initSellF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
                         this.executeOrder(initSellF);
                         initBuyS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
                         initBuyS.Label = AboveLabel;
-                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2);
+                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
                         this.executeOrder(initBuyS);
                         AboveCross = false;
                     }
@@ -180,11 +188,11 @@ namespace cAlgo
                     {
                         initBuyF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
                         initBuyF.Label = BelowLabel;
-                        initBuyF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
+                        initBuyF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
                         this.executeOrder(initBuyF);
                         initSellS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
                         initSellS.Label = BelowLabel;
-                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2);
+                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
                         this.executeOrder(initSellS);
                         BelowCross = false;
                     }
@@ -253,12 +261,16 @@ namespace cAlgo
             var now = DateTime.UtcNow;
             List<DateTime> lastPosTime = new List<DateTime>();
             if (Pos_above.Count != 0)
+            {
                 lastPosTime.Add(Pos_above[0].EntryTime.AddHours(timer));
+            }
             if (Pos_below.Count != 0)
+            {
                 lastPosTime.Add(Pos_below[0].EntryTime.AddHours(timer));
+            }
             var Pos_LastTime = lastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-timer) : lastPosTime.Max();
             #endregion
-            if (DateTime.Compare(now, Pos_LastTime) > 0)
+            if (DateTime.Compare(now, Pos_LastTime) > 0 && !list_mark.Contains(currency_sub.Mark))
             {
                 if (sig == "above" && AboveCross)
                 {
@@ -309,8 +321,8 @@ namespace cAlgo
             List<string> _currency = new List<string>();
             if (Positions.Count != 0)
                 foreach (var pos in Positions)
-                    if (!_currency.Contains(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label))))
-                        _currency.Add(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label)));
+                    if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label))))
+                        _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)));
             ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio + "\t\tMagnify-" + Magnify, StaticPosition.TopLeft, Colors.White);
             int i = 0;
