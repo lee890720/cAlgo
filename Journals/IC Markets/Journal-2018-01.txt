@@ -56,3 +56,4 @@
 2018.01.08 07:05:58.543 | Request to close position PID40144942 is sent to server
 2018.01.08 07:05:59.122 | → Request to close position PID40144942 is ACCEPTED, order OID62362368 created (08/01/2018 07:05:58.835 UTC+0)
 2018.01.08 07:05:59.637 | → Order OID62362368 is FILLED at 136.018, position PID40144942 closed (08/01/2018 07:05:59.104 UTC+0)
+2018.01.08 07:51:27.684 | cAlgo started

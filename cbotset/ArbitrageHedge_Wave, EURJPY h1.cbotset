@@ -1,0 +1,14 @@
+﻿[ChartParameters]
+Symbol = EURJPY
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = EURUSD
+SecondSymbol = USDJPY
+Period = 120
+Distance = 30
+timer = 1
+Ratio = 1
+Magnify = 1
+IsTrade = True

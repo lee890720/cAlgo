@@ -1,0 +1,14 @@
+﻿[ChartParameters]
+Symbol = EURPLN
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = EURUSD
+SecondSymbol = USDPLN
+Period = 120
+Distance = 30
+timer = 1
+Ratio = 4
+Magnify = 4
+IsTrade = True
