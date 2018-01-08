@@ -48,9 +48,15 @@ namespace cAlgo
         private bool AboveCross;
         private bool BelowCross;
         private List<string> list_mark = new List<string>();
+        private List<string> _metalssymbol = new List<string>();
+        private List<string> _oilsymbol = new List<string>();
 
         protected override void OnStart()
         {
+            _metalssymbol.Add("XAUUSD");
+            _metalssymbol.Add("XAGUSD");
+            _oilsymbol.Add("XBRUSD");
+            _oilsymbol.Add("XTIUSD");
             AboveCross = false;
             BelowCross = false;
             // Currency_Highlight has a public parameter that it's BarsAgo.
@@ -100,28 +106,34 @@ namespace cAlgo
 
         protected override void OnTick()
         {
+            #region Parameter
+            var UR = currency.Result.LastValue;
+            var UA = currency.Average.LastValue;
+            var SR = currency_sub.Result.LastValue;
+            var SA = currency_sub.Average.LastValue;
+
+            List<Position> Pos_above = new List<Position>(this.GetPositions(AboveLabel));
+            List<Position> Pos_below = new List<Position>(this.GetPositions(BelowLabel));
+            Pos_above.Reverse();
+            Pos_below.Reverse();
+            #endregion
+
             chartdraw();
-            foreach (var p in Positions)
-            {
-                if (!list_mark.Contains(p.Comment.Substring(15)))
-                    list_mark.Add(p.Comment.Substring(15));
-            }
-            if (list_mark.Count != 0)
-                Print(list_mark[0]);
+
+            if (Pos_above.Count != 0)
+                foreach (var p in Pos_above)
+                {
+                    if (!list_mark.Contains(p.Comment.Substring(15)))
+                        list_mark.Add(p.Comment.Substring(15));
+                }
+            if (Pos_below.Count != 0)
+                foreach (var p in Pos_below)
+                {
+                    if (!list_mark.Contains(p.Comment.Substring(15)))
+                        list_mark.Add(p.Comment.Substring(15));
+                }
             if (IsTrade)
             {
-                #region Parameter
-                var UR = currency.Result.LastValue;
-                var UA = currency.Average.LastValue;
-                var SR = currency_sub.Result.LastValue;
-                var SA = currency_sub.Average.LastValue;
-
-                List<Position> Pos_above = new List<Position>(this.GetPositions(AboveLabel));
-                List<Position> Pos_below = new List<Position>(this.GetPositions(BelowLabel));
-                Pos_above.Reverse();
-                Pos_below.Reverse();
-                #endregion
-
                 #region Open
                 if (SymbolExist)
                 {
@@ -144,12 +156,6 @@ namespace cAlgo
                 }
                 else
                 {
-                    List<string> _metalssymbol = new List<string>();
-                    List<string> _oilsymbol = new List<string>();
-                    _metalssymbol.Add("XAUUSD");
-                    _metalssymbol.Add("XAGUSD");
-                    _oilsymbol.Add("XBRUSD");
-                    _oilsymbol.Add("XTIUSD");
                     double first_R = 1;
                     double second_R = 1;
                     if (_metalssymbol.Contains(FirstSymbol))
@@ -321,8 +327,19 @@ namespace cAlgo
             List<string> _currency = new List<string>();
             if (Positions.Count != 0)
                 foreach (var pos in Positions)
-                    if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label))))
-                        _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)));
+                {
+                    //if (_metalssymbol.Contains(pos.SymbolCode) || _oilsymbol.Contains(pos.SymbolCode))
+                    if (SymbolExist)
+                    {
+                        if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label))))
+                            _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)));
+                    }
+                    else
+                    {
+                        if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)) / 2))
+                            _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label) / 2));
+                    }
+                }
             ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio + "\t\tMagnify-" + Magnify, StaticPosition.TopLeft, Colors.White);
             int i = 0;
