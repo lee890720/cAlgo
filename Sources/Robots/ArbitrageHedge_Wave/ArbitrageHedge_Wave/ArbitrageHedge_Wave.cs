@@ -329,17 +329,19 @@ namespace cAlgo
                 foreach (var pos in Positions)
                 {
                     //if (_metalssymbol.Contains(pos.SymbolCode) || _oilsymbol.Contains(pos.SymbolCode))
-                    if (SymbolExist)
-                    {
-                        if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label))))
-                            _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)));
-                    }
-                    else
-                    {
-                        if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)) / 2))
-                            _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label) / 2));
-                    }
+                    if (pos.Label != null)
+                        if (!pos.SymbolCode.Contains("USD"))
+                        {
+                            if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label))))
+                                _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)));
+                        }
+                        else
+                        {
+                            if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)) / 2))
+                                _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label) / 2));
+                        }
                 }
+            ChartObjects.RemoveAllObjects();
             ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio + "\t\tMagnify-" + Magnify, StaticPosition.TopLeft, Colors.White);
             int i = 0;
