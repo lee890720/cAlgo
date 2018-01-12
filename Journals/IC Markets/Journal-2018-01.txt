@@ -64,3 +64,14 @@
 2018.01.08 08:45:07.658 | → Order OID62365620 is FILLED at 67.98, position PID40147019 closed (08/01/2018 08:45:07.327 UTC+0)
 2018.01.08 08:59:52.934 | cAlgo started
 2018.01.09 05:40:48.396 | cAlgo started
+2018.01.10 11:03:07.864 | cAlgo started
+2018.01.10 11:13:18.912 | Request to close position PID40147641 is sent to server
+2018.01.10 11:13:19.709 | → Request to close position PID40147641 is ACCEPTED, order OID62542820 created (10/01/2018 11:13:19.179 UTC+0)
+2018.01.10 11:13:19.912 | → Order OID62542820 is FILLED at 1324.02, position PID40147641 closed (10/01/2018 11:13:19.397 UTC+0)
+2018.01.10 11:13:20.834 | Request to close position PID40147643 is sent to server
+2018.01.10 11:13:21.224 | → Request to close position PID40147643 is ACCEPTED, order OID62542823 created (10/01/2018 11:13:21.035 UTC+0)
+2018.01.10 11:13:21.599 | → Order OID62542823 is FILLED at 17.181, position PID40147643 closed (10/01/2018 11:13:21.318 UTC+0)
+2018.01.11 13:09:02.828 | cAlgo started
+2018.01.12 03:35:32.640 | cAlgo started
+2018.01.12 08:24:32.416 | cAlgo started
+2018.01.12 08:49:13.106 | cAlgo started

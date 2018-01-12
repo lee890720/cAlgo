@@ -203,7 +203,8 @@ namespace cAlgo
             {
                 _ratio = item.num;
             }
-            ChartObjects.DrawText("Ratio", "Ratio-" + Ratio.ToString() + "_ratio-" + _ratio.ToString() + "_magnify-" + Magnify.ToString(), StaticPosition.TopRight, Colors.Red);
+            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio.ToString(), StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, Colors.White);
             #endregion
         }
     }

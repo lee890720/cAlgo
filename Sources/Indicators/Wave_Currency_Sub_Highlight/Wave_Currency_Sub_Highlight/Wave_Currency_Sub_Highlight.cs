@@ -68,11 +68,11 @@ namespace cAlgo
             else
                 sig_Result_A[index] = 0;
             if (SIG == null)
-                ChartObjects.DrawText("sig", "No-Signal", StaticPosition.TopRight, Colors.Red);
+                ChartObjects.DrawText("sig", "No-Signal", StaticPosition.TopLeft, Colors.White);
             else
-                ChartObjects.DrawText("sig", "Signal-" + SIG, StaticPosition.TopRight, Colors.Red);
-            ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopRight, Colors.Red);
-            ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopRight, Colors.Red);
+                ChartObjects.DrawText("sig", "Signal-" + SIG, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopLeft, Colors.White);
         }
 
         private string signal(int index)
