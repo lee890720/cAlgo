@@ -75,3 +75,6 @@
 2018.01.12 03:35:32.640 | cAlgo started
 2018.01.12 08:24:32.416 | cAlgo started
 2018.01.12 08:49:13.106 | cAlgo started
+2018.01.13 17:02:35.164 | cAlgo started
+2018.01.13 17:48:30.596 | cAlgo started
+2018.01.13 21:32:12.217 | cAlgo started
