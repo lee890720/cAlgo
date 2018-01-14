@@ -21,17 +21,16 @@ namespace cAlgo
         {
             var utctime = DateTime.UtcNow;
             SqlConnection con = new SqlConnection();
-            //con.ConnectionString = "server=bds121909490.my3w.com;database=bds121909490_db;uid=bds121909490;pwd=lee37355175";
             con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
             con.Open();
             DataSet dataset = new DataSet();
-            string strsql = "select * from UtcTime";
+            string strsql = "select * from Person where PersonID=1";
             SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
             SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
             objdataadpater.Fill(dataset, "cBot");
-            dataset.Tables["cBot"].Rows[0][1] = utctime;
+            dataset.Tables["cBot"].Rows[0][3] = utctime;
             objdataadpater.Update(dataset.Tables["cBot"]);
-            Print(dataset.Tables["cBot"].Rows[0][1].ToString());
+            Print(dataset.Tables["cBot"].Rows[0][3].ToString());
             con.Close();
         }
 

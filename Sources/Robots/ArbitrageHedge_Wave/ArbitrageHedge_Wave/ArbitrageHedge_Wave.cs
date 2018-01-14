@@ -343,7 +343,8 @@ namespace cAlgo
                 }
             ChartObjects.RemoveAllObjects();
             ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio + "\t\tMagnify-" + Magnify, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info2", "\nB-" + this.Account.Balance + "\t\tE-" + this.Account.Equity + "\t\tN-" + this.Account.UnrealizedNetProfit + "\t\tM-" + this.Account.Margin, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info3", "\n\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio + "\t\tMagnify-" + Magnify, StaticPosition.TopLeft, Colors.White);
             int i = 0;
             string si = null;
             string t = null;
@@ -352,7 +353,7 @@ namespace cAlgo
             {
                 i++;
                 si = "_C" + i.ToString();
-                ChartObjects.DrawText(si, "\n\n" + t + c, StaticPosition.TopLeft, Colors.White);
+                ChartObjects.DrawText(si, "\n\n\n" + t + c, StaticPosition.TopLeft, Colors.White);
                 t += tt;
             }
         }
