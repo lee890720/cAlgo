@@ -36,6 +36,7 @@ namespace cAlgo
         private DateTime SymbolTime;
         private Symbol _firstsymbol, _secondsymbol;
         private int FirstIndex, SecondIndex;
+        private Colors PCorel, NCorel, NoCorel;
         protected override void Initialize()
         {
             _symbolFirstSeries = MarketData.GetSeries(FirstSymbol, TimeFrame);
@@ -43,6 +44,9 @@ namespace cAlgo
             _firstsymbol = MarketData.GetSymbol(FirstSymbol);
             _secondsymbol = MarketData.GetSymbol(SecondSymbol);
             _ratio = 1;
+            PCorel = Colors.Lime;
+            NCorel = Colors.OrangeRed;
+            NoCorel = Colors.Gray;
         }
 
         public override void Calculate(int index)
@@ -203,8 +207,8 @@ namespace cAlgo
             {
                 _ratio = item.num;
             }
-            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio.ToString(), StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
             #endregion
         }
     }

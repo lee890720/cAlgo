@@ -12,10 +12,10 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Output("sig_Result_A", Color = Colors.Red, PlotType = PlotType.Points, Thickness = 2)]
+        [Output("sig_Result_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Points, Thickness = 2)]
         public IndicatorDataSeries sig_Result_A { get; set; }
 
-        [Output("sig_Result_B", Color = Colors.Blue, PlotType = PlotType.Points, Thickness = 2)]
+        [Output("sig_Result_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
         public IndicatorDataSeries sig_Result_B { get; set; }
 
         [Parameter(DefaultValue = "EURUSD")]
@@ -40,11 +40,15 @@ namespace cAlgo
         private Wave_Currency_Sub currency_sub;
         public int BarsAgo;
         public double _ratio;
+        private Colors PCorel, NCorel, NoCorel;
 
         protected override void Initialize()
         {
             currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
             currency_sub = Indicators.GetIndicator<Wave_Currency_Sub>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
+            PCorel = Colors.Lime;
+            NCorel = Colors.OrangeRed;
+            NoCorel = Colors.Gray;
         }
 
         public override void Calculate(int index)
@@ -58,9 +62,9 @@ namespace cAlgo
                 sig_Result_A[index] = currency.Result[index];
             BarsAgo = barsago(index);
             _ratio = currency._ratio;
-            ChartObjects.DrawText("barsago", "Cross-" + BarsAgo.ToString(), StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio.ToString(), StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("barsago", "Cross-" + BarsAgo.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
         }
 
         private string signal(int index)

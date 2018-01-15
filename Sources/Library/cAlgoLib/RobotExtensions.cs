@@ -314,18 +314,30 @@ namespace cAlgo.Lib
 		}
 
         //LabelExtensions
-        public static Position[] GetPositions(this Robot robot, string label)
+        public static Position[] GetPositions(this Robot robot, string label,Symbol symbol=null)
         {
+            if (symbol == null)
                 return robot.Positions.FindAll(label);
+            return robot.Positions.FindAll(label, symbol);
         }
 
-        public static long TotalLots(this Robot robot, string label = null)
+        public static long TotalLots(this Robot robot, string label = null,Symbol symbol=null)
         {
             List<Position> poss=new List<Position>();
-            if (label == null)
+            if (label == null && symbol == null)
                 poss.AddRange(robot.Positions);
+            else if (symbol == null)
+                poss.AddRange(robot.GetPositions(label));
+            else if (label == null)
+            {
+                foreach (var p in robot.Positions)
+                {
+                    if (p.SymbolCode == symbol.Code)
+                        poss.Add(p);
+                }
+            }
             else
-                poss.AddRange(robot.GetPositions(label)) ;
+                poss.AddRange(robot.GetPositions(label,symbol));
             if (poss.Count == 0)
                 return 0;
             long totallots = 0;

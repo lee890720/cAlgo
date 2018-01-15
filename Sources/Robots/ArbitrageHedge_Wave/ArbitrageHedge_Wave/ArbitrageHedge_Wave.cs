@@ -50,9 +50,13 @@ namespace cAlgo
         private List<string> list_mark = new List<string>();
         private List<string> _metalssymbol = new List<string>();
         private List<string> _oilsymbol = new List<string>();
+        private Colors PCorel, NCorel, NoCorel;
 
         protected override void OnStart()
         {
+            PCorel = Colors.Lime;
+            NCorel = Colors.OrangeRed;
+            NoCorel = Colors.Gray;
             _metalssymbol.Add("XAUUSD");
             _metalssymbol.Add("XAGUSD");
             _oilsymbol.Add("XBRUSD");
@@ -328,23 +332,32 @@ namespace cAlgo
             if (Positions.Count != 0)
                 foreach (var pos in Positions)
                 {
-                    //if (_metalssymbol.Contains(pos.SymbolCode) || _oilsymbol.Contains(pos.SymbolCode))
-                    if (pos.Label != null)
-                        if (!pos.SymbolCode.Contains("USD"))
-                        {
-                            if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label))))
-                                _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)));
-                        }
-                        else
-                        {
-                            if (!_currency.Contains(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label)) / 2))
-                                _currency.Add(pos.SymbolCode + "-" + MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label) / 2));
-                        }
+                    if (pos.Label == null)
+                        continue;
+                    if (!_currency.Contains(pos.SymbolCode + ": " + ((_oilsymbol.Contains(pos.SymbolCode) || _metalssymbol.Contains(pos.SymbolCode)) ? this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode)) : MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode))))))
+                        _currency.Add(pos.SymbolCode + ": " + ((_oilsymbol.Contains(pos.SymbolCode) || _metalssymbol.Contains(pos.SymbolCode)) ? this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode)) : MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode)))));
                 }
             ChartObjects.RemoveAllObjects();
-            ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("info2", "\nB-" + this.Account.Balance + "\t\tE-" + this.Account.Equity + "\t\tN-" + this.Account.UnrealizedNetProfit + "\t\tM-" + this.Account.Margin, StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("info3", "\n\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA) + "\t\tSIG-" + currency_sub.SIG + "\t\tRatio-" + Ratio + "\t\tMagnify-" + Magnify, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info1", "\t\t" + this.Account.Number + " - " + Pos_LastTime, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/1/1", "\n\t\tB:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/1/2", "\n\t\t     " + Math.Round(this.Account.Balance), StaticPosition.TopLeft, getcolors(Math.Round(this.Account.Balance)));
+            ChartObjects.DrawText("info2/2/1", "\n\t\t\t\tE:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/2/2", "\n\t\t\t\t     " + Math.Round(this.Account.Equity), StaticPosition.TopLeft, getcolors(Math.Round(this.Account.Equity)));
+            ChartObjects.DrawText("info2/3/1", "\n\t\t\t\t\t\tN:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/3/2", "\n\t\t\t\t\t\t     " + Math.Round(this.Account.UnrealizedNetProfit), StaticPosition.TopLeft, getcolors(Math.Round(this.Account.UnrealizedNetProfit)));
+            ChartObjects.DrawText("info2/4/1", "\n\t\t\t\t\t\t\t\tM:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/4/2", "\n\t\t\t\t\t\t\t\t     " + Math.Round(this.Account.Margin), StaticPosition.TopLeft, getcolors(Math.Round(this.Account.Margin)));
+            //ChartObjects.DrawText("info3", "\n\n\t\tSR: " + Math.Round(SR) + "\t\tSA: " + Math.Round(SA) + "\t\tSIG: " + currency_sub.SIG + "\t\tRatio: " + Ratio + "\t\tMagnify: " + Magnify, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info3/1/1", "\n\n\t\tSR:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/1/2", "\n\n\t\t       " + Math.Round(SR), StaticPosition.TopLeft, getcolors(Math.Round(SR)));
+            ChartObjects.DrawText("info3/2/1", "\n\n\t\t\t\tSA:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/2/2", "\n\n\t\t\t\t       " + Math.Round(SA), StaticPosition.TopLeft, getcolors(Math.Round(SA)));
+            if (currency_sub.SIG == null)
+                ChartObjects.DrawText("info3/3", "\n\n\t\t\t\t\t\tSIG: " + "null", StaticPosition.TopLeft, NoCorel);
+            else
+                ChartObjects.DrawText("info3/3", "\n\n\t\t\t\t\t\tSIG: " + currency_sub.SIG, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/4", "\n\n\t\t\t\t\t\t\t\tRatio: " + Ratio, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/5", "\n\n\t\t\t\t\t\t\t\t\t\tMagnify: " + Magnify, StaticPosition.TopLeft, NoCorel);
             int i = 0;
             string si = null;
             string t = null;
@@ -353,9 +366,20 @@ namespace cAlgo
             {
                 i++;
                 si = "_C" + i.ToString();
-                ChartObjects.DrawText(si, "\n\n\n" + t + c, StaticPosition.TopLeft, Colors.White);
+                ChartObjects.DrawText(si, "\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
                 t += tt;
             }
+        }
+
+        private Colors getcolors(double dou)
+        {
+            Colors col = Colors.White;
+            //color1 = (Result1.LastValue > 0.8) ? PCorel : (Result1.LastValue < -0.8) ? NCorel : NoCorel;
+            if (dou >= 0)
+                col = PCorel;
+            else
+                col = NCorel;
+            return col;
         }
     }
 }

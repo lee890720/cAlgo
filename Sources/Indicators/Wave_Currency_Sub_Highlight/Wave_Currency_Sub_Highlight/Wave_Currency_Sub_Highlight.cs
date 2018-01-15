@@ -13,10 +13,10 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Output("sig_Result_A", Color = Colors.Red, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        [Output("sig_Result_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
         public IndicatorDataSeries sig_Result_A { get; set; }
 
-        [Output("sig_Result_B", Color = Colors.Blue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        [Output("sig_Result_B", Color = Colors.OrangeRed, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
         public IndicatorDataSeries sig_Result_B { get; set; }
 
         [Parameter(DefaultValue = "EURUSD")]
@@ -42,12 +42,16 @@ namespace cAlgo
         public string SIG;
         public int BarsAgo_Sub;
         public string Mark;
+        private Colors PCorel, NCorel, NoCorel;
 
         protected override void Initialize()
         {
             currency = Indicators.GetIndicator<Wave_Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
             currency_sub = Indicators.GetIndicator<Wave_Currency_Sub>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
             SIG = null;
+            PCorel = Colors.Lime;
+            NCorel = Colors.OrangeRed;
+            NoCorel = Colors.Gray;
         }
 
         public override void Calculate(int index)
@@ -68,11 +72,11 @@ namespace cAlgo
             else
                 sig_Result_A[index] = 0;
             if (SIG == null)
-                ChartObjects.DrawText("sig", "No-Signal", StaticPosition.TopLeft, Colors.White);
+                ChartObjects.DrawText("sig", "No-Signal", StaticPosition.TopLeft, NoCorel);
             else
-                ChartObjects.DrawText("sig", "Signal-" + SIG, StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopLeft, Colors.White);
+                ChartObjects.DrawText("sig", "Signal-" + SIG, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopLeft, NoCorel);
         }
 
         private string signal(int index)
