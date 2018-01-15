@@ -190,7 +190,7 @@ namespace cAlgo
                         this.executeOrder(initSellF);
                         initBuyS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
                         initBuyS.Label = AboveLabel;
-                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
+                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
                         this.executeOrder(initBuyS);
                         AboveCross = false;
                     }
@@ -245,7 +245,18 @@ namespace cAlgo
                 if (cross > crossago)
                     crossago = cross;
             if (pos.Count != 0)
-                crossago = Convert.ToInt16(pos[0].Comment.Substring(7, 3)) + 5;
+            {
+                //crossago = Convert.ToInt16(pos[0].Comment.Substring(7, 3)) + 5;
+                var c = 0;
+                foreach (var p in pos)
+                {
+                    if (c == 0)
+                        c = Convert.ToInt16(p.Comment.Substring(7, 3)) + 5;
+                    if (c < Convert.ToInt16(p.Comment.Substring(7, 3)) + 5)
+                        c = Convert.ToInt16(p.Comment.Substring(7, 3)) + 5;
+                }
+                crossago = c;
+            }
             return crossago;
         }
 
