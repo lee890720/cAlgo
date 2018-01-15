@@ -52,8 +52,10 @@ namespace cAlgo
         public override void Calculate(int index)
         {
             SymbolTime = MarketSeries.OpenTime[index];
-            FirstIndex = _symbolFirstSeries.GetIndexByDate(SymbolTime);
-            SecondIndex = _symbolSecondSeries.GetIndexByDate(SymbolTime);
+            //FirstIndex = _symbolFirstSeries.GetIndexByDate(SymbolTime);
+            //SecondIndex = _symbolSecondSeries.GetIndexByDate(SymbolTime);
+            FirstIndex = _symbolFirstSeries.OpenTime.GetIndexByExactTime(SymbolTime);
+            SecondIndex = _symbolSecondSeries.OpenTime.GetIndexByExactTime(SymbolTime);
             GetRatio();
             //FirstClose
             double FirstClose = 0;

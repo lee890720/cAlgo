@@ -1,5 +1,5 @@
 ﻿using cAlgo.API;
-
+using System;
 namespace cAlgo
 {
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
@@ -35,7 +35,9 @@ namespace cAlgo
 
         public override void Calculate(int index)
         {
-            Result[index] = currency.Result[index] - currency.Average[index];
+            DateTime SymbolTime = MarketSeries.OpenTime[index];
+            var c_index = currency.MarketSeries.OpenTime.GetIndexByExactTime(SymbolTime);
+            Result[index] = currency.Result[c_index] - currency.Average[c_index];
             double sum = 0.0;
             for (int i = index - Period + 1; i <= index; i++)
             {
