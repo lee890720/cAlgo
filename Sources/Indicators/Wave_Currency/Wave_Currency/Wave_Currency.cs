@@ -54,6 +54,14 @@ namespace cAlgo
             SymbolTime = MarketSeries.OpenTime[index];
             FirstIndex = _symbolFirstSeries.GetIndexByDate(SymbolTime);
             SecondIndex = _symbolSecondSeries.GetIndexByDate(SymbolTime);
+            var _firsttime = _symbolFirstSeries.OpenTime[FirstIndex];
+            var _secondtime = _symbolSecondSeries.OpenTime[SecondIndex];
+            List<DateTime> _time = new List<DateTime>();
+            _time.Add(SymbolTime);
+            _time.Add(_firsttime);
+            _time.Add(_secondtime);
+            FirstIndex = _symbolFirstSeries.GetIndexByDate(_time.Min());
+            SecondIndex = _symbolSecondSeries.GetIndexByDate(_time.Min());
             GetRatio();
             //FirstClose
             double FirstClose = 0;
