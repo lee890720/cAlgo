@@ -93,3 +93,14 @@
 2018.01.16 01:13:17.473 | cAlgo started
 2018.01.16 02:03:17.090 | cAlgo started
 2018.01.16 02:26:51.667 | cAlgo started
+2018.01.16 03:07:17.623 | cAlgo started
+2018.01.16 05:53:20.184 | cAlgo started
+2018.01.16 05:58:52.395 | Request to Buy 100 Oz XBRUSD (Price: 70.21, MR: 2) is sent to server
+2018.01.16 05:58:53.895 | → Request to Buy 100 Oz XBRUSD (Price: 70.21, MR: 2) is ACCEPTED, order OID62755392 created (16/01/2018 05:58:52.755 UTC+0)
+2018.01.16 05:58:54.004 | → Order OID62755392 is FILLED at 70.21, position PID40367007 (16/01/2018 05:58:53.004 UTC+0)
+2018.01.16 05:58:54.129 | Request to Sell 100 Oz XTIUSD (Price: 64.50, MR: 2) is sent to server
+2018.01.16 05:58:54.551 | → Request to Sell 100 Oz XTIUSD (Price: 64.50, MR: 2) is ACCEPTED, order OID62755393 created (16/01/2018 05:58:54.359 UTC+0)
+2018.01.16 05:58:54.816 | → Order OID62755393 is FILLED at 64.50, position PID40367008 (16/01/2018 05:58:54.603 UTC+0)
+2018.01.16 08:59:52.884 | cAlgo started
+2018.01.16 09:07:22.065 | cAlgo started
+2018.01.16 09:07:34.181 | cAlgo started

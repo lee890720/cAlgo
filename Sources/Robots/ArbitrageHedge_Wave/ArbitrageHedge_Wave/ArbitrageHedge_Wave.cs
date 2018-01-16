@@ -190,7 +190,7 @@ namespace cAlgo
                         this.executeOrder(initSellF);
                         initBuyS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
                         initBuyS.Label = AboveLabel;
-                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
+                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above) - 5) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
                         this.executeOrder(initBuyS);
                         AboveCross = false;
                     }
@@ -202,7 +202,7 @@ namespace cAlgo
                         this.executeOrder(initBuyF);
                         initSellS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
                         initSellS.Label = BelowLabel;
-                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
+                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below) - 5) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
                         this.executeOrder(initSellS);
                         BelowCross = false;
                     }
@@ -377,7 +377,13 @@ namespace cAlgo
             {
                 i++;
                 si = "_C" + i.ToString();
-                ChartObjects.DrawText(si, "\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
+                if (i <= 10)
+                    ChartObjects.DrawText(si, "\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
+                if (i > 10)
+                {
+                    t = null;
+                    ChartObjects.DrawText(si, "\n\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
+                }
                 t += tt;
             }
         }
