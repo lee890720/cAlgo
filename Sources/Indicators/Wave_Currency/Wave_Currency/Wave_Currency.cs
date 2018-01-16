@@ -52,24 +52,46 @@ namespace cAlgo
         public override void Calculate(int index)
         {
             SymbolTime = MarketSeries.OpenTime[index];
-            //FirstIndex = _symbolFirstSeries.GetIndexByDate(SymbolTime);
-            //SecondIndex = _symbolSecondSeries.GetIndexByDate(SymbolTime);
-            FirstIndex = _symbolFirstSeries.OpenTime.GetIndexByExactTime(SymbolTime);
-            SecondIndex = _symbolSecondSeries.OpenTime.GetIndexByExactTime(SymbolTime);
+            FirstIndex = _symbolFirstSeries.GetIndexByDate(SymbolTime);
+            SecondIndex = _symbolSecondSeries.GetIndexByDate(SymbolTime);
             GetRatio();
             //FirstClose
             double FirstClose = 0;
+            double _firstclose = _symbolFirstSeries.Close[FirstIndex];
+            if (double.IsNaN(_firstclose))
+            {
+                for (int i = FirstIndex - 1; i >= 0; i--)
+                {
+                    if (!double.IsNaN(_symbolFirstSeries.Close[i]))
+                    {
+                        _firstclose = _symbolFirstSeries.Close[i];
+                        break;
+                    }
+                }
+            }
             if (FirstSymbol.Substring(0, 3) == "USD")
-                FirstClose = 1 / _symbolFirstSeries.Close[FirstIndex] * (_firstsymbol.PipSize / 0.0001);
+                FirstClose = 1 / _firstclose * (_firstsymbol.PipSize / 0.0001);
             if (FirstSymbol.Substring(3, 3) == "USD")
-                FirstClose = _symbolFirstSeries.Close[FirstIndex] / (_firstsymbol.PipSize / 0.0001);
+                FirstClose = _firstclose / (_firstsymbol.PipSize / 0.0001);
 
             //SecondClose
             double SecondClose = 0;
+            double _secondclose = _symbolSecondSeries.Close[SecondIndex];
+            if (double.IsNaN(_secondclose))
+            {
+                for (int i = SecondIndex - 1; i >= 0; i--)
+                {
+                    if (!double.IsNaN(_symbolSecondSeries.Close[i]))
+                    {
+                        _secondclose = _symbolSecondSeries.Close[i];
+                        break;
+                    }
+                }
+            }
             if (SecondSymbol.Substring(0, 3) == "USD")
-                SecondClose = 1 / _symbolSecondSeries.Close[SecondIndex] * (_secondsymbol.PipSize / 0.0001);
+                SecondClose = 1 / _secondclose * (_secondsymbol.PipSize / 0.0001);
             if (SecondSymbol.Substring(3, 3) == "USD")
-                SecondClose = _symbolSecondSeries.Close[SecondIndex] / (_secondsymbol.PipSize / 0.0001);
+                SecondClose = _secondclose / (_secondsymbol.PipSize / 0.0001);
 
             Result[index] = (FirstClose / Ratio - SecondClose) * Magnify / 0.0001 + 10000;
 
