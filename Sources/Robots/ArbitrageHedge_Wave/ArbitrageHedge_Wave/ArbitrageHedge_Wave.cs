@@ -122,6 +122,15 @@ namespace cAlgo
             Pos_below.Reverse();
             #endregion
 
+            #region Close
+            if (Pos_above.Count != 0)
+                if (UR <= UA)
+                    this.closeAllLabel(AboveLabel);
+            if (Pos_below.Count != 0)
+                if (UR >= UA)
+                    this.closeAllLabel(BelowLabel);
+            #endregion
+
             chartdraw();
 
             if (Pos_above.Count != 0)
@@ -207,15 +216,6 @@ namespace cAlgo
                         BelowCross = false;
                     }
                 }
-                #endregion
-
-                #region Close
-                if (Pos_above.Count != 0)
-                    if (UR <= UA)
-                        this.closeAllLabel(AboveLabel);
-                if (Pos_below.Count != 0)
-                    if (UR >= UA)
-                        this.closeAllLabel(BelowLabel);
                 #endregion
 
                 #region Cross
