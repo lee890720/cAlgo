@@ -1,0 +1,14 @@
+﻿[ChartParameters]
+Symbol = CHFJPY
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = USDCHF
+SecondSymbol = USDJPY
+Period = 120
+Distance = 30
+timer = 1
+Ratio = 1.15
+Magnify = 2
+IsTrade = True

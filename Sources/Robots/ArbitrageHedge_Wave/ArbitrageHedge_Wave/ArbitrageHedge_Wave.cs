@@ -379,9 +379,13 @@ namespace cAlgo
                 si = "_C" + i.ToString();
                 if (i <= 10)
                     ChartObjects.DrawText(si, "\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
-                if (i > 10)
+                if (i == 11)
                 {
                     t = null;
+                    ChartObjects.DrawText(si, "\n\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
+                }
+                if (i > 11)
+                {
                     ChartObjects.DrawText(si, "\n\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
                 }
                 t += tt;

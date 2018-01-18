@@ -1,0 +1,14 @@
+﻿[ChartParameters]
+Symbol = XAUUSD
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1
+FirstSymbol = XAUUSD
+SecondSymbol = XAGUSD
+Period = 120
+Distance = 30
+timer = 1
+Ratio = 80
+Magnify = 5
+IsTrade = True

@@ -11,7 +11,7 @@ namespace cAlgo
     public class ArbitrageHedge : Robot
     {
         [Parameter("INIT_Volume", DefaultValue = 1000, MinValue = 1000)]
-        public int Init_Volume { get; set; }
+        public double Init_Volume { get; set; }
 
         [Parameter(DefaultValue = "EURUSD")]
         public string FirstSymbol { get; set; }
@@ -28,128 +28,259 @@ namespace cAlgo
         [Parameter(DefaultValue = 1)]
         public int timer { get; set; }
 
+        [Parameter(DefaultValue = 1)]
+        public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
+
         [Parameter(DefaultValue = false)]
         public bool IsTrade { get; set; }
 
-        private Symbol symbol;
-        private string AboveLabel;
-        private string BelowLabel;
-        private OrderParams initBuy, initSell;
         private Currency_Highlight currency;
         private Currency_Sub_Highlight currency_sub;
         private bool AboveCross;
         private bool BelowCross;
+        private string AboveLabel, BelowLabel;
+        private bool SymbolExist;
+        private Symbol _symbol;
+        private Symbol _firstsymbol, _secondsymbol;
+        private List<string> list_mark = new List<string>();
+        private List<string> _metalssymbol = new List<string>();
+        private List<string> _oilsymbol = new List<string>();
+        private Colors PCorel, NCorel, NoCorel;
+        private OrderParams initBuy, initSell;
+        private OrderParams initBuyF, initBuyS, initSellF, initSellS;
 
         protected override void OnStart()
         {
+
+            // Currency_Highlight has two public parameters that were BarsAgo and _ratio.
+            currency = Indicators.GetIndicator<Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
+            // Currency_Sub_Highlight has three public parameters that they were SIG, BarsAgo_Sub and Mark.
+            currency_sub = Indicators.GetIndicator<Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
+
             AboveCross = false;
             BelowCross = false;
-            // Currency_Highlight has a public parameter that it's BarsAgo.
-            currency = Indicators.GetIndicator<Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance);
-            // Currency_Sub_Highlight has a public parameter that it's SIG.
-            currency_sub = Indicators.GetIndicator<Currency_Sub_Highlight>(FirstSymbol, SecondSymbol, Period, Distance);
-            string currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3) : SecondSymbol.Substring(0, 3));
-            Print("The currency of the current transaction is : " + currencysymbol + ".");
-            symbol = MarketData.GetSymbol(currencysymbol);
-            AboveLabel = "Above" + "-" + symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
-            BelowLabel = "Below" + "-" + symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
-            double slippage = 2;
-            //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
-            initBuy = new OrderParams(TradeType.Buy, symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+
+            string _currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3, 3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3, 3) : SecondSymbol.Substring(0, 3));
+            Print("The currency of the current transaction is : " + _currencysymbol + ".");
+            AboveLabel = "Above" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
+            BelowLabel = "Below" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
+
+            _firstsymbol = MarketData.GetSymbol(FirstSymbol);
+            _secondsymbol = MarketData.GetSymbol(SecondSymbol);
+
+            _metalssymbol.Add("XAUUSD");
+            _metalssymbol.Add("XAGUSD");
+            _oilsymbol.Add("XBRUSD");
+            _oilsymbol.Add("XTIUSD");
+
+            PCorel = Colors.Lime;
+            NCorel = Colors.OrangeRed;
+            NoCorel = Colors.Gray;
+
+            #region OrderParams
+            if (Symbol.Code == _currencysymbol)
             {
-                            });
-            initSell = new OrderParams(TradeType.Sell, symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                SymbolExist = true;
+                Print(_currencysymbol + " exists.");
+                _symbol = MarketData.GetSymbol(_currencysymbol);
+                double slippage = 2;
+                //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
+                initBuy = new OrderParams(TradeType.Buy, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                {
+                                    });
+                initSell = new OrderParams(TradeType.Sell, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                {
+                                    });
+            }
+            else
             {
-                            });
-            // Symbol.Pipsize
-            Symbol sym1 = MarketData.GetSymbol("EURUSD");
-            Symbol sym2 = MarketData.GetSymbol("GBPUSD");
-            Symbol sym3 = MarketData.GetSymbol("USDCHF");
-            Symbol sym4 = MarketData.GetSymbol("USDJPY");
-            Symbol sym5 = MarketData.GetSymbol("AUDUSD");
-            Symbol sym6 = MarketData.GetSymbol("NZDUSD");
-            Symbol sym7 = MarketData.GetSymbol("USDCAD");
-            Symbol sym8 = MarketData.GetSymbol("XAUUSD");
-            Print(sym1.PipSize + "-" + sym2.PipSize + "-" + sym3.PipSize + "-" + sym4.PipSize + "-" + sym5.PipSize + "-" + sym6.PipSize + "-" + sym7.PipSize + "-" + sym8.PipSize);
+                SymbolExist = false;
+                Print(_currencysymbol + " doesn't exist.");
+                double slippage = 2;
+                //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
+                initBuyF = new OrderParams(TradeType.Buy, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                {
+                                    });
+                initSellF = new OrderParams(TradeType.Sell, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                {
+                                    });
+                initBuyS = new OrderParams(TradeType.Buy, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                {
+                                    });
+                initSellS = new OrderParams(TradeType.Sell, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                {
+                                    });
+            }
+            #endregion
         }
 
         protected override void OnTick()
         {
-            chartdraw();
+            #region Parameter
+            var UR = currency.Result.LastValue;
+            var UA = currency.Average.LastValue;
+            var SR = currency_sub.Result.LastValue;
+            var SA = currency_sub.Average.LastValue;
+
+            List<Position> Pos_above = new List<Position>(this.GetPositions(AboveLabel));
+            List<Position> Pos_below = new List<Position>(this.GetPositions(BelowLabel));
+            Pos_above.Reverse();
+            Pos_below.Reverse();
+            #endregion
+
+            #region Cross
+            if (Pos_above.Count == 0)
+                AboveCross = true;
+            else
+            {
+                if (SR > SA)
+                    AboveCross = true;
+            }
+            if (Pos_below.Count == 0)
+                BelowCross = true;
+            else
+            {
+                if (SR < SA)
+                    BelowCross = true;
+            }
+            #endregion
+
+            #region Close
+            if (Pos_above.Count != 0)
+            {
+                if (GetClose(AboveLabel))
+                {
+                    if (SR <= 10)
+                        this.closeAllLabel(AboveLabel);
+                }
+                else
+                {
+                    if (SR <= 0)
+                        this.closeAllLabel(AboveLabel);
+                }
+            }
+            if (Pos_below.Count != 0)
+            {
+                if (GetClose(BelowLabel))
+                {
+                    if (SR >= -10)
+                        this.closeAllLabel(BelowLabel);
+                }
+                else
+                {
+                    if (SR >= 0)
+                        this.closeAllLabel(BelowLabel);
+                }
+            }
+
+            #endregion
+
+            #region Mark
+            if (Pos_above.Count != 0)
+                foreach (var p in Pos_above)
+                {
+                    if (!list_mark.Contains(p.Comment.Substring(15)))
+                        list_mark.Add(p.Comment.Substring(15));
+                }
+            if (Pos_below.Count != 0)
+                foreach (var p in Pos_below)
+                {
+                    if (!list_mark.Contains(p.Comment.Substring(15)))
+                        list_mark.Add(p.Comment.Substring(15));
+                }
+            #endregion
+
+            Chart();
+
             if (IsTrade)
             {
-                #region Parameter
-                var UR = currency.Result.LastValue;
-                var UA = currency.Average.LastValue;
-                var SR = currency_sub.Result.LastValue;
-                var SA = currency_sub.Average.LastValue;
-
-                List<Position> Pos_above = new List<Position>(this.GetPositions(AboveLabel));
-                List<Position> Pos_below = new List<Position>(this.GetPositions(BelowLabel));
-                Pos_above.Reverse();
-                Pos_below.Reverse();
-                #endregion
-
                 #region Open
-                if (opensignal() == "above")
+                if (SymbolExist)
                 {
-                    initSell.Volume = Init_Volume * Math.Pow(2, Pos_above.Count);
-                    initSell.Label = AboveLabel;
-                    initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1);
-                    this.executeOrder(initSell);
-                    AboveCross = false;
+                    #region Above
+                    if (OpenSignal() == "above")
+                    {
+                        initSell.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Count), RoundingMode.ToNearest);
+                        initSell.Label = AboveLabel;
+                        initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
+                        this.executeOrder(initSell);
+                        AboveCross = false;
+                    }
+                    #endregion
+                    #region Below
+                    if (OpenSignal() == "below")
+                    {
+                        initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Count), RoundingMode.ToNearest);
+                        initBuy.Label = BelowLabel;
+                        initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
+                        this.executeOrder(initBuy);
+                        BelowCross = false;
+                    }
+                    #endregion
                 }
-                if (opensignal() == "below")
-                {
-                    initBuy.Volume = Init_Volume * Math.Pow(2, Pos_below.Count);
-                    initBuy.Label = BelowLabel;
-                    initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1);
-                    this.executeOrder(initBuy);
-                    BelowCross = false;
-                }
-                #endregion
-
-                #region Close
-                if (Pos_above.Count != 0)
-                    if (UR <= UA)
-                        this.closeAllLabel(AboveLabel);
-                if (Pos_below.Count != 0)
-                    if (UR >= UA)
-                        this.closeAllLabel(BelowLabel);
-                #endregion
-
-                #region Cross
-                if (Pos_above.Count == 0)
-                    AboveCross = true;
                 else
                 {
-                    if (SR > SA)
-                        AboveCross = true;
-                }
-                if (Pos_below.Count == 0)
-                    BelowCross = true;
-                else
-                {
-                    if (SR < SA)
-                        BelowCross = true;
+                    #region Parameter
+                    double first_R = 1;
+                    double second_R = 1;
+                    if (_metalssymbol.Contains(FirstSymbol))
+                        first_R = 1000;
+                    if (_metalssymbol.Contains(SecondSymbol))
+                        second_R = 1000;
+                    if (_oilsymbol.Contains(FirstSymbol))
+                        first_R = 10;
+                    if (_oilsymbol.Contains(SecondSymbol))
+                        second_R = 10;
+                    double _firstvolume = Init_Volume / first_R;
+                    double _secondvolume = Init_Volume / second_R;
+                    if (Ratio >= 1)
+                    {
+                        _firstvolume = _firstsymbol.NormalizeVolume(Init_Volume / first_R, RoundingMode.ToNearest);
+                        _secondvolume = _secondsymbol.NormalizeVolume(Init_Volume * Ratio / second_R, RoundingMode.ToNearest);
+                    }
+                    else
+                    {
+                        _firstvolume = _firstsymbol.NormalizeVolume(Init_Volume / Ratio / first_R, RoundingMode.ToNearest);
+                        _secondvolume = _secondsymbol.NormalizeVolume(Init_Volume / second_R, RoundingMode.ToNearest);
+                    }
+                    #endregion
+                    #region Above
+                    if (OpenSignal() == "above")
+                    {
+                        initSellF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
+                        initSellF.Label = AboveLabel;
+                        initSellF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
+                        this.executeOrder(initSellF);
+                        initBuyS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
+                        initBuyS.Label = AboveLabel;
+                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
+                        this.executeOrder(initBuyS);
+                        AboveCross = false;
+                    }
+                    #endregion
+                    #region Below
+                    if (OpenSignal() == "below")
+                    {
+                        initBuyF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
+                        initBuyF.Label = BelowLabel;
+                        initBuyF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
+                        this.executeOrder(initBuyF);
+                        initSellS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
+                        initSellS.Label = BelowLabel;
+                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
+                        this.executeOrder(initSellS);
+                        BelowCross = false;
+                    }
+                    #endregion
                 }
                 #endregion
             }
         }
 
-        private int CrossAgo(List<Position> pos)
-        {
-            int cross = (int)Math.Round((double)currency.BarsAgo / 24) * 5;
-            int crossago = Distance / 2;
-            if (pos.Count == 0)
-                if (cross > crossago)
-                    crossago = cross;
-            if (pos.Count != 0)
-                crossago = Convert.ToInt16(pos[0].Comment.Substring(7, 3)) + 5;
-            return crossago;
-        }
-
-        private string opensignal()
+        private string OpenSignal()
         {
             #region Parameter
             string signal = null;
@@ -171,12 +302,17 @@ namespace cAlgo
             var now = DateTime.UtcNow;
             List<DateTime> lastPosTime = new List<DateTime>();
             if (Pos_above.Count != 0)
+            {
                 lastPosTime.Add(Pos_above[0].EntryTime.AddHours(timer));
+            }
             if (Pos_below.Count != 0)
+            {
                 lastPosTime.Add(Pos_below[0].EntryTime.AddHours(timer));
+            }
             var Pos_LastTime = lastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-timer) : lastPosTime.Max();
             #endregion
-            if (DateTime.Compare(now, Pos_LastTime) > 0)
+
+            if (DateTime.Compare(now, Pos_LastTime) > 0 && !list_mark.Contains(currency_sub.Mark))
             {
                 if (sig == "above" && AboveCross)
                 {
@@ -200,7 +336,7 @@ namespace cAlgo
             return signal;
         }
 
-        private void chartdraw()
+        private void Chart()
         {
             #region Parameter
             var UR = currency.Result.LastValue;
@@ -227,10 +363,33 @@ namespace cAlgo
             List<string> _currency = new List<string>();
             if (Positions.Count != 0)
                 foreach (var pos in Positions)
-                    if (!_currency.Contains(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label))))
-                        _currency.Add(pos.SymbolCode + "-" + Symbol.VolumeToQuantity(this.TotalLots(pos.Label)));
-            ChartObjects.DrawText("info1", this.Account.Number + " - " + Symbol.VolumeToQuantity(this.TotalLots()) + " - " + Pos_LastTime, StaticPosition.TopLeft, Colors.White);
-            ChartObjects.DrawText("info2", "\nSR-" + Math.Round(SR) + "\t\tSA-" + Math.Round(SA), StaticPosition.TopLeft, Colors.White);
+                {
+                    if (pos.Label == null)
+                        continue;
+                    if (!_currency.Contains(pos.SymbolCode + ": " + ((_oilsymbol.Contains(pos.SymbolCode) || _metalssymbol.Contains(pos.SymbolCode)) ? this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode)) : MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode))))))
+                        _currency.Add(pos.SymbolCode + ": " + ((_oilsymbol.Contains(pos.SymbolCode) || _metalssymbol.Contains(pos.SymbolCode)) ? this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode)) : MarketData.GetSymbol(pos.SymbolCode).VolumeToQuantity(this.TotalLots(pos.Label, MarketData.GetSymbol(pos.SymbolCode)))));
+                }
+            ChartObjects.RemoveAllObjects();
+            ChartObjects.DrawText("info1", "\t\t" + this.Account.Number + " - " + Pos_LastTime, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/1/1", "\n\t\tB:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/1/2", "\n\t\t     " + Math.Round(this.Account.Balance), StaticPosition.TopLeft, GetColors(Math.Round(this.Account.Balance)));
+            ChartObjects.DrawText("info2/2/1", "\n\t\t\t\tE:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/2/2", "\n\t\t\t\t     " + Math.Round(this.Account.Equity), StaticPosition.TopLeft, GetColors(Math.Round(this.Account.Equity)));
+            ChartObjects.DrawText("info2/3/1", "\n\t\t\t\t\t\tN:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/3/2", "\n\t\t\t\t\t\t     " + Math.Round(this.Account.UnrealizedNetProfit), StaticPosition.TopLeft, GetColors(Math.Round(this.Account.UnrealizedNetProfit)));
+            ChartObjects.DrawText("info2/4/1", "\n\t\t\t\t\t\t\t\tM:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info2/4/2", "\n\t\t\t\t\t\t\t\t     " + Math.Round(this.Account.Margin), StaticPosition.TopLeft, GetColors(Math.Round(this.Account.Margin)));
+            //ChartObjects.DrawText("info3", "\n\n\t\tSR: " + Math.Round(SR) + "\t\tSA: " + Math.Round(SA) + "\t\tSIG: " + currency_sub.SIG + "\t\tRatio: " + Ratio + "\t\tMagnify: " + Magnify, StaticPosition.TopLeft, Colors.White);
+            ChartObjects.DrawText("info3/1/1", "\n\n\t\tSR:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/1/2", "\n\n\t\t       " + Math.Round(SR), StaticPosition.TopLeft, GetColors(Math.Round(SR)));
+            ChartObjects.DrawText("info3/2/1", "\n\n\t\t\t\tSA:", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/2/2", "\n\n\t\t\t\t       " + Math.Round(SA), StaticPosition.TopLeft, GetColors(Math.Round(SA)));
+            if (currency_sub.SIG == null)
+                ChartObjects.DrawText("info3/3", "\n\n\t\t\t\t\t\tSIG: " + "null", StaticPosition.TopLeft, NoCorel);
+            else
+                ChartObjects.DrawText("info3/3", "\n\n\t\t\t\t\t\tSIG: " + currency_sub.SIG, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/4", "\n\n\t\t\t\t\t\t\t\tRatio: " + Ratio, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("info3/5", "\n\n\t\t\t\t\t\t\t\t\t\tMagnify: " + Magnify, StaticPosition.TopLeft, NoCorel);
             int i = 0;
             string si = null;
             string t = null;
@@ -239,10 +398,64 @@ namespace cAlgo
             {
                 i++;
                 si = "_C" + i.ToString();
-                ChartObjects.DrawText(si, "\n\n" + t + c, StaticPosition.TopLeft, Colors.White);
+                if (i <= 10)
+                    ChartObjects.DrawText(si, "\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
+                if (i == 11)
+                {
+                    t = null;
+                    ChartObjects.DrawText(si, "\n\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
+                }
+                if (i > 11)
+                {
+                    ChartObjects.DrawText(si, "\n\n\n\n\t\t" + t + c, StaticPosition.TopLeft, NoCorel);
+                }
                 t += tt;
             }
-            //ChartObjects.DrawText("info2", "\nEq-" + Math.Round(this.Account.Equity) + "\tPr-" + Math.Round(this.Account.UnrealizedNetProfit) + "\tMa-" + Math.Round(this.Account.Margin) + "\tLe-" + marginlevel + "%", StaticPosition.TopLeft, Colors.White);
+        }
+
+        private int CrossAgo(List<Position> pos)
+        {
+            int cross = (int)Math.Round((double)currency.BarsAgo / 24) * 5;
+            int crossago = Distance / 2;
+            if (pos.Count == 0)
+                if (cross > crossago)
+                    crossago = cross;
+            if (pos.Count != 0)
+            {
+                var c = 0;
+                foreach (var p in pos)
+                {
+                    if (c == 0)
+                        c = Convert.ToInt16(p.Comment.Substring(7, 3)) + 5;
+                    if (c < Convert.ToInt16(p.Comment.Substring(7, 3)) + 5)
+                        c = Convert.ToInt16(p.Comment.Substring(7, 3)) + 5;
+                }
+                crossago = c;
+            }
+            return crossago;
+        }
+
+        private Colors GetColors(double dou)
+        {
+            Colors col = Colors.White;
+            //color1 = (Result1.LastValue > 0.8) ? PCorel : (Result1.LastValue < -0.8) ? NCorel : NoCorel;
+            if (dou >= 0)
+                col = PCorel;
+            else
+                col = NCorel;
+            return col;
+        }
+
+        private bool GetClose(string label)
+        {
+            int count = this.GetPositions(label).Count();
+            if (count != 0)
+            {
+                TimeSpan ts = DateTime.UtcNow - this.FirstPosition(label).EntryTime;
+                if (ts.Days >= 1 || this.MaxLot(label) != this.MinLot(label))
+                    return true;
+            }
+            return false;
         }
     }
 }

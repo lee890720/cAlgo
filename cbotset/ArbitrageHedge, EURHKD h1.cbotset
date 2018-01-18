@@ -1,0 +1,14 @@
+﻿[ChartParameters]
+Symbol = EURHKD
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = EURUSD
+SecondSymbol = USDHKD
+Period = 120
+Distance = 30
+timer = 1
+Ratio = 9.5
+Magnify = 5
+IsTrade = True

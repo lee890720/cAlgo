@@ -16,10 +16,10 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Output("sig_Result_A", Color = Colors.Red, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        [Output("sig_Result_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
         public IndicatorDataSeries sig_Result_A { get; set; }
 
-        [Output("sig_Result_B", Color = Colors.Blue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        [Output("sig_Result_B", Color = Colors.OrangeRed, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
         public IndicatorDataSeries sig_Result_B { get; set; }
 
         [Parameter(DefaultValue = "EURUSD")]
@@ -34,15 +34,28 @@ namespace cAlgo
         [Parameter(DefaultValue = 30)]
         public int Sub { get; set; }
 
+        [Parameter(DefaultValue = 1)]
+        public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
+
+        public string SIG;
+        public int BarsAgo_Sub;
+        public string Mark;
         private Currency currency;
         private Currency_Sub currency_sub;
-        public string SIG;
+        //private Colors PCorel;
+        //private Colors NCorel;
+        private Colors NoCorel;
 
         protected override void Initialize()
         {
-            currency = Indicators.GetIndicator<Currency>(FirstSymbol, SecondSymbol, Period);
-            currency_sub = Indicators.GetIndicator<Currency_Sub>(FirstSymbol, SecondSymbol, Period);
-            SIG = null;
+            currency = Indicators.GetIndicator<Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
+            currency_sub = Indicators.GetIndicator<Currency_Sub>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
+            //PCorel = Colors.Lime;
+            //NCorel = Colors.OrangeRed;
+            NoCorel = Colors.Gray;
         }
 
         public override void Calculate(int index)
@@ -50,7 +63,6 @@ namespace cAlgo
             Result[index] = currency_sub.Result[index];
             Average[index] = currency_sub.Average[index];
             string sig = signal(index);
-            SIG = sig;
             if (sig == "below")
                 sig_Result_B[index] = currency_sub.Result[index];
             else
@@ -59,10 +71,17 @@ namespace cAlgo
                 sig_Result_A[index] = currency_sub.Result[index];
             else
                 sig_Result_A[index] = 0;
+
+            SIG = sig;
+            BarsAgo_Sub = barsago(index);
+            Mark = mark(index).ToString("yyyy-MM-dd") + "-" + mark(index).ToString("HH");
             if (SIG == null)
-                ChartObjects.DrawText("sig", "NO Signal", StaticPosition.TopRight, Colors.Red);
+                ChartObjects.DrawText("sig", "No-Signal", StaticPosition.TopLeft, NoCorel);
             else
-                ChartObjects.DrawText("sig", "Signal: " + SIG, StaticPosition.TopRight, Colors.Red);
+                ChartObjects.DrawText("sig", "Signal-" + SIG, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawHorizontalLine("midline", 0, NoCorel);
         }
 
         private string signal(int index)
@@ -76,6 +95,32 @@ namespace cAlgo
             if (Sub < s_result && s_result < s_average && u_result > u_average)
                 return "above";
             return null;
+        }
+
+        private int barsago(int index)
+        {
+            double s_result = currency_sub.Result[index];
+            double s_average = currency_sub.Average[index];
+            if (s_result > s_average)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (currency_sub.Result[i] <= currency_sub.Average[i])
+                        return index - i;
+                }
+            if (s_result < s_average)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (currency_sub.Result[i] >= currency_sub.Average[i])
+                        return index - i;
+                }
+            return -1;
+        }
+
+        private DateTime mark(int index)
+        {
+            int idx = index - BarsAgo_Sub;
+            DateTime dt = MarketSeries.OpenTime[idx];
+            return dt;
         }
     }
 }

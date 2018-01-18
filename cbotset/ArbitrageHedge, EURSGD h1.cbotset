@@ -1,0 +1,14 @@
+﻿[ChartParameters]
+Symbol = EURSGD
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = EURUSD
+SecondSymbol = USDSGD
+Period = 120
+Distance = 30
+timer = 1
+Ratio = 1.6
+Magnify = 2
+IsTrade = True

@@ -2,8 +2,6 @@
 using cAlgo.API.Internals;
 using cAlgo.Lib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace cAlgo
 {
@@ -25,16 +23,24 @@ namespace cAlgo
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
 
+        [Parameter(DefaultValue = 1)]
+        public double Ratio { get; set; }
+
+        [Parameter(DefaultValue = 1)]
+        public double Magnify { get; set; }
+
         private Currency currency;
 
         protected override void Initialize()
         {
-            currency = Indicators.GetIndicator<Currency>(FirstSymbol, SecondSymbol, Period);
+            currency = Indicators.GetIndicator<Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
         }
 
         public override void Calculate(int index)
         {
-            Result[index] = currency.Result[index] - currency.Average[index];
+            DateTime SymbolTime = MarketSeries.OpenTime[index];
+            var c_index = currency.MarketSeries.GetIndexByDate(SymbolTime);
+            Result[index] = currency.Result[c_index] - currency.Average[c_index];
             double sum = 0.0;
             for (int i = index - Period + 1; i <= index; i++)
             {
