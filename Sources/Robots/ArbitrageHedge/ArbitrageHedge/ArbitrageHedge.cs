@@ -44,17 +44,14 @@ namespace cAlgo
         private string AboveLabel, BelowLabel;
         private bool SymbolExist;
         private Symbol _symbol;
-        private Symbol _firstsymbol, _secondsymbol;
         private List<string> list_mark = new List<string>();
         private List<string> _metalssymbol = new List<string>();
         private List<string> _oilsymbol = new List<string>();
         private Colors PCorel, NCorel, NoCorel;
         private OrderParams initBuy, initSell;
-        private OrderParams initBuyF, initBuyS, initSellF, initSellS;
 
         protected override void OnStart()
         {
-
             // Currency_Highlight has two public parameters that were BarsAgo and _ratio.
             currency = Indicators.GetIndicator<Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
             // Currency_Sub_Highlight has three public parameters that they were SIG, BarsAgo_Sub and Mark.
@@ -67,9 +64,6 @@ namespace cAlgo
             Print("The currency of the current transaction is : " + _currencysymbol + ".");
             AboveLabel = "Above" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
             BelowLabel = "Below" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
-
-            _firstsymbol = MarketData.GetSymbol(FirstSymbol);
-            _secondsymbol = MarketData.GetSymbol(SecondSymbol);
 
             _metalssymbol.Add("XAUUSD");
             _metalssymbol.Add("XAGUSD");
@@ -92,25 +86,6 @@ namespace cAlgo
                 {
                                     });
                 initSell = new OrderParams(TradeType.Sell, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
-                {
-                                    });
-            }
-            else
-            {
-                SymbolExist = false;
-                Print(_currencysymbol + " doesn't exist.");
-                double slippage = 2;
-                //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
-                initBuyF = new OrderParams(TradeType.Buy, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
-                {
-                                    });
-                initSellF = new OrderParams(TradeType.Sell, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
-                {
-                                    });
-                initBuyS = new OrderParams(TradeType.Buy, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
-                {
-                                    });
-                initSellS = new OrderParams(TradeType.Sell, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
             }
@@ -221,61 +196,6 @@ namespace cAlgo
                     }
                     #endregion
                 }
-                else
-                {
-                    #region Parameter
-                    double first_R = 1;
-                    double second_R = 1;
-                    if (_metalssymbol.Contains(FirstSymbol))
-                        first_R = 1000;
-                    if (_metalssymbol.Contains(SecondSymbol))
-                        second_R = 1000;
-                    if (_oilsymbol.Contains(FirstSymbol))
-                        first_R = 10;
-                    if (_oilsymbol.Contains(SecondSymbol))
-                        second_R = 10;
-                    double _firstvolume = Init_Volume / first_R;
-                    double _secondvolume = Init_Volume / second_R;
-                    if (Ratio >= 1)
-                    {
-                        _firstvolume = _firstsymbol.NormalizeVolume(Init_Volume / first_R, RoundingMode.ToNearest);
-                        _secondvolume = _secondsymbol.NormalizeVolume(Init_Volume * Ratio / second_R, RoundingMode.ToNearest);
-                    }
-                    else
-                    {
-                        _firstvolume = _firstsymbol.NormalizeVolume(Init_Volume / Ratio / first_R, RoundingMode.ToNearest);
-                        _secondvolume = _secondsymbol.NormalizeVolume(Init_Volume / second_R, RoundingMode.ToNearest);
-                    }
-                    #endregion
-                    #region Above
-                    if (OpenSignal() == "above")
-                    {
-                        initSellF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
-                        initSellF.Label = AboveLabel;
-                        initSellF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
-                        this.executeOrder(initSellF);
-                        initBuyS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
-                        initBuyS.Label = AboveLabel;
-                        initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
-                        this.executeOrder(initBuyS);
-                        AboveCross = false;
-                    }
-                    #endregion
-                    #region Below
-                    if (OpenSignal() == "below")
-                    {
-                        initBuyF.Volume = _firstvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
-                        initBuyF.Label = BelowLabel;
-                        initBuyF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
-                        this.executeOrder(initBuyF);
-                        initSellS.Volume = _secondvolume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
-                        initSellS.Label = BelowLabel;
-                        initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
-                        this.executeOrder(initSellS);
-                        BelowCross = false;
-                    }
-                    #endregion
-                }
                 #endregion
             }
         }
@@ -379,7 +299,6 @@ namespace cAlgo
             ChartObjects.DrawText("info2/3/2", "\n\t\t\t\t\t\t     " + Math.Round(this.Account.UnrealizedNetProfit), StaticPosition.TopLeft, GetColors(Math.Round(this.Account.UnrealizedNetProfit)));
             ChartObjects.DrawText("info2/4/1", "\n\t\t\t\t\t\t\t\tM:", StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("info2/4/2", "\n\t\t\t\t\t\t\t\t     " + Math.Round(this.Account.Margin), StaticPosition.TopLeft, GetColors(Math.Round(this.Account.Margin)));
-            //ChartObjects.DrawText("info3", "\n\n\t\tSR: " + Math.Round(SR) + "\t\tSA: " + Math.Round(SA) + "\t\tSIG: " + currency_sub.SIG + "\t\tRatio: " + Ratio + "\t\tMagnify: " + Magnify, StaticPosition.TopLeft, Colors.White);
             ChartObjects.DrawText("info3/1/1", "\n\n\t\tSR:", StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("info3/1/2", "\n\n\t\t       " + Math.Round(SR), StaticPosition.TopLeft, GetColors(Math.Round(SR)));
             ChartObjects.DrawText("info3/2/1", "\n\n\t\t\t\tSA:", StaticPosition.TopLeft, NoCorel);
@@ -438,7 +357,6 @@ namespace cAlgo
         private Colors GetColors(double dou)
         {
             Colors col = Colors.White;
-            //color1 = (Result1.LastValue > 0.8) ? PCorel : (Result1.LastValue < -0.8) ? NCorel : NoCorel;
             if (dou >= 0)
                 col = PCorel;
             else

@@ -235,3 +235,5 @@
 2018.01.18 11:50:41.925 | Request to Sell € 1k EURTRY (Price: 4.64910, MR: 2) is sent to server
 2018.01.18 11:50:43.035 | → Request to Sell € 1k EURTRY (Price: 4.64910, MR: 2) is ACCEPTED, order OID62954169 created (18/01/2018 11:50:42.362 UTC+0)
 2018.01.18 11:50:43.066 | → Order OID62954169 is FILLED at 4.64910, position PID40498803 (18/01/2018 11:50:42.635 UTC+0)
+2018.01.18 11:56:06.930 | cAlgo started
+2018.01.18 16:03:23.051 | cAlgo started

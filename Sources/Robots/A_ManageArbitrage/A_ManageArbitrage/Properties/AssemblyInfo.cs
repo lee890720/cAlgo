@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ExportToSQL")]
+[assembly: AssemblyTitle("A_ManageArbitrage")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("ExportToSQL")]
+[assembly: AssemblyProduct("A_ManageArbitrage")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

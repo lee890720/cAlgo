@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Average")]
+[assembly: AssemblyTitle("A_ExportToSQL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("Average")]
+[assembly: AssemblyProduct("A_ExportToSQL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

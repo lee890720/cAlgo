@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManageArbitrage", "ManageArbitrage\ManageArbitrage.csproj", "{0B253F5B-D710-4BA6-93B5-F2F12EE1CFB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A_ManageArbitrage", "A_ManageArbitrage\A_ManageArbitrage.csproj", "{0B253F5B-D710-4BA6-93B5-F2F12EE1CFB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

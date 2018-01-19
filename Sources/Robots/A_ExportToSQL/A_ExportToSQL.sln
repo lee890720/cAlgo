@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportToSQL", "ExportToSQL\ExportToSQL.csproj", "{DF6B4FD3-2C36-42A3-AF40-488BCCAEB7D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A_ExportToSQL", "A_ExportToSQL\A_ExportToSQL.csproj", "{DF6B4FD3-2C36-42A3-AF40-488BCCAEB7D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

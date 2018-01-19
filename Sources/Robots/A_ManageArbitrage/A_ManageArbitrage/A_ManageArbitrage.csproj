@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8C0BC6F8-DB8B-4567-AFB9-E50C2528F95A}</ProjectGuid>
+    <ProjectGuid>{0B253F5B-D710-4BA6-93B5-F2F12EE1CFB5}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>cAlgo</RootNamespace>
-    <AssemblyName>Average</AssemblyName>
+    <AssemblyName>A_ManageArbitrage</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -42,12 +42,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
     </Reference>
-    <Reference Include="cAlgo.Lib">
-      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Average.cs" />
+    <Compile Include="A_ManageArbitrage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

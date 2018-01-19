@@ -194,11 +194,11 @@ namespace cAlgo
                 #region Above
                 if (OpenSignal() == "above")
                 {
-                    initSellF.Volume = Init_Volume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
+                    initSellF.Volume = _firstsymbol.NormalizeVolume(Init_Volume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2)), RoundingMode.ToNearest);
                     initSellF.Label = AboveLabel;
                     initSellF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
                     this.executeOrder(initSellF);
-                    initBuyS.Volume = Init_Volume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2));
+                    initBuyS.Volume = _secondsymbol.NormalizeVolume(Init_Volume * Math.Pow(2, Math.Floor((double)Pos_above.Count / 2)), RoundingMode.ToNearest);
                     initBuyS.Label = AboveLabel;
                     initBuyS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
                     this.executeOrder(initBuyS);
@@ -206,11 +206,11 @@ namespace cAlgo
                 }
                 if (OpenSignal() == "aboveB")
                 {
-                    initSellF.Volume = Init_Volume;
+                    initSellF.Volume = _firstsymbol.NormalizeVolume(Init_Volume);
                     initSellF.Label = AboveLabel;
                     initSellF.Comment = "777" + string.Format("{0:000}", GetBreak(AboveLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
                     this.executeOrder(initSellF);
-                    initBuyS.Volume = Init_Volume;
+                    initBuyS.Volume = _secondsymbol.NormalizeVolume(Init_Volume);
                     initBuyS.Label = AboveLabel;
                     initBuyS.Comment = "777" + string.Format("{0:000}", GetBreak(AboveLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
                     this.executeOrder(initBuyS);
@@ -219,11 +219,11 @@ namespace cAlgo
                 #region Below
                 if (OpenSignal() == "below")
                 {
-                    initBuyF.Volume = Init_Volume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
+                    initBuyF.Volume = _firstsymbol.NormalizeVolume(Init_Volume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2)), RoundingMode.ToNearest);
                     initBuyF.Label = BelowLabel;
                     initBuyF.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
                     this.executeOrder(initBuyF);
-                    initSellS.Volume = Init_Volume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2));
+                    initSellS.Volume = _secondsymbol.NormalizeVolume(Init_Volume * Math.Pow(2, Math.Floor((double)Pos_below.Count / 2)), RoundingMode.ToNearest);
                     initSellS.Label = BelowLabel;
                     initSellS.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
                     this.executeOrder(initSellS);
@@ -231,11 +231,11 @@ namespace cAlgo
                 }
                 if (OpenSignal() == "belowB")
                 {
-                    initBuyF.Volume = Init_Volume;
+                    initBuyF.Volume = _firstsymbol.NormalizeVolume(Init_Volume);
                     initBuyF.Label = BelowLabel;
                     initBuyF.Comment = "777" + string.Format("{0:000}", GetBreak(BelowLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
                     this.executeOrder(initBuyF);
-                    initSellS.Volume = Init_Volume;
+                    initSellS.Volume = _secondsymbol.NormalizeVolume(Init_Volume);
                     initSellS.Label = BelowLabel;
                     initSellS.Comment = "777" + string.Format("{0:000}", GetBreak(BelowLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
                     this.executeOrder(initSellS);

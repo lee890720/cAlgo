@@ -8,7 +8,7 @@ using cAlgo.Indicators;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
-    public class ClosePosition : Robot
+    public class A_ManageArbitrage : Robot
     {
         [Parameter("INIT_Volume", DefaultValue = 1, MinValue = 1)]
         public double Init_Volume { get; set; }

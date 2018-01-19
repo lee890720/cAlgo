@@ -10,7 +10,7 @@ using cAlgo.Indicators;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
-    public class ExportToSQL : Robot
+    public class A_ExportToSQL : Robot
     {
         protected override void OnStart()
         {
