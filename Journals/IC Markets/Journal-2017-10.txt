@@ -1,4 +1,0 @@
-2017.10.02 03:28:26.286 | cAlgo started
-2017.10.18 11:11:00.001 | cAlgo started
-2017.10.23 03:43:30.870 | cAlgo started
-2017.10.24 05:46:51.220 | cAlgo started

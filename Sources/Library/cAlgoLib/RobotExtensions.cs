@@ -113,6 +113,10 @@ namespace cAlgo.Lib
 		}
         public static void closeAllLabel(this Robot robot,string label="")
         {
+            if (string.IsNullOrEmpty(label))
+                foreach (Position position in robot.Positions)
+                    robot.closePosition(position);
+            else
             foreach (Position position in robot.Positions.FindAll(label))
                 robot.closePosition(position);
         }
@@ -511,6 +515,29 @@ namespace cAlgo.Lib
                     if (pos == null)
                         pos = p;
                     else if (DateTime.Compare(pos.EntryTime, p.EntryTime) > 0)
+                        pos = p;
+                }
+            }
+            return pos;
+        }
+
+        public static Position LastPosition(this Robot robot, string label = null)
+        {
+            Position pos = null;
+            List<Position> poss = new List<Position>();
+            if (label == null)
+                poss.AddRange(robot.Positions);
+            else
+                poss.AddRange(robot.GetPositions(label));
+            if (poss.Count == 0)
+                return null;
+            else
+            {
+                foreach (var p in poss)
+                {
+                    if (pos == null)
+                        pos = p;
+                    else if (DateTime.Compare(pos.EntryTime, p.EntryTime)< 0)
                         pos = p;
                 }
             }
