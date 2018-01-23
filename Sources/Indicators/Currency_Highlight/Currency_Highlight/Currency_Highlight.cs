@@ -75,9 +75,43 @@ namespace cAlgo
                 sum += Average[i];
             }
             var midaverage = sum / Period;
+            var _currentDaySeries = MarketData.GetSeries(Symbol, TimeFrame.Daily);
+            var _currentHourSeries = MarketData.GetSeries(Symbol, TimeFrame.Hour);
+            double t_day = 0;
+            double t_hour = 0;
+            double a_day = 0;
+            double a_hour = 0;
+            for (int i = index - Period; i < index; i++)
+            {
+                var td = Math.Abs(_currentDaySeries.High[i] - _currentDaySeries.Low[i]);
+                var th = Math.Abs(_currentHourSeries.High[i] - _currentHourSeries.Low[i]);
+                t_day += (double.IsNaN(td) ? 0 : td) / Symbol.PipSize;
+                t_hour += (double.IsNaN(th) ? 0 : th) / Symbol.PipSize;
+            }
+            a_day = Math.Round(t_day / Period);
+            a_hour = Math.Round(t_hour / Period);
+            var e_currentDaySeries = MarketData.GetSeries("EURCHF", TimeFrame.Daily);
+            var e_currentHourSeries = MarketData.GetSeries("EURCHF", TimeFrame.Hour);
+            double et_day = 0;
+            double et_hour = 0;
+            double ea_day = 0;
+            double ea_hour = 0;
+            Symbol esymbol = MarketData.GetSymbol("EURCHF");
+            for (int i = index - Period; i < index; i++)
+            {
+                var etd = Math.Abs(e_currentDaySeries.High[i] - e_currentDaySeries.Low[i]);
+                var eth = Math.Abs(e_currentHourSeries.High[i] - e_currentHourSeries.Low[i]);
+                et_day += (double.IsNaN(etd) ? 0 : etd) / esymbol.PipSize;
+                et_hour += (double.IsNaN(eth) ? 0 : eth) / esymbol.PipSize;
+            }
+            ea_day = Math.Round(et_day / Period);
+            ea_hour = Math.Round(et_hour / Period);
+            var _magnify = Math.Round(Ratio * Ratio / (a_hour / ea_hour), 2);
             ChartObjects.DrawText("barsago", "Cross-" + BarsAgo.ToString(), StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio + "_manify-" + _magnify.ToString(), StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("symbol", "\n\n\n" + Symbol.Code + "_D-" + a_day.ToString() + "_H-" + a_hour.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("esymbol", "\n\n\n\n" + esymbol.Code + "_D-" + ea_day.ToString() + "_H-" + ea_hour.ToString(), StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawHorizontalLine("midline", midaverage, NoCorel);
             #endregion
         }
