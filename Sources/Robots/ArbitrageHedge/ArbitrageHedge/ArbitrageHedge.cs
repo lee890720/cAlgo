@@ -349,7 +349,8 @@ namespace cAlgo
                 }
                 crossago = c;
             }
-            return crossago;
+            //return crossago;
+            return Distance;
         }
 
         private Colors GetColors(double dou)

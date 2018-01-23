@@ -388,7 +388,7 @@ namespace cAlgo
         private int CrossAgo(List<Position> pos)
         {
             int cross = (int)Math.Round((double)currency.BarsAgo / 24) * 5;
-            int crossago = Distance / 2;
+            int crossago = Distance;
             if (pos.Count == 0)
                 if (cross > crossago)
                     crossago = cross;
@@ -404,7 +404,8 @@ namespace cAlgo
                 }
                 crossago = c;
             }
-            return crossago;
+            //return crossago;
+            return Distance;
         }
 
         private Colors GetColors(double dou)
