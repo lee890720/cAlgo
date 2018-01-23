@@ -37,7 +37,7 @@ namespace cAlgo
         {
             if (_getbuttontext != null)
             {
-                String path = @"C:\Users\lee-lenovo\Documents\cAlgo\cbotset\";
+                String path = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\cAlgo\cbotset\";
                 DirectoryInfo folder = new DirectoryInfo(path);
                 foreach (FileInfo file in folder.GetFiles("*.cbotset"))
                 {
