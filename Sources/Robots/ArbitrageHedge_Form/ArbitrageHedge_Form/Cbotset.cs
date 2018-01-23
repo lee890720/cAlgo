@@ -24,8 +24,8 @@ namespace cAlgo
 
         private void Cbotset_Load(object sender, EventArgs e)
         {
-            String path = @"C:\Users\lee-lenovo\Documents\cAlgo\cbotset";
-            DirectoryInfo folder = new DirectoryInfo(path);
+            String path = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)+@"\cAlgo\cbotset";
+            DirectoryInfo folder = new DirectoryInfo(path);     
             int i = folder.GetFiles("*.cbotset").Count();
             int b = 1;
             foreach (FileInfo file in folder.GetFiles("*.cbotset"))
