@@ -77,18 +77,16 @@ namespace cAlgo
             NoCorel = Colors.Gray;
 
             #region OrderParams
-            double slippage = 2;
-            //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
-            initBuyF = new OrderParams(TradeType.Buy, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initBuyF = new OrderParams(TradeType.Buy, _firstsymbol, Init_Volume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initSellF = new OrderParams(TradeType.Sell, _firstsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initSellF = new OrderParams(TradeType.Sell, _firstsymbol, Init_Volume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initBuyS = new OrderParams(TradeType.Buy, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initBuyS = new OrderParams(TradeType.Buy, _secondsymbol, Init_Volume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            initSellS = new OrderParams(TradeType.Sell, _secondsymbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+            initSellS = new OrderParams(TradeType.Sell, _secondsymbol, Init_Volume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
             #endregion

@@ -80,12 +80,10 @@ namespace cAlgo
                 SymbolExist = true;
                 Print(_currencysymbol + " exists.");
                 _symbol = MarketData.GetSymbol(_currencysymbol);
-                double slippage = 2;
-                //maximun slippage in point,if order execution imposes a higher slipage, the order is not executed.
-                initBuy = new OrderParams(TradeType.Buy, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initBuy = new OrderParams(TradeType.Buy, _symbol, Init_Volume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
-                initSell = new OrderParams(TradeType.Sell, _symbol, Init_Volume, null, null, null, slippage, null, null, new System.Collections.Generic.List<double> 
+                initSell = new OrderParams(TradeType.Sell, _symbol, Init_Volume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
                 {
                                     });
             }

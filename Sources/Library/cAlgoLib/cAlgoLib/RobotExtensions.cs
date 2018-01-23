@@ -248,7 +248,8 @@ namespace cAlgo.Lib
 
 
 			// it is necessary that the volume is a multiple of "microvolume".
-			long v = robot.Symbol.NormalizeVolume(op.Volume.Value, RoundingMode.ToNearest);
+			//long v = robot.Symbol.NormalizeVolume(op.Volume.Value, RoundingMode.ToNearest);
+            long v = Convert.ToInt64(op.Volume);
 
 			if (v > 0)
 			{

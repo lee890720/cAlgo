@@ -75,23 +75,23 @@ namespace cAlgo
                     }
                     if (p_label.Contains("Above"))
                     {
-                        ExecuteMarketOrder(p_trade, _firstsymbol, _firstvolume, p_label, null, null, null, p_comment);
+                        ExecuteMarketOrder(p_trade, _firstsymbol, _firstvolume, p_label, null, null, 2, p_comment);
                         ExecuteMarketOrder(p_trade.inverseTradeType(), _secondsymbol, _secondvolume, p_label, null, null, null, p_comment);
 
                     }
                     if (p_label.Contains("Below"))
                     {
-                        ExecuteMarketOrder(p_trade, _firstsymbol, _firstvolume, p_label, null, null, null, p_comment);
+                        ExecuteMarketOrder(p_trade, _firstsymbol, _firstvolume, p_label, null, null, 3, p_comment);
                         ExecuteMarketOrder(p_trade.inverseTradeType(), _secondsymbol, _secondvolume, p_label, null, null, null, p_comment);
                     }
                     return;
                 }
                 else
                     return;
-            ExecuteMarketOrder(p_trade, p_symbol, p_volume, p_label, null, null, null, p_comment);
+            ExecuteMarketOrder(p_trade, p_symbol, p_volume, p_label, null, null, 4, p_comment);
         }
 
-        private void OnStop()
+        protected override void OnStop()
         {
             _thread.Abort();
         }

@@ -43,7 +43,7 @@
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
     </Reference>
     <Reference Include="cAlgo.Lib">
-      <HintPath>..\..\..\Library\cAlgoLib\bin\Debug\cAlgo.Lib.dll</HintPath>
+      <HintPath>..\..\..\..\API\cAlgo.Lib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
