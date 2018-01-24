@@ -22,7 +22,7 @@ namespace cAlgo
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
 
-        [Parameter(DefaultValue = 30)]
+        [Parameter(DefaultValue = 20)]
         public int Distance { get; set; }
 
         [Parameter(DefaultValue = 1)]
@@ -31,7 +31,7 @@ namespace cAlgo
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
 
-        [Parameter(DefaultValue = 2)]
+        [Parameter(DefaultValue = 1)]
         public double Magnify { get; set; }
 
         [Parameter(DefaultValue = false)]
@@ -128,7 +128,7 @@ namespace cAlgo
             {
                 if (GetClose(AboveLabel))
                 {
-                    if (SR <= 10)
+                    if (SR <= Distance / 4)
                         this.closeAllLabel(AboveLabel);
                 }
                 else
@@ -141,7 +141,7 @@ namespace cAlgo
             {
                 if (GetClose(BelowLabel))
                 {
-                    if (SR >= -10)
+                    if (SR >= -Distance / 4)
                         this.closeAllLabel(BelowLabel);
                 }
                 else
@@ -206,11 +206,11 @@ namespace cAlgo
                 {
                     initSellF.Volume = _firstsymbol.NormalizeVolume(Init_Volume);
                     initSellF.Label = AboveLabel;
-                    initSellF.Comment = "777" + string.Format("{0:000}", GetBreak(AboveLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
+                    initSellF.Comment = "777" + string.Format("{0:000}", GetBreak(AboveLabel) + 25) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 1) + "-" + currency_sub.Mark;
                     this.executeOrder(initSellF);
                     initBuyS.Volume = _secondsymbol.NormalizeVolume(Init_Volume);
                     initBuyS.Label = AboveLabel;
-                    initBuyS.Comment = "777" + string.Format("{0:000}", GetBreak(AboveLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
+                    initBuyS.Comment = "777" + string.Format("{0:000}", GetBreak(AboveLabel) + 25) + "-" + string.Format("{0:000}", CrossAgo(Pos_above)) + "-" + string.Format("{0:000}", Pos_above.Count + 2) + "-" + currency_sub.Mark;
                     this.executeOrder(initBuyS);
                 }
                 #endregion
@@ -231,11 +231,11 @@ namespace cAlgo
                 {
                     initBuyF.Volume = _firstsymbol.NormalizeVolume(Init_Volume);
                     initBuyF.Label = BelowLabel;
-                    initBuyF.Comment = "777" + string.Format("{0:000}", GetBreak(BelowLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
+                    initBuyF.Comment = "777" + string.Format("{0:000}", GetBreak(BelowLabel) + 25) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 1) + "-" + currency_sub.Mark;
                     this.executeOrder(initBuyF);
                     initSellS.Volume = _secondsymbol.NormalizeVolume(Init_Volume);
                     initSellS.Label = BelowLabel;
-                    initSellS.Comment = "777" + string.Format("{0:000}", GetBreak(BelowLabel) + 50) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
+                    initSellS.Comment = "777" + string.Format("{0:000}", GetBreak(BelowLabel) + 25) + "-" + string.Format("{0:000}", CrossAgo(Pos_below)) + "-" + string.Format("{0:000}", Pos_below.Count + 2) + "-" + currency_sub.Mark;
                     this.executeOrder(initSellS);
                 }
                 #endregion
@@ -447,7 +447,7 @@ namespace cAlgo
         private int GetBreak(string label)
         {
             var poss = this.GetPositions(label);
-            var br = 100;
+            var br = 50;
             if (poss.Count() != 0)
             {
                 foreach (var p in poss)

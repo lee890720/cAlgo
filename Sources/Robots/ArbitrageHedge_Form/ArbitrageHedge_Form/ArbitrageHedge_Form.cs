@@ -131,7 +131,7 @@ namespace cAlgo
             {
                 if (GetClose(AboveLabel))
                 {
-                    if (SR <= 10)
+                    if (SR <= Distance / 4)
                         this.closeAllLabel(AboveLabel);
                 }
                 else
@@ -144,7 +144,7 @@ namespace cAlgo
             {
                 if (GetClose(BelowLabel))
                 {
-                    if (SR >= -10)
+                    if (SR >= -Distance / 4)
                         this.closeAllLabel(BelowLabel);
                 }
                 else

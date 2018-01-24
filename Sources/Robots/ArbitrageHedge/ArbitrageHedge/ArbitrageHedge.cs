@@ -126,7 +126,7 @@ namespace cAlgo
             {
                 if (GetClose(AboveLabel))
                 {
-                    if (SR <= 10)
+                    if (SR <= Distance / 4)
                         this.closeAllLabel(AboveLabel);
                 }
                 else
@@ -139,7 +139,7 @@ namespace cAlgo
             {
                 if (GetClose(BelowLabel))
                 {
-                    if (SR >= -10)
+                    if (SR >= -Distance / 4)
                         this.closeAllLabel(BelowLabel);
                 }
                 else
@@ -333,7 +333,7 @@ namespace cAlgo
         private int CrossAgo(List<Position> pos)
         {
             int cross = (int)Math.Round((double)currency.BarsAgo / 24) * 5;
-            int crossago = Distance / 2;
+            int crossago = Distance;
             if (pos.Count == 0)
                 if (cross > crossago)
                     crossago = cross;

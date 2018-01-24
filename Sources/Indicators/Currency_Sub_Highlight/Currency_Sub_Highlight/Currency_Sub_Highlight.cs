@@ -74,6 +74,40 @@ namespace cAlgo
 
             SIG = sig;
             BarsAgo_Sub = barsago(index);
+
+            var a_100 = 0;
+            var a_150 = 0;
+            var a_200 = 0;
+            var a_250 = 0;
+            var a_300 = 0;
+            var b_100 = 0;
+            var b_150 = 0;
+            var b_200 = 0;
+            var b_250 = 0;
+            var b_300 = 0;
+            for (int i = 0; i < index; i++)
+            {
+                if (currency_sub.Result[i] > 100)
+                    a_100++;
+                if (currency_sub.Result[i] > 150)
+                    a_150++;
+                if (currency_sub.Result[i] > 200)
+                    a_200++;
+                if (currency_sub.Result[i] > 250)
+                    a_250++;
+                if (currency_sub.Result[i] > 300)
+                    a_300++;
+                if (currency_sub.Result[i] < -100)
+                    b_100++;
+                if (currency_sub.Result[i] < -150)
+                    b_150++;
+                if (currency_sub.Result[i] < -200)
+                    b_200++;
+                if (currency_sub.Result[i] < -250)
+                    b_250++;
+                if (currency_sub.Result[i] < -300)
+                    b_300++;
+            }
             Mark = mark(index).ToString("yyyy-MM-dd") + "-" + mark(index).ToString("HH");
             if (SIG == null)
                 ChartObjects.DrawText("sig", "No-Signal", StaticPosition.TopLeft, NoCorel);
@@ -82,6 +116,7 @@ namespace cAlgo
             ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawHorizontalLine("midline", 0, NoCorel);
+            ChartObjects.DrawText("above", "\n\n\nT-" + index.ToString() + "_A-" + a_100 + "-" + a_150 + "-" + a_200 + "-" + a_250 + "-" + a_300 + "_B-" + b_100 + "-" + b_150 + "-" + b_200 + "-" + b_250 + "-" + b_300, StaticPosition.TopLeft, NoCorel);
         }
 
         private string signal(int index)
