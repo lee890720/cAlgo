@@ -33,6 +33,7 @@ namespace cAlgo
         public double Magnify { get; set; }
 
         public string _ratio;
+        public string _magnify;
         private MarketSeries _symbolFirstSeries, _symbolSecondSeries;
         private DateTime SymbolTime;
         private Symbol _firstsymbol, _secondsymbol;
@@ -66,8 +67,9 @@ namespace cAlgo
             FirstIndex = _symbolFirstSeries.GetIndexByDate(_time.Min());
             SecondIndex = _symbolSecondSeries.GetIndexByDate(_time.Min());
             #endregion
-            //Ratio
-            GetRatio();
+
+            GetChart(index);
+
             #region FirstClose
             double FirstClose = 0;
             double _firstclose = _symbolFirstSeries.Close[FirstIndex];
@@ -82,11 +84,9 @@ namespace cAlgo
                     }
                 }
             }
-            if (FirstSymbol.Substring(0, 3) == "USD")
-                FirstClose = 1 / _firstclose * (_firstsymbol.PipSize / 0.0001);
-            if (FirstSymbol.Substring(3, 3) == "USD")
-                FirstClose = _firstclose / (_firstsymbol.PipSize / 0.0001);
+            FirstClose = _getvalue(_firstsymbol, _firstclose);
             #endregion
+
             #region SecondClose
             double SecondClose = 0;
             double _secondclose = _symbolSecondSeries.Close[SecondIndex];
@@ -101,13 +101,14 @@ namespace cAlgo
                     }
                 }
             }
-            if (SecondSymbol.Substring(0, 3) == "USD")
-                SecondClose = 1 / _secondclose * (_secondsymbol.PipSize / 0.0001);
-            if (SecondSymbol.Substring(3, 3) == "USD")
-                SecondClose = _secondclose / (_secondsymbol.PipSize / 0.0001);
+            SecondClose = _getvalue(_secondsymbol, _secondclose);
             #endregion
+
             //Result
-            Result[index] = (FirstClose / Ratio - SecondClose) * Magnify / 0.0001 + 10000;
+            if (Ratio >= 1)
+                Result[index] = (SecondClose * Ratio - FirstClose) * Magnify / 0.0001 + 10000;
+            else
+                Result[index] = (SecondClose - FirstClose / Ratio) * Magnify / 0.0001 + 10000;
             //Average
             double sum = 0.0;
             for (int i = index - Period + 1; i <= index; i++)
@@ -117,139 +118,101 @@ namespace cAlgo
             Average[index] = sum / Period;
         }
 
-        private void GetRatio()
+        private void GetChart(int index)
         {
-            #region Parameter
-            double _ratio0 = 1;
-            double _ratio1 = 1;
-            double _ratio2 = 1;
-            double _ratio3 = 1;
+            string s_ratio = null;
             List<double> list_ratio = new List<double>();
-            double firsttotal0 = 0;
-            double secondtotal0 = 0;
-            double firsttotal1 = 0;
-            double secondtotal1 = 0;
-            double firsttotal2 = 0;
-            double secondtotal2 = 0;
-            double firsttotal3 = 0;
-            double secondtotal3 = 0;
-            #endregion
-            #region _ratio0
-            for (int i = FirstIndex - Period; i < FirstIndex; i++)
+            for (int i = 0; i < 10; i++)
             {
-                double FC = 0;
-                if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
-                if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
-                firsttotal0 += FC;
+                if (double.IsNaN(_getratio(i)))
+                    if (double.IsNaN(list_ratio[i - 1]))
+                        list_ratio.Add(1);
+                    else
+                        list_ratio.Add(list_ratio[i - 1]);
+                else
+                    list_ratio.Add(_getratio(i));
+                s_ratio += "_" + list_ratio[i].ToString();
             }
-            for (int i = SecondIndex - Period; i < SecondIndex; i++)
-            {
-                double SC = 0;
-                if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
-                if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
-                secondtotal0 += SC;
-            }
-            _ratio0 = Math.Round(firsttotal0 / secondtotal0, 2);
-            #endregion
-            #region _ratio1
-            for (int i = FirstIndex - Period * 2; i < FirstIndex - Period; i++)
-            {
-                double FC = 0;
-                if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
-                if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
-                firsttotal1 += FC;
-            }
-            for (int i = SecondIndex - Period * 2; i < SecondIndex - Period; i++)
-            {
-                double SC = 0;
-                if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
-                if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
-                secondtotal1 += SC;
-            }
-            _ratio1 = Math.Round(firsttotal1 / secondtotal1, 2);
-            #endregion
-            #region _ratio2
-            for (int i = FirstIndex - Period * 3; i < FirstIndex - Period * 2; i++)
-            {
-                double FC = 0;
-                if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
-                if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
-                firsttotal2 += FC;
-            }
-            for (int i = SecondIndex - Period * 3; i < SecondIndex - Period * 2; i++)
-            {
-                double SC = 0;
-                if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
-                if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
-                secondtotal2 += SC;
-            }
-            _ratio2 = Math.Round(firsttotal2 / secondtotal2, 2);
-            #endregion
-            #region _ratio3
-            for (int i = FirstIndex - Period * 4; i < FirstIndex - Period * 3; i++)
-            {
-                double FC = 0;
-                if (FirstSymbol.Substring(0, 3) == "USD")
-                    FC = 1 / _symbolFirstSeries.Close[i] * (_firstsymbol.PipSize / 0.0001);
-                if (FirstSymbol.Substring(3, 3) == "USD")
-                    FC = _symbolFirstSeries.Close[i] / (_firstsymbol.PipSize / 0.0001);
-                firsttotal3 += FC;
-            }
-            for (int i = SecondIndex - Period * 4; i < SecondIndex - Period * 3; i++)
-            {
-                double SC = 0;
-                if (SecondSymbol.Substring(0, 3) == "USD")
-                    SC = 1 / _symbolSecondSeries.Close[i] * (_secondsymbol.PipSize / 0.0001);
-                if (SecondSymbol.Substring(3, 3) == "USD")
-                    SC = _symbolSecondSeries.Close[i] / (_secondsymbol.PipSize / 0.0001);
-                secondtotal3 += SC;
-            }
-            _ratio3 = Math.Round(firsttotal3 / secondtotal3, 2);
-            #endregion
-            double[] _r = 
-            {
-                _ratio0,
-                _ratio1,
-                _ratio2,
-                _ratio3
-            };
-            list_ratio.AddRange(_r);
-            for (int i = 0; i < list_ratio.Count; i++)
-            {
-                if (list_ratio[i] < 10)
-                    list_ratio[i] = Math.Round(list_ratio[i]);
+            double a_ratio = Math.Round(list_ratio.Average(), 3);
+            _ratio = s_ratio = "(" + a_ratio.ToString() + ")" + s_ratio;
+            _magnify = _getmagnify(index);
+            ChartObjects.DrawText("Ratio", "\n" + s_ratio, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Magnify", "\n\n" + _magnify, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Ratio2", "\n\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
+        }
 
-                if (list_ratio[i] >= 10)
-                    list_ratio[i] = Math.Round(list_ratio[i] / 5) * 5;
-            }
-            var result = from item in list_ratio
-                group item by item into gro
-                orderby gro.Count() descending
-                select new 
-                {
-                    num = gro.Key,
-                    nums = gro.Count()
-                };
-            double d_ratio = 1;
-            foreach (var item in result.Take(1))
+        private string _getmagnify(int index)
+        {
+            double min = 0;
+            double max = 0;
+            double current = Result[index - 1];
+            double mmin = 0;
+            double mmax = 0;
+            double mcurrent = MarketSeries.Close[index - 1] / Symbol.PipSize;
+            List<double> list_mag = new List<double>();
+            string mag = null;
+            for (int n = 0; n < 10; n++)
             {
-                d_ratio = item.num;
+                for (int i = index - Period * (n + 1); i < index - Period * n; i++)
+                {
+                    if (min == 0)
+                        min = Result[i];
+                    if (max == 0)
+                        max = Result[i];
+                    if (min > Result[i])
+                        min = Result[i];
+                    if (max < Result[i])
+                        max = Result[i];
+                    if (mmin == 0)
+                        mmin = MarketSeries.Close[i] / Symbol.PipSize;
+                    if (mmax == 0)
+                        mmax = MarketSeries.Close[i] / Symbol.PipSize;
+                    if (mmin > MarketSeries.Close[i] / Symbol.PipSize)
+                        mmin = MarketSeries.Close[i] / Symbol.PipSize;
+                    if (mmax < MarketSeries.Close[i] / Symbol.PipSize)
+                        mmax = MarketSeries.Close[i] / Symbol.PipSize;
+                }
+                var mm = Math.Round((mmax - mmin) / (max - min), 2);
+                list_mag.Add(mm);
+                mag += "_" + list_mag[n].ToString();
             }
-            _ratio = string.Format("{0:00}", d_ratio) + "_" + _r[0].ToString() + "_" + _r[1].ToString() + "_" + _r[2].ToString() + "_" + _r[3].ToString();
-            ChartObjects.DrawText("Ratio", "\n" + _ratio, StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawText("Ratio2", "\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
+            mag = Math.Round(list_mag.Average(), 2).ToString() + mag;
+            return mag;
+        }
+
+        private double _getratio(int _r)
+        {
+            double firsttotal = 0;
+            double secondtotal = 0;
+            double r_ratio = 0;
+            for (int i = FirstIndex - Period * (_r + 1); i < FirstIndex - Period * _r; i++)
+            {
+                double FH = 0;
+                double FL = 0;
+                FH = _getvalue(_firstsymbol, _symbolFirstSeries.High[i]);
+                FL = _getvalue(_firstsymbol, _symbolFirstSeries.Low[i]);
+                firsttotal += (FH - FL);
+            }
+            for (int i = SecondIndex - Period * (_r + 1); i < SecondIndex - Period * _r; i++)
+            {
+                double SH = 0;
+                double SL = 0;
+                SH = _getvalue(_secondsymbol, _symbolSecondSeries.High[i]);
+                SL = _getvalue(_secondsymbol, _symbolSecondSeries.Low[i]);
+                secondtotal += (SH - SL);
+            }
+            r_ratio = Math.Round(firsttotal / secondtotal, 3);
+            return r_ratio;
+        }
+
+        private double _getvalue(Symbol symbol, double v)
+        {
+            double _value = 0;
+            if (symbol.Code.Substring(0, 3) == "USD")
+                _value = v / (symbol.PipSize / 0.0001);
+            if (symbol.Code.Substring(3, 3) == "USD")
+                _value = 1 / v * (symbol.PipSize / 0.0001);
+            return _value;
         }
     }
 }

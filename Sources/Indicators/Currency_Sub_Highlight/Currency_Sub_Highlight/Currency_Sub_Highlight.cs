@@ -74,40 +74,6 @@ namespace cAlgo
 
             SIG = sig;
             BarsAgo_Sub = barsago(index);
-
-            var a_100 = 0;
-            var a_150 = 0;
-            var a_200 = 0;
-            var a_250 = 0;
-            var a_300 = 0;
-            var b_100 = 0;
-            var b_150 = 0;
-            var b_200 = 0;
-            var b_250 = 0;
-            var b_300 = 0;
-            for (int i = 0; i < index; i++)
-            {
-                if (currency_sub.Result[i] > 100)
-                    a_100++;
-                if (currency_sub.Result[i] > 150)
-                    a_150++;
-                if (currency_sub.Result[i] > 200)
-                    a_200++;
-                if (currency_sub.Result[i] > 250)
-                    a_250++;
-                if (currency_sub.Result[i] > 300)
-                    a_300++;
-                if (currency_sub.Result[i] < -100)
-                    b_100++;
-                if (currency_sub.Result[i] < -150)
-                    b_150++;
-                if (currency_sub.Result[i] < -200)
-                    b_200++;
-                if (currency_sub.Result[i] < -250)
-                    b_250++;
-                if (currency_sub.Result[i] < -300)
-                    b_300++;
-            }
             Mark = mark(index).ToString("yyyy-MM-dd") + "-" + mark(index).ToString("HH");
             if (SIG == null)
                 ChartObjects.DrawText("sig", "No-Signal", StaticPosition.TopLeft, NoCorel);
@@ -115,8 +81,8 @@ namespace cAlgo
                 ChartObjects.DrawText("sig", "Signal-" + SIG, StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("above", "\n\n\n" + getbreak(index), StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawHorizontalLine("midline", 0, NoCorel);
-            ChartObjects.DrawText("above", "\n\n\nT-" + index.ToString() + "_A-" + a_100 + "-" + a_150 + "-" + a_200 + "-" + a_250 + "-" + a_300 + "_B-" + b_100 + "-" + b_150 + "-" + b_200 + "-" + b_250 + "-" + b_300, StaticPosition.TopLeft, NoCorel);
         }
 
         private string signal(int index)
@@ -156,6 +122,97 @@ namespace cAlgo
             int idx = index - BarsAgo_Sub;
             DateTime dt = MarketSeries.OpenTime[idx];
             return dt;
+        }
+
+        private string getbreak(int index)
+        {
+            string _break = null;
+            int sub = 0;
+            int initmax = 0;
+            int t1 = 0;
+            int t2 = 0;
+            int t3 = 0;
+            int t4 = 0;
+            int t5 = 0;
+            int bars = MarketSeries.Bars();
+            int period = Period * 10;
+            if (bars < Period * 10)
+                period = bars;
+            double maxbar = currency_sub.Result.Maximum(period);
+            double minbar = currency_sub.Result.Minimum(period);
+            double getmax = Math.Round(maxbar > Math.Abs(minbar) ? maxbar : Math.Abs(minbar));
+            if (getmax < 100)
+            {
+                sub = 10;
+                initmax = 100;
+            }
+            else if (getmax < 150)
+            {
+                sub = 15;
+                initmax = 150;
+            }
+            else if (getmax < 200)
+            {
+                sub = 25;
+                initmax = 200;
+            }
+            else if (getmax < 300)
+            {
+                sub = 50;
+                initmax = 300;
+            }
+            else if (getmax < 600)
+            {
+                sub = 100;
+                initmax = 600;
+            }
+            else
+            {
+                sub = 200;
+                initmax = 1200;
+            }
+
+            for (int i = ((bars > Period * 10) ? (bars - Period * 10) : 0); i < bars; i++)
+            {
+                var SR = Math.Abs(currency_sub.Result[i]);
+                if (SR > initmax - sub * 0)
+                {
+                    t5++;
+                    t4++;
+                    t3++;
+                    t2++;
+                    t1++;
+                    continue;
+                }
+                if (SR > initmax - sub * 1)
+                {
+                    t4++;
+                    t3++;
+                    t2++;
+                    t1++;
+                    continue;
+                }
+                if (SR > initmax - sub * 2)
+                {
+                    t3++;
+                    t2++;
+                    t1++;
+                    continue;
+                }
+                if (SR > initmax - sub * 3)
+                {
+                    t2++;
+                    t1++;
+                    continue;
+                }
+                if (SR > initmax - sub * 4)
+                {
+                    t1++;
+                    continue;
+                }
+            }
+            _break = initmax.ToString() + "_" + sub.ToString() + "_" + getmax.ToString() + "_" + (initmax - sub * 4).ToString() + "-" + t1.ToString() + "_" + (initmax - sub * 3).ToString() + "-" + t2.ToString() + "_" + (initmax - sub * 2).ToString() + "-" + t3.ToString() + "_" + (initmax - sub * 1).ToString() + "-" + t4.ToString() + "_" + (initmax - sub * 0).ToString() + "-" + t5.ToString();
+            return _break;
         }
     }
 }
