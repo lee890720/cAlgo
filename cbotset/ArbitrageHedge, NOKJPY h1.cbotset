@@ -1,0 +1,15 @@
+﻿[ChartParameters]
+Symbol = NOKJPY
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = USDNOK
+SecondSymbol = USDJPY
+_timer = 1
+_break = 125
+Period = 120
+Distance = 25
+Ratio = 11.6
+Magnify = 0.1
+IsTrade = True

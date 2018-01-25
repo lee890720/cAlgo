@@ -1,0 +1,15 @@
+﻿[ChartParameters]
+Symbol = SGDJPY
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = USDSGD
+SecondSymbol = USDJPY
+_timer = 1
+_break = 80
+Period = 120
+Distance = 15
+Ratio = 0.69
+Magnify = 0.62
+IsTrade = True

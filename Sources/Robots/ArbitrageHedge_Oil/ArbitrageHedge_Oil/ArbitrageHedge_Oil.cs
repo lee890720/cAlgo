@@ -23,19 +23,19 @@ namespace cAlgo
         [Parameter(DefaultValue = 1)]
         public int _timer { get; set; }
 
-        [Parameter(DefaultValue = 100)]
+        [Parameter(DefaultValue = 80)]
         public double _break { get; set; }
 
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
 
-        [Parameter(DefaultValue = 20)]
+        [Parameter(DefaultValue = 25)]
         public double Distance { get; set; }
 
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
 
-        [Parameter(DefaultValue = 1)]
+        [Parameter(DefaultValue = 0.35)]
         public double Magnify { get; set; }
 
         [Parameter(DefaultValue = false)]

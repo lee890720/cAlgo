@@ -1,0 +1,15 @@
+﻿[ChartParameters]
+Symbol = AUDSGD
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = AUDUSD
+SecondSymbol = USDSGD
+_timer = 1
+_break = 150
+Period = 120
+Distance = 30
+Ratio = 1.9
+Magnify = 1.1
+IsTrade = True

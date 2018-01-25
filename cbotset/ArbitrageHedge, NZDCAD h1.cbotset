@@ -1,0 +1,15 @@
+﻿[ChartParameters]
+Symbol = NZDCAD
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = NZDUSD
+SecondSymbol = USDCAD
+_timer = 1
+_break = 125
+Period = 120
+Distance = 25
+Ratio = 1.47
+Magnify = 0.64
+IsTrade = True

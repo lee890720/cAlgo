@@ -4,11 +4,12 @@ Timeframe = h1
 
 [cBotParameters]
 Init_Volume = 1000
-FirstSymbol = USDCAD
+FirstSymbol = CADUSD
 SecondSymbol = USDCHF
+_timer = 1
+_break = 90
 Period = 120
-Distance = 30
-timer = 1
-Ratio = 0.8
-Magnify = 2
+Distance = 20
+Ratio = 1.3
+Magnify = 0.62
 IsTrade = True

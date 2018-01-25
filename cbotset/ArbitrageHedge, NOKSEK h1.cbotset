@@ -1,0 +1,15 @@
+﻿[ChartParameters]
+Symbol = NOKSEK
+Timeframe = h1
+
+[cBotParameters]
+Init_Volume = 1000
+FirstSymbol = USDNOK
+SecondSymbol = USDSEK
+_timer = 1
+_break = 100
+Period = 120
+Distance = 25
+Ratio = 1.05
+Magnify = 0.14
+IsTrade = True

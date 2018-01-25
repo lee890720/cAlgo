@@ -29,7 +29,7 @@ namespace cAlgo
         [Parameter(DefaultValue = 120)]
         public int Period { get; set; }
 
-        [Parameter(DefaultValue = 20)]
+        [Parameter(DefaultValue = 25)]
         public double Distance { get; set; }
 
         [Parameter(DefaultValue = 0.0077)]
