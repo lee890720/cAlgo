@@ -211,7 +211,7 @@ namespace cAlgo
                     continue;
                 }
             }
-            _break = initmax.ToString() + "_" + sub.ToString() + "_" + getmax.ToString() + "_" + (initmax - sub * 4).ToString() + "-" + t1.ToString() + "_" + (initmax - sub * 3).ToString() + "-" + t2.ToString() + "_" + (initmax - sub * 2).ToString() + "-" + t3.ToString() + "_" + (initmax - sub * 1).ToString() + "-" + t4.ToString() + "_" + (initmax - sub * 0).ToString() + "-" + t5.ToString();
+            _break = initmax.ToString() + "_" + sub.ToString() + "_" + getmax.ToString() + "_" + Math.Round(150 / getmax, 3).ToString() + "_" + (initmax - sub * 4).ToString() + "-" + t1.ToString() + "_" + (initmax - sub * 3).ToString() + "-" + t2.ToString() + "_" + (initmax - sub * 2).ToString() + "-" + t3.ToString() + "_" + (initmax - sub * 1).ToString() + "-" + t4.ToString() + "_" + (initmax - sub * 0).ToString() + "-" + t5.ToString();
             return _break;
         }
     }

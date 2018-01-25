@@ -133,7 +133,11 @@ namespace cAlgo
                     list_ratio.Add(_getratio(i));
                 s_ratio += "_" + list_ratio[i].ToString();
             }
-            double a_ratio = Math.Round(list_ratio.Average(), 3);
+            double a_ratio = 0;
+            if (FirstSymbol.Contains("XAU") || FirstSymbol.Contains("XAG"))
+                a_ratio = Math.Round(list_ratio.Average(), 4);
+            else
+                a_ratio = Math.Round(list_ratio.Average(), 3);
             _ratio = s_ratio = "(" + a_ratio.ToString() + ")" + s_ratio;
             _magnify = _getmagnify(index);
             ChartObjects.DrawText("Ratio", "\n" + s_ratio, StaticPosition.TopLeft, NoCorel);
@@ -176,7 +180,7 @@ namespace cAlgo
                 list_mag.Add(mm);
                 mag += "_" + list_mag[n].ToString();
             }
-            mag = Math.Round(list_mag.Average(), 2).ToString() + mag;
+            mag = "(" + Math.Round(list_mag.Average(), 2).ToString() + ")" + mag;
             return mag;
         }
 
@@ -201,7 +205,10 @@ namespace cAlgo
                 SL = _getvalue(_secondsymbol, _symbolSecondSeries.Low[i]);
                 secondtotal += (SH - SL);
             }
-            r_ratio = Math.Round(firsttotal / secondtotal, 3);
+            if (FirstSymbol.Contains("XAU") || FirstSymbol.Contains("XAG"))
+                r_ratio = Math.Round(firsttotal / secondtotal, 4);
+            else
+                r_ratio = Math.Round(firsttotal / secondtotal, 3);
             return r_ratio;
         }
 
