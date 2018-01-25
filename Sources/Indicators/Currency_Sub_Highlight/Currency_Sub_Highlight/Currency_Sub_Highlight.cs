@@ -2,14 +2,13 @@
 using cAlgo.API.Internals;
 using cAlgo.Lib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace cAlgo
 {
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class Currency_Sub_Highlight : Indicator
     {
+        #region Paramter
         [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
 
@@ -32,7 +31,7 @@ namespace cAlgo
         public int Period { get; set; }
 
         [Parameter(DefaultValue = 30)]
-        public int Sub { get; set; }
+        public double Sub { get; set; }
 
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
@@ -45,16 +44,13 @@ namespace cAlgo
         public string Mark;
         private Currency currency;
         private Currency_Sub currency_sub;
-        //private Colors PCorel;
-        //private Colors NCorel;
         private Colors NoCorel;
+        #endregion
 
         protected override void Initialize()
         {
             currency = Indicators.GetIndicator<Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
             currency_sub = Indicators.GetIndicator<Currency_Sub>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
-            //PCorel = Colors.Lime;
-            //NCorel = Colors.OrangeRed;
             NoCorel = Colors.Gray;
         }
 
@@ -82,7 +78,7 @@ namespace cAlgo
             ChartObjects.DrawText("barsago", "\nCross-" + BarsAgo_Sub.ToString(), StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("mark", "\n\nMark-" + Mark, StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("above", "\n\n\n" + getbreak(index), StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawHorizontalLine("midline", 0, NoCorel);
+            //ChartObjects.DrawHorizontalLine("midline", 0, NoCorel);
         }
 
         private string signal(int index)
@@ -211,7 +207,7 @@ namespace cAlgo
                     continue;
                 }
             }
-            _break = initmax.ToString() + "_" + sub.ToString() + "_" + getmax.ToString() + "_" + Math.Round(150 / getmax, 3).ToString() + "_" + (initmax - sub * 4).ToString() + "-" + t1.ToString() + "_" + (initmax - sub * 3).ToString() + "-" + t2.ToString() + "_" + (initmax - sub * 2).ToString() + "-" + t3.ToString() + "_" + (initmax - sub * 1).ToString() + "-" + t4.ToString() + "_" + (initmax - sub * 0).ToString() + "-" + t5.ToString();
+            _break = "(" + Math.Round(150 / getmax, 3).ToString() + ")_(" + getmax.ToString() + ")_" + initmax.ToString() + "_" + sub.ToString() + "_" + (initmax - sub * 4).ToString() + "-" + t1.ToString() + "_" + (initmax - sub * 3).ToString() + "-" + t2.ToString() + "_" + (initmax - sub * 2).ToString() + "-" + t3.ToString() + "_" + (initmax - sub * 1).ToString() + "-" + t4.ToString() + "_" + (initmax - sub * 0).ToString() + "-" + t5.ToString();
             return _break;
         }
     }

@@ -30,7 +30,7 @@ namespace cAlgo
             string str;
             foreach (var p in Positions)
             {
-                str = p.SymbolCode + "-(" + p.Label + ")-[" + (this.TotalLots(p.Label, MarketData.GetSymbol(p.SymbolCode))).ToString() + "]-<" + this.LastPosition(p.Label).Comment + ">";
+                str = p.SymbolCode + "-(" + p.Label + ")-[" + (this.TotalLots(p.Label, MarketData.GetSymbol(p.SymbolCode))).ToString() + "]-<" + this.LastPosition(this.GetPositions(p.Label)).Comment + ">";
                 if (!list_str.Contains(str))
                     list_str.Add(str);
             }

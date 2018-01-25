@@ -8,6 +8,7 @@ namespace cAlgo
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class Currency_Sub : Indicator
     {
+        #region Parameter
         [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
 
@@ -30,6 +31,8 @@ namespace cAlgo
         public double Magnify { get; set; }
 
         private Currency currency;
+
+        #endregion
 
         protected override void Initialize()
         {

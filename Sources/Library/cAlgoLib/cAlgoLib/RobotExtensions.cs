@@ -499,15 +499,10 @@ namespace cAlgo.Lib
             return averageprice;
         }
 
-        public static Position FirstPosition(this Robot robot, string label=null)
+        public static Position FirstPosition(this Robot robot, Position[] poss)
         {
             Position pos = null;
-            List<Position> poss = new List<Position>();
-            if (label == null)
-                poss.AddRange(robot.Positions);
-            else
-                poss.AddRange(robot.GetPositions(label));
-            if (poss.Count == 0)
+            if (poss.Count() == 0)
                 return null;
             else
             {
@@ -522,15 +517,10 @@ namespace cAlgo.Lib
             return pos;
         }
 
-        public static Position LastPosition(this Robot robot, string label = null)
+        public static Position LastPosition(this Robot robot, Position[] poss)
         {
             Position pos = null;
-            List<Position> poss = new List<Position>();
-            if (label == null)
-                poss.AddRange(robot.Positions);
-            else
-                poss.AddRange(robot.GetPositions(label));
-            if (poss.Count == 0)
+            if (poss.Count() == 0)
                 return null;
             else
             {

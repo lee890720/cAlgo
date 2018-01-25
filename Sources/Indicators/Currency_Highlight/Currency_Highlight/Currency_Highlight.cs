@@ -1,15 +1,12 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
-using cAlgo.Lib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace cAlgo
 {
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class Currency_Highlight : Indicator
     {
+        #region Parameter
         [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
 
@@ -32,7 +29,7 @@ namespace cAlgo
         public int Period { get; set; }
 
         [Parameter(DefaultValue = 30)]
-        public int Sub { get; set; }
+        public double Sub { get; set; }
 
         [Parameter(DefaultValue = 1)]
         public double Ratio { get; set; }
@@ -44,16 +41,13 @@ namespace cAlgo
         public string _ratio;
         private Currency currency;
         private Currency_Sub currency_sub;
-        //private Colors PCorel;
-        //private Colors NCorel;
         private Colors NoCorel;
+        #endregion
 
         protected override void Initialize()
         {
             currency = Indicators.GetIndicator<Currency>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
             currency_sub = Indicators.GetIndicator<Currency_Sub>(FirstSymbol, SecondSymbol, Period, Ratio, Magnify);
-            //PCorel = Colors.Lime;
-            //NCorel = Colors.OrangeRed;
             NoCorel = Colors.Gray;
         }
 
@@ -66,6 +60,7 @@ namespace cAlgo
                 sig_Result_A[index] = currency.Result[index];
             if (sig == "below")
                 sig_Result_B[index] = currency.Result[index];
+
             #region Chart
             BarsAgo = barsago(index);
             _ratio = currency._ratio;
@@ -75,11 +70,11 @@ namespace cAlgo
                 sum += Average[i];
             }
             var midaverage = sum / Period;
-            ChartObjects.DrawText("barsago", "Cross-" + BarsAgo.ToString(), StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawText("Ratio", "\nratio-" + _ratio, StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawText("Magnify", "\n\nmagnify-" + currency._magnify, StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawText("Ratio2", "\n\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
-            //ChartObjects.DrawHorizontalLine("midline", midaverage, NoCorel);
+            ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Ratio", "\nratio_" + _ratio, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Magnify", "\n\nmagnify_" + currency._magnify, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Param_R_M", "\n\n\nRatio_(" + Ratio.ToString() + ")" + "_Magnify_(" + Magnify.ToString() + ")", StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawHorizontalLine("midline", midaverage, NoCorel);
             #endregion
         }
 

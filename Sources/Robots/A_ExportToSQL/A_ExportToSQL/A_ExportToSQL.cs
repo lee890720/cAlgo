@@ -1,11 +1,7 @@
-﻿using System;
+﻿using cAlgo.API;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using cAlgo.API;
-using cAlgo.API.Indicators;
-using cAlgo.API.Internals;
-using cAlgo.Indicators;
 
 namespace cAlgo
 {

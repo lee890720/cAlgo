@@ -4,13 +4,13 @@ using cAlgo.Lib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using cAlgo.API.Indicators;
 
 namespace cAlgo
 {
     [Indicator(IsOverlay = false, TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
     public class Currency : Indicator
     {
+        #region Parameter
         [Output("Result")]
         public IndicatorDataSeries Result { get; set; }
 
@@ -38,17 +38,16 @@ namespace cAlgo
         private DateTime SymbolTime;
         private Symbol _firstsymbol, _secondsymbol;
         private int FirstIndex, SecondIndex;
-        //private Colors PCorel;
-        //private Colors  NCorel;
+        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
         private Colors NoCorel;
+        #endregion
+
         protected override void Initialize()
         {
             _symbolFirstSeries = MarketData.GetSeries(FirstSymbol, TimeFrame);
             _symbolSecondSeries = MarketData.GetSeries(SecondSymbol, TimeFrame);
             _firstsymbol = MarketData.GetSymbol(FirstSymbol);
             _secondsymbol = MarketData.GetSymbol(SecondSymbol);
-            //PCorel = Colors.Lime;
-            //NCorel = Colors.OrangeRed;
             NoCorel = Colors.Gray;
         }
 
@@ -67,8 +66,6 @@ namespace cAlgo
             FirstIndex = _symbolFirstSeries.GetIndexByDate(_time.Min());
             SecondIndex = _symbolSecondSeries.GetIndexByDate(_time.Min());
             #endregion
-
-            GetChart(index);
 
             #region FirstClose
             double FirstClose = 0;
@@ -116,33 +113,32 @@ namespace cAlgo
                 sum += Result[i];
             }
             Average[index] = sum / Period;
+            //Chart
+            Chart(index);
         }
 
-        private void GetChart(int index)
+        private void Chart(int index)
         {
-            string s_ratio = null;
+            string str_ratio = null;
+            double average_ratio = 0;
             List<double> list_ratio = new List<double>();
             for (int i = 0; i < 10; i++)
             {
                 if (double.IsNaN(_getratio(i)))
-                    if (double.IsNaN(list_ratio[i - 1]))
-                        list_ratio.Add(1);
-                    else
-                        list_ratio.Add(list_ratio[i - 1]);
+                    list_ratio.Add(1);
                 else
                     list_ratio.Add(_getratio(i));
-                s_ratio += "_" + list_ratio[i].ToString();
+                str_ratio += "_" + list_ratio[i].ToString();
             }
-            double a_ratio = 0;
             if (FirstSymbol.Contains("XAU") || FirstSymbol.Contains("XAG"))
-                a_ratio = Math.Round(list_ratio.Average(), 4);
+                average_ratio = Math.Round(list_ratio.Average(), 4);
             else
-                a_ratio = Math.Round(list_ratio.Average(), 3);
-            _ratio = s_ratio = "(" + a_ratio.ToString() + ")" + s_ratio;
+                average_ratio = Math.Round(list_ratio.Average(), 3);
+            _ratio = str_ratio = "(" + average_ratio.ToString() + ")" + str_ratio;
             _magnify = _getmagnify(index);
-            ChartObjects.DrawText("Ratio", "\n" + s_ratio, StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Ratio", "\n" + _ratio, StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("Magnify", "\n\n" + _magnify, StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawText("Ratio2", "\n\n\nRatio-" + Ratio.ToString() + "_Magnify-" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
+            ChartObjects.DrawText("Param", "\n\n\nRatio_" + Ratio.ToString() + "_Magnify_" + Magnify.ToString(), StaticPosition.TopLeft, NoCorel);
         }
 
         private string _getmagnify(int index)
@@ -195,7 +191,7 @@ namespace cAlgo
                 double FL = 0;
                 FH = _getvalue(_firstsymbol, _symbolFirstSeries.High[i]);
                 FL = _getvalue(_firstsymbol, _symbolFirstSeries.Low[i]);
-                firsttotal += (FH - FL);
+                firsttotal += Math.Abs(FH - FL);
             }
             for (int i = SecondIndex - Period * (_r + 1); i < SecondIndex - Period * _r; i++)
             {
@@ -203,7 +199,7 @@ namespace cAlgo
                 double SL = 0;
                 SH = _getvalue(_secondsymbol, _symbolSecondSeries.High[i]);
                 SL = _getvalue(_secondsymbol, _symbolSecondSeries.Low[i]);
-                secondtotal += (SH - SL);
+                secondtotal += Math.Abs(SH - SL);
             }
             if (FirstSymbol.Contains("XAU") || FirstSymbol.Contains("XAG"))
                 r_ratio = Math.Round(firsttotal / secondtotal, 4);

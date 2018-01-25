@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace cAlgo
 {
@@ -16,9 +10,10 @@ namespace cAlgo
         public static double _Init_Volume;
         public static string _FirstSymbol;
         public static string _SecondSymbol;
+        public static int _timer;
+        public static double _break;
         public static int _Period;
         public static int _Distance;
-        public static int _timer;
         public static double _Ratio;
         public static double _Magnify;
         public static bool _IsTrade;
@@ -49,8 +44,14 @@ namespace cAlgo
                         {
                             foreach (Control ctrl in Controls)
                             {
-                                if (ctrl is TextBox||ctrl is ComboBox)
-                                    if (nextLine.Contains(ctrl.Name))
+                                if (ctrl is TextBox)
+                                    if (nextLine.Contains(ctrl.Name.Substring(8) ))
+                                    {
+                                        int num = nextLine.IndexOf("=");
+                                        ctrl.Text = nextLine.Substring(num + 2);
+                                    }
+                                if(ctrl is ComboBox)
+                                                                        if (nextLine.Contains(ctrl.Name.Substring(9)))
                                     {
                                         int num = nextLine.IndexOf("=");
                                         ctrl.Text = nextLine.Substring(num + 2);
@@ -65,15 +66,16 @@ namespace cAlgo
 
         private void button_OK_Click(object sender, EventArgs e)
         {
-            _Init_Volume = Convert.ToDouble(this.Init_Volume.Text);
-            _FirstSymbol = this.FirstSymbol.Text;
-            _SecondSymbol = this.SecondSymbol.Text;
-            _Period = Convert.ToInt32(this.Period.Text);
-            _Distance = Convert.ToInt32(this.Distance.Text);
-            _timer = Convert.ToInt32(this.timer.Text);
-            _Ratio = Convert.ToDouble(this.Ratio.Text);
-            _Magnify = Convert.ToDouble(this.Magnify.Text);
-            _IsTrade = Convert.ToBoolean(this.IsTrade.Text);
+            _Init_Volume = Convert.ToDouble(this.textBox_Init_Volume.Text);
+            _FirstSymbol = this.textBox_FirstSymbol.Text;
+            _SecondSymbol = this.textBox_SecondSymbol.Text;
+            _timer = Convert.ToInt32(this.textBox_timer.Text);
+            _break = Convert.ToDouble(this.textBox_break.Text);
+            _Period = Convert.ToInt32(this.textBox_Period.Text);
+            _Distance = Convert.ToInt32(this.textBox_Distance.Text);
+            _Ratio = Convert.ToDouble(this.textBox_Ratio.Text);
+            _Magnify = Convert.ToDouble(this.textBox_Magnify.Text);
+            _IsTrade = Convert.ToBoolean(this.comboBox_IsTrade.Text);
             this.Close();
         }
     }
