@@ -215,8 +215,6 @@ namespace cAlgo
                 {
                     initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Length), RoundingMode.ToNearest);
                     initBuy.Label = BelowLabel;
-                    initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Length), RoundingMode.ToNearest);
-                    initBuy.Label = AboveLabel;
                     initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
                     initBuy.Comment += string.Format("{0:000}", CrossAgo()) + "<";
                     initBuy.Comment += string.Format("{0:000}", Pos_below.Length + 1) + "<";
