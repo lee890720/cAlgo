@@ -53,7 +53,7 @@ namespace cAlgo
             Symbol p_symbol = MarketData.GetSymbol(list_p[0]);
             var p_label = list_p[1];
             var p_volume = p_symbol.NormalizeVolume(Convert.ToDouble(list_p[2]), RoundingMode.ToNearest);
-            var p_comment = list_p[3];
+            var p_comment = list_p[3].Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
             TradeType p_trade = new TradeType();
             if (p_label.Contains("Above"))
                 p_trade = TradeType.Sell;

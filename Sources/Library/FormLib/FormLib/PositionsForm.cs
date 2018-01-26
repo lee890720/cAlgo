@@ -36,7 +36,7 @@ namespace FormLib
             this.textBox_volume.AutoSize = false;
             this.textBox_volume.Height = 30;
             this.textBox_comment.AutoSize = false;
-            this.textBox_comment.Height = 30;
+            //this.textBox_comment.Height = 30;
             foreach (Control ctrl in this.panel_pos.Controls)
             {
                 if (ctrl is Button)
@@ -135,7 +135,24 @@ namespace FormLib
                         if (ctrl.InvokeRequired)
                             ctrl.Invoke(new dlSetLabelText(SetLabelText), cTxt);
                         else
+                        {
+                            var mulstr = (ctrl as Label).Text;
+                            string newstr = null;
+                            var num=mulstr.Length;
+                            if (num >= 15)
+                            {
+                                newstr= mulstr.Substring(0, 15);
+                                if (num >= 29)
+                                    newstr+= "\r\n"+mulstr.Substring(15, 14);
+                                if (num >= 48)
+                                    newstr += "\r\n" + mulstr.Substring(29, 19);
+                                if (num >= 66)
+                                    newstr += "\r\n" + mulstr.Substring(48, 18);
+                                this.textBox_comment.Text =newstr;
+                            }
+                            else
                             this.textBox_comment.Text = (ctrl as Label).Text;
+                        }
                     }
                 }
             }

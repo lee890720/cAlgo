@@ -5,7 +5,7 @@ Timeframe = h1
 [cBotParameters]
 Init_Volume = 1000
 FirstSymbol = USDCHF
-SecondSymbol = USDGSD
+SecondSymbol = USDSGD
 _timer = 1
 _break = 125
 Period = 120

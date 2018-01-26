@@ -102,18 +102,18 @@
             this.label_v1 = new System.Windows.Forms.Label();
             this.label_l1 = new System.Windows.Forms.Label();
             this.panel_comm = new System.Windows.Forms.Panel();
+            this.label_net = new System.Windows.Forms.Label();
+            this.label_margin = new System.Windows.Forms.Label();
+            this.label_equlity = new System.Windows.Forms.Label();
+            this.label_balance = new System.Windows.Forms.Label();
             this.panel_ctrl = new System.Windows.Forms.Panel();
+            this.label_vps = new System.Windows.Forms.Label();
             this.textBox_comment = new System.Windows.Forms.TextBox();
             this.textBox_volume = new System.Windows.Forms.TextBox();
             this.textBox_label = new System.Windows.Forms.TextBox();
             this.button_close = new System.Windows.Forms.Button();
             this.textBox_symbol = new System.Windows.Forms.TextBox();
             this.button_open = new System.Windows.Forms.Button();
-            this.label_balance = new System.Windows.Forms.Label();
-            this.label_equlity = new System.Windows.Forms.Label();
-            this.label_margin = new System.Windows.Forms.Label();
-            this.label_net = new System.Windows.Forms.Label();
-            this.label_vps = new System.Windows.Forms.Label();
             this.panel_pos.SuspendLayout();
             this.panel_comm.SuspendLayout();
             this.panel_ctrl.SuspendLayout();
@@ -199,7 +199,7 @@
             this.panel_pos.Controls.Add(this.label_l1);
             this.panel_pos.Location = new System.Drawing.Point(3, 3);
             this.panel_pos.Name = "panel_pos";
-            this.panel_pos.Size = new System.Drawing.Size(600, 400);
+            this.panel_pos.Size = new System.Drawing.Size(844, 414);
             this.panel_pos.TabIndex = 0;
             // 
             // button18
@@ -370,9 +370,9 @@
             this.label_c18.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c18.Location = new System.Drawing.Point(358, 632);
             this.label_c18.Name = "label_c18";
-            this.label_c18.Size = new System.Drawing.Size(220, 30);
+            this.label_c18.Size = new System.Drawing.Size(420, 30);
             this.label_c18.TabIndex = 71;
-            this.label_c18.Text = "000000-000-000-0000-00-00-00";
+            this.label_c18.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v18
@@ -403,9 +403,9 @@
             this.label_c17.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c17.Location = new System.Drawing.Point(358, 596);
             this.label_c17.Name = "label_c17";
-            this.label_c17.Size = new System.Drawing.Size(220, 30);
+            this.label_c17.Size = new System.Drawing.Size(420, 30);
             this.label_c17.TabIndex = 67;
-            this.label_c17.Text = "000000-000-000-0000-00-00-00";
+            this.label_c17.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v17
@@ -436,9 +436,9 @@
             this.label_c16.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c16.Location = new System.Drawing.Point(358, 560);
             this.label_c16.Name = "label_c16";
-            this.label_c16.Size = new System.Drawing.Size(220, 30);
+            this.label_c16.Size = new System.Drawing.Size(420, 30);
             this.label_c16.TabIndex = 63;
-            this.label_c16.Text = "000000-000-000-0000-00-00-00";
+            this.label_c16.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v16
@@ -469,9 +469,9 @@
             this.label_c15.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c15.Location = new System.Drawing.Point(358, 524);
             this.label_c15.Name = "label_c15";
-            this.label_c15.Size = new System.Drawing.Size(220, 30);
+            this.label_c15.Size = new System.Drawing.Size(420, 30);
             this.label_c15.TabIndex = 59;
-            this.label_c15.Text = "000000-000-000-0000-00-00-00";
+            this.label_c15.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v15
@@ -502,9 +502,9 @@
             this.label_c14.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c14.Location = new System.Drawing.Point(358, 488);
             this.label_c14.Name = "label_c14";
-            this.label_c14.Size = new System.Drawing.Size(220, 30);
+            this.label_c14.Size = new System.Drawing.Size(420, 30);
             this.label_c14.TabIndex = 55;
-            this.label_c14.Text = "000000-000-000-0000-00-00-00";
+            this.label_c14.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v14
@@ -535,9 +535,9 @@
             this.label_c13.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c13.Location = new System.Drawing.Point(358, 452);
             this.label_c13.Name = "label_c13";
-            this.label_c13.Size = new System.Drawing.Size(220, 30);
+            this.label_c13.Size = new System.Drawing.Size(420, 30);
             this.label_c13.TabIndex = 51;
-            this.label_c13.Text = "000000-000-000-0000-00-00-00";
+            this.label_c13.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v13
@@ -568,9 +568,9 @@
             this.label_c12.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c12.Location = new System.Drawing.Point(358, 416);
             this.label_c12.Name = "label_c12";
-            this.label_c12.Size = new System.Drawing.Size(220, 30);
+            this.label_c12.Size = new System.Drawing.Size(420, 30);
             this.label_c12.TabIndex = 47;
-            this.label_c12.Text = "000000-000-000-0000-00-00-00";
+            this.label_c12.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v12
@@ -601,9 +601,9 @@
             this.label_c11.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c11.Location = new System.Drawing.Point(358, 380);
             this.label_c11.Name = "label_c11";
-            this.label_c11.Size = new System.Drawing.Size(220, 30);
+            this.label_c11.Size = new System.Drawing.Size(420, 30);
             this.label_c11.TabIndex = 43;
-            this.label_c11.Text = "000000-000-000-0000-00-00-00";
+            this.label_c11.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v11
@@ -634,9 +634,9 @@
             this.label_c10.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c10.Location = new System.Drawing.Point(358, 344);
             this.label_c10.Name = "label_c10";
-            this.label_c10.Size = new System.Drawing.Size(220, 30);
+            this.label_c10.Size = new System.Drawing.Size(420, 30);
             this.label_c10.TabIndex = 39;
-            this.label_c10.Text = "200000-000-000-0000-00-00-00";
+            this.label_c10.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v10
@@ -647,7 +647,7 @@
             this.label_v10.Name = "label_v10";
             this.label_v10.Size = new System.Drawing.Size(120, 30);
             this.label_v10.TabIndex = 38;
-            this.label_v10.Text = "10001";
+            this.label_v10.Text = "1000";
             this.label_v10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_l10
@@ -658,7 +658,7 @@
             this.label_l10.Name = "label_l10";
             this.label_l10.Size = new System.Drawing.Size(120, 30);
             this.label_l10.TabIndex = 37;
-            this.label_l10.Text = "Above-CADCHF-Hour";
+            this.label_l10.Text = "Above-EURCHF-Hour";
             this.label_l10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_c9
@@ -667,9 +667,9 @@
             this.label_c9.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c9.Location = new System.Drawing.Point(358, 308);
             this.label_c9.Name = "label_c9";
-            this.label_c9.Size = new System.Drawing.Size(220, 30);
+            this.label_c9.Size = new System.Drawing.Size(420, 30);
             this.label_c9.TabIndex = 35;
-            this.label_c9.Text = "000000-000-000-0000-00-00-00";
+            this.label_c9.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v9
@@ -700,9 +700,9 @@
             this.label_c8.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c8.Location = new System.Drawing.Point(358, 272);
             this.label_c8.Name = "label_c8";
-            this.label_c8.Size = new System.Drawing.Size(220, 30);
+            this.label_c8.Size = new System.Drawing.Size(420, 30);
             this.label_c8.TabIndex = 31;
-            this.label_c8.Text = "000000-000-000-0000-00-00-00";
+            this.label_c8.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v8
@@ -733,9 +733,9 @@
             this.label_c7.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c7.Location = new System.Drawing.Point(358, 236);
             this.label_c7.Name = "label_c7";
-            this.label_c7.Size = new System.Drawing.Size(220, 30);
+            this.label_c7.Size = new System.Drawing.Size(420, 30);
             this.label_c7.TabIndex = 27;
-            this.label_c7.Text = "000000-000-000-0000-00-00-00";
+            this.label_c7.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v7
@@ -766,9 +766,9 @@
             this.label_c6.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c6.Location = new System.Drawing.Point(358, 200);
             this.label_c6.Name = "label_c6";
-            this.label_c6.Size = new System.Drawing.Size(220, 30);
+            this.label_c6.Size = new System.Drawing.Size(420, 30);
             this.label_c6.TabIndex = 23;
-            this.label_c6.Text = "000000-000-000-0000-00-00-00";
+            this.label_c6.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v6
@@ -799,9 +799,9 @@
             this.label_c5.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c5.Location = new System.Drawing.Point(358, 164);
             this.label_c5.Name = "label_c5";
-            this.label_c5.Size = new System.Drawing.Size(220, 30);
+            this.label_c5.Size = new System.Drawing.Size(420, 30);
             this.label_c5.TabIndex = 19;
-            this.label_c5.Text = "000000-000-000-0000-00-00-00";
+            this.label_c5.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v5
@@ -832,9 +832,9 @@
             this.label_c4.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c4.Location = new System.Drawing.Point(358, 128);
             this.label_c4.Name = "label_c4";
-            this.label_c4.Size = new System.Drawing.Size(220, 30);
+            this.label_c4.Size = new System.Drawing.Size(420, 30);
             this.label_c4.TabIndex = 15;
-            this.label_c4.Text = "000000-000-000-0000-00-00-00";
+            this.label_c4.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v4
@@ -865,9 +865,9 @@
             this.label_c3.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c3.Location = new System.Drawing.Point(358, 92);
             this.label_c3.Name = "label_c3";
-            this.label_c3.Size = new System.Drawing.Size(220, 30);
+            this.label_c3.Size = new System.Drawing.Size(420, 30);
             this.label_c3.TabIndex = 11;
-            this.label_c3.Text = "000000-000-000-0000-00-00-00";
+            this.label_c3.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v3
@@ -898,9 +898,9 @@
             this.label_c2.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c2.Location = new System.Drawing.Point(358, 56);
             this.label_c2.Name = "label_c2";
-            this.label_c2.Size = new System.Drawing.Size(220, 30);
+            this.label_c2.Size = new System.Drawing.Size(420, 30);
             this.label_c2.TabIndex = 7;
-            this.label_c2.Text = "000000-000-000-0000-00-00-00";
+            this.label_c2.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v2
@@ -931,9 +931,9 @@
             this.label_c1.Font = new System.Drawing.Font("微软雅黑", 7F);
             this.label_c1.Location = new System.Drawing.Point(358, 20);
             this.label_c1.Name = "label_c1";
-            this.label_c1.Size = new System.Drawing.Size(220, 30);
+            this.label_c1.Size = new System.Drawing.Size(420, 30);
             this.label_c1.TabIndex = 3;
-            this.label_c1.Text = "100000-000-000-0000-00-00-00";
+            this.label_c1.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
             this.label_c1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v1
@@ -944,7 +944,7 @@
             this.label_v1.Name = "label_v1";
             this.label_v1.Size = new System.Drawing.Size(120, 30);
             this.label_v1.TabIndex = 2;
-            this.label_v1.Text = "12000";
+            this.label_v1.Text = "1000";
             this.label_v1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_l1
@@ -955,7 +955,7 @@
             this.label_l1.Name = "label_l1";
             this.label_l1.Size = new System.Drawing.Size(120, 30);
             this.label_l1.TabIndex = 1;
-            this.label_l1.Text = "Above-AUDZND-Hour";
+            this.label_l1.Text = "Above-EURCHF-Hour";
             this.label_l1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel_comm
@@ -967,10 +967,58 @@
             this.panel_comm.Controls.Add(this.label_margin);
             this.panel_comm.Controls.Add(this.label_equlity);
             this.panel_comm.Controls.Add(this.label_balance);
-            this.panel_comm.Location = new System.Drawing.Point(3, 409);
+            this.panel_comm.Location = new System.Drawing.Point(3, 423);
             this.panel_comm.Name = "panel_comm";
-            this.panel_comm.Size = new System.Drawing.Size(806, 50);
+            this.panel_comm.Size = new System.Drawing.Size(1004, 50);
             this.panel_comm.TabIndex = 2;
+            // 
+            // label_net
+            // 
+            this.label_net.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label_net.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_net.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_net.Location = new System.Drawing.Point(613, 10);
+            this.label_net.Name = "label_net";
+            this.label_net.Size = new System.Drawing.Size(150, 30);
+            this.label_net.TabIndex = 6;
+            this.label_net.Text = "Unr.Net";
+            this.label_net.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_margin
+            // 
+            this.label_margin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label_margin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_margin.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_margin.Location = new System.Drawing.Point(423, 10);
+            this.label_margin.Name = "label_margin";
+            this.label_margin.Size = new System.Drawing.Size(150, 30);
+            this.label_margin.TabIndex = 5;
+            this.label_margin.Text = "Margin";
+            this.label_margin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_equlity
+            // 
+            this.label_equlity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label_equlity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_equlity.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_equlity.Location = new System.Drawing.Point(233, 10);
+            this.label_equlity.Name = "label_equlity";
+            this.label_equlity.Size = new System.Drawing.Size(150, 30);
+            this.label_equlity.TabIndex = 4;
+            this.label_equlity.Text = "Equlity";
+            this.label_equlity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label_balance
+            // 
+            this.label_balance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label_balance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_balance.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_balance.Location = new System.Drawing.Point(50, 10);
+            this.label_balance.Name = "label_balance";
+            this.label_balance.Size = new System.Drawing.Size(150, 30);
+            this.label_balance.TabIndex = 3;
+            this.label_balance.Text = "Balance";
+            this.label_balance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel_ctrl
             // 
@@ -984,19 +1032,31 @@
             this.panel_ctrl.Controls.Add(this.button_close);
             this.panel_ctrl.Controls.Add(this.textBox_symbol);
             this.panel_ctrl.Controls.Add(this.button_open);
-            this.panel_ctrl.Location = new System.Drawing.Point(609, 3);
+            this.panel_ctrl.Location = new System.Drawing.Point(807, 3);
             this.panel_ctrl.Name = "panel_ctrl";
-            this.panel_ctrl.Size = new System.Drawing.Size(200, 400);
+            this.panel_ctrl.Size = new System.Drawing.Size(200, 414);
             this.panel_ctrl.TabIndex = 1;
+            // 
+            // label_vps
+            // 
+            this.label_vps.Font = new System.Drawing.Font("微软雅黑", 18F);
+            this.label_vps.ForeColor = System.Drawing.SystemColors.Window;
+            this.label_vps.Location = new System.Drawing.Point(30, 308);
+            this.label_vps.Name = "label_vps";
+            this.label_vps.Size = new System.Drawing.Size(140, 82);
+            this.label_vps.TabIndex = 6;
+            this.label_vps.Text = "VPS IS OK";
+            this.label_vps.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textBox_comment
             // 
-            this.textBox_comment.Font = new System.Drawing.Font("微软雅黑", 7F);
+            this.textBox_comment.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.textBox_comment.Location = new System.Drawing.Point(20, 200);
+            this.textBox_comment.Multiline = true;
             this.textBox_comment.Name = "textBox_comment";
-            this.textBox_comment.Size = new System.Drawing.Size(160, 20);
+            this.textBox_comment.Size = new System.Drawing.Size(160, 75);
             this.textBox_comment.TabIndex = 5;
-            this.textBox_comment.Text = "000000-000-000-0000-00-00-00";
+            this.textBox_comment.Text = "000000<000<000<\r\n0000-00-00-00<\r\nbr_000<B_000<D_000<\r\nR_0.0000<M_0.0000<";
             this.textBox_comment.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox_volume
@@ -1051,66 +1111,11 @@
             this.button_open.UseVisualStyleBackColor = true;
             this.button_open.Click += new System.EventHandler(this.button_open_Click);
             // 
-            // label_balance
-            // 
-            this.label_balance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_balance.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_balance.Location = new System.Drawing.Point(20, 10);
-            this.label_balance.Name = "label_balance";
-            this.label_balance.Size = new System.Drawing.Size(150, 30);
-            this.label_balance.TabIndex = 3;
-            this.label_balance.Text = "Balance";
-            this.label_balance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label_equlity
-            // 
-            this.label_equlity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_equlity.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_equlity.Location = new System.Drawing.Point(225, 10);
-            this.label_equlity.Name = "label_equlity";
-            this.label_equlity.Size = new System.Drawing.Size(150, 30);
-            this.label_equlity.TabIndex = 4;
-            this.label_equlity.Text = "Equlity";
-            this.label_equlity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label_margin
-            // 
-            this.label_margin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_margin.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_margin.Location = new System.Drawing.Point(430, 10);
-            this.label_margin.Name = "label_margin";
-            this.label_margin.Size = new System.Drawing.Size(150, 30);
-            this.label_margin.TabIndex = 5;
-            this.label_margin.Text = "Margin";
-            this.label_margin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label_net
-            // 
-            this.label_net.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label_net.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label_net.Location = new System.Drawing.Point(635, 10);
-            this.label_net.Name = "label_net";
-            this.label_net.Size = new System.Drawing.Size(150, 30);
-            this.label_net.TabIndex = 6;
-            this.label_net.Text = "Unr.Net";
-            this.label_net.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label_vps
-            // 
-            this.label_vps.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.label_vps.ForeColor = System.Drawing.SystemColors.Window;
-            this.label_vps.Location = new System.Drawing.Point(30, 250);
-            this.label_vps.Name = "label_vps";
-            this.label_vps.Size = new System.Drawing.Size(140, 140);
-            this.label_vps.TabIndex = 6;
-            this.label_vps.Text = "VPS IS OK";
-            this.label_vps.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // PositionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(814, 464);
+            this.ClientSize = new System.Drawing.Size(1012, 478);
             this.Controls.Add(this.panel_comm);
             this.Controls.Add(this.panel_ctrl);
             this.Controls.Add(this.panel_pos);

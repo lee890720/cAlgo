@@ -178,7 +178,7 @@ namespace cAlgo
                     initSell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
                     initSell.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
                     initSell.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
-                    initSell.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
+                    initSell.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + "<";
                     this.executeOrder(initSell);
                     AboveCross = false;
                 }
@@ -190,11 +190,11 @@ namespace cAlgo
                     initSell.Comment += string.Format("{0:000}", CrossAgo()) + "<";
                     initSell.Comment += string.Format("{0:000}", Pos_above.Length + 1) + "<";
                     initSell.Comment += currency_sub.Mark + "<";
-                    initSell.Comment += "br_" + string.Format("{0:000}", (_break + GetBreak(AboveLabel))) + "<";
+                    initSell.Comment += "br_" + string.Format("{0:000}", GetBreak(AboveLabel) + Distance) + "<";
                     initSell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
                     initSell.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
                     initSell.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
-                    initSell.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
+                    initSell.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + "<";
                     this.executeOrder(initSell);
                     //AboveCross = false;
                 }
@@ -212,7 +212,7 @@ namespace cAlgo
                     initBuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
                     initBuy.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
                     initBuy.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
-                    initBuy.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
+                    initBuy.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + "<";
                     this.executeOrder(initBuy);
                     BelowCross = false;
                 }
@@ -224,11 +224,11 @@ namespace cAlgo
                     initBuy.Comment += string.Format("{0:000}", CrossAgo()) + "<";
                     initBuy.Comment += string.Format("{0:000}", Pos_below.Length + 1) + "<";
                     initBuy.Comment += currency_sub.Mark + "<";
-                    initBuy.Comment += "br_" + string.Format("{0:000}", (_break + GetBreak(BelowLabel))) + "<";
+                    initBuy.Comment += "br_" + string.Format("{0:000}", GetBreak(BelowLabel) + Distance) + "<";
                     initBuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
                     initBuy.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
                     initBuy.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
-                    initBuy.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
+                    initBuy.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + "<";
                     this.executeOrder(initBuy);
                     //BelowCross = false;
                 }
@@ -263,9 +263,9 @@ namespace cAlgo
             if (DateTime.Compare(now, Pos_LastTime) < 0)
                 return null;
 
-            if (SR > _break + GetBreak(AboveLabel))
+            if (SR >= GetBreak(AboveLabel))
                 return signal = "above_br";
-            if (SR < -(_break + GetBreak(BelowLabel)))
+            if (SR <= -GetBreak(BelowLabel))
                 return signal = "below_br";
 
             var sig = currency_sub.SIG;
@@ -319,7 +319,10 @@ namespace cAlgo
         private double GetBreak(string label)
         {
             var poss = this.GetPositions(label);
-            double br = 0;
+            var sr = currency_sub.Result.LastValue;
+            double br = _break;
+            if (br < sr)
+                br = Math.Floor(sr);
             if (poss.Count() != 0)
             {
                 foreach (var p in poss)
@@ -328,7 +331,8 @@ namespace cAlgo
                     {
                         if (p.Comment.Substring(29, 3) == "br_")
                         {
-                            br += Distance;
+                            if (br < Convert.ToDouble(p.Comment.Substring(32, 3)))
+                                br = Convert.ToDouble(p.Comment.Substring(32, 3));
                         }
                     }
                 }

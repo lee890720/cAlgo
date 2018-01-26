@@ -62,7 +62,6 @@
       <DependentUpon>PositionsForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\Alarm.wav" />
     <Content Include="Resources\umbrella.ico" />
