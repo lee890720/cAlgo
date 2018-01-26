@@ -319,7 +319,7 @@ namespace cAlgo
         private double GetBreak(string label)
         {
             var poss = this.GetPositions(label);
-            var sr = currency_sub.Result.LastValue;
+            var sr = Math.Abs(currency_sub.Result.LastValue);
             double br = _break;
             if (br < sr)
                 br = Math.Floor(sr);
