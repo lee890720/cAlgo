@@ -10,16 +10,19 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class ArbitrageHedge_AUD : Robot
     {
-        public double Init_Volume;
-        public string FirstSymbol;
-        public string SecondSymbol;
-        public int _timer;
-        public double _break;
-        public int Period;
-        public int Distance;
-        public double Ratio;
-        public double Magnify;
-        public bool IsTrade;
+        [Parameter(DefaultValue = "AUD")]
+        public string Choice { get; set; }
+
+        private double Init_Volume;
+        private string FirstSymbol;
+        private string SecondSymbol;
+        private int _timer;
+        private double _break;
+        private int Period;
+        private int Distance;
+        private double Ratio;
+        private double Magnify;
+        private bool IsTrade;
 
         private Currency_Highlight currency;
         private Currency_Sub_Highlight currency_sub;
@@ -32,6 +35,7 @@ namespace cAlgo
 
         protected override void OnStart()
         {
+            Main._choice = Choice;
             Main main = new Main();
             main.ShowDialog();
             Init_Volume = Main._Init_Volume;
@@ -52,7 +56,8 @@ namespace cAlgo
             AboveCross = false;
             BelowCross = false;
 
-            string _currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3, 3) : FirstSymbol.Substring(0, 3)) + (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3, 3) : SecondSymbol.Substring(0, 3));
+            string _currencysymbol = (FirstSymbol.Substring(0, 3) == "USD" ? FirstSymbol.Substring(3, 3) : FirstSymbol.Substring(0, 3));
+            _currencysymbol += (SecondSymbol.Substring(0, 3) == "USD" ? SecondSymbol.Substring(3, 3) : SecondSymbol.Substring(0, 3));
             Print("The currency of the current transaction is : " + _currencysymbol + ".");
             AboveLabel = "Above" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
             BelowLabel = "Below" + "-" + _currencysymbol + "-" + MarketSeries.TimeFrame.ToString();
@@ -165,7 +170,15 @@ namespace cAlgo
                 {
                     initSell.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Length), RoundingMode.ToNearest);
                     initSell.Label = AboveLabel;
-                    initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo()) + "-" + string.Format("{0:000}", Pos_above.Length + 1) + "-" + currency_sub.Mark + "-nul000";
+                    initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
+                    initSell.Comment += string.Format("{0:000}", CrossAgo()) + "<";
+                    initSell.Comment += string.Format("{0:000}", Pos_above.Length + 1) + "<";
+                    initSell.Comment += currency_sub.Mark + "<";
+                    initSell.Comment += "nul000" + "<";
+                    initSell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    initSell.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
+                    initSell.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
+                    initSell.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
                     this.executeOrder(initSell);
                     AboveCross = false;
                 }
@@ -173,7 +186,15 @@ namespace cAlgo
                 {
                     initSell.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Length), RoundingMode.ToNearest);
                     initSell.Label = AboveLabel;
-                    initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo()) + "-" + string.Format("{0:000}", Pos_above.Length + 1) + "-" + currency_sub.Mark + "-br_" + string.Format("{0:000}", (_break + GetBreak(AboveLabel)));
+                    initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
+                    initSell.Comment += string.Format("{0:000}", CrossAgo()) + "<";
+                    initSell.Comment += string.Format("{0:000}", Pos_above.Length + 1) + "<";
+                    initSell.Comment += currency_sub.Mark + "<";
+                    initSell.Comment += "br_" + string.Format("{0:000}", (_break + GetBreak(AboveLabel))) + "<";
+                    initSell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    initSell.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
+                    initSell.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
+                    initSell.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
                     this.executeOrder(initSell);
                     //AboveCross = false;
                 }
@@ -183,7 +204,15 @@ namespace cAlgo
                 {
                     initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Length), RoundingMode.ToNearest);
                     initBuy.Label = BelowLabel;
-                    initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo()) + "-" + string.Format("{0:000}", Pos_below.Length + 1) + "-" + currency_sub.Mark + "-nul000";
+                    initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
+                    initBuy.Comment += string.Format("{0:000}", CrossAgo()) + "<";
+                    initBuy.Comment += string.Format("{0:000}", Pos_below.Length + 1) + "<";
+                    initBuy.Comment += currency_sub.Mark + "<";
+                    initBuy.Comment += "nul000" + "<";
+                    initBuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    initBuy.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
+                    initBuy.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
+                    initBuy.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
                     this.executeOrder(initBuy);
                     BelowCross = false;
                 }
@@ -191,7 +220,17 @@ namespace cAlgo
                 {
                     initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Length), RoundingMode.ToNearest);
                     initBuy.Label = BelowLabel;
-                    initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "-" + string.Format("{0:000}", CrossAgo()) + "-" + string.Format("{0:000}", Pos_below.Length + 1) + "-" + currency_sub.Mark + "-br_" + string.Format("{0:000}", (_break + GetBreak(BelowLabel)));
+                    initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Length), RoundingMode.ToNearest);
+                    initBuy.Label = AboveLabel;
+                    initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
+                    initBuy.Comment += string.Format("{0:000}", CrossAgo()) + "<";
+                    initBuy.Comment += string.Format("{0:000}", Pos_below.Length + 1) + "<";
+                    initBuy.Comment += currency_sub.Mark + "<";
+                    initBuy.Comment += "br_" + string.Format("{0:000}", (_break + GetBreak(BelowLabel))) + "<";
+                    initBuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    initBuy.Comment += "D_" + string.Format("{0:000}", Distance) + "<";
+                    initBuy.Comment += "R_" + Ratio.ToString("0.0000").Substring(0, 6) + "<";
+                    initBuy.Comment += "M_" + Magnify.ToString("0.0000").Substring(0, 6) + ">";
                     this.executeOrder(initBuy);
                     //BelowCross = false;
                 }

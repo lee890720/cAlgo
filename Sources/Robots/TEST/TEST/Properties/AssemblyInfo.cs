@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ArbitrageHedge_Form")]
+[assembly: AssemblyTitle("TEST")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("ArbitrageHedge_Form")]
+[assembly: AssemblyProduct("TEST")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

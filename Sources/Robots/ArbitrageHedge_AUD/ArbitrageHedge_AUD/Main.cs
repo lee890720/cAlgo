@@ -6,6 +6,7 @@ namespace cAlgo
 {
     public partial class Main : Form
     {
+        public static string _choice;
         public static string _getbuttontext;
         public static double _Init_Volume;
         public static string _FirstSymbol;
