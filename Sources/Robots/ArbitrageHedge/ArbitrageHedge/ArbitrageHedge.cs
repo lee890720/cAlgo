@@ -321,9 +321,12 @@ namespace cAlgo
             {
                 foreach (var p in poss)
                 {
-                    if (p.Comment.Substring(29, 3) == "br_")
+                    if (p.Comment.Length > 35)
                     {
-                        br += Distance;
+                        if (p.Comment.Substring(29, 3) == "br_")
+                        {
+                            br += Distance;
+                        }
                     }
                 }
             }
