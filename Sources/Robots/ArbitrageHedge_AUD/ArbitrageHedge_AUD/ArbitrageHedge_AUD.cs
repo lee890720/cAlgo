@@ -168,7 +168,12 @@ namespace cAlgo
                 #region Above
                 if (OpenSignal() == "above")
                 {
-                    initSell.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Length), RoundingMode.ToNearest);
+                    var _initvolume = Init_Volume;
+                    if (Pos_above.Length != 0)
+                    {
+                        _initvolume = this.LastPosition(Pos_above).Volume * 2;
+                    }
+                    initSell.Volume = _symbol.NormalizeVolume(_initvolume, RoundingMode.ToNearest);
                     initSell.Label = AboveLabel;
                     initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
                     initSell.Comment += string.Format("{0:000}", CrossAgo()) + "<";
@@ -184,7 +189,12 @@ namespace cAlgo
                 }
                 if (OpenSignal() == "above_br")
                 {
-                    initSell.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_above.Length), RoundingMode.ToNearest);
+                    var _initvolume = Init_Volume;
+                    if (Pos_above.Length != 0)
+                    {
+                        _initvolume = this.LastPosition(Pos_above).Volume;
+                    }
+                    initSell.Volume = _symbol.NormalizeVolume(_initvolume, RoundingMode.ToNearest);
                     initSell.Label = AboveLabel;
                     initSell.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
                     initSell.Comment += string.Format("{0:000}", CrossAgo()) + "<";
@@ -202,7 +212,12 @@ namespace cAlgo
                 #region Below
                 if (OpenSignal() == "below")
                 {
-                    initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Length), RoundingMode.ToNearest);
+                    var _initvolume = Init_Volume;
+                    if (Pos_below.Length != 0)
+                    {
+                        _initvolume = this.LastPosition(Pos_below).Volume * 2;
+                    }
+                    initBuy.Volume = _symbol.NormalizeVolume(_initvolume, RoundingMode.ToNearest);
                     initBuy.Label = BelowLabel;
                     initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
                     initBuy.Comment += string.Format("{0:000}", CrossAgo()) + "<";
@@ -218,7 +233,12 @@ namespace cAlgo
                 }
                 if (OpenSignal() == "below_br")
                 {
-                    initBuy.Volume = _symbol.NormalizeVolume(Init_Volume * Math.Pow(2, Pos_below.Length), RoundingMode.ToNearest);
+                    var _initvolume = Init_Volume;
+                    if (Pos_below.Length != 0)
+                    {
+                        _initvolume = this.LastPosition(Pos_below).Volume;
+                    }
+                    initBuy.Volume = _symbol.NormalizeVolume(_initvolume, RoundingMode.ToNearest);
                     initBuy.Label = BelowLabel;
                     initBuy.Comment = string.Format("{0:000000}", Math.Round(UR)) + "<";
                     initBuy.Comment += string.Format("{0:000}", CrossAgo()) + "<";
@@ -306,11 +326,11 @@ namespace cAlgo
         private bool GetClose(string label)
         {
             var poss = this.GetPositions(label, _symbol);
-            if (poss.Count() != 0)
+            if (poss.Length != 0)
             {
                 MarketSeries _marketseries = MarketData.GetSeries(_symbol, TimeFrame);
                 int barsago = _marketseries.barsAgo(this.FirstPosition(poss));
-                if (barsago > 24 || poss.Count() > 1)
+                if (barsago > 24 || poss.Length > 1)
                     return true;
             }
             return false;
@@ -323,7 +343,7 @@ namespace cAlgo
             double br = _break;
             if (br < sr)
                 br = Math.Floor(sr);
-            if (poss.Count() != 0)
+            if (poss.Length != 0)
             {
                 foreach (var p in poss)
                 {
