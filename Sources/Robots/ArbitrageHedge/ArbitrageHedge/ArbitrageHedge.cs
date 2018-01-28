@@ -140,6 +140,20 @@ namespace cAlgo
                         this.closeAllLabel(BelowLabel);
                 }
             }
+            //Risk
+            if (this.Risk())
+            {
+                Print("There is a risk for the current symbol.");
+                var poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
+                if (poss.Length >= 2)
+                {
+                    if (this.FirstPosition(poss).NetProfit + this.LastPosition(poss).NetProfit > 0)
+                    {
+                        this.ClosePosition(this.FirstPosition(poss));
+                        this.ClosePosition(this.LastPosition(poss));
+                    }
+                }
+            }
             #endregion
 
             #region Mark
