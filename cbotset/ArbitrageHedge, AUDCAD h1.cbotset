@@ -13,3 +13,4 @@ Distance = 25
 Ratio = 1.1
 Magnify = 0.76
 IsTrade = True
+IsBreak = False

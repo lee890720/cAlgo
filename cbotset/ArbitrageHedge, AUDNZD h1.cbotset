@@ -11,5 +11,6 @@ _break = 90
 Period = 120
 Distance = 20
 Ratio = 0.75
-Magnify = 0.65
+Magnify = 0.57
 IsTrade = True
+IsBreak = False

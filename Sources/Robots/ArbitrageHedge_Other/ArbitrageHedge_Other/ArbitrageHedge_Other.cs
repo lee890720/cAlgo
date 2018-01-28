@@ -23,6 +23,7 @@ namespace cAlgo
         private double Ratio;
         private double Magnify;
         private bool IsTrade;
+        private bool IsBreak;
 
         private Currency_Highlight currency;
         private Currency_Sub_Highlight currency_sub;
@@ -48,6 +49,7 @@ namespace cAlgo
             Ratio = Main._Ratio;
             Magnify = Main._Magnify;
             IsTrade = Main._IsTrade;
+            IsBreak = Main._IsBreak;
             // Currency_Highlight has two public parameters that were BarsAgo and _ratio.
             currency = Indicators.GetIndicator<Currency_Highlight>(FirstSymbol, SecondSymbol, Period, Distance, Ratio, Magnify);
             // Currency_Sub_Highlight has three public parameters that they were SIG, BarsAgo_Sub and Mark.
@@ -76,6 +78,7 @@ namespace cAlgo
                 Print("Ratio: " + Ratio.ToString() + "-" + Ratio.GetType().ToString());
                 Print("Magnify: " + Magnify.ToString() + "-" + Magnify.GetType().ToString());
                 Print("IsTrade: " + IsTrade.ToString() + "-" + IsTrade.GetType().ToString());
+                Print("IsBreak: " + IsBreak.ToString() + "-" + IsBreak.GetType().ToString());
                 _symbol = MarketData.GetSymbol(_currencysymbol);
                 initBuy = new OrderParams(TradeType.Buy, _symbol, Init_Volume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
                 {
@@ -201,7 +204,7 @@ namespace cAlgo
                     this.executeOrder(initSell);
                     AboveCross = false;
                 }
-                if (OpenSignal() == "above_br")
+                if (OpenSignal() == "above_br" && IsBreak)
                 {
                     var _initvolume = Init_Volume;
                     if (Pos_above.Length != 0)
@@ -245,7 +248,7 @@ namespace cAlgo
                     this.executeOrder(initBuy);
                     BelowCross = false;
                 }
-                if (OpenSignal() == "below_br")
+                if (OpenSignal() == "below_br" && IsBreak)
                 {
                     var _initvolume = Init_Volume;
                     if (Pos_below.Length != 0)
@@ -296,12 +299,13 @@ namespace cAlgo
 
             if (DateTime.Compare(now, Pos_LastTime) < 0)
                 return null;
-
-            if (SR >= GetBreak(AboveLabel))
-                return signal = "above_br";
-            if (SR <= -GetBreak(BelowLabel))
-                return signal = "below_br";
-
+            if (IsBreak)
+            {
+                if (SR >= GetBreak(AboveLabel))
+                    return signal = "above_br";
+                if (SR <= -GetBreak(BelowLabel))
+                    return signal = "below_br";
+            }
             var sig = currency_sub.SIG;
             if (sig == null)
             {

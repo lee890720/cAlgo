@@ -49,6 +49,8 @@
             this.comboBox_IsTrade = new System.Windows.Forms.ComboBox();
             this.textBox_break = new System.Windows.Forms.TextBox();
             this.label_Break = new System.Windows.Forms.Label();
+            this.label_IsBreak = new System.Windows.Forms.Label();
+            this.comboBox_IsBreak = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label_Init_Volume
@@ -208,7 +210,7 @@
             // 
             // button_OK
             // 
-            this.button_OK.Location = new System.Drawing.Point(50, 353);
+            this.button_OK.Location = new System.Drawing.Point(50, 390);
             this.button_OK.Name = "button_OK";
             this.button_OK.Size = new System.Drawing.Size(320, 23);
             this.button_OK.TabIndex = 18;
@@ -226,6 +228,7 @@
             this.comboBox_IsTrade.Name = "comboBox_IsTrade";
             this.comboBox_IsTrade.Size = new System.Drawing.Size(200, 20);
             this.comboBox_IsTrade.TabIndex = 19;
+            this.comboBox_IsTrade.Text = "False";
             // 
             // textBox_break
             // 
@@ -245,11 +248,36 @@
             this.label_Break.Text = "Break";
             this.label_Break.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label_IsBreak
+            // 
+            this.label_IsBreak.BackColor = System.Drawing.SystemColors.Control;
+            this.label_IsBreak.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_IsBreak.Location = new System.Drawing.Point(50, 350);
+            this.label_IsBreak.Name = "label_IsBreak";
+            this.label_IsBreak.Size = new System.Drawing.Size(100, 20);
+            this.label_IsBreak.TabIndex = 22;
+            this.label_IsBreak.Text = "IsBreak";
+            this.label_IsBreak.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // comboBox_IsBreak
+            // 
+            this.comboBox_IsBreak.FormattingEnabled = true;
+            this.comboBox_IsBreak.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.comboBox_IsBreak.Location = new System.Drawing.Point(170, 350);
+            this.comboBox_IsBreak.Name = "comboBox_IsBreak";
+            this.comboBox_IsBreak.Size = new System.Drawing.Size(200, 20);
+            this.comboBox_IsBreak.TabIndex = 23;
+            this.comboBox_IsBreak.Text = "False";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(422, 381);
+            this.ClientSize = new System.Drawing.Size(422, 436);
+            this.Controls.Add(this.comboBox_IsBreak);
+            this.Controls.Add(this.label_IsBreak);
             this.Controls.Add(this.textBox_break);
             this.Controls.Add(this.label_Break);
             this.Controls.Add(this.comboBox_IsTrade);
@@ -304,5 +332,7 @@
         private System.Windows.Forms.ComboBox comboBox_IsTrade;
         private System.Windows.Forms.TextBox textBox_break;
         private System.Windows.Forms.Label label_Break;
+        private System.Windows.Forms.Label label_IsBreak;
+        private System.Windows.Forms.ComboBox comboBox_IsBreak;
     }
 }

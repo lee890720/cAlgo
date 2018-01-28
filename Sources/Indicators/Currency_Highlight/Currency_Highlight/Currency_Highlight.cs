@@ -74,7 +74,7 @@ namespace cAlgo
             ChartObjects.DrawText("Ratio", "\nratio_" + _ratio, StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("Magnify", "\n\nmagnify_" + currency._magnify, StaticPosition.TopLeft, NoCorel);
             ChartObjects.DrawText("Param_R_M", "\n\n\nRatio_(" + Ratio.ToString() + ")" + "_Magnify_(" + Magnify.ToString() + ")", StaticPosition.TopLeft, NoCorel);
-            ChartObjects.DrawHorizontalLine("midline", midaverage, NoCorel);
+            //ChartObjects.DrawHorizontalLine("midline", midaverage, NoCorel);
             #endregion
         }
 

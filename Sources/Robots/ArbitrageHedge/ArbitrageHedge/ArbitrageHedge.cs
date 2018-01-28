@@ -41,6 +41,9 @@ namespace cAlgo
         [Parameter(DefaultValue = false)]
         public bool IsTrade { get; set; }
 
+        [Parameter(DefaultValue = false)]
+        public bool IsBreak { get; set; }
+
         private Currency_Highlight currency;
         private Currency_Sub_Highlight currency_sub;
         private bool AboveCross;
@@ -196,7 +199,7 @@ namespace cAlgo
                     this.executeOrder(initSell);
                     AboveCross = false;
                 }
-                if (OpenSignal() == "above_br")
+                if (OpenSignal() == "above_br" && IsBreak)
                 {
                     var _initvolume = Init_Volume;
                     if (Pos_above.Length != 0)
@@ -240,7 +243,7 @@ namespace cAlgo
                     this.executeOrder(initBuy);
                     BelowCross = false;
                 }
-                if (OpenSignal() == "below_br")
+                if (OpenSignal() == "below_br" && IsBreak)
                 {
                     var _initvolume = Init_Volume;
                     if (Pos_below.Length != 0)
@@ -291,12 +294,13 @@ namespace cAlgo
 
             if (DateTime.Compare(now, Pos_LastTime) < 0)
                 return null;
-
-            if (SR >= GetBreak(AboveLabel))
-                return signal = "above_br";
-            if (SR <= -GetBreak(BelowLabel))
-                return signal = "below_br";
-
+            if (IsBreak)
+            {
+                if (SR >= GetBreak(AboveLabel))
+                    return signal = "above_br";
+                if (SR <= -GetBreak(BelowLabel))
+                    return signal = "below_br";
+            }
             var sig = currency_sub.SIG;
             if (sig == null)
             {

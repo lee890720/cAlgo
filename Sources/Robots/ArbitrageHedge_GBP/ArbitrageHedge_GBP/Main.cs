@@ -18,6 +18,7 @@ namespace cAlgo
         public static double _Ratio;
         public static double _Magnify;
         public static bool _IsTrade;
+        public static bool _IsBreak;
         public Main()
         {
             InitializeComponent();
@@ -46,13 +47,13 @@ namespace cAlgo
                             foreach (Control ctrl in Controls)
                             {
                                 if (ctrl is TextBox)
-                                    if (nextLine.Contains(ctrl.Name.Substring(8) ))
+                                    if (nextLine.Contains(ctrl.Name.Substring(8)))
                                     {
                                         int num = nextLine.IndexOf("=");
                                         ctrl.Text = nextLine.Substring(num + 2);
                                     }
-                                if(ctrl is ComboBox)
-                                                                        if (nextLine.Contains(ctrl.Name.Substring(9)))
+                                if (ctrl is ComboBox)
+                                    if (nextLine.Contains(ctrl.Name.Substring(9)))
                                     {
                                         int num = nextLine.IndexOf("=");
                                         ctrl.Text = nextLine.Substring(num + 2);
@@ -77,6 +78,7 @@ namespace cAlgo
             _Ratio = Convert.ToDouble(this.textBox_Ratio.Text);
             _Magnify = Convert.ToDouble(this.textBox_Magnify.Text);
             _IsTrade = Convert.ToBoolean(this.comboBox_IsTrade.Text);
+            _IsBreak = Convert.ToBoolean(this.comboBox_IsBreak.Text);
             this.Close();
         }
     }
