@@ -378,7 +378,7 @@ namespace cAlgo
                     signal = "below";
                     if (Pos_below.Length != 0)
                     {
-                        if (UR + CrossAgo() > Convert.ToDouble(this.LastPosition(Pos_above).Comment.Substring(0, 6)))
+                        if (UR + CrossAgo() > Convert.ToDouble(this.LastPosition(Pos_below).Comment.Substring(0, 6)))
                             signal = null;
                     }
                 }
