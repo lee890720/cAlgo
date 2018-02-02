@@ -67,7 +67,7 @@ namespace FormLib
             Assembly assembly = Assembly.GetExecutingAssembly();
             SoundPlayer sp = new SoundPlayer(assembly.GetManifestResourceStream(namespaceName + ".Resources" + ".Alarm.wav"));
             sp.Stop();
-            if (DateTime.Compare(utctime.AddSeconds(-70), time) > 0)
+            if (DateTime.Compare(utctime.AddSeconds(-120), time) > 0)
             {
                 this.label_vps.ForeColor = Color.Red;
                 this.label_vps.Text = "ERROR!!!";
