@@ -44,10 +44,7 @@ namespace cAlgo
 
         protected override void Initialize()
         {
-            _symbolFirstSeries = MarketData.GetSeries(FirstSymbol, TimeFrame);
-            _symbolSecondSeries = MarketData.GetSeries(SecondSymbol, TimeFrame);
-            _firstsymbol = MarketData.GetSymbol(FirstSymbol);
-            _secondsymbol = MarketData.GetSymbol(SecondSymbol);
+
             NoCorel = Colors.Gray;
         }
 

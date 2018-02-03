@@ -576,5 +576,49 @@ namespace cAlgo.Lib
                 risk = true;
             return risk;
         }
+
+        public static bool PreRisk(this Robot robot)
+        {
+            bool risk = false;
+            if (robot.Positions.Count == 0)
+                return risk;
+            double lots = 0;
+            List<Position> list_pos = new List<Position>();
+            foreach (var p in robot.Positions)
+            {
+                if (p.SymbolCode == robot.Symbol.Code)
+                {
+                    lots += p.Volume;
+                    list_pos.Add(p);
+                }
+            }
+            if (list_pos.Count == 0)
+                return risk;
+            var pos = robot.LastPosition(list_pos.ToArray());
+            lots += pos.Volume * 2;
+            var freemargin = robot.Account.FreeMargin;
+            var pips = freemargin / (lots * robot.Symbol.PipValue);
+            double min = 0;
+            double max = 0;
+            double bars_pips = 0;
+            var bars = robot.MarketSeries.Bars();
+            for (int i = bars - 120; i < bars; i++)
+            {
+                if (min == 0)
+                    min = robot.MarketSeries.Low[i];
+                if (max == 0)
+                    max = robot.MarketSeries.High[i];
+                if (min > robot.MarketSeries.Low[i])
+                    min = robot.MarketSeries.Low[i];
+                if (max < robot.MarketSeries.High[i])
+                    max = robot.MarketSeries.High[i];
+            }
+            bars_pips = (max - min) / robot.Symbol.PipSize;
+            //robot.Print("Max: " + Math.Round(pips).ToString());
+            //robot.Print("Present: " + Math.Round(bars_pips).ToString());
+            if (pips < bars_pips)
+                risk = true;
+            return risk;
+        }
     }
 }

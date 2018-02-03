@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MACS_Metals", "MACS_Metals\MACS_Metals.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MAC", "..\..\Indicators\Metals_MAC\Metals_MAC\Metals_MAC.csproj", "{4DACF84E-B2ED-484A-AF31-E892076A8041}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MAS", "..\..\Indicators\Metals_MAS\Metals_MAS\Metals_MAS.csproj", "{FCC8C7DC-30B9-4812-B790-E009CAD6B176}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCC8C7DC-30B9-4812-B790-E009CAD6B176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCC8C7DC-30B9-4812-B790-E009CAD6B176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCC8C7DC-30B9-4812-B790-E009CAD6B176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCC8C7DC-30B9-4812-B790-E009CAD6B176}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

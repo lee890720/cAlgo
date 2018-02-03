@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAS", "MAS\MAS.csproj", "{26287B93-888B-407C-A4CA-7F293EEF3321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaCross", "..\MaCross\MaCross\MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaSub", "..\MaSub\MaSub\MaSub.csproj", "{260EC882-0065-4090-BCD9-CCE960F34016}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26287B93-888B-407C-A4CA-7F293EEF3321}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26287B93-888B-407C-A4CA-7F293EEF3321}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26287B93-888B-407C-A4CA-7F293EEF3321}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26287B93-888B-407C-A4CA-7F293EEF3321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
