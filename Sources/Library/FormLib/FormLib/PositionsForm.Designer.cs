@@ -372,7 +372,7 @@
             this.label_c18.Name = "label_c18";
             this.label_c18.Size = new System.Drawing.Size(420, 30);
             this.label_c18.TabIndex = 71;
-            this.label_c18.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c18.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v18
@@ -405,7 +405,7 @@
             this.label_c17.Name = "label_c17";
             this.label_c17.Size = new System.Drawing.Size(420, 30);
             this.label_c17.TabIndex = 67;
-            this.label_c17.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c17.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v17
@@ -438,7 +438,7 @@
             this.label_c16.Name = "label_c16";
             this.label_c16.Size = new System.Drawing.Size(420, 30);
             this.label_c16.TabIndex = 63;
-            this.label_c16.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c16.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v16
@@ -471,7 +471,7 @@
             this.label_c15.Name = "label_c15";
             this.label_c15.Size = new System.Drawing.Size(420, 30);
             this.label_c15.TabIndex = 59;
-            this.label_c15.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c15.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v15
@@ -504,7 +504,7 @@
             this.label_c14.Name = "label_c14";
             this.label_c14.Size = new System.Drawing.Size(420, 30);
             this.label_c14.TabIndex = 55;
-            this.label_c14.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c14.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v14
@@ -537,7 +537,7 @@
             this.label_c13.Name = "label_c13";
             this.label_c13.Size = new System.Drawing.Size(420, 30);
             this.label_c13.TabIndex = 51;
-            this.label_c13.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c13.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v13
@@ -570,7 +570,7 @@
             this.label_c12.Name = "label_c12";
             this.label_c12.Size = new System.Drawing.Size(420, 30);
             this.label_c12.TabIndex = 47;
-            this.label_c12.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c12.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v12
@@ -603,7 +603,7 @@
             this.label_c11.Name = "label_c11";
             this.label_c11.Size = new System.Drawing.Size(420, 30);
             this.label_c11.TabIndex = 43;
-            this.label_c11.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c11.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v11
@@ -636,7 +636,7 @@
             this.label_c10.Name = "label_c10";
             this.label_c10.Size = new System.Drawing.Size(420, 30);
             this.label_c10.TabIndex = 39;
-            this.label_c10.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c10.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v10
@@ -669,7 +669,7 @@
             this.label_c9.Name = "label_c9";
             this.label_c9.Size = new System.Drawing.Size(420, 30);
             this.label_c9.TabIndex = 35;
-            this.label_c9.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c9.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v9
@@ -702,7 +702,7 @@
             this.label_c8.Name = "label_c8";
             this.label_c8.Size = new System.Drawing.Size(420, 30);
             this.label_c8.TabIndex = 31;
-            this.label_c8.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c8.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v8
@@ -735,7 +735,7 @@
             this.label_c7.Name = "label_c7";
             this.label_c7.Size = new System.Drawing.Size(420, 30);
             this.label_c7.TabIndex = 27;
-            this.label_c7.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c7.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v7
@@ -768,7 +768,7 @@
             this.label_c6.Name = "label_c6";
             this.label_c6.Size = new System.Drawing.Size(420, 30);
             this.label_c6.TabIndex = 23;
-            this.label_c6.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c6.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v6
@@ -801,7 +801,7 @@
             this.label_c5.Name = "label_c5";
             this.label_c5.Size = new System.Drawing.Size(420, 30);
             this.label_c5.TabIndex = 19;
-            this.label_c5.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c5.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v5
@@ -834,7 +834,7 @@
             this.label_c4.Name = "label_c4";
             this.label_c4.Size = new System.Drawing.Size(420, 30);
             this.label_c4.TabIndex = 15;
-            this.label_c4.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c4.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v4
@@ -867,7 +867,7 @@
             this.label_c3.Name = "label_c3";
             this.label_c3.Size = new System.Drawing.Size(420, 30);
             this.label_c3.TabIndex = 11;
-            this.label_c3.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c3.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v3
@@ -900,7 +900,7 @@
             this.label_c2.Name = "label_c2";
             this.label_c2.Size = new System.Drawing.Size(420, 30);
             this.label_c2.TabIndex = 7;
-            this.label_c2.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c2.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v2
@@ -933,7 +933,7 @@
             this.label_c1.Name = "label_c1";
             this.label_c1.Size = new System.Drawing.Size(420, 30);
             this.label_c1.TabIndex = 3;
-            this.label_c1.Text = "<000000<000<000<0000-00-00-00<br_000<B_000<D_000<R_0.0000<M_0.0000>";
+            this.label_c1.Text = "CR_000001<BR_001<D_001<S_001<B_001<P_001<M_2018-01-02-03<";
             this.label_c1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label_v1
@@ -1056,7 +1056,7 @@
             this.textBox_comment.Name = "textBox_comment";
             this.textBox_comment.Size = new System.Drawing.Size(160, 75);
             this.textBox_comment.TabIndex = 5;
-            this.textBox_comment.Text = "000000<000<000<\r\n0000-00-00-00<\r\nbr_000<B_000<D_000<\r\nR_0.0000<M_0.0000<";
+            this.textBox_comment.Text = "CR_000001<BR_001<\r\nD_001<S_001<\r\nB_001<P_001<\r\nM_2018-01-02-03<";
             this.textBox_comment.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox_volume

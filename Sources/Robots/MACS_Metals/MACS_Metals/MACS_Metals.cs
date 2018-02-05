@@ -114,8 +114,9 @@ namespace cAlgo
             if (Poss.Length != 0)
                 foreach (var p in Poss)
                 {
-                    if (!_marklist.Contains(p.Comment.Substring(15, 13)))
-                        _marklist.Add(p.Comment.Substring(15, 13));
+                    var idx = p.Comment.IndexOf("M_") + 2;
+                    if (!_marklist.Contains(p.Comment.Substring(idx, 13)))
+                        _marklist.Add(p.Comment.Substring(idx, 13));
                 }
             #endregion
 
@@ -160,8 +161,9 @@ namespace cAlgo
                 }
                 if (Pos_xau_Pre.NetProfit + Pos_xag_Pre.NetProfit > 0)
                 {
-                    if (_marklist.Contains(Pos_xau_Last.Comment.Substring(15, 13)))
-                        if (_marklist.Remove(Pos_xau_Last.Comment.Substring(15, 13)))
+                    var idx = Pos_xau_Last.Comment.IndexOf("M_") + 2;
+                    if (_marklist.Contains(Pos_xau_Last.Comment.Substring(idx, 13)))
+                        if (_marklist.Remove(Pos_xau_Last.Comment.Substring(idx, 13)))
                             this.ClosePosition(Pos_xau_Last);
                     if (LastResult.IsSuccessful)
                         this.ClosePosition(Pos_xag_Last);
@@ -209,14 +211,13 @@ namespace cAlgo
                     _initsell.Symbol = _xausymbol;
                     _initsell.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
                     _initsell.Label = _abovelabel;
-                    _initsell.Comment = string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initsell.Comment += string.Format("{0:000}", GetDistance()) + "<";
-                    _initsell.Comment += string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initsell.Comment += _mas._Mark + "<";
-                    _initsell.Comment += "nul000" + "<";
+                    _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _initsell.Comment += "BR_000" + "<";
+                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _initsell.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _initsell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _initsell.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _initsell.Comment += "M_" + _mas._Mark + "<";
                     this.executeOrder(_initsell);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -238,14 +239,13 @@ namespace cAlgo
                     _initsell.Symbol = _xausymbol;
                     _initsell.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
                     _initsell.Label = _abovelabel;
-                    _initsell.Comment = string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initsell.Comment += string.Format("{0:000}", GetDistance()) + "<";
-                    _initsell.Comment += string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initsell.Comment += _mas._Mark + "<";
-                    _initsell.Comment += "br_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
+                    _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _initsell.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
+                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _initsell.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _initsell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _initsell.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _initsell.Comment += "M_" + _mas._Mark + "<";
                     this.executeOrder(_initsell);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -268,14 +268,13 @@ namespace cAlgo
                     _initbuy.Symbol = _xausymbol;
                     _initbuy.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
                     _initbuy.Label = _belowlabel;
-                    _initbuy.Comment = string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initbuy.Comment += string.Format("{0:000}", GetDistance()) + "<";
-                    _initbuy.Comment += string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initbuy.Comment += _mas._Mark + "<";
-                    _initbuy.Comment += "nul000" + "<";
+                    _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _initbuy.Comment += "BR_000" + "<";
+                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _initbuy.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _initbuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _initbuy.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _initbuy.Comment += "M_" + _mas._Mark + "<";
                     this.executeOrder(_initbuy);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -297,14 +296,13 @@ namespace cAlgo
                     _initbuy.Symbol = _xausymbol;
                     _initbuy.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
                     _initbuy.Label = _belowlabel;
-                    _initbuy.Comment = string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initbuy.Comment += string.Format("{0:000}", GetDistance()) + "<";
-                    _initbuy.Comment += string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initbuy.Comment += _mas._Mark + "<";
-                    _initbuy.Comment += "br_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
+                    _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _initbuy.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
+                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _initbuy.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _initbuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _initbuy.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _initbuy.Comment += "M_" + _mas._Mark + "<";
                     this.executeOrder(_initbuy);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -363,7 +361,8 @@ namespace cAlgo
                     Signal = "above";
                     if (Pos_above.Length != 0)
                     {
-                        if (CR - GetDistance() < Convert.ToDouble(this.LastPosition(Pos_above).Comment.Substring(0, 6)))
+                        var idx = this.LastPosition(Pos_above).Comment.IndexOf("CR_") + 3;
+                        if (CR - GetDistance() < Convert.ToDouble(this.LastPosition(Pos_above).Comment.Substring(idx, 6)))
                             Signal = null;
                     }
                 }
@@ -372,7 +371,8 @@ namespace cAlgo
                     Signal = "below";
                     if (Pos_below.Length != 0)
                     {
-                        if (CR + GetDistance() > Convert.ToDouble(this.LastPosition(Pos_below).Comment.Substring(0, 6)))
+                        var idx = this.LastPosition(Pos_below).Comment.IndexOf("CR_") + 3;
+                        if (CR + GetDistance() > Convert.ToDouble(this.LastPosition(Pos_below).Comment.Substring(idx, 6)))
                             Signal = null;
                     }
                 }
@@ -408,11 +408,9 @@ namespace cAlgo
             {
                 foreach (var p in Poss)
                 {
-                    if (p.Comment.Substring(29, 3) == "br_")
-                    {
-                        if (BR < Convert.ToDouble(p.Comment.Substring(32, 3)))
-                            BR = Convert.ToDouble(p.Comment.Substring(32, 3));
-                    }
+                    var idx = p.Comment.IndexOf("BR_") + 3;
+                    if (BR < Convert.ToDouble(p.Comment.Substring(idx, 3)))
+                        BR = Convert.ToDouble(p.Comment.Substring(idx, 3));
                 }
             }
             return BR;

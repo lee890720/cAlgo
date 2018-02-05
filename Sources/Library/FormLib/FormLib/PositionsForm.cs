@@ -137,21 +137,14 @@ namespace FormLib
                         else
                         {
                             var mulstr = (ctrl as Label).Text;
-                            string newstr = null;
-                            var num=mulstr.Length;
-                            if (num >= 15)
-                            {
-                                newstr= mulstr.Substring(0, 15);
-                                if (num >= 29)
-                                    newstr+= "\r\n"+mulstr.Substring(15, 14);
-                                if (num >= 48)
-                                    newstr += "\r\n" + mulstr.Substring(29, 19);
-                                if (num >= 66)
-                                    newstr += "\r\n" + mulstr.Substring(48, 18);
-                                this.textBox_comment.Text =newstr;
-                            }
-                            else
-                            this.textBox_comment.Text = (ctrl as Label).Text;
+                            string newstr=null;
+                            if (mulstr.IndexOf("BR_") != -1)
+                                newstr=mulstr.Insert(mulstr.IndexOf("BR_") + 7, "\r\n");
+                            if (newstr.IndexOf("S_") != -1)
+                                newstr=newstr.Insert(newstr.IndexOf("S_") + 6, "\r\n");
+                            if (newstr.IndexOf("P_") != -1)
+                                newstr=newstr.Insert(newstr.IndexOf("P_") + 6, "\r\n");
+                            this.textBox_comment.Text = newstr;
                         }
                     }
                 }
