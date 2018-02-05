@@ -84,7 +84,7 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            var PossLabel = this.FirstPosition(Poss).Label;
+            //var PossLabel = this.FirstPosition(Poss).Label;
             #endregion
 
             #region Mark
@@ -267,7 +267,7 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            var PossLabel = this.FirstPosition(Poss).Label;
+            //var PossLabel = this.FirstPosition(Poss).Label;
             var CR = _mac.Result.LastValue;
             var CA = _mac.Average.LastValue;
             var SR = _mas.Result.LastValue;

@@ -95,7 +95,7 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            var PossLabel = this.FirstPosition(Poss).Label;
+            //var PossLabel = this.FirstPosition(Poss).Label;
             List<Position> Poss_xau = new List<Position>();
             List<Position> Poss_xag = new List<Position>();
             if (Poss.Length != 0)
@@ -224,6 +224,7 @@ namespace cAlgo
                         _initbuy.Volume = _initsell.Volume * _ratio;
                         _initbuy.Label = _initsell.Label;
                         _initbuy.Comment = _initsell.Comment;
+                        this.executeOrder(_initbuy);
                     }
                     _abovecross = false;
                 }
@@ -252,6 +253,7 @@ namespace cAlgo
                         _initbuy.Volume = _initsell.Volume * _ratio;
                         _initbuy.Label = _initsell.Label;
                         _initbuy.Comment = _initsell.Comment;
+                        this.executeOrder(_initbuy);
                     }
                 }
                 #endregion
@@ -281,6 +283,7 @@ namespace cAlgo
                         _initsell.Volume = _initbuy.Volume * _ratio;
                         _initsell.Label = _initbuy.Label;
                         _initsell.Comment = _initbuy.Comment;
+                        this.executeOrder(_initsell);
                     }
                     _belowcross = false;
                 }
@@ -309,6 +312,7 @@ namespace cAlgo
                         _initsell.Volume = _initbuy.Volume * _ratio;
                         _initsell.Label = _initbuy.Label;
                         _initsell.Comment = _initbuy.Comment;
+                        this.executeOrder(_initsell);
                     }
                 }
                 #endregion
@@ -323,7 +327,7 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            var PossLabel = this.FirstPosition(Poss).Label;
+            //var PossLabel = this.FirstPosition(Poss).Label;
             var CR = _mac.Result.LastValue;
             var CA = _mac.Average.LastValue;
             var SR = _mas.Result.LastValue;
