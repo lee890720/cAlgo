@@ -35,7 +35,7 @@ namespace cAlgo
         private bool _risk;
         private string _abovelabel, _belowlabel;
         private List<string> _marklist = new List<string>();
-        private OrderParams _initbuy, _initsell;
+        private OrderParams _init;
 
         protected override void OnStart()
         {
@@ -95,12 +95,10 @@ namespace cAlgo
             _abovelabel = "Above" + "-" + "XAUXAG" + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + "XAUXAG" + "-" + MarketSeries.TimeFrame.ToString();
 
-            _initbuy = new OrderParams(TradeType.Buy, null, null, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
+            _init = new OrderParams(null, null, null, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
-            _initsell = new OrderParams(TradeType.Sell, null, null, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
-            {
-                            });
+
             #region Get Mark
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
@@ -126,7 +124,7 @@ namespace cAlgo
             Position pos = obj.Position;
             var idx = pos.Comment.IndexOf("M_") + 2;
             _marklist.Add(pos.Comment.Substring(idx, 13));
-            Print("It's successful to add a mark.");
+            Print("It's successful to add a mark for XAUXAG.");
         }
 
         private void OnPositionsClosed(PositionClosedEventArgs obj)
@@ -134,7 +132,7 @@ namespace cAlgo
             Position pos = obj.Position;
             var idx = pos.Comment.IndexOf("M_") + 2;
             if (_marklist.Remove(pos.Comment.Substring(idx, 13)))
-                Print("It's successful to remove a mark.");
+                Print("It's successful to remove a mark for XAUXAG.");
         }
 
         protected override void OnTick()
@@ -193,10 +191,10 @@ namespace cAlgo
                     var second_xag = Poss_xag[1];
                     Poss_xau.OrderByDescending(p => p.EntryTime);
                     Poss_xag.OrderByDescending(p => p.EntryTime);
-                    var last0_xau = Poss[0];
-                    var last1_xau = Poss[1];
-                    var last0_xag = Poss[0];
-                    var last1_xag = Poss[1];
+                    var last0_xau = Poss_xau[0];
+                    var last1_xau = Poss_xau[1];
+                    var last0_xag = Poss_xag[0];
+                    var last1_xag = Poss_xag[1];
                     var first_net = first_xau.NetProfit + first_xag.NetProfit;
                     var second_net = second_xau.NetProfit + second_xag.NetProfit;
                     var last0_net = last0_xau.NetProfit + last0_xag.NetProfit;
@@ -266,46 +264,48 @@ namespace cAlgo
                 if (GetOpen() == "above")
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initsell.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initsell.Label = _abovelabel;
-                    _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initsell.Comment += "BR_000" + "<";
-                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initsell.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initsell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initsell.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initsell.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initsell);
+                    _init.TradeType = TradeType.Sell;
+                    _init.Symbol = _xausymbol;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _abovelabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_000" + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
-                        _initbuy.Symbol = _xagsymbol;
-                        _initbuy.Volume = _initsell.Volume * _ratio;
-                        _initbuy.Label = _initsell.Label;
-                        _initbuy.Comment = _initsell.Comment;
-                        this.executeOrder(_initbuy);
+                        _init.TradeType = TradeType.Buy;
+                        _init.Symbol = _xagsymbol;
+                        _init.Volume = _init.Volume * _ratio;
+                        this.executeOrder(_init);
                     }
                     _abovecross = false;
                 }
                 if (GetOpen() == "above_br" && _isbreak)
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initsell.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initsell.Label = _abovelabel;
-                    _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initsell.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
-                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initsell.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initsell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initsell.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initsell.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initsell);
+                    _init.TradeType = TradeType.Sell;
+                    _init.Symbol = _xausymbol;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _abovelabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
-                        _initbuy.Symbol = _xagsymbol;
-                        _initbuy.Volume = _initsell.Volume * _ratio;
-                        _initbuy.Label = _initsell.Label;
-                        _initbuy.Comment = _initsell.Comment;
-                        this.executeOrder(_initbuy);
+                        _init.TradeType = TradeType.Buy;
+                        _init.Symbol = _xagsymbol;
+                        _init.Volume = _init.Volume * _ratio;
+                        this.executeOrder(_init);
                     }
                 }
                 #endregion
@@ -313,46 +313,48 @@ namespace cAlgo
                 if (GetOpen() == "below")
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initbuy.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initbuy.Label = _belowlabel;
-                    _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initbuy.Comment += "BR_000" + "<";
-                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initbuy.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initbuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initbuy.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initbuy.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initbuy);
+                    _init.TradeType = TradeType.Buy;
+                    _init.Symbol = _xausymbol;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _belowlabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_000" + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
-                        _initsell.Symbol = _xagsymbol;
-                        _initsell.Volume = _initbuy.Volume * _ratio;
-                        _initsell.Label = _initbuy.Label;
-                        _initsell.Comment = _initbuy.Comment;
-                        this.executeOrder(_initsell);
+                        _init.TradeType = TradeType.Sell;
+                        _init.Symbol = _xagsymbol;
+                        _init.Volume = _init.Volume * _ratio;
+                        this.executeOrder(_init);
                     }
                     _belowcross = false;
                 }
                 if (GetOpen() == "below_br" && _isbreak)
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initbuy.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initbuy.Label = _belowlabel;
-                    _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initbuy.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
-                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initbuy.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initbuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initbuy.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
-                    _initbuy.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initbuy);
+                    _init.TradeType = TradeType.Buy;
+                    _init.Symbol = _xausymbol;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _belowlabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xau.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
-                        _initsell.Symbol = _xagsymbol;
-                        _initsell.Volume = _initbuy.Volume * _ratio;
-                        _initsell.Label = _initbuy.Label;
-                        _initsell.Comment = _initbuy.Comment;
-                        this.executeOrder(_initsell);
+                        _init.TradeType = TradeType.Sell;
+                        _init.Symbol = _xagsymbol;
+                        _init.Volume = _init.Volume * _ratio;
+                        this.executeOrder(_init);
                     }
                 }
                 #endregion
@@ -426,8 +428,10 @@ namespace cAlgo
             double Volume = 0;
             if (opensignal == null)
                 return _initvolume;
-            string Label = opensignal.Substring(0, 5);
-            var Poss = this.GetPositions(Label, _xausymbol);
+            string Label = opensignal.Substring(0, 1).ToUpper();
+            Label += opensignal.Substring(1, 4);
+            Label += "-" + "XAUXAG" + "-" + MarketSeries.TimeFrame.ToString();
+            var Poss = this.GetPositions(Label, Symbol);
             if (Poss.Length == 0)
                 return _initvolume;
             List<Position> List_Poss = new List<Position>();

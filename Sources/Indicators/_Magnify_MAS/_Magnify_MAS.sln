@@ -1,0 +1,24 @@
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MAS", "_Magnify_MAS\_Magnify_MAS.csproj", "{F7195E4A-62F3-4B6C-953A-E6C355BB9333}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7195E4A-62F3-4B6C-953A-E6C355BB9333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7195E4A-62F3-4B6C-953A-E6C355BB9333}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7195E4A-62F3-4B6C-953A-E6C355BB9333}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7195E4A-62F3-4B6C-953A-E6C355BB9333}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MASub", "..\_Magnify_MASub\_Magnify_MASub\_Magnify_MASub.csproj", "{A6D51FB1-E1AA-4C03-8DA2-E71510895742}"
+EndProject

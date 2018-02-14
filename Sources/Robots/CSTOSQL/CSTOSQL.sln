@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSTOSQL", "CSTOSQL\CSTOSQL.csproj", "{7E5E19AA-5621-4E5A-9FBF-3E1087E6A894}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E5E19AA-5621-4E5A-9FBF-3E1087E6A894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E5E19AA-5621-4E5A-9FBF-3E1087E6A894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E5E19AA-5621-4E5A-9FBF-3E1087E6A894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E5E19AA-5621-4E5A-9FBF-3E1087E6A894}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MAC", "..\..\Indicators\Metals_MAC\Metals_MAC\Metals_MAC.csproj", "{63FCCF06-7483-45F7-A378-8300DEDF5879}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MAS", "..\..\Indicators\Metals_MAS\Metals_MAS\Metals_MAS.csproj", "{8B82BCC7-716F-4FAE-A595-D69034431C76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAC", "..\..\Indicators\Oil_MAC\Oil_MAC\Oil_MAC.csproj", "{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAS", "..\..\Indicators\Oil_MAS\Oil_MAS\Oil_MAS.csproj", "{A25947F7-9E20-48E0-8E1C-0115F84A55C9}"
+EndProject

@@ -59,13 +59,13 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Indicators\Magnify_MAC\Magnify_MAC\Magnify_MAC.csproj">
+    <ProjectReference Include="..\..\..\Indicators\_Magnify_MAC\_Magnify_MAC\_Magnify_MAC.csproj">
       <Project>{4DACF84E-B2ED-484A-AF31-E892076A8041}</Project>
-      <Name>Magnify_MAC</Name>
+      <Name>_Magnify_MAC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Indicators\Magnify_MAS\Magnify_MAS\Magnify_MAS.csproj">
+    <ProjectReference Include="..\..\..\Indicators\_Magnify_MAS\_Magnify_MAS\_Magnify_MAS.csproj">
       <Project>{BCE3082A-0491-4C6D-8E9A-0B6A85B322B2}</Project>
-      <Name>Magnify_MAS</Name>
+      <Name>_Magnify_MAS</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

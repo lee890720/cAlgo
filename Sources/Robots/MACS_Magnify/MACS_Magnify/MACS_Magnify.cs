@@ -25,14 +25,14 @@ namespace cAlgo
         private double _sub;
         #endregion
 
-        private Magnify_MAC _mac;
-        private Magnify_MAS _mas;
+        private _Magnify_MAC _mac;
+        private _Magnify_MAS _mas;
         private bool _abovecross;
         private bool _belowcross;
         private bool _risk;
         private string _abovelabel, _belowlabel;
         private List<string> _marklist = new List<string>();
-        private OrderParams _initbuy, _initsell;
+        private OrderParams _init;
 
         protected override void OnStart()
         {
@@ -80,8 +80,8 @@ namespace cAlgo
 
             Positions.Opened += OnPositionsOpened;
             Positions.Closed += OnPositionsClosed;
-            _mac = Indicators.GetIndicator<Magnify_MAC>(_resultperiods, _averageperiods, _magnify, _sub);
-            _mas = Indicators.GetIndicator<Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub);
+            _mac = Indicators.GetIndicator<_Magnify_MAC>(_resultperiods, _averageperiods, _magnify, _sub);
+            _mas = Indicators.GetIndicator<_Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub);
             _abovecross = false;
             _belowcross = false;
             _risk = false;
@@ -89,10 +89,7 @@ namespace cAlgo
             _abovelabel = "Above" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
 
-            _initbuy = new OrderParams(TradeType.Buy, Symbol, _initvolume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
-            {
-                            });
-            _initsell = new OrderParams(TradeType.Sell, Symbol, _initvolume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
+            _init = new OrderParams(null, Symbol, _initvolume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
 
@@ -121,7 +118,7 @@ namespace cAlgo
             Position pos = obj.Position;
             var idx = pos.Comment.IndexOf("M_") + 2;
             _marklist.Add(pos.Comment.Substring(idx, 13));
-            Print("It's successful to add a mark.");
+            Print("It's successful to add a mark for " + Symbol.Code + ".");
         }
 
         private void OnPositionsClosed(PositionClosedEventArgs obj)
@@ -129,7 +126,7 @@ namespace cAlgo
             Position pos = obj.Position;
             var idx = pos.Comment.IndexOf("M_") + 2;
             if (_marklist.Remove(pos.Comment.Substring(idx, 13)))
-                Print("It's successful to remove a mark.");
+                Print("It's successful to remove a mark for " + Symbol.Code + ".");
         }
 
         protected override void OnTick()
@@ -235,62 +232,66 @@ namespace cAlgo
                 if (GetOpen() == "above")
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initsell.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initsell.Label = _abovelabel;
-                    _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initsell.Comment += "BR_000" + "<";
-                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initsell.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initsell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initsell.Comment += "P_" + string.Format("{0:000}", Pos_above.Length + 1) + "<";
-                    _initsell.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initsell);
+                    _init.TradeType = TradeType.Sell;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _abovelabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_000" + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Pos_above.Length + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                     _abovecross = false;
                 }
                 if (GetOpen() == "above_br" && _isbreak)
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initsell.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initsell.Label = _abovelabel;
-                    _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initsell.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
-                    _initsell.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initsell.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initsell.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initsell.Comment += "P_" + string.Format("{0:000}", Pos_above.Length + 1) + "<";
-                    _initsell.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initsell);
+                    _init.TradeType = TradeType.Sell;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _abovelabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Pos_above.Length + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                 }
                 #endregion
                 #region Below
                 if (GetOpen() == "below")
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initbuy.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initbuy.Label = _belowlabel;
-                    _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initbuy.Comment += "BR_000" + "<";
-                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initbuy.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initbuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initbuy.Comment += "P_" + string.Format("{0:000}", Pos_below.Length + 1) + "<";
-                    _initbuy.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initbuy);
+                    _init.TradeType = TradeType.Buy;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _belowlabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_000" + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Pos_below.Length + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                     _belowcross = false;
                 }
                 if (GetOpen() == "below_br" && _isbreak)
                 {
                     var Volume = GetOpenVolume(GetOpen());
-                    _initbuy.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
-                    _initbuy.Label = _belowlabel;
-                    _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
-                    _initbuy.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
-                    _initbuy.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
-                    _initbuy.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
-                    _initbuy.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _initbuy.Comment += "P_" + string.Format("{0:000}", Pos_below.Length + 1) + "<";
-                    _initbuy.Comment += "M_" + _mas._Mark + "<";
-                    this.executeOrder(_initbuy);
+                    _init.TradeType = TradeType.Buy;
+                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Label = _belowlabel;
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
+                    _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
+                    _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
+                    _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", Pos_below.Length + 1) + "<";
+                    _init.Comment += "M_" + _mas._Mark + "<";
+                    this.executeOrder(_init);
                 }
                 #endregion
                 #endregion

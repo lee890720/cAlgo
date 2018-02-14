@@ -1,14 +1,12 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MACS_Oil", "MACS_Oil\MACS_Oil.csproj", "{2B4A7A01-D7D2-4EE9-8C4D-7B86F455C10E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAC", "..\..\Indicators\Oil_MAC\Oil_MAC\Oil_MAC.csproj", "{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAS", "..\..\Indicators\Oil_MAS\Oil_MAS\Oil_MAS.csproj", "{A25947F7-9E20-48E0-8E1C-0115F84A55C9}"
-EndProject
+
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,3 +30,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
+
+
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAC", "..\..\Indicators\Oil_MAC\Oil_MAC\Oil_MAC.csproj", "{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAS", "..\..\Indicators\Oil_MAS\Oil_MAS\Oil_MAS.csproj", "{A25947F7-9E20-48E0-8E1C-0115F84A55C9}"
+EndProject

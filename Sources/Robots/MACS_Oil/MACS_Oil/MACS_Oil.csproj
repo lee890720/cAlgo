@@ -60,11 +60,11 @@
   -->
   <ItemGroup>
     <ProjectReference Include="..\..\..\Indicators\Oil_MAC\Oil_MAC\Oil_MAC.csproj">
-      <Project>{4DACF84E-B2ED-484A-AF31-E892076A8041}</Project>
+      <Project>{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}</Project>
       <Name>Oil_MAC</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Indicators\Oil_MAS\Oil_MAS\Oil_MAS.csproj">
-      <Project>{FCC8C7DC-30B9-4812-B790-E009CAD6B176}</Project>
+      <Project>{A25947F7-9E20-48E0-8E1C-0115F84A55C9}</Project>
       <Name>Oil_MAS</Name>
     </ProjectReference>
   </ItemGroup>
