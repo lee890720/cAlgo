@@ -322,8 +322,10 @@ namespace cAlgo.Lib
         public static Position[] GetPositions(this Robot robot, string label, Symbol symbol = null)
         {
             if (symbol == null)
-                return robot.Positions.FindAll(label);
-            return robot.Positions.FindAll(label, symbol);
+            {
+                return robot.Positions.FindAll(label).OrderBy(p=>p.EntryTime).ToArray();
+            }
+            return robot.Positions.FindAll(label, symbol).OrderBy(p=>p.EntryTime).ToArray();
         }
 
         public static long TotalLots(this Robot robot, string label = null, Symbol symbol = null)
@@ -360,14 +362,7 @@ namespace cAlgo.Lib
                 poss.AddRange(robot.GetPositions(label));
             if (poss.Count == 0)
                 return 0;
-            long maxlot = 0;
-            foreach (var pos in poss)
-            {
-                if (maxlot == 0)
-                    maxlot = pos.Volume;
-                if (maxlot < pos.Volume)
-                    maxlot = pos.Volume;
-            }
+            long maxlot = poss.OrderByDescending(p => p.Volume).ToArray()[0].Volume;
             return maxlot;
         }
 
@@ -380,14 +375,7 @@ namespace cAlgo.Lib
                 poss.AddRange(robot.GetPositions(label));
             if (poss.Count == 0)
                 return 0;
-            long minlot = 0;
-            foreach (var pos in poss)
-            {
-                if (minlot == 0)
-                    minlot = pos.Volume;
-                if (minlot < pos.Volume)
-                    minlot = pos.Volume;
-            }
+            long minlot = poss.OrderBy(p => p.Volume).ToArray()[0].Volume;
             return minlot;
         }
 
@@ -447,14 +435,7 @@ namespace cAlgo.Lib
                 poss.AddRange(robot.GetPositions(label));
             if (poss.Count == 0)
                 return 0;
-            double maxprice = 0;
-            foreach (var pos in poss)
-            {
-                if (maxprice == 0)
-                    maxprice = pos.EntryPrice;
-                if (maxprice < pos.EntryPrice)
-                    maxprice = pos.EntryPrice;
-            }
+            double maxprice = poss.OrderByDescending(p => p.EntryPrice).ToArray()[0].EntryPrice;
             return maxprice;
         }
 
@@ -467,14 +448,7 @@ namespace cAlgo.Lib
                 poss.AddRange(robot.GetPositions(label));
             if (poss.Count == 0)
                 return 0;
-            double minprice = 0;
-            foreach (var pos in poss)
-            {
-                if (minprice == 0)
-                    minprice = pos.EntryPrice;
-                if (minprice < pos.EntryPrice)
-                    minprice = pos.EntryPrice;
-            }
+            double minprice = poss.OrderBy(p => p.EntryTime).ToArray()[0].EntryPrice;
             return minprice;
         }
 
@@ -506,13 +480,7 @@ namespace cAlgo.Lib
                 return null;
             else
             {
-                foreach (var p in poss)
-                {
-                    if (pos == null)
-                        pos = p;
-                    else if (DateTime.Compare(pos.EntryTime, p.EntryTime) > 0)
-                        pos = p;
-                }
+                pos=poss.OrderBy(p=>p.EntryTime).ToArray()[0];
             }
             return pos;
         }
@@ -524,13 +492,7 @@ namespace cAlgo.Lib
                 return null;
             else
             {
-                foreach (var p in poss)
-                {
-                    if (pos == null)
-                        pos = p;
-                    else if (DateTime.Compare(pos.EntryTime, p.EntryTime) < 0)
-                        pos = p;
-                }
+                pos = poss.OrderByDescending(p => p.EntryTime).ToArray()[0];
             }
             return pos;
         }

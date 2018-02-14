@@ -1,12 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAC", "Oil_MAC\Oil_MAC.csproj", "{4DACF84E-B2ED-484A-AF31-E892076A8041}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MACross", "..\Oil_MACross\Oil_MACross\Oil_MACross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MaSub", "..\Oil_MaSub\Oil_MaSub\Oil_MaSub.csproj", "{260EC882-0065-4090-BCD9-CCE960F34016}"
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MAC", "Oil_MAC\Oil_MAC.csproj", "{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,20 +9,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{260EC882-0065-4090-BCD9-CCE960F34016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{260EC882-0065-4090-BCD9-CCE960F34016}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{260EC882-0065-4090-BCD9-CCE960F34016}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{260EC882-0065-4090-BCD9-CCE960F34016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
+
+
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MaCross", "..\Oil_MaCross\Oil_MaCross\Oil_MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oil_MaSub", "..\Oil_MaSub\Oil_MaSub\Oil_MaSub.csproj", "{8385630B-FBA5-4963-BFFA-129462024820}"
+EndProject

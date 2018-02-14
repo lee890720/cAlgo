@@ -16,17 +16,11 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Output("Sig_Result_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
-        public IndicatorDataSeries Sig_Result_A { get; set; }
+        [Output("Sig1_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        public IndicatorDataSeries Sig1_A { get; set; }
 
-        [Output("Sig_Result_B", Color = Colors.OrangeRed, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
-        public IndicatorDataSeries Sig_Result_B { get; set; }
-
-        [Parameter("MA Type")]
-        public MovingAverageType MAType { get; set; }
-
-        [Parameter("SourceSeries")]
-        public DataSeries SourceSeries { get; set; }
+        [Output("Sig1_B", Color = Colors.OrangeRed, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        public IndicatorDataSeries Sig1_B { get; set; }
 
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
@@ -34,10 +28,10 @@ namespace cAlgo
         [Parameter("Average Periods", DefaultValue = 120)]
         public int AveragePeriods { get; set; }
 
-        [Parameter(DefaultValue = 30)]
+        [Parameter("Sub", DefaultValue = 30)]
         public double Sub { get; set; }
 
-        public string _Signal;
+        public string _Signal1;
         public int _BarsAgo;
         public string _Mark;
         private Oil_MaCross _mac;
@@ -46,8 +40,8 @@ namespace cAlgo
 
         protected override void Initialize()
         {
-            _mac = Indicators.GetIndicator<Oil_MaCross>(MAType, SourceSeries, ResultPeriods, AveragePeriods);
-            _mas = Indicators.GetIndicator<Oil_MaSub>(MAType, SourceSeries, ResultPeriods, AveragePeriods);
+            _mac = Indicators.GetIndicator<Oil_MaCross>(ResultPeriods, AveragePeriods);
+            _mas = Indicators.GetIndicator<Oil_MaSub>(ResultPeriods, AveragePeriods);
             _nocorel = Colors.Gray;
         }
 
@@ -55,31 +49,31 @@ namespace cAlgo
         {
             Result[index] = _mas.Result[index];
             Average[index] = _mas.Average[index];
-            string Sig = GetSignal(index);
-            if (Sig == "below")
-                Sig_Result_B[index] = _mas.Result[index];
+            string Sig1 = GetSig1(index);
+            if (Sig1 == "below")
+                Sig1_B[index] = _mas.Result[index];
             else
-                Sig_Result_B[index] = 0;
-            if (Sig == "above")
-                Sig_Result_A[index] = _mas.Result[index];
+                Sig1_B[index] = 0;
+            if (Sig1 == "above")
+                Sig1_A[index] = _mas.Result[index];
             else
-                Sig_Result_A[index] = 0;
+                Sig1_A[index] = 0;
 
             #region Chart
-            _Signal = Sig;
+            _Signal1 = Sig1;
             _BarsAgo = GetBarsAgo(index);
             _Mark = GetMark(index).ToString("yyyy-MM-dd") + "-" + GetMark(index).ToString("HH");
-            if (_Signal == null)
+            if (_Signal1 == null)
                 ChartObjects.DrawText("sig", "NoSignal", StaticPosition.TopLeft, _nocorel);
             else
-                ChartObjects.DrawText("sig", "Signal_(" + _Signal + ")", StaticPosition.TopLeft, _nocorel);
+                ChartObjects.DrawText("sig", "Signal_(" + _Signal1 + ")", StaticPosition.TopLeft, _nocorel);
             ChartObjects.DrawText("barsago", "\nCross_(" + _BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
             ChartObjects.DrawText("mark", "\n\nMark_(" + _Mark + ")", StaticPosition.TopLeft, _nocorel);
             ChartObjects.DrawText("break", "\n\n\n" + GetBreak(index), StaticPosition.TopLeft, _nocorel);
             #endregion
         }
 
-        private string GetSignal(int index)
+        private string GetSig1(int index)
         {
             double CR = _mac.Result[index];
             double CA = _mac.Average[index];

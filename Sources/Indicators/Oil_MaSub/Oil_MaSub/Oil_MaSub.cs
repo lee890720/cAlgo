@@ -1,5 +1,4 @@
-﻿using System;
-using cAlgo.API;
+﻿using cAlgo.API;
 using cAlgo.API.Internals;
 using cAlgo.API.Indicators;
 using cAlgo.Indicators;
@@ -15,12 +14,6 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Parameter("MA Type")]
-        public MovingAverageType MAType { get; set; }
-
-        [Parameter("SourceSeries")]
-        public DataSeries SourceSeries { get; set; }
-
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
 
@@ -31,7 +24,7 @@ namespace cAlgo
 
         protected override void Initialize()
         {
-            _mac = Indicators.GetIndicator<Oil_MaCross>(MAType, SourceSeries, ResultPeriods, AveragePeriods);
+            _mac = Indicators.GetIndicator<Oil_MaCross>(ResultPeriods, AveragePeriods);
         }
 
         public override void Calculate(int index)

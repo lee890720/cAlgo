@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4DACF84E-B2ED-484A-AF31-E892076A8041}</ProjectGuid>
+    <ProjectGuid>{63FCCF06-7483-45F7-A378-8300DEDF5879}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -42,9 +42,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\API\cAlgo.API.dll</HintPath>
     </Reference>
-    <Reference Include="cAlgo.Lib">
-      <HintPath>..\..\..\..\API\cAlgo.Lib.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Metals_MAC.cs" />
@@ -59,16 +56,12 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\..\Metals_MACross\Metals_MACross\Metals_MACross.csproj">
-      <Project>{77ADA415-2333-4325-8902-D979C6B9663C}</Project>
-      <Name>Metals_MACross</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Metals_MaCross\Metals_MaCross\Metals_MaCross.csproj">
-      <Project>{77ADA415-2333-4325-8902-D979C6B9663C}</Project>
-      <Name>Metals_MaCross</Name>
+    <ProjectReference Include="..\..\Metals_MAS\Metals_MAS\Metals_MAS.csproj">
+      <Project>{8B82BCC7-716F-4FAE-A595-D69034431C76}</Project>
+      <Name>Metals_MAS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Metals_MaSub\Metals_MaSub\Metals_MaSub.csproj">
-      <Project>{260EC882-0065-4090-BCD9-CCE960F34016}</Project>
+      <Project>{89927847-818D-4958-9712-A89162D99D19}</Project>
       <Name>Metals_MaSub</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,8 +1,6 @@
-﻿using System;
-using cAlgo.API;
-using cAlgo.API.Internals;
+﻿using cAlgo.API;
 using cAlgo.API.Indicators;
-using cAlgo.Indicators;
+using cAlgo.API.Internals;
 
 namespace cAlgo
 {
@@ -15,26 +13,19 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Parameter("MA Type")]
-        public MovingAverageType MAType { get; set; }
-
-        [Parameter("SourceSeries")]
-        public DataSeries SourceSeries { get; set; }
-
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
 
         [Parameter("Average Periods", DefaultValue = 120)]
         public int AveragePeriods { get; set; }
 
-        private MovingAverage _result;
-        private MovingAverage _average;
-
+        private SimpleMovingAverage _result;
+        private SimpleMovingAverage _average;
 
         protected override void Initialize()
         {
-            _result = Indicators.MovingAverage(SourceSeries, ResultPeriods, MAType);
-            _average = Indicators.MovingAverage(SourceSeries, AveragePeriods, MAType);
+            _result = Indicators.SimpleMovingAverage(MarketSeries.Close, ResultPeriods);
+            _average = Indicators.SimpleMovingAverage(MarketSeries.Close, AveragePeriods);
         }
 
         public override void Calculate(int index)

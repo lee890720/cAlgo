@@ -12,17 +12,11 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Output("Sig_Result_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Points, Thickness = 2)]
-        public IndicatorDataSeries Sig_Result_A { get; set; }
+        [Output("Sig1_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Points, Thickness = 2)]
+        public IndicatorDataSeries Sig1_A { get; set; }
 
-        [Output("Sig_Result_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
-        public IndicatorDataSeries Sig_Result_B { get; set; }
-
-        [Parameter("MA Type")]
-        public MovingAverageType MAType { get; set; }
-
-        [Parameter("SourceSeries")]
-        public DataSeries SourceSeries { get; set; }
+        [Output("Sig1_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
+        public IndicatorDataSeries Sig1_B { get; set; }
 
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
@@ -30,12 +24,11 @@ namespace cAlgo
         [Parameter("Average Periods", DefaultValue = 120)]
         public int AveragePeriods { get; set; }
 
-        [Parameter(DefaultValue = 30)]
+        [Parameter("Sub", DefaultValue = 30)]
         public double Sub { get; set; }
 
         //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
-        public double _Ratio;
-        public string _Signal;
+        public string _Signal1;
         public int _BarsAgo;
         private Metals_MaCross _mac;
         private Metals_MaSub _mas;
@@ -43,9 +36,8 @@ namespace cAlgo
 
         protected override void Initialize()
         {
-            _mac = Indicators.GetIndicator<Metals_MaCross>(MAType, SourceSeries, ResultPeriods, AveragePeriods);
-            _mas = Indicators.GetIndicator<Metals_MaSub>(MAType, SourceSeries, ResultPeriods, AveragePeriods);
-            _Ratio = _mac._Ratio;
+            _mac = Indicators.GetIndicator<Metals_MaCross>(ResultPeriods, AveragePeriods);
+            _mas = Indicators.GetIndicator<Metals_MaSub>(ResultPeriods, AveragePeriods);
             _nocorel = Colors.Gray;
         }
 
@@ -53,20 +45,20 @@ namespace cAlgo
         {
             Result[index] = _mac.Result[index];
             Average[index] = _mac.Average[index];
-            string Sig = GetSignal(index);
-            if (Sig == "above")
-                Sig_Result_A[index] = _mac.Result[index];
-            if (Sig == "below")
-                Sig_Result_B[index] = _mac.Result[index];
+            string Sig1 = GetSig1(index);
+            if (Sig1 == "above")
+                Sig1_A[index] = _mac.Result[index];
+            if (Sig1 == "below")
+                Sig1_B[index] = _mac.Result[index];
 
             #region Chart
-            _Signal = Sig;
+            _Signal1 = Sig1;
             _BarsAgo = GetBarsAgo(index);
             ChartObjects.DrawText("barsago", "Cross_(" + _BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
             #endregion
         }
 
-        private string GetSignal(int index)
+        private string GetSig1(int index)
         {
             double CR = _mac.Result[index];
             double CA = _mac.Average[index];

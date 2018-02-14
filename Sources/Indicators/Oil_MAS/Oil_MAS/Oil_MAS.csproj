@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FCC8C7DC-30B9-4812-B790-E009CAD6B176}</ProjectGuid>
+    <ProjectGuid>{A25947F7-9E20-48E0-8E1C-0115F84A55C9}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -59,16 +59,12 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\..\Oil_MASub\Oil_MASub\Oil_MASub.csproj">
-      <Project>{260EC882-0065-4090-BCD9-CCE960F34016}</Project>
-      <Name>Oil_MASub</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Oil_MaCross\Oil_MaCross\Oil_MaCross.csproj">
       <Project>{77ADA415-2333-4325-8902-D979C6B9663C}</Project>
       <Name>Oil_MaCross</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Oil_MaSub\Oil_MaSub\Oil_MaSub.csproj">
-      <Project>{260EC882-0065-4090-BCD9-CCE960F34016}</Project>
+      <Project>{8385630B-FBA5-4963-BFFA-129462024820}</Project>
       <Name>Oil_MaSub</Name>
     </ProjectReference>
   </ItemGroup>

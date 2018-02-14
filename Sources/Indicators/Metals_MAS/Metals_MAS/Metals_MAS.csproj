@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FCC8C7DC-30B9-4812-B790-E009CAD6B176}</ProjectGuid>
+    <ProjectGuid>{8B82BCC7-716F-4FAE-A595-D69034431C76}</ProjectGuid>
     <ProjectTypeGuids>{DD87C1B2-3799-4CA2-93B6-5288EE928820};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -64,7 +64,7 @@
       <Name>Metals_MaCross</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Metals_MaSub\Metals_MaSub\Metals_MaSub.csproj">
-      <Project>{260EC882-0065-4090-BCD9-CCE960F34016}</Project>
+      <Project>{89927847-818D-4958-9712-A89162D99D19}</Project>
       <Name>Metals_MaSub</Name>
     </ProjectReference>
   </ItemGroup>

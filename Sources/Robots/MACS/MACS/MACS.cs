@@ -4,64 +4,87 @@ using cAlgo.Lib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace cAlgo
 {
-    [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
+    [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class MACS : Robot
     {
         #region Parameter
-        [Parameter("INIT_Volume", DefaultValue = 1000, MinValue = 1000)]
-        public double _initvolume { get; set; }
-
-        [Parameter("Timer", DefaultValue = 1)]
-        public int _timer { get; set; }
-
-        [Parameter("Break", DefaultValue = 100)]
-        public double _break { get; set; }
-
-        [Parameter("Distance", DefaultValue = 20)]
-        public double _distance { get; set; }
-
-        [Parameter(DefaultValue = false)]
-        public bool _istrade { get; set; }
-
-        [Parameter(DefaultValue = false)]
-        public bool _isbreak { get; set; }
-        #endregion
-
-        #region Indicators
-        [Parameter("MA Type")]
-        public MovingAverageType _matype { get; set; }
-
-        [Parameter("SourceSeries")]
-        public DataSeries _sourceseries { get; set; }
-
-        [Parameter("Result Periods", DefaultValue = 1)]
-        public int _resultperiods { get; set; }
-
-        [Parameter("Average Periods", DefaultValue = 120)]
-        public int _averageperiods { get; set; }
-
-        [Parameter("Sub", DefaultValue = 30)]
-        public double _sub { get; set; }
+        private double _initvolume;
+        private int _timer;
+        private double _break;
+        private double _distance;
+        private bool _istrade;
+        private bool _isbreak;
+        private int _resultperiods;
+        private int _averageperiods;
+        private double _magnify;
+        private double _sub;
         #endregion
 
         private MAC _mac;
         private MAS _mas;
         private bool _abovecross;
         private bool _belowcross;
+        private bool _risk;
         private string _abovelabel, _belowlabel;
         private List<string> _marklist = new List<string>();
         private OrderParams _initbuy, _initsell;
 
         protected override void OnStart()
         {
-            _mac = Indicators.GetIndicator<MAC>(_matype, _sourceseries, _resultperiods, _averageperiods, _sub);
-            _mas = Indicators.GetIndicator<MAS>(_matype, _sourceseries, _resultperiods, _averageperiods, _sub);
+            #region Set Paramters
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
+            con.Open();
+            DataSet dataset = new DataSet();
+            string strsql = "select * from CBotSet where symbol='" + Symbol.Code + "'";
+            SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
+            SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
+            objdataadpater.SelectCommand.CommandTimeout = 300;
+            objdataadpater.Fill(dataset, "cbotset");
+            DataTable dt = dataset.Tables["cbotset"];
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["symbol"].ToString() == Symbol.Code)
+                {
+                    _initvolume = Convert.ToDouble(dr["initvolume"]);
+                    _timer = Convert.ToInt32(dr["tmr"]);
+                    _break = Convert.ToDouble(dr["brk"]);
+                    _distance = Convert.ToDouble(dr["distance"]);
+                    _istrade = Convert.ToBoolean(dr["istrade"]);
+                    _isbreak = Convert.ToBoolean(dr["isbreak"]);
+                    _resultperiods = Convert.ToInt32(dr["resultperiods"]);
+                    _averageperiods = Convert.ToInt32(dr["averageperiods"]);
+                    _magnify = Convert.ToDouble(dr["magnify"]);
+                    _sub = Convert.ToDouble(dr["sub"]);
+                    Print("Init_Volume: " + _initvolume.ToString() + "-" + _initvolume.GetType().ToString());
+                    Print("Timer: " + _timer.ToString() + "-" + _timer.GetType().ToString());
+                    Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
+                    Print("Distance: " + _distance.ToString() + "-" + _distance.GetType().ToString());
+                    Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
+                    Print("IsBreak: " + _isbreak.ToString() + "-" + _isbreak.GetType().ToString());
+                    Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
+                    Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
+                    Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
+                    Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
+                    break;
+                }
+            }
+            con.Close();
+            con.Dispose();
+            #endregion
 
+            Positions.Opened += OnPositionsOpened;
+            Positions.Closed += OnPositionsClosed;
+            _mac = Indicators.GetIndicator<MAC>(_resultperiods, _averageperiods, _sub);
+            _mas = Indicators.GetIndicator<MAS>(_resultperiods, _averageperiods, _sub);
             _abovecross = false;
             _belowcross = false;
+            _risk = false;
 
             _abovelabel = "Above" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
@@ -72,6 +95,41 @@ namespace cAlgo
             _initsell = new OrderParams(TradeType.Sell, Symbol, _initvolume, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
+
+            #region Get Mark
+            Position[] Pos_above = this.GetPositions(_abovelabel);
+            Position[] Pos_below = this.GetPositions(_belowlabel);
+            var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
+            if (Poss.Length != 0)
+                foreach (var p in Poss)
+                {
+                    var idx = p.Comment.IndexOf("M_") + 2;
+                    if (!_marklist.Contains(p.Comment.Substring(idx, 13)))
+                        _marklist.Add(p.Comment.Substring(idx, 13));
+                }
+            if (_marklist.Count != 0)
+            {
+                foreach (var mar in _marklist)
+                    Print(mar);
+            }
+            Print("The cbot is ok.");
+            #endregion
+        }
+
+        private void OnPositionsOpened(PositionOpenedEventArgs obj)
+        {
+            Position pos = obj.Position;
+            var idx = pos.Comment.IndexOf("M_") + 2;
+            _marklist.Add(pos.Comment.Substring(idx, 13));
+            Print("It's successful to add a mark.");
+        }
+
+        private void OnPositionsClosed(PositionClosedEventArgs obj)
+        {
+            Position pos = obj.Position;
+            var idx = pos.Comment.IndexOf("M_") + 2;
+            if (_marklist.Remove(pos.Comment.Substring(idx, 13)))
+                Print("It's successful to remove a mark.");
         }
 
         protected override void OnTick()
@@ -84,17 +142,6 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            //var PossLabel = this.FirstPosition(Poss).Label;
-            #endregion
-
-            #region Mark
-            if (Poss.Length != 0)
-                foreach (var p in Poss)
-                {
-                    var idx = p.Comment.IndexOf("M_") + 2;
-                    if (!_marklist.Contains(p.Comment.Substring(idx, 13)))
-                        _marklist.Add(p.Comment.Substring(idx, 13));
-                }
             #endregion
 
             #region Cross
@@ -116,31 +163,28 @@ namespace cAlgo
 
             #region Close
             //Risk
-            if (this.Risk())
+            if (_risk)
             {
                 Print("There is a risk for the current symbol.");
                 if (Poss.Length >= 2)
                 {
-                    if (this.FirstPosition(Poss).NetProfit + this.LastPosition(Poss).NetProfit > 0)
+                    var first = Poss[0];
+                    var second = Poss[1];
+                    Poss.OrderByDescending(p => p.EntryTime);
+                    var last0 = Poss[0];
+                    var last1 = Poss[1];
+                    if (last1.NetProfit < 0 && first.NetProfit + last0.NetProfit > 0)
                     {
-                        this.ClosePosition(this.FirstPosition(Poss));
-                        this.ClosePosition(this.LastPosition(Poss));
+                        this.ClosePosition(last0);
+                        this.ClosePosition(first);
+                        _risk = false;
+                        return;
                     }
-                }
-            }
-            else if (this.PreRisk())
-            {
-                Print("There is a pre_risk for thi current symbol.");
-                if (Poss.Length >= 2)
-                {
-                    var Pos_Last = this.LastPosition(Poss);
-                    var List_Pre = Poss.ToList();
-                    if (List_Pre.Remove(Pos_Last))
+                    else if (last1.NetProfit > 0)
                     {
-                        var Poss_Pre = List_Pre.ToArray();
-                        var Pos_Pre = this.LastPosition(Poss_Pre);
-                        if (Pos_Pre.NetProfit > 0)
-                            this.ClosePosition(Pos_Last);
+                        this.ClosePosition(last0);
+                        _risk = false;
+                        return;
                     }
                 }
             }
@@ -149,12 +193,18 @@ namespace cAlgo
                 if (GetClose(_abovelabel))
                 {
                     if (SR <= _sub / 5)
+                    {
                         this.closeAllLabel(_abovelabel);
+                        _risk = false;
+                    }
                 }
                 else
                 {
                     if (SR <= 0)
+                    {
                         this.closeAllLabel(_abovelabel);
+                        _risk = false;
+                    }
                 }
             }
             if (Pos_below.Length != 0)
@@ -162,12 +212,18 @@ namespace cAlgo
                 if (GetClose(_belowlabel))
                 {
                     if (SR >= -_sub / 5)
+                    {
                         this.closeAllLabel(_belowlabel);
+                        _risk = false;
+                    }
                 }
                 else
                 {
                     if (SR >= 0)
+                    {
                         this.closeAllLabel(_belowlabel);
+                        _risk = false;
+                    }
                 }
             }
             #endregion
@@ -178,12 +234,8 @@ namespace cAlgo
                 #region Above
                 if (GetOpen() == "above")
                 {
-                    var InitVolume = _initvolume;
-                    if (Pos_above.Length != 0)
-                    {
-                        InitVolume = this.LastPosition(Pos_above).Volume * 2;
-                    }
-                    _initsell.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
+                    var Volume = GetOpenVolume(GetOpen());
+                    _initsell.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
                     _initsell.Label = _abovelabel;
                     _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
                     _initsell.Comment += "BR_000" + "<";
@@ -197,12 +249,8 @@ namespace cAlgo
                 }
                 if (GetOpen() == "above_br" && _isbreak)
                 {
-                    var InitVolume = _initvolume;
-                    if (Pos_above.Length != 0)
-                    {
-                        InitVolume = this.LastPosition(Pos_above).Volume;
-                    }
-                    _initsell.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
+                    var Volume = GetOpenVolume(GetOpen());
+                    _initsell.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
                     _initsell.Label = _abovelabel;
                     _initsell.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
                     _initsell.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
@@ -217,12 +265,8 @@ namespace cAlgo
                 #region Below
                 if (GetOpen() == "below")
                 {
-                    var InitVolume = _initvolume;
-                    if (Pos_below.Length != 0)
-                    {
-                        InitVolume = this.LastPosition(Pos_below).Volume * 2;
-                    }
-                    _initbuy.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
+                    var Volume = GetOpenVolume(GetOpen());
+                    _initbuy.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
                     _initbuy.Label = _belowlabel;
                     _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
                     _initbuy.Comment += "BR_000" + "<";
@@ -236,12 +280,8 @@ namespace cAlgo
                 }
                 if (GetOpen() == "below_br" && _isbreak)
                 {
-                    var InitVolume = _initvolume;
-                    if (Pos_below.Length != 0)
-                    {
-                        InitVolume = this.LastPosition(Pos_below).Volume;
-                    }
-                    _initbuy.Volume = Symbol.NormalizeVolume(InitVolume, RoundingMode.ToNearest);
+                    var Volume = GetOpenVolume(GetOpen());
+                    _initbuy.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
                     _initbuy.Label = _belowlabel;
                     _initbuy.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
                     _initbuy.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
@@ -264,7 +304,6 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            //var PossLabel = this.FirstPosition(Poss).Label;
             var CR = _mac.Result.LastValue;
             var CA = _mac.Average.LastValue;
             var SR = _mas.Result.LastValue;
@@ -280,14 +319,14 @@ namespace cAlgo
 
             if (DateTime.Compare(NowTime, Pos_LastTime) < 0)
                 return null;
-            if (_isbreak)
+            if (_isbreak && Poss.Length != 0)
             {
                 if (SR >= GetBreak(_abovelabel))
                     return Signal = "above_br";
                 if (SR <= -GetBreak(_belowlabel))
                     return Signal = "below_br";
             }
-            var Sig = _mas._Signal;
+            var Sig = _mas._Signal1;
             if (Sig == null)
             {
                 return null;
@@ -317,6 +356,50 @@ namespace cAlgo
                 }
             }
             return Signal;
+        }
+
+        private double GetOpenVolume(string opensignal)
+        {
+            double Volume = 0;
+            if (opensignal == null)
+                return _initvolume;
+            string Label = opensignal.Substring(0, 5);
+            var Poss = this.GetPositions(Label);
+            if (Poss.Length == 0)
+                return _initvolume;
+            List<Position> List_Poss = new List<Position>();
+            var CR = _mac.Result.LastValue;
+            var CA = _mac.Average.LastValue;
+            var SR = _mas.Result.LastValue;
+            var SA = _mas.Average.LastValue;
+            foreach (var p in Poss)
+            {
+                var IDX = p.Comment.IndexOf("CR_") + 3;
+                double PCR = Convert.ToDouble(p.Comment.Substring(IDX, 6));
+                if (PCR < CA && SR > 0)
+                    List_Poss.Add(p);
+                if (PCR > CA & SR < 0)
+                    List_Poss.Add(p);
+            }
+            if (List_Poss.Count > 0)
+            {
+                foreach (var p in List_Poss)
+                {
+                    Volume += p.Volume * 2;
+                }
+            }
+            if (List_Poss.Count > 1)
+            {
+                _risk = true;
+            }
+            else
+            {
+                _risk = false;
+            }
+
+            if (this.LastPosition(Poss).Volume > Volume)
+                Volume = this.LastPosition(Poss).Volume;
+            return Volume;
         }
 
         private double GetDistance()
