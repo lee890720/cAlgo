@@ -120,6 +120,8 @@ namespace cAlgo
         private void OnPositionsOpened(PositionOpenedEventArgs obj)
         {
             Position pos = obj.Position;
+            if (pos.Label != _abovelabel && pos.Label != _belowlabel)
+                return;
             var idx = pos.Comment.IndexOf("M_") + 2;
             _marklist.Add(pos.Comment.Substring(idx, 13));
             Print("It's successful to add a mark for XBRXTI.");
@@ -128,6 +130,8 @@ namespace cAlgo
         private void OnPositionsClosed(PositionClosedEventArgs obj)
         {
             Position pos = obj.Position;
+            if (pos.Label != _abovelabel && pos.Label != _belowlabel)
+                return;
             var idx = pos.Comment.IndexOf("M_") + 2;
             if (_marklist.Remove(pos.Comment.Substring(idx, 13)))
                 Print("It's successful to remove a mark for XBRXTI.");
