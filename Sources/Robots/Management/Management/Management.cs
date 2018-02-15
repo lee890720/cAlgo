@@ -5,6 +5,9 @@ using FormLib;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Data;
+using System.Data.SqlClient;
+
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
@@ -51,9 +54,40 @@ namespace cAlgo
         {
             var list_p = _threadhandler.positionParam();
             Symbol p_symbol = MarketData.GetSymbol(list_p[0]);
+            string cr_comment = null;
+            #region GetComment
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
+            try
+            {
+                con.Open();
+                DataSet dataset = new DataSet();
+                string strsql = "select * from CBotSet where symbol='" + p_symbol.Code + "'";
+                SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
+                SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
+                objdataadpater.SelectCommand.CommandTimeout = 300;
+                objdataadpater.Fill(dataset, "cBot");
+                foreach (DataRow dr in dataset.Tables["cBot"].Rows)
+                {
+                    if (Convert.ToString(dr["symbol"]) == p_symbol.Code)
+                        cr_comment = "CR_" + string.Format("{0:000000}", dr["cr"]);
+                }
+                objdataadpater.Update(dataset.Tables["cBot"]);
+            } catch (System.Data.SqlClient.SqlException ex)
+            {
+                Print(ex.ToString());
+                throw new Exception(ex.Message);
+            } finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+            #endregion
             var p_label = list_p[1];
             var p_volume = p_symbol.NormalizeVolume(Convert.ToDouble(list_p[2]), RoundingMode.ToNearest);
             var p_comment = list_p[3].Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
+            p_comment = p_comment.Remove(0, 9);
+            p_comment = cr_comment + p_comment;
             TradeType p_trade = new TradeType();
             if (p_label.Contains("Above"))
                 p_trade = TradeType.Sell;
