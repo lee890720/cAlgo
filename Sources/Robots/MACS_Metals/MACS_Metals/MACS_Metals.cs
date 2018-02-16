@@ -19,6 +19,7 @@ namespace cAlgo
         private double _distance;
         private bool _istrade;
         private bool _isbreak;
+        private bool _breakfirst;
         private int _resultperiods;
         private int _averageperiods;
         private double _magnify;
@@ -60,6 +61,7 @@ namespace cAlgo
                     _distance = Convert.ToDouble(dr["distance"]);
                     _istrade = Convert.ToBoolean(dr["istrade"]);
                     _isbreak = Convert.ToBoolean(dr["isbreak"]);
+                    _breakfirst = Convert.ToBoolean(dr["breakfirst"]);
                     _resultperiods = Convert.ToInt32(dr["resultperiods"]);
                     _averageperiods = Convert.ToInt32(dr["averageperiods"]);
                     _magnify = Convert.ToDouble(dr["magnify"]);
@@ -80,7 +82,11 @@ namespace cAlgo
             con.Close();
             con.Dispose();
             #endregion
-
+            if (_magnify != 1)
+            {
+                Print("Please choose the MACS_Magnify.");
+                this.Stop();
+            }
             Positions.Opened += OnPositionsOpened;
             Positions.Closed += OnPositionsClosed;
             _mac = Indicators.GetIndicator<Metals_MAC>(_resultperiods, _averageperiods, _sub);
@@ -388,7 +394,7 @@ namespace cAlgo
 
             if (DateTime.Compare(NowTime, Pos_LastTime) < 0)
                 return null;
-            if (_isbreak && Poss.Length != 0)
+            if ((_isbreak && Poss.Length != 0) || (_isbreak && _breakfirst))
             {
                 if (SR >= GetBreak(_abovelabel))
                     return Signal = "above_br";
