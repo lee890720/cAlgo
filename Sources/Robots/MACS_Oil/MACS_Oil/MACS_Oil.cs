@@ -3,9 +3,8 @@ using cAlgo.API.Internals;
 using cAlgo.Lib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data;
-using System.Data.SqlClient;
+using System.Linq;
 
 namespace cAlgo
 {
@@ -25,7 +24,8 @@ namespace cAlgo
         private double _magnify;
         private double _sub;
         #endregion
-
+        private string DataDir;
+        private string fiName;
         private Oil_MAC _mac;
         private Oil_MAS _mas;
         private Symbol _xbrsymbol;
@@ -37,50 +37,79 @@ namespace cAlgo
         private List<string> _marklist = new List<string>();
         private OrderParams _init;
 
-        protected override void OnStart()
+        private void SetParams()
         {
-            #region Set Paramters
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
-            con.Open();
-            DataSet dataset = new DataSet();
-            string strsql = "select * from CBotSet where symbol='" + Symbol.Code + "'";
-            SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
-            SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
-            objdataadpater.SelectCommand.CommandTimeout = 300;
-            objdataadpater.Fill(dataset, "cbotset");
-            DataTable dt = dataset.Tables["cbotset"];
+            DataTable dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
+            Print("fiName=" + fiName);
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["symbol"].ToString() == Symbol.Code)
                 {
-                    _initvolume = Convert.ToDouble(dr["initvolume"]);
-                    _timer = Convert.ToInt32(dr["tmr"]);
-                    _break = Convert.ToDouble(dr["brk"]);
-                    _distance = Convert.ToDouble(dr["distance"]);
-                    _istrade = Convert.ToBoolean(dr["istrade"]);
-                    _isbreak = Convert.ToBoolean(dr["isbreak"]);
-                    _breakfirst = Convert.ToBoolean(dr["breakfirst"]);
-                    _resultperiods = Convert.ToInt32(dr["resultperiods"]);
-                    _averageperiods = Convert.ToInt32(dr["averageperiods"]);
-                    _magnify = Convert.ToDouble(dr["magnify"]);
-                    _sub = Convert.ToDouble(dr["sub"]);
-                    Print("Init_Volume: " + _initvolume.ToString() + "-" + _initvolume.GetType().ToString());
-                    Print("Timer: " + _timer.ToString() + "-" + _timer.GetType().ToString());
-                    Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
-                    Print("Distance: " + _distance.ToString() + "-" + _distance.GetType().ToString());
-                    Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
-                    Print("IsBreak: " + _isbreak.ToString() + "-" + _isbreak.GetType().ToString());
-                    Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
-                    Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
-                    Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
-                    Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
+                    if (_initvolume != Convert.ToDouble(dr["initvolume"]))
+                    {
+                        _initvolume = Convert.ToDouble(dr["initvolume"]);
+                        Print("Init_Volume: " + _initvolume.ToString() + "-" + _initvolume.GetType().ToString());
+                    }
+                    if (_timer != Convert.ToInt32(dr["tmr"]))
+                    {
+                        _timer = Convert.ToInt32(dr["tmr"]);
+                        Print("Timer: " + _timer.ToString() + "-" + _timer.GetType().ToString());
+                    }
+                    if (_break != Convert.ToDouble(dr["brk"]))
+                    {
+                        _break = Convert.ToDouble(dr["brk"]);
+                        Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
+                    }
+                    if (_distance != Convert.ToDouble(dr["distance"]))
+                    {
+                        _distance = Convert.ToDouble(dr["distance"]);
+                        Print("Distance: " + _distance.ToString() + "-" + _distance.GetType().ToString());
+                    }
+                    if (_istrade != Convert.ToBoolean(dr["istrade"]))
+                    {
+                        _istrade = Convert.ToBoolean(dr["istrade"]);
+                        Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
+                    }
+                    if (_isbreak != Convert.ToBoolean(dr["isbreak"]))
+                    {
+                        _isbreak = Convert.ToBoolean(dr["isbreak"]);
+                        Print("IsBreak: " + _isbreak.ToString() + "-" + _isbreak.GetType().ToString());
+                    }
+                    if (_breakfirst != Convert.ToBoolean(dr["breakfirst"]))
+                    {
+                        _breakfirst = Convert.ToBoolean(dr["breakfirst"]);
+                        Print("BreakFirst: " + _breakfirst.ToString() + "-" + _breakfirst.GetType().ToString());
+                    }
+                    if (_resultperiods != Convert.ToInt32(dr["resultperiods"]))
+                    {
+                        _resultperiods = Convert.ToInt32(dr["resultperiods"]);
+                        Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
+                    }
+                    if (_averageperiods != Convert.ToInt32(dr["averageperiods"]))
+                    {
+                        _averageperiods = Convert.ToInt32(dr["averageperiods"]);
+                        Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
+                    }
+                    if (_magnify != Convert.ToDouble(dr["magnify"]))
+                    {
+                        _magnify = Convert.ToDouble(dr["magnify"]);
+                        Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
+                    }
+                    if (_sub != Convert.ToDouble(dr["sub"]))
+                    {
+                        _sub = Convert.ToDouble(dr["sub"]);
+                        Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
+                    }
                     break;
                 }
             }
-            con.Close();
-            con.Dispose();
-            #endregion
+        }
+
+        protected override void OnStart()
+        {
+            DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
+            fiName = DataDir + "\\" + "cBotSet.csv";
+            SetParams();
             if (_magnify != 1)
             {
                 Print("Please choose the MACS_Magnify.");
@@ -95,10 +124,8 @@ namespace cAlgo
             _abovecross = false;
             _belowcross = false;
             _risk = false;
-
             _abovelabel = "Above" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
-
             _init = new OrderParams(null, null, null, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
             {
                             });
@@ -119,7 +146,7 @@ namespace cAlgo
                 foreach (var mar in _marklist)
                     Print(mar);
             }
-            Print("The cbot is ok.");
+            Print("Done OnStart()");
             #endregion
         }
 
@@ -146,6 +173,7 @@ namespace cAlgo
         protected override void OnTick()
         {
             #region Parameter
+            SetParams();
             var CR = _mac.Result.LastValue;
             var CA = _mac.Average.LastValue;
             var SR = _mas.Result.LastValue;
