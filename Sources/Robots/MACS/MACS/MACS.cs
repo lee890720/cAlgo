@@ -38,7 +38,6 @@ namespace cAlgo
         private void SetParams()
         {
             DataTable dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
-            Print("fiName=" + fiName);
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["symbol"].ToString() == Symbol.Code)
@@ -107,6 +106,7 @@ namespace cAlgo
         {
             DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
             fiName = DataDir + "\\" + "cBotSet.csv";
+            Print("fiName=" + fiName);
             SetParams();
             if (_magnify != 1)
             {
