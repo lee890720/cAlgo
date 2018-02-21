@@ -402,7 +402,8 @@ namespace cAlgo
             double Volume = 0;
             if (opensignal == null)
                 return _initvolume;
-            string Label = opensignal.Substring(0, 5);
+            string Label = opensignal.Substring(0, 1).ToUpper() + opensignal.Substring(1, 4);
+            Label = Label + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
             var Poss = this.GetPositions(Label);
             if (Poss.Length == 0)
                 return _initvolume;
