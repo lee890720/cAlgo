@@ -57,7 +57,7 @@ namespace cAlgo
                     break;
                 }
             }
-            if (double.IsNaN(Sub))
+            if (Sub == 0)
             {
                 ResultPeriods = 1;
                 AveragePeriods = 120;
@@ -67,6 +67,7 @@ namespace cAlgo
 
         protected override void Initialize()
         {
+            Sub = 0;
             DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
             fiName = DataDir + "\\" + "cBotSet.csv";
             SetParams();

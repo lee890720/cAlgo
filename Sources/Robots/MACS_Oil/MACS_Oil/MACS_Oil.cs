@@ -121,8 +121,8 @@ namespace cAlgo
             _mas = Indicators.GetIndicator<Oil_MAS>(_resultperiods, _averageperiods, _sub);
             _xbrsymbol = MarketData.GetSymbol("XBRUSD");
             _xtisymbol = MarketData.GetSymbol("XTIUSD");
-            _abovecross = false;
-            _belowcross = false;
+            _abovecross = true;
+            _belowcross = true;
             _risk = false;
             _abovelabel = "Above" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();

@@ -37,6 +37,7 @@ namespace cAlgo
 
         private void SetParams()
         {
+            Sub = 0;
             DataTable dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
             foreach (DataRow dr in dt.Rows)
             {
@@ -56,6 +57,12 @@ namespace cAlgo
                     }
                     break;
                 }
+            }
+            if (Sub == 0)
+            {
+                ResultPeriods = 1;
+                AveragePeriods = 120;
+                Sub = 30;
             }
         }
 

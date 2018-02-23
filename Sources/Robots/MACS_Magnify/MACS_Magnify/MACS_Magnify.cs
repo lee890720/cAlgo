@@ -117,8 +117,8 @@ namespace cAlgo
             Positions.Closed += OnPositionsClosed;
             _mac = Indicators.GetIndicator<_Magnify_MAC>(_resultperiods, _averageperiods, _magnify, _sub);
             _mas = Indicators.GetIndicator<_Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub);
-            _abovecross = false;
-            _belowcross = false;
+            _abovecross = true;
+            _belowcross = true;
             _risk = false;
             _abovelabel = "Above" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();

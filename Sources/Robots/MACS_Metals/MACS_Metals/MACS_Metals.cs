@@ -123,8 +123,8 @@ namespace cAlgo
             _ratio = 80;
             _xausymbol = MarketData.GetSymbol("XAUUSD");
             _xagsymbol = MarketData.GetSymbol("XAGUSD");
-            _abovecross = false;
-            _belowcross = false;
+            _abovecross = true;
+            _belowcross = true;
             _risk = false;
             _abovelabel = "Above" + "-" + "XAUXAG" + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + "XAUXAG" + "-" + MarketSeries.TimeFrame.ToString();
