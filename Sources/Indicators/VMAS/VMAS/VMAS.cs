@@ -60,6 +60,12 @@ namespace cAlgo
                     break;
                 }
             }
+            if (double.IsNaN(Sub))
+            {
+                ResultPeriods = 1;
+                AveragePeriods = 120;
+                Sub = 30;
+            }
         }
 
         protected override void Initialize()
