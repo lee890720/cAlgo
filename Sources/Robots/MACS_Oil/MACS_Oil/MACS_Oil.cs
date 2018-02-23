@@ -502,6 +502,8 @@ namespace cAlgo
 
             if (this.LastPosition(Poss).Volume > Volume)
                 Volume = this.LastPosition(Poss).Volume;
+            if (_initvolume > Volume)
+                Volume = _initvolume;
             return Volume;
         }
 
