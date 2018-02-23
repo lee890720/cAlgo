@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMAC_Metals", "VMAC_Metals\VMAC_Metals.csproj", "{B845D607-12D5-4813-BEDA-30138154B1E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B845D607-12D5-4813-BEDA-30138154B1E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B845D607-12D5-4813-BEDA-30138154B1E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B845D607-12D5-4813-BEDA-30138154B1E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B845D607-12D5-4813-BEDA-30138154B1E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MaCross", "..\Metals_MaCross\Metals_MaCross\Metals_MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MaSub", "..\Metals_MaSub\Metals_MaSub\Metals_MaSub.csproj", "{89927847-818D-4958-9712-A89162D99D19}"
+EndProject

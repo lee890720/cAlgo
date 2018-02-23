@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMAS_Magnify", "VMAS_Magnify\VMAS_Magnify.csproj", "{789726D2-D76B-40E6-98BA-4AC96967E332}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{789726D2-D76B-40E6-98BA-4AC96967E332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789726D2-D76B-40E6-98BA-4AC96967E332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789726D2-D76B-40E6-98BA-4AC96967E332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789726D2-D76B-40E6-98BA-4AC96967E332}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MaCross", "..\_Magnify_MaCross\_Magnify_MaCross\_Magnify_MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MaSub", "..\_Magnify_MaSub\_Magnify_MaSub\_Magnify_MaSub.csproj", "{A6D51FB1-E1AA-4C03-8DA2-E71510895742}"
+EndProject
