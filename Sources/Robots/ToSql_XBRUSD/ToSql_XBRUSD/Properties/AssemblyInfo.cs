@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ToSql")]
+[assembly: AssemblyTitle("ToSql_XBRUSD")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("ToSql")]
+[assembly: AssemblyProduct("ToSql_XBRUSD")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
