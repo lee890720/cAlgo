@@ -58,30 +58,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Indicators\SMAC\SMAC\SMAC.csproj">
-      <Project>{175D4B24-BADC-4760-B565-48F5E900CCA5}</Project>
-      <Name>SMAC</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Indicators\SMAS\SMAS\SMAS.csproj">
-      <Project>{C35E0699-6C93-4483-B4FC-9EA2FCC5075C}</Project>
-      <Name>SMAS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Indicators\Metals_MAC\Metals_MAC\Metals_MAC.csproj">
-      <Project>{63FCCF06-7483-45F7-A378-8300DEDF5879}</Project>
-      <Name>Metals_MAC</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Indicators\Metals_MAS\Metals_MAS\Metals_MAS.csproj">
-      <Project>{8B82BCC7-716F-4FAE-A595-D69034431C76}</Project>
-      <Name>Metals_MAS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Indicators\Oil_MAC\Oil_MAC\Oil_MAC.csproj">
-      <Project>{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}</Project>
-      <Name>Oil_MAC</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Indicators\Oil_MAS\Oil_MAS\Oil_MAS.csproj">
-      <Project>{A25947F7-9E20-48E0-8E1C-0115F84A55C9}</Project>
-      <Name>Oil_MAS</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

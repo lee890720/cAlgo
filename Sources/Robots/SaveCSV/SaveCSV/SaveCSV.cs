@@ -11,31 +11,31 @@ namespace cAlgo
     {
         private string DataDir;
         private string fiName;
-        private System.Timers.Timer timer;
+        private System.Timers.Timer timer1;
 
         protected override void OnStart()
         {
             DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
             fiName = DataDir + "\\" + "cBotSet.csv";
             Print("fiName=" + fiName);
-            InitTimer();
-            timer.Start();
+            InitTimer1();
+            timer1.Start();
         }
 
-        private void InitTimer()
+        private void InitTimer1()
         {
             //设置定时间隔(毫秒为单位)
             int interval = 10000;
-            timer = new System.Timers.Timer(interval);
+            timer1 = new System.Timers.Timer(interval);
             //设置执行一次（false）还是一直执行(true)
-            timer.AutoReset = true;
+            timer1.AutoReset = true;
             //设置是否执行System.Timers.Timer.Elapsed事件
-            timer.Enabled = true;
+            timer1.Enabled = true;
             //绑定Elapsed事件
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer);
+            timer1.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer1);
         }
 
-        private void OnTimer(object sender, System.Timers.ElapsedEventArgs e)
+        private void OnTimer1(object sender, System.Timers.ElapsedEventArgs e)
         {
             var utctime = DateTime.UtcNow;
             SqlConnection con = new SqlConnection();
@@ -62,13 +62,11 @@ namespace cAlgo
                 objdataadpater.Fill(dataset, "cBotSet");
                 CsvParsingHelper.SaveCsv(dataset.Tables["cBotSet"], DataDir);
                 Print("It's Successful to save CSV.");
-            }
-            catch (System.Data.SqlClient.SqlException ex)
+            } catch (System.Data.SqlClient.SqlException ex)
             {
                 Print(ex.ToString());
                 throw new Exception(ex.Message);
-            }
-            finally
+            } finally
             {
                 con.Close();
                 con.Dispose();
@@ -77,7 +75,7 @@ namespace cAlgo
 
         protected override void OnStop()
         {
-            timer.Stop();
+            timer1.Stop();
             Print("OnStop()");
             // Put your deinitialization logic here
         }
