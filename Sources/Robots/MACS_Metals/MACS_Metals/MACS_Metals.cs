@@ -4,7 +4,9 @@ using cAlgo.Lib;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace cAlgo
 {
@@ -40,7 +42,11 @@ namespace cAlgo
 
         private void SetParams()
         {
-            DataTable dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
+            DataTable dt = new DataTable();
+            if (!File.Exists(fiName))
+                Thread.Sleep(1000);
+            if (File.Exists(fiName))
+                dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["symbol"].ToString() == Symbol.Code)
