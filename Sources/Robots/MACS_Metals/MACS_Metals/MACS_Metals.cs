@@ -402,6 +402,8 @@ namespace cAlgo
 
         private string GetOpen()
         {
+            if (!GetTradeTime())
+                return null;
             #region Parameter
             string Signal = null;
             Position[] Pos_above = this.GetPositions(_abovelabel);
@@ -543,6 +545,15 @@ namespace cAlgo
                 }
             }
             return BR;
+        }
+
+        private bool GetTradeTime()
+        {
+            var now = DateTime.UtcNow;
+            var hour = now.Hour;
+            if (hour >= 20)
+                return false;
+            return true;
         }
     }
 }

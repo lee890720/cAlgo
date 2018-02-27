@@ -1,0 +1,36 @@
+﻿using System;
+using System.Linq;
+using cAlgo.API;
+using cAlgo.API.Indicators;
+using cAlgo.API.Internals;
+using cAlgo.Indicators;
+
+
+namespace cAlgo
+{
+    [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.None)]
+    public class testtime : Robot
+    {
+        [Parameter(DefaultValue = 0.0)]
+        public double Parameter { get; set; }
+
+        protected override void OnStart()
+        {
+            // Put your initialization logic here
+        }
+
+        protected override void OnTick()
+        {
+            var now = DateTime.UtcNow;
+            Print(now);
+            var hour = now.Hour;
+            Print(hour);
+            this.Stop();
+        }
+
+        protected override void OnStop()
+        {
+            // Put your deinitialization logic here
+        }
+    }
+}

@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("CSTOSQL")]
+[assembly: AssemblyTitle("slipage")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("CSTOSQL")]
+[assembly: AssemblyProduct("slipage")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
