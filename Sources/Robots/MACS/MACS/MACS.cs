@@ -136,6 +136,16 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
+            //For _risk
+            if (Poss.Length != 0)
+            {
+                double getrisk;
+                if (Poss[0].Label == _abovelabel)
+                    getrisk = GetOpenVolume("above");
+                if (Poss[0].Label == _belowlabel)
+                    getrisk = GetOpenVolume("below");
+                Print(_risk.ToString());
+            }
             if (Poss.Length != 0)
                 foreach (var p in Poss)
                 {
@@ -211,9 +221,8 @@ namespace cAlgo
                 {
                     var first = Poss[0];
                     var second = Poss[1];
-                    Poss.OrderByDescending(p => p.EntryTime);
-                    var last0 = Poss[0];
-                    var last1 = Poss[1];
+                    var last0 = Poss.OrderByDescending(p => p.EntryTime).ToArray()[0];
+                    var last1 = Poss.OrderByDescending(p => p.EntryTime).ToArray()[1];
                     if (last1.NetProfit < 0 && first.NetProfit + last0.NetProfit > 0)
                     {
                         this.ClosePosition(last0);

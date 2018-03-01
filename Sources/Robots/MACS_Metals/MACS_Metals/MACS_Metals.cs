@@ -142,6 +142,16 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
+            //For _risk
+            if (Poss.Length != 0)
+            {
+                double getrisk;
+                if (Poss[0].Label == _abovelabel)
+                    getrisk = GetOpenVolume("above");
+                if (Poss[0].Label == _belowlabel)
+                    getrisk = GetOpenVolume("below");
+                Print(_risk.ToString());
+            }
             if (Poss.Length != 0)
                 foreach (var p in Poss)
                 {
@@ -233,12 +243,10 @@ namespace cAlgo
                     var second_xau = Poss_xau[1];
                     var first_xag = Poss_xag[0];
                     var second_xag = Poss_xag[1];
-                    Poss_xau.OrderByDescending(p => p.EntryTime);
-                    Poss_xag.OrderByDescending(p => p.EntryTime);
-                    var last0_xau = Poss_xau[0];
-                    var last1_xau = Poss_xau[1];
-                    var last0_xag = Poss_xag[0];
-                    var last1_xag = Poss_xag[1];
+                    var last0_xau = Poss_xau.OrderByDescending(p => p.EntryTime).ToArray()[0];
+                    var last1_xau = Poss_xau.OrderByDescending(p => p.EntryTime).ToArray()[1];
+                    var last0_xag = Poss_xag.OrderByDescending(p => p.EntryTime).ToArray()[0];
+                    var last1_xag = Poss_xag.OrderByDescending(p => p.EntryTime).ToArray()[1];
                     var first_net = first_xau.NetProfit + first_xag.NetProfit;
                     var second_net = second_xau.NetProfit + second_xag.NetProfit;
                     var last0_net = last0_xau.NetProfit + last0_xag.NetProfit;
