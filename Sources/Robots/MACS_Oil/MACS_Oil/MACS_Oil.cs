@@ -140,16 +140,6 @@ namespace cAlgo
             Position[] Pos_above = this.GetPositions(_abovelabel);
             Position[] Pos_below = this.GetPositions(_belowlabel);
             var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            //For _risk
-            if (Poss.Length != 0)
-            {
-                double getrisk;
-                if (Poss[0].Label == _abovelabel)
-                    getrisk = GetOpenVolume("above");
-                if (Poss[0].Label == _belowlabel)
-                    getrisk = GetOpenVolume("below");
-                Print(_risk.ToString());
-            }
             if (Poss.Length != 0)
                 foreach (var p in Poss)
                 {
@@ -162,8 +152,8 @@ namespace cAlgo
                 foreach (var mar in _marklist)
                     Print(mar);
             }
-            Print("Done OnStart()");
             #endregion
+            Print("Done OnStart()");
         }
 
         private void OnPositionsOpened(PositionOpenedEventArgs obj)
@@ -189,6 +179,7 @@ namespace cAlgo
         protected override void OnTick()
         {
             #region Parameter
+            GetRisk();
             SetParams();
             var CR = _mac.Result.LastValue;
             var CA = _mac.Average.LastValue;
@@ -507,14 +498,6 @@ namespace cAlgo
                     Volume += p.Volume * 2;
                 }
             }
-            if (List_Poss.Count > 1)
-            {
-                _risk = true;
-            }
-            else
-            {
-                _risk = false;
-            }
 
             if (this.LastPosition(Poss).Volume > Volume)
                 Volume = this.LastPosition(Poss).Volume;
@@ -566,6 +549,41 @@ namespace cAlgo
             if (hour >= 20)
                 return false;
             return true;
+        }
+
+        private void GetRisk()
+        {
+            Position[] Pos_above = this.GetPositions(_abovelabel, Symbol);
+            Position[] Pos_below = this.GetPositions(_belowlabel, Symbol);
+            var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
+            if (Poss.Length == 0)
+            {
+                _risk = false;
+                return;
+            }
+
+            List<Position> List_Poss = new List<Position>();
+            var CR = _mac.Result.LastValue;
+            var CA = _mac.Average.LastValue;
+            var SR = _mas.Result.LastValue;
+            var SA = _mas.Average.LastValue;
+            foreach (var p in Poss)
+            {
+                var IDX = p.Comment.IndexOf("CR_") + 3;
+                double PCR = Convert.ToDouble(p.Comment.Substring(IDX, 6));
+                if (PCR < CA && SR > 0)
+                    List_Poss.Add(p);
+                if (PCR > CA & SR < 0)
+                    List_Poss.Add(p);
+            }
+            if (List_Poss.Count > 1)
+            {
+                _risk = true;
+            }
+            else
+            {
+                _risk = false;
+            }
         }
     }
 }
