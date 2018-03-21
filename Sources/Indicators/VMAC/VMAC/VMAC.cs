@@ -16,63 +16,63 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Output("Sig1_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Points, Thickness = 2)]
-        public IndicatorDataSeries Sig1_A { get; set; }
+        [Output("SigOne_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Points, Thickness = 2)]
+        public IndicatorDataSeries SigOne_A { get; set; }
 
-        [Output("Sig1_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
-        public IndicatorDataSeries Sig1_B { get; set; }
+        [Output("SigOne_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
+        public IndicatorDataSeries SigOne_B { get; set; }
 
-        private int ResultPeriods;
-        private int AveragePeriods;
-        private double Sub;
-        private string DataDir;
-        private string fiName;
+        private int _resultperiods;
+        private int _averageperiods;
+        private double _sub;
+        private string _datadir;
+        private string _filename;
 
         //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
-        public string _Signal1;
-        public int _BarsAgo;
+        public string SignalOne;
+        public int BarsAgo;
         private MaCross _mac;
         private MaSub _mas;
         private Colors _nocorel;
 
         private void SetParams()
         {
-            DataTable dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
+            DataTable dt = CSVLib.CsvParsingHelper.CsvToDataTable(_filename, true);
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["symbol"].ToString() == Symbol.Code)
                 {
-                    if (ResultPeriods != Convert.ToInt32(dr["resultperiods"]))
+                    if (_resultperiods != Convert.ToInt32(dr["resultperiods"]))
                     {
-                        ResultPeriods = Convert.ToInt32(dr["resultperiods"]);
+                        _resultperiods = Convert.ToInt32(dr["resultperiods"]);
                     }
-                    if (AveragePeriods != Convert.ToInt32(dr["averageperiods"]))
+                    if (_averageperiods != Convert.ToInt32(dr["averageperiods"]))
                     {
-                        AveragePeriods = Convert.ToInt32(dr["averageperiods"]);
+                        _averageperiods = Convert.ToInt32(dr["averageperiods"]);
                     }
-                    if (Sub != Convert.ToDouble(dr["sub"]))
+                    if (_sub != Convert.ToDouble(dr["sub"]))
                     {
-                        Sub = Convert.ToDouble(dr["sub"]);
+                        _sub = Convert.ToDouble(dr["sub"]);
                     }
                     break;
                 }
             }
-            if (Sub == 0)
+            if (_sub == 0)
             {
-                ResultPeriods = 1;
-                AveragePeriods = 120;
-                Sub = 30;
+                _resultperiods = 1;
+                _averageperiods = 120;
+                _sub = 30;
             }
         }
 
         protected override void Initialize()
         {
-            Sub = 0;
-            DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
-            fiName = DataDir + "\\" + "cBotSet.csv";
+            _sub = 0;
+            _datadir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
+            _filename = _datadir + "\\" + "cBotSet.csv";
             SetParams();
-            _mac = Indicators.GetIndicator<MaCross>(ResultPeriods, AveragePeriods);
-            _mas = Indicators.GetIndicator<MaSub>(ResultPeriods, AveragePeriods);
+            _mac = Indicators.GetIndicator<MaCross>(_resultperiods, _averageperiods);
+            _mas = Indicators.GetIndicator<MaSub>(_resultperiods, _averageperiods);
             _nocorel = Colors.Gray;
         }
 
@@ -80,43 +80,43 @@ namespace cAlgo
         {
             Result[index] = _mac.Result[index];
             Average[index] = _mac.Average[index];
-            string Sig1 = GetSig1(index);
-            if (Sig1 == "above")
-                Sig1_A[index] = _mac.Result[index];
-            if (Sig1 == "below")
-                Sig1_B[index] = _mac.Result[index];
+            string sigone = GetSigOne(index);
+            if (sigone == "above")
+                SigOne_A[index] = _mac.Result[index];
+            if (sigone == "below")
+                SigOne_B[index] = _mac.Result[index];
 
             #region Chart
-            _Signal1 = Sig1;
-            _BarsAgo = GetBarsAgo(index);
-            ChartObjects.DrawText("barsago", "Cross_(" + _BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
+            SignalOne = sigone;
+            BarsAgo = GetBarsAgo(index);
+            ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
             #endregion
         }
 
-        private string GetSig1(int index)
+        private string GetSigOne(int index)
         {
-            double CR = _mac.Result[index];
-            double CA = _mac.Average[index];
-            double SR = _mas.Result[index];
-            double SA = _mas.Average[index];
-            if (-Sub > SR && SR > SA && CR < CA)
+            double cr = _mac.Result[index];
+            double ca = _mac.Average[index];
+            double sr = _mas.Result[index];
+            double sa = _mas.Average[index];
+            if (-_sub > sr && sr > sa && cr < ca)
                 return "below";
-            if (Sub < SR && SR < SA && CR > CA)
+            if (_sub < sr && sr < sa && cr > ca)
                 return "above";
             return null;
         }
 
         private int GetBarsAgo(int index)
         {
-            double CR = _mac.Result[index];
-            double CA = _mac.Average[index];
-            if (CR > CA)
+            double cr = _mac.Result[index];
+            double ca = _mac.Average[index];
+            if (cr > ca)
                 for (int i = index - 1; i > 0; i--)
                 {
                     if (_mac.Result[i] <= _mac.Average[i])
                         return index - i;
                 }
-            if (CR < CA)
+            if (cr < ca)
                 for (int i = index - 1; i > 0; i--)
                 {
                     if (_mac.Result[i] >= _mac.Average[i])

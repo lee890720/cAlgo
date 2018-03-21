@@ -23,22 +23,22 @@ namespace cAlgo
         [Parameter("Magnify", DefaultValue = 1)]
         public double Magnify { get; set; }
 
-        private _Magnify_MaCross _mac;
+        private _Magnify_MaCross _macross;
 
         protected override void Initialize()
         {
-            _mac = Indicators.GetIndicator<_Magnify_MaCross>(ResultPeriods, AveragePeriods, Magnify);
+            _macross = Indicators.GetIndicator<_Magnify_MaCross>(ResultPeriods, AveragePeriods, Magnify);
         }
 
         public override void Calculate(int index)
         {
-            Result[index] = _mac.Result[index] - _mac.Average[index];
-            double Sum = 0.0;
+            Result[index] = _macross.Result[index] - _macross.Average[index];
+            double sum = 0.0;
             for (int i = index - AveragePeriods + 1; i <= index; i++)
             {
-                Sum += Result[i];
+                sum += Result[i];
             }
-            Average[index] = Sum / AveragePeriods;
+            Average[index] = sum / AveragePeriods;
         }
     }
 }

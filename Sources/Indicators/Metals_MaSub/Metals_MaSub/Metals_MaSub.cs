@@ -20,22 +20,22 @@ namespace cAlgo
         [Parameter("Average Periods", DefaultValue = 120)]
         public int AveragePeriods { get; set; }
 
-        private Metals_MaCross _mac;
+        private Metals_MaCross _macross;
 
         protected override void Initialize()
         {
-            _mac = Indicators.GetIndicator<Metals_MaCross>(ResultPeriods, AveragePeriods);
+            _macross = Indicators.GetIndicator<Metals_MaCross>(ResultPeriods, AveragePeriods);
         }
 
         public override void Calculate(int index)
         {
-            Result[index] = _mac.Result[index] - _mac.Average[index];
-            double Sum = 0.0;
+            Result[index] = _macross.Result[index] - _macross.Average[index];
+            double sum = 0.0;
             for (int i = index - AveragePeriods + 1; i <= index; i++)
             {
-                Sum += Result[i];
+                sum += Result[i];
             }
-            Average[index] = Sum / AveragePeriods;
+            Average[index] = sum / AveragePeriods;
         }
     }
 }

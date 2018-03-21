@@ -1,4 +1,5 @@
 ﻿using cAlgo.API;
+using cAlgo.API.Indicators;
 using cAlgo.API.Internals;
 using cAlgo.Lib;
 using System;
@@ -22,44 +23,44 @@ namespace cAlgo
         [Parameter("Average Periods", DefaultValue = 120)]
         public int AveragePeriods { get; set; }
 
-        private DateTime _Symboltime;
-        private double _Ratio;
-        private Symbol _XAUSymbol, _XAGSymbol;
-        private MarketSeries _XAUSeries, _XAGSeries;
-        private int _XAUIndex, _XAGIndex;
+        private DateTime _symboltime;
+        private double _ratio;
+        private Symbol _xausymbol, _xagsymbol;
+        private MarketSeries _xauseries, _xagseries;
+        private int _xauindex, _xagindex;
 
         protected override void Initialize()
         {
-            _Ratio = 80;
-            _XAUSymbol = MarketData.GetSymbol("XAUUSD");
-            _XAGSymbol = MarketData.GetSymbol("XAGUSD");
-            _XAUSeries = MarketData.GetSeries(_XAUSymbol, TimeFrame);
-            _XAGSeries = MarketData.GetSeries(_XAGSymbol, TimeFrame);
+            _ratio = 80;
+            _xausymbol = MarketData.GetSymbol("XAUUSD");
+            _xagsymbol = MarketData.GetSymbol("XAGUSD");
+            _xauseries = MarketData.GetSeries(_xausymbol, TimeFrame);
+            _xagseries = MarketData.GetSeries(_xagsymbol, TimeFrame);
         }
 
         public override void Calculate(int index)
         {
-            _Symboltime = MarketSeries.OpenTime[index];
-            _XAUIndex = _XAUSeries.GetIndexByDate(_Symboltime);
-            _XAGIndex = _XAGSeries.GetIndexByDate(_Symboltime);
-            var XAUTime = _XAUSeries.OpenTime[_XAUIndex];
-            var XAGTime = _XAGSeries.OpenTime[_XAGIndex];
-            List<DateTime> TimeList = new List<DateTime>();
-            TimeList.Add(_Symboltime);
-            TimeList.Add(XAUTime);
-            TimeList.Add(XAGTime);
-            _XAUIndex = _XAUSeries.GetIndexByDate(TimeList.Min());
-            _XAGIndex = _XAGSeries.GetIndexByDate(TimeList.Min());
-            double XAUClose = _XAUSeries.Close[_XAUIndex] / _XAUSymbol.PipSize;
-            double XAGClose = _XAGSeries.Close[_XAGIndex] * _Ratio / _XAGSymbol.PipSize;
-            double NEWClose = (XAUClose / XAGClose) / (_XAUSymbol.PipSize * _XAGSymbol.PipSize);
-            Result[index] = NEWClose;
-            double Sum = 0.0;
+            _symboltime = MarketSeries.OpenTime[index];
+            _xauindex = _xauseries.GetIndexByDate(_symboltime);
+            _xagindex = _xagseries.GetIndexByDate(_symboltime);
+            var xautime = _xauseries.OpenTime[_xauindex];
+            var xagtime = _xagseries.OpenTime[_xagindex];
+            List<DateTime> timelist = new List<DateTime>();
+            timelist.Add(_symboltime);
+            timelist.Add(xautime);
+            timelist.Add(xagtime);
+            _xauindex = _xauseries.GetIndexByDate(timelist.Min());
+            _xagindex = _xagseries.GetIndexByDate(timelist.Min());
+            double xauclose = _xauseries.Close[_xauindex] / _xausymbol.PipSize;
+            double xagclose = _xagseries.Close[_xagindex] * _ratio / _xagsymbol.PipSize;
+            double newclose = (xauclose / xagclose) / (_xausymbol.PipSize * _xagsymbol.PipSize);
+            Result[index] = newclose;
+            double sum = 0.0;
             for (int i = index - AveragePeriods + 1; i <= index; i++)
             {
-                Sum += Result[i];
+                sum += Result[i];
             }
-            Average[index] = Sum / AveragePeriods;
+            Average[index] = sum / AveragePeriods;
         }
     }
 }

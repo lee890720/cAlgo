@@ -1,7 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMAS", "SMAS\SMAS.csproj", "{C35E0699-6C93-4483-B4FC-9EA2FCC5075C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMaCross", "..\SMaCross\SMaCross\SMaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMaSub", "..\SMaSub\SMaSub\SMaSub.csproj", "{260EC882-0065-4090-BCD9-CCE960F34016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,13 +19,16 @@ Global
 		{C35E0699-6C93-4483-B4FC-9EA2FCC5075C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C35E0699-6C93-4483-B4FC-9EA2FCC5075C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C35E0699-6C93-4483-B4FC-9EA2FCC5075C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260EC882-0065-4090-BCD9-CCE960F34016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
-
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMaCross", "..\SMaCross\SMaCross\SMaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMaSub", "..\SMaSub\SMaSub\SMaSub.csproj", "{260EC882-0065-4090-BCD9-CCE960F34016}"
-EndProject

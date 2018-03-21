@@ -15,7 +15,7 @@ namespace cAlgo
         public IndicatorDataSeries Average { get; set; }
 
         [Parameter("Symbol")]
-        public string symbol { get; set; }
+        public string _Symbol { get; set; }
 
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
@@ -26,22 +26,22 @@ namespace cAlgo
         [Parameter("Magnify", DefaultValue = 1)]
         public double Magnify { get; set; }
 
-        private SMaCross _mac;
+        private SMaCross _macross;
 
         protected override void Initialize()
         {
-            _mac = Indicators.GetIndicator<SMaCross>(symbol, ResultPeriods, AveragePeriods, Magnify);
+            _macross = Indicators.GetIndicator<SMaCross>(_Symbol, ResultPeriods, AveragePeriods, Magnify);
         }
 
         public override void Calculate(int index)
         {
-            Result[index] = _mac.Result[index] - _mac.Average[index];
-            double Sum = 0.0;
+            Result[index] = _macross.Result[index] - _macross.Average[index];
+            double sum = 0.0;
             for (int i = index - AveragePeriods + 1; i <= index; i++)
             {
-                Sum += Result[i];
+                sum += Result[i];
             }
-            Average[index] = Sum / AveragePeriods;
+            Average[index] = sum / AveragePeriods;
         }
     }
 }

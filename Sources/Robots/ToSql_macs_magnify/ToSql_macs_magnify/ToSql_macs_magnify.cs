@@ -15,16 +15,16 @@ namespace cAlgo
         private int _averageperiods;
         private double _magnify;
         private double _sub;
-        private string DataDir;
-        private string fiName;
+        private string _datadir;
+        private string _filename;
         private _Magnify_MAC _mac;
         private _Magnify_MAS _mas;
 
         protected override void OnStart()
         {
-            DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
-            fiName = DataDir + "\\" + "cBotSet.csv";
-            Print("fiName=" + fiName);
+            _datadir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
+            _filename = _datadir + "\\" + "cBotSet.csv";
+            Print("fiName=" + _filename);
             SetParams();
             if (_magnify == 1)
             {
@@ -40,11 +40,11 @@ namespace cAlgo
         protected override void OnTimer()
         {
             #region Parameter
-            var CR = _mac.Result.LastValue;
-            var CA = _mac.Average.LastValue;
-            var SR = _mas.Result.LastValue;
-            var SA = _mas.Average.LastValue;
-            var Sig = _mas._Signal1;
+            var cr = _mac.Result.LastValue;
+            var ca = _mac.Average.LastValue;
+            var sr = _mas.Result.LastValue;
+            var sa = _mas.Average.LastValue;
+            var sig = _mas.SignalOne;
             #endregion
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
@@ -63,11 +63,11 @@ namespace cAlgo
                     var symbol = Convert.ToString(dr["symbol"]);
                     if (symbol == Symbol.Code)
                     {
-                        dr["cr"] = CR;
-                        dr["ca"] = CA;
-                        dr["sr"] = SR;
-                        dr["sa"] = SA;
-                        dr["signal"] = Sig;
+                        dr["cr"] = cr;
+                        dr["ca"] = ca;
+                        dr["sr"] = sr;
+                        dr["sa"] = sa;
+                        dr["signal"] = sig;
                     }
                 }
                 var _result = objdataadpater.Update(dataset.Tables["cBotSet"]);
@@ -86,10 +86,10 @@ namespace cAlgo
         private void SetParams()
         {
             DataTable dt = new DataTable();
-            if (!File.Exists(fiName))
+            if (!File.Exists(_filename))
                 Thread.Sleep(1000);
-            if (File.Exists(fiName))
-                dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
+            if (File.Exists(_filename))
+                dt = CSVLib.CsvParsingHelper.CsvToDataTable(_filename, true);
             foreach (DataRow dr in dt.Rows)
             {
                 if (dr["symbol"].ToString() == Symbol.Code)

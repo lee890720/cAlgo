@@ -16,11 +16,11 @@ namespace cAlgo
         [Output("Average")]
         public IndicatorDataSeries Average { get; set; }
 
-        [Output("Sig1_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
-        public IndicatorDataSeries Sig1_A { get; set; }
+        [Output("SigOne_A", Color = Colors.DeepSkyBlue, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        public IndicatorDataSeries SigOne_A { get; set; }
 
-        [Output("Sig1_B", Color = Colors.OrangeRed, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
-        public IndicatorDataSeries Sig1_B { get; set; }
+        [Output("SigOne_B", Color = Colors.OrangeRed, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
+        public IndicatorDataSeries SigOne_B { get; set; }
 
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
@@ -31,9 +31,9 @@ namespace cAlgo
         [Parameter("Sub", DefaultValue = 30)]
         public double Sub { get; set; }
 
-        public string _Signal1;
-        public int _BarsAgo;
-        public string _Mark;
+        public string SignalOne;
+        public int BarsAgo;
+        public string Mark;
         private MaCross _mac;
         private MaSub _mas;
         private Colors _nocorel;
@@ -49,54 +49,54 @@ namespace cAlgo
         {
             Result[index] = _mas.Result[index];
             Average[index] = _mas.Average[index];
-            string Sig1 = GetSig1(index);
-            if (Sig1 == "below")
-                Sig1_B[index] = _mas.Result[index];
+            string sigone = GetSigOne(index);
+            if (sigone == "below")
+                SigOne_B[index] = _mas.Result[index];
             else
-                Sig1_B[index] = 0;
-            if (Sig1 == "above")
-                Sig1_A[index] = _mas.Result[index];
+                SigOne_B[index] = 0;
+            if (sigone == "above")
+                SigOne_A[index] = _mas.Result[index];
             else
-                Sig1_A[index] = 0;
+                SigOne_A[index] = 0;
 
             #region Chart
-            _Signal1 = Sig1;
-            _BarsAgo = GetBarsAgo(index);
-            _Mark = GetMark(index).ToString("yyyy-MM-dd") + "-" + GetMark(index).ToString("HH");
-            if (_Signal1 == null)
-                ChartObjects.DrawText("sig", "NoSignal", StaticPosition.TopLeft, _nocorel);
+            SignalOne = sigone;
+            BarsAgo = GetBarsAgo(index);
+            Mark = GetMark(index).ToString("yyyy-MM-dd") + "-" + GetMark(index).ToString("HH");
+            if (SignalOne == null)
+                ChartObjects.DrawText("sigone", "NoSignal", StaticPosition.TopLeft, _nocorel);
             else
-                ChartObjects.DrawText("sig", "Signal_(" + _Signal1 + ")", StaticPosition.TopLeft, _nocorel);
-            ChartObjects.DrawText("barsago", "\nCross_(" + _BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
-            ChartObjects.DrawText("mark", "\n\nMark_(" + _Mark + ")", StaticPosition.TopLeft, _nocorel);
+                ChartObjects.DrawText("sigone", "Signal_(" + SignalOne + ")", StaticPosition.TopLeft, _nocorel);
+            ChartObjects.DrawText("barsago", "\nCross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
+            ChartObjects.DrawText("mark", "\n\nMark_(" + Mark + ")", StaticPosition.TopLeft, _nocorel);
             ChartObjects.DrawText("break", "\n\n\n" + GetBreak(index), StaticPosition.TopLeft, _nocorel);
             #endregion
         }
 
-        private string GetSig1(int index)
+        private string GetSigOne(int index)
         {
-            double CR = _mac.Result[index];
-            double CA = _mac.Average[index];
-            double SR = _mas.Result[index];
-            double SA = _mas.Average[index];
-            if (-Sub > SR && SR > SA && CR < CA)
+            double cr = _mac.Result[index];
+            double ca = _mac.Average[index];
+            double sr = _mas.Result[index];
+            double sa = _mas.Average[index];
+            if (-Sub > sr && sr > sa && cr < ca)
                 return "below";
-            if (Sub < SR && SR < SA && CR > CA)
+            if (Sub < sr && sr < sa && cr > ca)
                 return "above";
             return null;
         }
 
         private int GetBarsAgo(int index)
         {
-            double SR = _mas.Result[index];
-            double SA = _mas.Average[index];
-            if (SR > SA)
+            double sr = _mas.Result[index];
+            double sa = _mas.Average[index];
+            if (sr > sa)
                 for (int i = index - 1; i > 0; i--)
                 {
                     if (_mas.Result[i] <= _mas.Average[i])
                         return index - i;
                 }
-            if (SR < SA)
+            if (sr < sa)
                 for (int i = index - 1; i > 0; i--)
                 {
                     if (_mas.Result[i] >= _mas.Average[i])
@@ -107,110 +107,110 @@ namespace cAlgo
 
         private DateTime GetMark(int index)
         {
-            int IDX = index - _BarsAgo;
-            DateTime DT = MarketSeries.OpenTime[IDX];
-            return DT;
+            int idx = index - BarsAgo;
+            DateTime dt = MarketSeries.OpenTime[idx];
+            return dt;
         }
 
         private string GetBreak(int index)
         {
-            string BR = null;
-            int SUB = 0;
-            int Initmax = 0;
-            int T1 = 0;
-            int T2 = 0;
-            int T3 = 0;
-            int T4 = 0;
-            int T5 = 0;
-            int TotalBars = MarketSeries.Bars();
-            int Per = AveragePeriods * 10;
-            if (TotalBars < AveragePeriods * 10)
-                Per = TotalBars;
-            double MaxBar = _mas.Result.Maximum(Per);
-            double MinBar = _mas.Result.Minimum(Per);
-            double GetMax = Math.Round(MaxBar > Math.Abs(MinBar) ? MaxBar : Math.Abs(MinBar));
-            if (GetMax < 100)
+            string br = null;
+            int sub = 0;
+            int initmax = 0;
+            int t1 = 0;
+            int t2 = 0;
+            int t3 = 0;
+            int t4 = 0;
+            int t5 = 0;
+            int bars = MarketSeries.Bars();
+            int per = AveragePeriods * 10;
+            if (bars < AveragePeriods * 10)
+                per = bars;
+            double maxbar = _mas.Result.Maximum(per);
+            double minbar = _mas.Result.Minimum(per);
+            double getmax = Math.Round(maxbar > Math.Abs(minbar) ? maxbar : Math.Abs(minbar));
+            if (getmax < 100)
             {
-                SUB = 10;
-                Initmax = 100;
+                sub = 10;
+                initmax = 100;
             }
-            else if (GetMax < 150)
+            else if (getmax < 150)
             {
-                SUB = 15;
-                Initmax = 150;
+                sub = 15;
+                initmax = 150;
             }
-            else if (GetMax < 200)
+            else if (getmax < 200)
             {
-                SUB = 20;
-                Initmax = 200;
+                sub = 20;
+                initmax = 200;
             }
-            else if (GetMax < 250)
+            else if (getmax < 250)
             {
-                SUB = 25;
-                Initmax = 250;
+                sub = 25;
+                initmax = 250;
             }
-            else if (GetMax < 300)
+            else if (getmax < 300)
             {
-                SUB = 30;
-                Initmax = 300;
+                sub = 30;
+                initmax = 300;
             }
-            else if (GetMax < 350)
+            else if (getmax < 350)
             {
-                SUB = 35;
-                Initmax = 350;
+                sub = 35;
+                initmax = 350;
             }
-            else if (GetMax < 400)
+            else if (getmax < 400)
             {
-                SUB = 40;
-                Initmax = 400;
+                sub = 40;
+                initmax = 400;
             }
             else
             {
-                SUB = 50;
-                Initmax = 500;
+                sub = 50;
+                initmax = 500;
             }
 
-            for (int i = ((TotalBars > AveragePeriods * 10) ? (TotalBars - AveragePeriods * 10) : 0); i < TotalBars; i++)
+            for (int i = ((bars > AveragePeriods * 10) ? (bars - AveragePeriods * 10) : 0); i < bars; i++)
             {
-                var SR = Math.Abs(_mas.Result[i]);
-                if (SR > Initmax - SUB * 0)
+                var sr = Math.Abs(_mas.Result[i]);
+                if (sr > initmax - sub * 0)
                 {
-                    T5++;
-                    T4++;
-                    T3++;
-                    T2++;
-                    T1++;
+                    t5++;
+                    t4++;
+                    t3++;
+                    t2++;
+                    t1++;
                     continue;
                 }
-                if (SR > Initmax - SUB * 1)
+                if (sr > initmax - sub * 1)
                 {
-                    T4++;
-                    T3++;
-                    T2++;
-                    T1++;
+                    t4++;
+                    t3++;
+                    t2++;
+                    t1++;
                     continue;
                 }
-                if (SR > Initmax - SUB * 2)
+                if (sr > initmax - sub * 2)
                 {
-                    T3++;
-                    T2++;
-                    T1++;
+                    t3++;
+                    t2++;
+                    t1++;
                     continue;
                 }
-                if (SR > Initmax - SUB * 3)
+                if (sr > initmax - sub * 3)
                 {
-                    T2++;
-                    T1++;
+                    t2++;
+                    t1++;
                     continue;
                 }
-                if (SR > Initmax - SUB * 4)
+                if (sr > initmax - sub * 4)
                 {
-                    T1++;
+                    t1++;
                     continue;
                 }
             }
-            BR = "(" + Math.Round(150 / GetMax, 3).ToString() + "-" + Per.ToString() + "-" + GetMax.ToString() + ")_(" + Initmax.ToString() + "-" + SUB.ToString() + ")_(" + (Initmax - SUB * 4).ToString() + "-" + T1.ToString() + ")_(" + (Initmax - SUB * 3).ToString() + "-" + T2.ToString() + ")_(" + (Initmax - SUB * 2).ToString() + "-" + T3.ToString() + ")_(" + (Initmax - SUB * 1).ToString() + "-" + T4.ToString() + ")_(" + (Initmax - SUB * 0).ToString() + "-" + T5.ToString() + ")";
-            return BR;
+            br = "(" + Math.Round(150 / getmax, 3).ToString() + "-" + per.ToString() + "-" + getmax.ToString() + ")_(" + initmax.ToString() + "-" + sub.ToString() + ")_(" + (initmax - sub * 4).ToString() + "-" + t1.ToString() + ")_(" + (initmax - sub * 3).ToString() + "-" + t2.ToString() + ")_(" + (initmax - sub * 2).ToString() + "-" + t3.ToString() + ")_(" + (initmax - sub * 1).ToString() + "-" + t4.ToString() + ")_(" + (initmax - sub * 0).ToString() + "-" + t5.ToString() + ")";
+            return br;
         }
     }
 }

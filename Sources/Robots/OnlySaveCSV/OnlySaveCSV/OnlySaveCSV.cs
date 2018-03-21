@@ -9,30 +9,30 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class OnlySaveCSV : Robot
     {
-        private string DataDir;
-        private string fiName;
-        private System.Timers.Timer timer1;
+        private string _datadir;
+        private string _filename;
+        private System.Timers.Timer _timer1;
 
         protected override void OnStart()
         {
-            DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
-            fiName = DataDir + "\\" + "cBotSet.csv";
-            Print("fiName=" + fiName);
+            _datadir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
+            _filename = _datadir + "\\" + "cBotSet.csv";
+            Print("fiName=" + _filename);
             InitTimer1();
-            timer1.Start();
+            _timer1.Start();
         }
 
         private void InitTimer1()
         {
             //设置定时间隔(毫秒为单位)
-            int interval = 10000;
-            timer1 = new System.Timers.Timer(interval);
+            int interval = 60000;
+            _timer1 = new System.Timers.Timer(interval);
             //设置执行一次（false）还是一直执行(true)
-            timer1.AutoReset = true;
+            _timer1.AutoReset = true;
             //设置是否执行System.Timers.Timer.Elapsed事件
-            timer1.Enabled = true;
+            _timer1.Enabled = true;
             //绑定Elapsed事件
-            timer1.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer1);
+            _timer1.Elapsed += new System.Timers.ElapsedEventHandler(OnTimer1);
         }
 
         private void OnTimer1(object sender, System.Timers.ElapsedEventArgs e)
@@ -49,7 +49,7 @@ namespace cAlgo
                 SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
                 objdataadpater.SelectCommand.CommandTimeout = 1000;
                 objdataadpater.Fill(dataset, "cBotSet");
-                CsvParsingHelper.SaveCsv(dataset.Tables["cBotSet"], DataDir);
+                CsvParsingHelper.SaveCsv(dataset.Tables["cBotSet"], _datadir);
                 Print("It's Successful to save CSV.");
             } catch (System.Data.SqlClient.SqlException ex)
             {
@@ -64,7 +64,7 @@ namespace cAlgo
 
         protected override void OnStop()
         {
-            timer1.Stop();
+            _timer1.Stop();
             Print("OnStop()");
             // Put your deinitialization logic here
         }

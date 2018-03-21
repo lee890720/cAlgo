@@ -26,8 +26,8 @@ namespace cAlgo
         private double _magnify;
         private double _sub;
         #endregion
-        private string DataDir;
-        private string fiName;
+        private string _datadir;
+        private string _filename;
         private Oil_MAC _mac;
         private Oil_MAS _mas;
         private Symbol _xbrsymbol;
@@ -42,13 +42,13 @@ namespace cAlgo
         private void SetParams()
         {
             DataTable dt = new DataTable();
-            if (!File.Exists(fiName))
+            if (!File.Exists(_filename))
                 Thread.Sleep(1000);
-            if (File.Exists(fiName))
-                dt = CSVLib.CsvParsingHelper.CsvToDataTable(fiName, true);
+            if (File.Exists(_filename))
+                dt = CSVLib.CsvParsingHelper.CsvToDataTable(_filename, true);
             foreach (DataRow dr in dt.Rows)
             {
-                if (dr["symbol"].ToString() == Symbol.Code)
+                if (dr["symbol"].ToString() == "XBRXTI")
                 {
                     if (_initvolume != Convert.ToDouble(dr["initvolume"]))
                     {
@@ -112,9 +112,9 @@ namespace cAlgo
 
         protected override void OnStart()
         {
-            DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
-            fiName = DataDir + "\\" + "cBotSet.csv";
-            Print("fiName=" + fiName);
+            _datadir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
+            _filename = _datadir + "\\" + "cBotSet.csv";
+            Print("fiName=" + _filename);
             SetParams();
             if (_magnify != 1)
             {
@@ -137,11 +137,11 @@ namespace cAlgo
                             });
 
             #region Get Mark
-            Position[] Pos_above = this.GetPositions(_abovelabel);
-            Position[] Pos_below = this.GetPositions(_belowlabel);
-            var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            if (Poss.Length != 0)
-                foreach (var p in Poss)
+            Position[] pos_above = this.GetPositions(_abovelabel);
+            Position[] pos_below = this.GetPositions(_belowlabel);
+            var poss = pos_above.Length == 0 ? pos_below : pos_above;
+            if (poss.Length != 0)
+                foreach (var p in poss)
                 {
                     var idx = p.Comment.IndexOf("M_") + 2;
                     if (!_marklist.Contains(p.Comment.Substring(idx, 13)))
@@ -181,42 +181,42 @@ namespace cAlgo
             #region Parameter
             GetRisk();
             SetParams();
-            var CR = _mac.Result.LastValue;
-            var CA = _mac.Average.LastValue;
-            var SR = _mas.Result.LastValue;
-            var SA = _mas.Average.LastValue;
-            Position[] Pos_above = this.GetPositions(_abovelabel);
-            Position[] Pos_below = this.GetPositions(_belowlabel);
-            var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            List<Position> Poss_xbr = new List<Position>();
-            List<Position> Poss_xti = new List<Position>();
-            if (Poss.Length != 0)
+            var cr = _mac.Result.LastValue;
+            var ca = _mac.Average.LastValue;
+            var sr = _mas.Result.LastValue;
+            var sa = _mas.Average.LastValue;
+            Position[] pos_above = this.GetPositions(_abovelabel);
+            Position[] pos_below = this.GetPositions(_belowlabel);
+            var poss = pos_above.Length == 0 ? pos_below : pos_above;
+            List<Position> poss_xbr = new List<Position>();
+            List<Position> poss_xti = new List<Position>();
+            if (poss.Length != 0)
             {
-                foreach (var p in Poss)
+                foreach (var p in poss)
                 {
                     if (p.SymbolCode == _xbrsymbol.Code)
-                        Poss_xbr.Add(p);
+                        poss_xbr.Add(p);
                     if (p.SymbolCode == _xtisymbol.Code)
-                        Poss_xti.Add(p);
+                        poss_xti.Add(p);
                 }
-                Poss_xbr.OrderBy(p => p.EntryTime);
-                Poss_xti.OrderBy(p => p.EntryTime);
+                poss_xbr.OrderBy(p => p.EntryTime);
+                poss_xti.OrderBy(p => p.EntryTime);
             }
             #endregion
 
             #region Cross
-            if (Pos_above.Length == 0)
+            if (pos_above.Length == 0)
                 _abovecross = true;
             else
             {
-                if (SR > SA)
+                if (sr > sa)
                     _abovecross = true;
             }
-            if (Pos_below.Length == 0)
+            if (pos_below.Length == 0)
                 _belowcross = true;
             else
             {
-                if (SR < SA)
+                if (sr < sa)
                     _belowcross = true;
             }
             #endregion
@@ -226,16 +226,16 @@ namespace cAlgo
             if (_risk)
             {
                 Print("There is a risk for the current symbol.");
-                if (Poss_xbr.Count >= 2 && Poss_xti.Count >= 2)
+                if (poss_xbr.Count >= 2 && poss_xti.Count >= 2)
                 {
-                    var first_xbr = Poss_xbr[0];
-                    var second_xbr = Poss_xbr[1];
-                    var first_xti = Poss_xti[0];
-                    var second_xti = Poss_xti[1];
-                    var last0_xbr = Poss_xbr.OrderByDescending(p => p.EntryTime).ToArray()[0];
-                    var last1_xbr = Poss_xbr.OrderByDescending(p => p.EntryTime).ToArray()[1];
-                    var last0_xti = Poss_xti.OrderByDescending(p => p.EntryTime).ToArray()[0];
-                    var last1_xti = Poss_xti.OrderByDescending(p => p.EntryTime).ToArray()[1];
+                    var first_xbr = poss_xbr[0];
+                    var second_xbr = poss_xbr[1];
+                    var first_xti = poss_xti[0];
+                    var second_xti = poss_xti[1];
+                    var last0_xbr = poss_xbr.OrderByDescending(p => p.EntryTime).ToArray()[0];
+                    var last1_xbr = poss_xbr.OrderByDescending(p => p.EntryTime).ToArray()[1];
+                    var last0_xti = poss_xti.OrderByDescending(p => p.EntryTime).ToArray()[0];
+                    var last1_xti = poss_xti.OrderByDescending(p => p.EntryTime).ToArray()[1];
                     var first_net = first_xbr.NetProfit + first_xti.NetProfit;
                     var second_net = second_xbr.NetProfit + second_xti.NetProfit;
                     var last0_net = last0_xbr.NetProfit + last0_xti.NetProfit;
@@ -258,11 +258,11 @@ namespace cAlgo
                     }
                 }
             }
-            if (Pos_above.Length != 0)
+            if (pos_above.Length != 0)
             {
                 if (GetClose(_abovelabel))
                 {
-                    if (SR <= _sub / 5)
+                    if (sr <= _sub / 5)
                     {
                         this.closeAllLabel(_abovelabel);
                         _risk = false;
@@ -270,18 +270,18 @@ namespace cAlgo
                 }
                 else
                 {
-                    if (SR <= 0)
+                    if (sr <= 0)
                     {
                         this.closeAllLabel(_abovelabel);
                         _risk = false;
                     }
                 }
             }
-            if (Pos_below.Length != 0)
+            if (pos_below.Length != 0)
             {
                 if (GetClose(_belowlabel))
                 {
-                    if (SR >= -_sub / 5)
+                    if (sr >= -_sub / 5)
                     {
                         this.closeAllLabel(_belowlabel);
                         _risk = false;
@@ -289,7 +289,7 @@ namespace cAlgo
                 }
                 else
                 {
-                    if (SR >= 0)
+                    if (sr >= 0)
                     {
                         this.closeAllLabel(_belowlabel);
                         _risk = false;
@@ -304,18 +304,18 @@ namespace cAlgo
                 #region Above
                 if (GetOpen() == "above")
                 {
-                    var Volume = GetOpenVolume(GetOpen());
+                    var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Sell;
                     _init.Symbol = _xbrsymbol;
-                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
                     _init.Label = _abovelabel;
-                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_000" + "<";
                     _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xbr.Count + 1) + "<";
-                    _init.Comment += "M_" + _mas._Mark + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", poss_xbr.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas.Mark + "<";
                     this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -328,18 +328,18 @@ namespace cAlgo
                 }
                 if (GetOpen() == "above_br" && _isbreak)
                 {
-                    var Volume = GetOpenVolume(GetOpen());
+                    var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Sell;
                     _init.Symbol = _xbrsymbol;
-                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
                     _init.Label = _abovelabel;
-                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
                     _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xbr.Count + 1) + "<";
-                    _init.Comment += "M_" + _mas._Mark + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", poss_xbr.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas.Mark + "<";
                     this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -353,18 +353,18 @@ namespace cAlgo
                 #region Below
                 if (GetOpen() == "below")
                 {
-                    var Volume = GetOpenVolume(GetOpen());
+                    var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Buy;
                     _init.Symbol = _xbrsymbol;
-                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
                     _init.Label = _belowlabel;
-                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_000" + "<";
                     _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xbr.Count + 1) + "<";
-                    _init.Comment += "M_" + _mas._Mark + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", poss_xbr.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas.Mark + "<";
                     this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -377,18 +377,18 @@ namespace cAlgo
                 }
                 if (GetOpen() == "below_br" && _isbreak)
                 {
-                    var Volume = GetOpenVolume(GetOpen());
+                    var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Buy;
                     _init.Symbol = _xbrsymbol;
-                    _init.Volume = Symbol.NormalizeVolume(Volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
                     _init.Label = _belowlabel;
-                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(CR)) + "<";
+                    _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
                     _init.Comment += "D_" + string.Format("{0:000}", _distance) + "<";
                     _init.Comment += "S_" + string.Format("{0:000}", _sub) + "<";
                     _init.Comment += "B_" + string.Format("{0:000}", _break) + "<";
-                    _init.Comment += "P_" + string.Format("{0:000}", Poss_xbr.Count + 1) + "<";
-                    _init.Comment += "M_" + _mas._Mark + "<";
+                    _init.Comment += "P_" + string.Format("{0:000}", poss_xbr.Count + 1) + "<";
+                    _init.Comment += "M_" + _mas.Mark + "<";
                     this.executeOrder(_init);
                     if (this.LastResult.IsSuccessful)
                     {
@@ -408,102 +408,101 @@ namespace cAlgo
             if (!GetTradeTime())
                 return null;
             #region Parameter
-            string Signal = null;
-            Position[] Pos_above = this.GetPositions(_abovelabel);
-            Position[] Pos_below = this.GetPositions(_belowlabel);
-            var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            var CR = _mac.Result.LastValue;
-            var CA = _mac.Average.LastValue;
-            var SR = _mas.Result.LastValue;
-            var SA = _mas.Average.LastValue;
-            var NowTime = DateTime.UtcNow;
-            List<DateTime> LastPosTime = new List<DateTime>();
-            if (Poss.Length != 0)
+            string signal = null;
+            Position[] pos_above = this.GetPositions(_abovelabel);
+            Position[] pos_below = this.GetPositions(_belowlabel);
+            var poss = pos_above.Length == 0 ? pos_below : pos_above;
+            var cr = _mac.Result.LastValue;
+            var ca = _mac.Average.LastValue;
+            var sr = _mas.Result.LastValue;
+            var sa = _mas.Average.LastValue;
+            var nowtime = DateTime.UtcNow;
+            List<DateTime> lastpostime = new List<DateTime>();
+            if (poss.Length != 0)
             {
-                LastPosTime.Add(this.LastPosition(Poss).EntryTime.AddHours(_timer));
+                lastpostime.Add(this.LastPosition(poss).EntryTime.AddHours(_timer));
             }
-            var Pos_LastTime = LastPosTime.Count == 0 ? DateTime.UtcNow.AddHours(-_timer) : LastPosTime.Max();
+            var pos_lasttime = lastpostime.Count == 0 ? DateTime.UtcNow.AddHours(-_timer) : lastpostime.Max();
             #endregion
 
-            if (DateTime.Compare(NowTime, Pos_LastTime) < 0)
+            if (DateTime.Compare(nowtime, pos_lasttime) < 0)
                 return null;
-            if ((_isbreak && Poss.Length != 0) || (_isbreak && _breakfirst))
+            if ((_isbreak && poss.Length != 0) || (_isbreak && _breakfirst))
             {
-                if (SR >= GetBreak(_abovelabel))
-                    return Signal = "above_br";
-                if (SR <= -GetBreak(_belowlabel))
-                    return Signal = "below_br";
+                if (sr >= GetBreak(_abovelabel))
+                    return signal = "above_br";
+                if (sr <= -GetBreak(_belowlabel))
+                    return signal = "below_br";
             }
-            var Sig = _mas._Signal1;
-            if (Sig == null)
+            var sig = _mas.SignalOne;
+            if (sig == null)
             {
                 return null;
             }
 
-            if (!_marklist.Contains(_mas._Mark))
+            if (!_marklist.Contains(_mas.Mark))
             {
-                if (Sig == "above" && _abovecross)
+                if (sig == "above" && _abovecross)
                 {
-                    Signal = "above";
-                    if (Pos_above.Length != 0)
+                    signal = "above";
+                    if (pos_above.Length != 0)
                     {
-                        var idx = this.LastPosition(Pos_above).Comment.IndexOf("CR_") + 3;
-                        if (CR - GetDistance() < Convert.ToDouble(this.LastPosition(Pos_above).Comment.Substring(idx, 6)))
-                            Signal = null;
+                        var idx = this.LastPosition(pos_above).Comment.IndexOf("CR_") + 3;
+                        if (cr - GetDistance() < Convert.ToDouble(this.LastPosition(pos_above).Comment.Substring(idx, 6)))
+                            signal = null;
                     }
                 }
-                if (Sig == "below" && _belowcross)
+                if (sig == "below" && _belowcross)
                 {
-                    Signal = "below";
-                    if (Pos_below.Length != 0)
+                    signal = "below";
+                    if (pos_below.Length != 0)
                     {
-                        var idx = this.LastPosition(Pos_below).Comment.IndexOf("CR_") + 3;
-                        if (CR + GetDistance() > Convert.ToDouble(this.LastPosition(Pos_below).Comment.Substring(idx, 6)))
-                            Signal = null;
+                        var idx = this.LastPosition(pos_below).Comment.IndexOf("CR_") + 3;
+                        if (cr + GetDistance() > Convert.ToDouble(this.LastPosition(pos_below).Comment.Substring(idx, 6)))
+                            signal = null;
                     }
                 }
             }
-            return Signal;
+            return signal;
         }
 
         private double GetOpenVolume(string opensignal)
         {
-            double Volume = 0;
+            double volume = 0;
             if (opensignal == null)
                 return _initvolume;
-            string Label = opensignal.Substring(0, 1).ToUpper();
-            Label += opensignal.Substring(1, 4);
-            Label += "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
-            var Poss = this.GetPositions(Label, Symbol);
-            if (Poss.Length == 0)
+            string label = opensignal.Substring(0, 1).ToUpper() + opensignal.Substring(1, 4);
+            label = label + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
+            var poss = this.GetPositions(label, Symbol);
+            if (poss.Length == 0)
                 return _initvolume;
-            List<Position> List_Poss = new List<Position>();
-            var CR = _mac.Result.LastValue;
-            var CA = _mac.Average.LastValue;
-            var SR = _mas.Result.LastValue;
-            var SA = _mas.Average.LastValue;
-            foreach (var p in Poss)
+            List<Position> list_poss = new List<Position>();
+            var cr = _mac.Result.LastValue;
+            var ca = _mac.Average.LastValue;
+            var sr = _mas.Result.LastValue;
+            var sa = _mas.Average.LastValue;
+            foreach (var p in poss)
             {
-                var IDX = p.Comment.IndexOf("CR_") + 3;
-                double PCR = Convert.ToDouble(p.Comment.Substring(IDX, 6));
-                if (PCR < CA && SR > 0)
-                    List_Poss.Add(p);
-                if (PCR > CA & SR < 0)
-                    List_Poss.Add(p);
+                var idx = p.Comment.IndexOf("CR_") + 3;
+                double pcr = Convert.ToDouble(p.Comment.Substring(idx, 6));
+                if (pcr < ca && sr > 0)
+                    list_poss.Add(p);
+                if (pcr > ca & sr < 0)
+                    list_poss.Add(p);
             }
-            if (List_Poss.Count > 0)
+            if (list_poss.Count > 0)
             {
-                foreach (var p in List_Poss)
+                foreach (var p in list_poss)
                 {
-                    Volume += p.Volume * 2;
+                    volume += p.Volume * 2;
                 }
             }
 
-            if (this.LastPosition(Poss).Volume > Volume)
-                Volume = this.LastPosition(Poss).Volume;
-            if (_initvolume > Volume)
-                Volume = _initvolume;
-            return Volume;
+            if (this.LastPosition(poss).Volume > volume)
+                volume = this.LastPosition(poss).Volume;
+            if (_initvolume > volume)
+                volume = _initvolume;
+            return volume;
         }
 
         private double GetDistance()
@@ -513,11 +512,11 @@ namespace cAlgo
 
         private bool GetClose(string label)
         {
-            var Poss = this.GetPositions(label, Symbol);
-            if (Poss.Length != 0)
+            var poss = this.GetPositions(label, Symbol);
+            if (poss.Length != 0)
             {
-                int BarsAgo = MarketSeries.barsAgo(this.FirstPosition(Poss));
-                if (BarsAgo > 24 || Poss.Length > 1)
+                int barsago = MarketSeries.barsAgo(this.FirstPosition(poss));
+                if (barsago > 24 || poss.Length > 1)
                     return true;
             }
             return false;
@@ -525,25 +524,27 @@ namespace cAlgo
 
         private double GetBreak(string label)
         {
-            var Poss = this.GetPositions(label, Symbol);
-            var SR = Math.Abs(_mas.Result.LastValue);
-            double BR = _break;
-            if (BR < SR)
-                BR = Math.Floor(SR);
-            if (Poss.Length != 0)
+            var poss = this.GetPositions(label, Symbol);
+            var sr = Math.Abs(_mas.Result.LastValue);
+            double br = _break;
+            if (br < sr)
+                br = Math.Floor(sr);
+            if (poss.Length != 0)
             {
-                foreach (var p in Poss)
+                foreach (var p in poss)
                 {
                     var idx = p.Comment.IndexOf("BR_") + 3;
-                    if (BR < Convert.ToDouble(p.Comment.Substring(idx, 3)))
-                        BR = Convert.ToDouble(p.Comment.Substring(idx, 3));
+                    if (br < Convert.ToDouble(p.Comment.Substring(idx, 3)))
+                        br = Convert.ToDouble(p.Comment.Substring(idx, 3));
                 }
             }
-            return BR;
+            return br;
         }
 
         private bool GetTradeTime()
         {
+            if (Symbol.Spread / Symbol.PipSize <= 5)
+                return true;
             var now = DateTime.UtcNow;
             var hour = now.Hour;
             if (hour >= 20)
@@ -553,30 +554,30 @@ namespace cAlgo
 
         private void GetRisk()
         {
-            Position[] Pos_above = this.GetPositions(_abovelabel, Symbol);
-            Position[] Pos_below = this.GetPositions(_belowlabel, Symbol);
-            var Poss = Pos_above.Length == 0 ? Pos_below : Pos_above;
-            if (Poss.Length == 0)
+            Position[] pos_above = this.GetPositions(_abovelabel, Symbol);
+            Position[] pos_below = this.GetPositions(_belowlabel, Symbol);
+            var poss = pos_above.Length == 0 ? pos_below : pos_above;
+            if (poss.Length == 0)
             {
                 _risk = false;
                 return;
             }
 
-            List<Position> List_Poss = new List<Position>();
-            var CR = _mac.Result.LastValue;
-            var CA = _mac.Average.LastValue;
-            var SR = _mas.Result.LastValue;
-            var SA = _mas.Average.LastValue;
-            foreach (var p in Poss)
+            List<Position> list_poss = new List<Position>();
+            var cr = _mac.Result.LastValue;
+            var ca = _mac.Average.LastValue;
+            var sr = _mas.Result.LastValue;
+            var sa = _mas.Average.LastValue;
+            foreach (var p in poss)
             {
-                var IDX = p.Comment.IndexOf("CR_") + 3;
-                double PCR = Convert.ToDouble(p.Comment.Substring(IDX, 6));
-                if (PCR < CA && SR > 0)
-                    List_Poss.Add(p);
-                if (PCR > CA & SR < 0)
-                    List_Poss.Add(p);
+                var idx = p.Comment.IndexOf("CR_") + 3;
+                double pcr = Convert.ToDouble(p.Comment.Substring(idx, 6));
+                if (pcr < ca && sr > 0)
+                    list_poss.Add(p);
+                if (pcr > ca & sr < 0)
+                    list_poss.Add(p);
             }
-            if (List_Poss.Count > 1)
+            if (list_poss.Count > 1)
             {
                 _risk = true;
             }

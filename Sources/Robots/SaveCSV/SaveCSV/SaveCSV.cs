@@ -9,15 +9,15 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class SaveCSV : Robot
     {
-        private string DataDir;
-        private string fiName;
+        private string _datadir;
+        private string _filename;
         private System.Timers.Timer timer1;
 
         protected override void OnStart()
         {
-            DataDir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
-            fiName = DataDir + "\\" + "cBotSet.csv";
-            Print("fiName=" + fiName);
+            _datadir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
+            _filename = _datadir + "\\" + "cBotSet.csv";
+            Print("fiName=" + _filename);
             InitTimer1();
             timer1.Start();
         }
@@ -25,7 +25,7 @@ namespace cAlgo
         private void InitTimer1()
         {
             //设置定时间隔(毫秒为单位)
-            int interval = 10000;
+            int interval = 60000;
             timer1 = new System.Timers.Timer(interval);
             //设置执行一次（false）还是一直执行(true)
             timer1.AutoReset = true;
@@ -60,7 +60,7 @@ namespace cAlgo
                 SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
                 objdataadpater.SelectCommand.CommandTimeout = 1000;
                 objdataadpater.Fill(dataset, "cBotSet");
-                CsvParsingHelper.SaveCsv(dataset.Tables["cBotSet"], DataDir);
+                CsvParsingHelper.SaveCsv(dataset.Tables["cBotSet"], _datadir);
                 Print("It's Successful to save CSV.");
             } catch (System.Data.SqlClient.SqlException ex)
             {

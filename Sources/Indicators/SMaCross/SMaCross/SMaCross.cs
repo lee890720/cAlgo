@@ -16,7 +16,7 @@ namespace cAlgo
         public IndicatorDataSeries Average { get; set; }
 
         [Parameter("Symbol")]
-        public string symbol { get; set; }
+        public string _Symbol { get; set; }
 
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
@@ -34,8 +34,8 @@ namespace cAlgo
 
         protected override void Initialize()
         {
-            _marketseries = MarketData.GetSeries(symbol, TimeFrame);
-            _symbol = MarketData.GetSymbol(symbol);
+            _marketseries = MarketData.GetSeries(_Symbol, TimeFrame);
+            _symbol = MarketData.GetSymbol(_Symbol);
             _result = Indicators.SimpleMovingAverage(_marketseries.Close, ResultPeriods);
             _average = Indicators.SimpleMovingAverage(_marketseries.Close, AveragePeriods);
         }

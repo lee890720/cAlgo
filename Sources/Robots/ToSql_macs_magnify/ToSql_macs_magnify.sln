@@ -1,7 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToSql_macs_magnify", "ToSql_macs_magnify\ToSql_macs_magnify.csproj", "{AC8904F3-DFF5-4E53-A07C-206A8238A663}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MAC", "..\..\Indicators\_Magnify_MAC\_Magnify_MAC\_Magnify_MAC.csproj", "{4DACF84E-B2ED-484A-AF31-E892076A8041}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MAS", "..\..\Indicators\_Magnify_MAS\_Magnify_MAS\_Magnify_MAS.csproj", "{BCE3082A-0491-4C6D-8E9A-0B6A85B322B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,13 +19,16 @@ Global
 		{AC8904F3-DFF5-4E53-A07C-206A8238A663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC8904F3-DFF5-4E53-A07C-206A8238A663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC8904F3-DFF5-4E53-A07C-206A8238A663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DACF84E-B2ED-484A-AF31-E892076A8041}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE3082A-0491-4C6D-8E9A-0B6A85B322B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE3082A-0491-4C6D-8E9A-0B6A85B322B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE3082A-0491-4C6D-8E9A-0B6A85B322B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE3082A-0491-4C6D-8E9A-0B6A85B322B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
-
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MAC", "..\..\Indicators\_Magnify_MAC\_Magnify_MAC\_Magnify_MAC.csproj", "{4DACF84E-B2ED-484A-AF31-E892076A8041}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MAS", "..\..\Indicators\_Magnify_MAS\_Magnify_MAS\_Magnify_MAS.csproj", "{BCE3082A-0491-4C6D-8E9A-0B6A85B322B2}"
-EndProject
