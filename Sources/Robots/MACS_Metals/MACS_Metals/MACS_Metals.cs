@@ -20,7 +20,7 @@ namespace cAlgo
         private double _distance;
         private bool _istrade;
         private bool _isbreak;
-        private bool _breakfirst;
+        private bool _isbrkfirst;
         private int _resultperiods;
         private int _averageperiods;
         private double _magnify;
@@ -81,10 +81,10 @@ namespace cAlgo
                         _isbreak = Convert.ToBoolean(dr["isbreak"]);
                         Print("IsBreak: " + _isbreak.ToString() + "-" + _isbreak.GetType().ToString());
                     }
-                    if (_breakfirst != Convert.ToBoolean(dr["breakfirst"]))
+                    if (_isbrkfirst != Convert.ToBoolean(dr["isbrkfirst"]))
                     {
-                        _breakfirst = Convert.ToBoolean(dr["breakfirst"]);
-                        Print("BreakFirst: " + _breakfirst.ToString() + "-" + _breakfirst.GetType().ToString());
+                        _isbrkfirst = Convert.ToBoolean(dr["isbrkfirst"]);
+                        Print("BreakFirst: " + _isbrkfirst.ToString() + "-" + _isbrkfirst.GetType().ToString());
                     }
                     if (_resultperiods != Convert.ToInt32(dr["result"]))
                     {
@@ -429,7 +429,7 @@ namespace cAlgo
 
             if (DateTime.Compare(nowtime, pos_lasttime) < 0)
                 return null;
-            if ((_isbreak && poss.Length != 0) || (_isbreak && _breakfirst))
+            if ((_isbreak && poss.Length != 0) || (_isbreak && _isbrkfirst))
             {
                 if (sr >= GetBreak(_abovelabel))
                     return signal = "above_br";
