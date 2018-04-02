@@ -46,13 +46,13 @@ namespace cAlgo
             {
                 if (dr["symbol"].ToString() == Symbol.Code)
                 {
-                    if (_resultperiods != Convert.ToInt32(dr["resultperiods"]))
+                    if (_resultperiods != Convert.ToInt32(dr["result"]))
                     {
-                        _resultperiods = Convert.ToInt32(dr["resultperiods"]);
+                        _resultperiods = Convert.ToInt32(dr["result"]);
                     }
-                    if (_averageperiods != Convert.ToInt32(dr["averageperiods"]))
+                    if (_averageperiods != Convert.ToInt32(dr["average"]))
                     {
-                        _averageperiods = Convert.ToInt32(dr["averageperiods"]);
+                        _averageperiods = Convert.ToInt32(dr["average"]);
                     }
                     if (_magnify != Convert.ToDouble(dr["magnify"]))
                     {

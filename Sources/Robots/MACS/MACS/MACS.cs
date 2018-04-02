@@ -83,14 +83,14 @@ namespace cAlgo
                         _breakfirst = Convert.ToBoolean(dr["breakfirst"]);
                         Print("BreakFirst: " + _breakfirst.ToString() + "-" + _breakfirst.GetType().ToString());
                     }
-                    if (_resultperiods != Convert.ToInt32(dr["resultperiods"]))
+                    if (_resultperiods != Convert.ToInt32(dr["result"]))
                     {
-                        _resultperiods = Convert.ToInt32(dr["resultperiods"]);
+                        _resultperiods = Convert.ToInt32(dr["result"]);
                         Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
                     }
-                    if (_averageperiods != Convert.ToInt32(dr["averageperiods"]))
+                    if (_averageperiods != Convert.ToInt32(dr["average"]))
                     {
-                        _averageperiods = Convert.ToInt32(dr["averageperiods"]);
+                        _averageperiods = Convert.ToInt32(dr["average"]);
                         Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
                     }
                     if (_magnify != Convert.ToDouble(dr["magnify"]))

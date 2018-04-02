@@ -44,7 +44,7 @@ namespace cAlgo
             {
                 con.Open();
                 DataSet dataset = new DataSet();
-                string strsql = "select * from CBotSet";
+                string strsql = "select * from Frx_Cbotset";
                 SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
                 SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
                 objdataadpater.SelectCommand.CommandTimeout = 1000;

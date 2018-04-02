@@ -1,8 +1,10 @@
-﻿using cAlgo.API;
-using CSVLib;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using cAlgo.API;
+using CSVLib;
 
 namespace cAlgo
 {
@@ -37,25 +39,31 @@ namespace cAlgo
 
         private void OnTimer1(object sender, System.Timers.ElapsedEventArgs e)
         {
-            var utctime = DateTime.UtcNow;
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
             try
             {
                 con.Open();
                 DataSet dataset_time = new DataSet();
-                string strsql_time = "select * from Person where PersonID=1";
+                string strsql_time = "select * from Frx_Ecs";
                 SqlDataAdapter objdataadpater_time = new SqlDataAdapter(strsql_time, con);
                 SqlCommandBuilder sql_time = new SqlCommandBuilder(objdataadpater_time);
                 objdataadpater_time.SelectCommand.CommandTimeout = 1000;
                 objdataadpater_time.Fill(dataset_time, "time");
-                dataset_time.Tables["time"].Rows[0][3] = utctime;
-                objdataadpater_time.Update(dataset_time.Tables["time"]);
-                Print(dataset_time.Tables["time"].Rows[0][3].ToString());
-                objdataadpater_time.Update(dataset_time.Tables["time"]);
+                var utctime = DateTime.UtcNow;
+                foreach (DataRow r in dataset_time.Tables["time"].Rows)
+                {
+                    if (r["EcsName"].ToString() == "LeeInfo")
+                    {
+                        r["EcsTime"] = utctime;
+                        objdataadpater_time.Update(dataset_time.Tables["time"]);
+                        Print("It's Successful to update " + utctime.ToString());
+
+                    }
+                }
 
                 DataSet dataset = new DataSet();
-                string strsql = "select * from CBotSet";
+                string strsql = "select * from Frx_Cbotset";
                 SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
                 SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
                 objdataadpater.SelectCommand.CommandTimeout = 1000;

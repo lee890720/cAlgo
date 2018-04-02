@@ -40,10 +40,10 @@ namespace cAlgo
         protected override void OnTimer()
         {
             #region Parameter
-            var cr = _mac.Result.LastValue;
-            var ca = _mac.Average.LastValue;
-            var sr = _mas.Result.LastValue;
-            var sa = _mas.Average.LastValue;
+            var cr = Math.Round(_mac.Result.LastValue);
+            var ca = Math.Round(_mac.Average.LastValue);
+            var sr = Math.Round(_mas.Result.LastValue);
+            var sa = Math.Round(_mas.Average.LastValue);
             var sig = _mas.SignalOne;
             #endregion
             SqlConnection con = new SqlConnection();
@@ -52,7 +52,7 @@ namespace cAlgo
             {
                 con.Open();
                 DataSet dataset = new DataSet();
-                string strsql = "select * from CBotSet where symbol='";
+                string strsql = "select * from Frx_Cbotset where symbol='";
                 strsql += Symbol.Code + "'";
                 SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
                 SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
@@ -94,14 +94,14 @@ namespace cAlgo
             {
                 if (dr["symbol"].ToString() == Symbol.Code)
                 {
-                    if (_resultperiods != Convert.ToInt32(dr["resultperiods"]))
+                    if (_resultperiods != Convert.ToInt32(dr["result"]))
                     {
-                        _resultperiods = Convert.ToInt32(dr["resultperiods"]);
+                        _resultperiods = Convert.ToInt32(dr["result"]);
                         Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
                     }
-                    if (_averageperiods != Convert.ToInt32(dr["averageperiods"]))
+                    if (_averageperiods != Convert.ToInt32(dr["average"]))
                     {
-                        _averageperiods = Convert.ToInt32(dr["averageperiods"]);
+                        _averageperiods = Convert.ToInt32(dr["average"]);
                         Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
                     }
                     if (_magnify != Convert.ToDouble(dr["magnify"]))

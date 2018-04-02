@@ -62,7 +62,7 @@ namespace cAlgo
             {
                 con.Open();
                 DataSet dataset = new DataSet();
-                string strsql = "select * from CBotSet where symbol='" + p_symbol.Code + "'";
+                string strsql = "select * from Frx_Cbotset where symbol='" + p_symbol.Code + "'";
                 SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
                 SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
                 objdataadpater.SelectCommand.CommandTimeout = 300;
