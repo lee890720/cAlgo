@@ -11,6 +11,18 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class ToSql_XAUXAG : Robot
     {
+        [Parameter("Data Source", DefaultValue = ".")]
+        public string DataSource { get; set; }
+
+        [Parameter("Initial Catalog", DefaultValue = "LeeInfoDb")]
+        public string InitialCatalog { get; set; }
+
+        [Parameter("User ID", DefaultValue = "sa")]
+        public string UserID { get; set; }
+
+        [Parameter("Password", DefaultValue = "Lee37355175")]
+        public string Password { get; set; }
+
         private int _resultperiods;
         private int _averageperiods;
         private double _magnify;
@@ -43,8 +55,13 @@ namespace cAlgo
             #endregion
             try
             {
+                string strcon = "Data Source=";
+                strcon += DataSource + ";Initial Catalog=";
+                strcon += InitialCatalog + ";User ID=";
+                strcon += UserID + ";Password=";
+                strcon += Password + ";Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
                 SqlConnection sqlCon = new SqlConnection();
-                sqlCon.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
+                sqlCon.ConnectionString = strcon;
                 sqlCon.Open();
                 DataSet dataset = new DataSet();
                 string strsql = "select * from Frx_Cbotset where symbol='";
@@ -67,6 +84,11 @@ namespace cAlgo
                 }
                 var result = sqlData.Update(dataset, "cBotSet");
                 Print("XAUXAG" + result.ToString() + " has been changed.");
+                dataset.Dispose();
+                sqlCom.Dispose();
+                sqlData.Dispose();
+                sqlCon.Close();
+                sqlCon.Dispose();
             } catch (System.Data.SqlClient.SqlException ex)
             {
                 Print(ex.ToString());
