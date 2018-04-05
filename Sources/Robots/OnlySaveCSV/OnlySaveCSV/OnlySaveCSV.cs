@@ -37,28 +37,28 @@ namespace cAlgo
 
         private void OnTimer1(object sender, System.Timers.ElapsedEventArgs e)
         {
-            var utctime = DateTime.UtcNow;
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
             try
             {
-                con.Open();
+                SqlConnection sqlCon = new SqlConnection();
+                sqlCon.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
+                sqlCon.Open();
                 DataSet dataset = new DataSet();
                 string strsql = "select * from Frx_Cbotset";
-                SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
-                SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
-                objdataadpater.SelectCommand.CommandTimeout = 1000;
-                objdataadpater.Fill(dataset, "cBotSet");
+                SqlDataAdapter sqlData = new SqlDataAdapter(strsql, sqlCon);
+                SqlCommandBuilder sqlCom = new SqlCommandBuilder(sqlData);
+                //objdataadpater.SelectCommand.CommandTimeout = 1000;
+                sqlData.Fill(dataset, "cBotSet");
                 CsvParsingHelper.SaveCsv(dataset.Tables["cBotSet"], _datadir);
                 Print("It's Successful to save CSV.");
+                dataset.Dispose();
+                sqlCom.Dispose();
+                sqlData.Dispose();
+                sqlCon.Close();
+                sqlCon.Dispose();
             } catch (System.Data.SqlClient.SqlException ex)
             {
                 Print(ex.ToString());
                 throw new Exception(ex.Message);
-            } finally
-            {
-                con.Close();
-                con.Dispose();
             }
         }
 

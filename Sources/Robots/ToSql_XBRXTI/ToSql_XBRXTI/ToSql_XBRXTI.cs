@@ -41,19 +41,19 @@ namespace cAlgo
             var sa = Math.Round(_mas.Average.LastValue);
             var sig = _mas.SignalOne;
             #endregion
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
             try
             {
-                con.Open();
+                SqlConnection sqlCon = new SqlConnection();
+                sqlCon.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
+                sqlCon.Open();
                 DataSet dataset = new DataSet();
                 string strsql = "select * from Frx_Cbotset where symbol='";
                 strsql += "XBRXTI" + "'";
-                SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
-                SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
-                objdataadpater.SelectCommand.CommandTimeout = 1000;
-                objdataadpater.Fill(dataset, "cBotSet");
-                foreach (DataRow dr in dataset.Tables["cBotSet"].Rows)
+                SqlDataAdapter sqlData = new SqlDataAdapter(strsql, sqlCon);
+                SqlCommandBuilder sqlCom = new SqlCommandBuilder(sqlData);
+                sqlData.Fill(dataset, "cBotSet");
+                DataTable dt = dataset.Tables["cBotSet"];
+                foreach (DataRow dr in dt.Rows)
                 {
                     var symbol = Convert.ToString(dr["symbol"]);
                     if (symbol == "XBRXTI")
@@ -65,16 +65,12 @@ namespace cAlgo
                         dr["signal"] = sig;
                     }
                 }
-                var _result = objdataadpater.Update(dataset.Tables["cBotSet"]);
-                Print("XBRXTI" + _result.ToString() + " has been changed.");
+                var result = sqlData.Update(dataset, "cBotSet");
+                Print("XBRXTI" + result.ToString() + " has been changed.");
             } catch (System.Data.SqlClient.SqlException ex)
             {
                 Print(ex.ToString());
                 throw new Exception(ex.Message);
-            } finally
-            {
-                con.Close();
-                con.Dispose();
             }
         }
 
