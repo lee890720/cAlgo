@@ -95,7 +95,7 @@ namespace cAlgo
                     }
                     if (_magnify != Convert.ToDouble(dr["Magnify"]))
                     {
-                        _magnify = Convert.ToDouble(dr["Mgnify"]);
+                        _magnify = Convert.ToDouble(dr["Magnify"]);
                         Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
                     }
                     if (_sub != Convert.ToDouble(dr["Sub"]))
