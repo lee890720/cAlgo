@@ -9,16 +9,16 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class ToSql_TradeData : Robot
     {
-        [Parameter("Data Source", DefaultValue = ".")]
+        [Parameter("Data Source", DefaultValue = "tcp:leeinfodb.database.windows.net,1433")]
         public string DataSource { get; set; }
 
         [Parameter("Initial Catalog", DefaultValue = "LeeInfoDb")]
         public string InitialCatalog { get; set; }
 
-        [Parameter("User ID", DefaultValue = "sa")]
+        [Parameter("User ID", DefaultValue = "lee_890720")]
         public string UserID { get; set; }
 
-        [Parameter("Password", DefaultValue = "Lee37355175")]
+        [Parameter("Password", DefaultValue = "l_37355175")]
         public string Password { get; set; }
 
         protected override void OnStart()
@@ -48,7 +48,7 @@ namespace cAlgo
                 {
                     if (Convert.ToString(r["AccountNumber"]) == this.Account.Number.ToString())
                     {
-                        accountid = Convert.ToInt32(r["Id"]);
+                        accountid = Convert.ToInt32(r["AccountId"]);
                         Print("It's success to find the account id.");
                     }
                 }
@@ -88,7 +88,7 @@ namespace cAlgo
                         dr_pos["TakeProfit"] = p.TakeProfit;
                     dr_pos["TradeType"] = p.TradeType;
                     dr_pos["Volume"] = p.Volume;
-                    dr_pos["FrxAccountId"] = accountid;
+                    dr_pos["AccountId"] = accountid;
                     dt_pos.Rows.Add(dr_pos);
                 }
                 sqlData_pos.Update(dataset, "Frx_Position");
@@ -124,7 +124,7 @@ namespace cAlgo
                     dr_his["SymbolCode"] = h.SymbolCode;
                     dr_his["TradeType"] = h.TradeType;
                     dr_his["Volume"] = h.Volume;
-                    dr_his["FrxAccountId"] = accountid;
+                    dr_his["AccountId"] = accountid;
                     DataRow dr = dt_his.Rows.Find(h.ClosingDealId);
                     if (dr == null)
                         dt_his.Rows.Add(dr_his);

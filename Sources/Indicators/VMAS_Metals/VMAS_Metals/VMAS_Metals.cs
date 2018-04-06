@@ -43,19 +43,19 @@ namespace cAlgo
             DataTable dt = CSVLib.CsvParsingHelper.CsvToDataTable(_filename, true);
             foreach (DataRow dr in dt.Rows)
             {
-                if (dr["symbol"].ToString() == "XAUXAG")
+                if (dr["Symbol"].ToString() == "XAUXAG")
                 {
-                    if (_resultperiods != Convert.ToInt32(dr["result"]))
+                    if (_resultperiods != Convert.ToInt32(dr["Result"]))
                     {
-                        _resultperiods = Convert.ToInt32(dr["result"]);
+                        _resultperiods = Convert.ToInt32(dr["Result"]);
                     }
-                    if (_averageperiods != Convert.ToInt32(dr["average"]))
+                    if (_averageperiods != Convert.ToInt32(dr["Average"]))
                     {
-                        _averageperiods = Convert.ToInt32(dr["average"]);
+                        _averageperiods = Convert.ToInt32(dr["Average"]);
                     }
-                    if (_sub != Convert.ToDouble(dr["sub"]))
+                    if (_sub != Convert.ToDouble(dr["Sub"]))
                     {
-                        _sub = Convert.ToDouble(dr["sub"]);
+                        _sub = Convert.ToDouble(dr["Sub"]);
                     }
                     break;
                 }

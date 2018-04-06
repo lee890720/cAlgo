@@ -11,16 +11,16 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class SaveCSV : Robot
     {
-        [Parameter("Data Source", DefaultValue = ".")]
+        [Parameter("Data Source", DefaultValue = "tcp:leeinfodb.database.windows.net,1433")]
         public string DataSource { get; set; }
 
         [Parameter("Initial Catalog", DefaultValue = "LeeInfoDb")]
         public string InitialCatalog { get; set; }
 
-        [Parameter("User ID", DefaultValue = "sa")]
+        [Parameter("User ID", DefaultValue = "lee_890720")]
         public string UserID { get; set; }
 
-        [Parameter("Password", DefaultValue = "Lee37355175")]
+        [Parameter("Password", DefaultValue = "l_37355175")]
         public string Password { get; set; }
 
         private string _datadir;

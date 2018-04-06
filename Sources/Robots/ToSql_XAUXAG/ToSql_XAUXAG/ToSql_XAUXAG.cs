@@ -72,14 +72,14 @@ namespace cAlgo
                 DataTable dt = dataset.Tables["cBotSet"];
                 foreach (DataRow dr in dt.Rows)
                 {
-                    var symbol = Convert.ToString(dr["symbol"]);
+                    var symbol = Convert.ToString(dr["Symbol"]);
                     if (symbol == "XAUXAG")
                     {
-                        dr["cr"] = cr;
-                        dr["ca"] = ca;
-                        dr["sr"] = sr;
-                        dr["sa"] = sa;
-                        dr["signal"] = sig;
+                        dr["Cr"] = cr;
+                        dr["Ca"] = ca;
+                        dr["Sr"] = sr;
+                        dr["Sa"] = sa;
+                        dr["Signal"] = sig;
                     }
                 }
                 var result = sqlData.Update(dataset, "cBotSet");
@@ -105,26 +105,26 @@ namespace cAlgo
                 dt = CSVLib.CsvParsingHelper.CsvToDataTable(_filename, true);
             foreach (DataRow dr in dt.Rows)
             {
-                if (dr["symbol"].ToString() == "XAUXAG")
+                if (dr["Symbol"].ToString() == "XAUXAG")
                 {
-                    if (_resultperiods != Convert.ToInt32(dr["result"]))
+                    if (_resultperiods != Convert.ToInt32(dr["Result"]))
                     {
-                        _resultperiods = Convert.ToInt32(dr["result"]);
+                        _resultperiods = Convert.ToInt32(dr["Result"]);
                         Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
                     }
-                    if (_averageperiods != Convert.ToInt32(dr["average"]))
+                    if (_averageperiods != Convert.ToInt32(dr["Average"]))
                     {
-                        _averageperiods = Convert.ToInt32(dr["average"]);
+                        _averageperiods = Convert.ToInt32(dr["Average"]);
                         Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
                     }
-                    if (_magnify != Convert.ToDouble(dr["magnify"]))
+                    if (_magnify != Convert.ToDouble(dr["Magnify"]))
                     {
-                        _magnify = Convert.ToDouble(dr["magnify"]);
+                        _magnify = Convert.ToDouble(dr["Magnify"]);
                         Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
                     }
-                    if (_sub != Convert.ToDouble(dr["sub"]))
+                    if (_sub != Convert.ToDouble(dr["Sub"]))
                     {
-                        _sub = Convert.ToDouble(dr["sub"]);
+                        _sub = Convert.ToDouble(dr["Sub"]);
                         Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
                     }
                     break;
