@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ToSql_TradeData")]
+[assembly: AssemblyTitle("New Indicator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("ToSql_TradeData")]
+[assembly: AssemblyProduct("New Indicator")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

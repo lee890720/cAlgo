@@ -7,18 +7,18 @@ using System.Data.SqlClient;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
-    public class ToSql_TradeData : Robot
+    public class ToSql_AccountData : Robot
     {
-        [Parameter("Data Source", DefaultValue = "tcp:leeinfodb.database.windows.net,1433")]
+        [Parameter("Data Source", DefaultValue = "tcp:leeinfo.database.windows.net,1433")]
         public string DataSource { get; set; }
 
-        [Parameter("Initial Catalog", DefaultValue = "LeeInfoDb")]
+        [Parameter("Initial Catalog", DefaultValue = "LeeInfo")]
         public string InitialCatalog { get; set; }
 
-        [Parameter("User ID", DefaultValue = "lee_890720")]
+        [Parameter("User ID", DefaultValue = "lee890720")]
         public string UserID { get; set; }
 
-        [Parameter("Password", DefaultValue = "l_37355175")]
+        [Parameter("Password", DefaultValue = "Lee37355175")]
         public string Password { get; set; }
 
         protected override void OnStart()
