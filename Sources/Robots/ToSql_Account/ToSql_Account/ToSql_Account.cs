@@ -23,7 +23,7 @@ namespace cAlgo
 
         protected override void OnStart()
         {
-            Timer.Start(10);
+            Timer.Start(600);
         }
 
         protected override void OnTimer()
