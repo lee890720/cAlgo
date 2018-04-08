@@ -62,21 +62,34 @@ namespace cAlgo
                 sqlCon.ConnectionString = strcon;
                 sqlCon.Open();
                 DataSet dataset_time = new DataSet();
-                string strsql_time = "select * from Frx_Ecs";
+                string strsql_time = "select * from Frx_Server";
                 SqlDataAdapter sqlData_time = new SqlDataAdapter(strsql_time, sqlCon);
                 SqlCommandBuilder sqlCom_time = new SqlCommandBuilder(sqlData_time);
                 sqlData_time.Fill(dataset_time, "time");
                 var utctime = DateTime.UtcNow;
                 DataTable dt = dataset_time.Tables["time"];
-                foreach (DataRow r in dt.Rows)
+                string computerName = System.Environment.MachineName;
+                bool isExist = false;
+                foreach (DataRow dr in dt.Rows)
                 {
-                    if (r["EcsName"].ToString() == "LeeInfo")
+                    if (dr["ServerName"].ToString() == computerName)
                     {
-                        r["EcsTime"] = utctime;
+                        isExist = true;
+                        dr["ServerTime"] = utctime;
+                        dr["AccountNumber"] = this.Account.Number;
                     }
                 }
-                sqlData_time.Update(dataset_time, "time");
-                Print("It's Successful to update " + utctime.ToString());
+                if (!isExist)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["ServerName"] = computerName;
+                    dr["ServerTime"] = utctime;
+                    dr["AccountNumber"] = this.Account.Number;
+                    dt.Rows.Add(dr);
+                }
+                var result = sqlData_time.Update(dataset_time, "time");
+                if (result > 0)
+                    Print("It's Successful to update " + utctime.ToString());
                 dataset_time.Dispose();
                 sqlCom_time.Dispose();
                 sqlData_time.Dispose();

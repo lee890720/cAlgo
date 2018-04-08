@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("New Indicator")]
+[assembly: AssemblyTitle("ToSql_Account")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyProduct("New Indicator")]
+[assembly: AssemblyProduct("ToSql_Account")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

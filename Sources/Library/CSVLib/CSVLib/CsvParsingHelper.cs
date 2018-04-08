@@ -200,6 +200,10 @@ namespace CSVLib
             StreamWriter sw = null;
             try
             {
+                if(!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
                 fs = new FileStream(filePath + dt.TableName + ".csv", FileMode.Create, FileAccess.Write);
                 sw = new StreamWriter(fs, Encoding.Default);
                 var data = string.Empty;

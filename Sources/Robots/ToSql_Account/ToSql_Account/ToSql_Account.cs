@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 namespace cAlgo
 {
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
-    public class ToSql_AccountData : Robot
+    public class ToSql_Account : Robot
     {
         [Parameter("Data Source", DefaultValue = "tcp:leeinfo.database.windows.net,1433")]
         public string DataSource { get; set; }
@@ -23,7 +23,7 @@ namespace cAlgo
 
         protected override void OnStart()
         {
-            Timer.Start(600);
+            Timer.Start(10);
         }
 
         protected override void OnTimer()
@@ -41,17 +41,37 @@ namespace cAlgo
                 DataSet dataset = new DataSet();
                 string strsql_account = "select * from Frx_Account";
                 SqlDataAdapter sqlData_account = new SqlDataAdapter(strsql_account, sqlCon);
+                SqlCommandBuilder sqlCom_account = new SqlCommandBuilder(sqlData_account);
                 sqlData_account.Fill(dataset, "Frx_Account");
                 DataTable dt_account = dataset.Tables["Frx_Account"];
-                int accountid = 0;
-                foreach (DataRow r in dt_account.Rows)
+                bool isExist = false;
+                foreach (DataRow dr in dt_account.Rows)
                 {
-                    if (Convert.ToString(r["AccountNumber"]) == this.Account.Number.ToString())
+                    if (Convert.ToInt32(dr["AccountNumber"]) == this.Account.Number)
                     {
-                        accountid = Convert.ToInt32(r["AccountId"]);
-                        Print("It's success to find the account id.");
+                        isExist = true;
+                        dr["Balance"] = this.Account.Balance;
+                        dr["Equity"] = this.Account.Equity;
+                        dr["PreciseLeverage"] = this.Account.PreciseLeverage;
+                        dr["UnrealizedNetProfit"] = this.Account.UnrealizedNetProfit;
+                        Print("It's success to find the Account .");
                     }
                 }
+                if (!isExist)
+                {
+                    DataRow dr = dt_account.NewRow();
+                    dr["AccountNumber"] = this.Account.Number;
+                    dr["BrokerName"] = this.Account.BrokerName;
+                    dr["Currency"] = this.Account.Currency;
+                    dr["IsLive"] = this.Account.IsLive;
+                    dr["Balance"] = this.Account.Balance;
+                    dr["Equity"] = this.Account.Equity;
+                    dr["PreciseLeverage"] = this.Account.PreciseLeverage;
+                    dr["UnrealizedNetProfit"] = this.Account.UnrealizedNetProfit;
+                    dt_account.Rows.Add(dr);
+                    Print("It's success to create the Account .");
+                }
+                sqlData_account.Update(dataset, "Frx_Account");
 
                 using (var cmd = sqlCon.CreateCommand())
                 {
@@ -88,7 +108,7 @@ namespace cAlgo
                         dr_pos["TakeProfit"] = p.TakeProfit;
                     dr_pos["TradeType"] = p.TradeType;
                     dr_pos["Volume"] = p.Volume;
-                    dr_pos["AccountId"] = accountid;
+                    dr_pos["AccountNumber"] = this.Account.Number;
                     dt_pos.Rows.Add(dr_pos);
                 }
                 sqlData_pos.Update(dataset, "Frx_Position");
@@ -124,7 +144,7 @@ namespace cAlgo
                     dr_his["SymbolCode"] = h.SymbolCode;
                     dr_his["TradeType"] = h.TradeType;
                     dr_his["Volume"] = h.Volume;
-                    dr_his["AccountId"] = accountid;
+                    dr_his["AccountNumber"] = this.Account.Number;
                     DataRow dr = dt_his.Rows.Find(h.ClosingDealId);
                     if (dr == null)
                         dt_his.Rows.Add(dr_his);
@@ -132,6 +152,7 @@ namespace cAlgo
                 sqlData_his.Update(dataset, "Frx_History");
                 Print("It's success to update Frx_History.");
                 dataset.Dispose();
+                sqlCom_account.Dispose();
                 sqlData_account.Dispose();
                 sqlCom_pos.Dispose();
                 sqlData_pos.Dispose();
