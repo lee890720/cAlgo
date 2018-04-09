@@ -31,6 +31,7 @@ namespace cAlgo
         private string _filename;
         private Oil_MAC _mac;
         private Oil_MAS _mas;
+        private bool _isChange;
 
         protected override void OnStart()
         {
@@ -40,12 +41,20 @@ namespace cAlgo
             SetParams();
             _mac = Indicators.GetIndicator<Oil_MAC>(_resultperiods, _averageperiods, _sub);
             _mas = Indicators.GetIndicator<Oil_MAS>(_resultperiods, _averageperiods, _sub);
+            _isChange = false;
             Timer.Start(60);
             Print("Done OnStart()");
         }
 
         protected override void OnTimer()
         {
+            SetParams();
+            if (_isChange)
+            {
+                _mac = Indicators.GetIndicator<Oil_MAC>(_resultperiods, _averageperiods, _sub);
+                _mas = Indicators.GetIndicator<Oil_MAS>(_resultperiods, _averageperiods, _sub);
+                _isChange = false;
+            }
             #region Parameter
             var cr = Math.Round(_mac.Result.LastValue);
             var ca = Math.Round(_mac.Average.LastValue);
@@ -111,21 +120,25 @@ namespace cAlgo
                     {
                         _resultperiods = Convert.ToInt32(dr["Result"]);
                         Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
+                        _isChange = true;
                     }
                     if (_averageperiods != Convert.ToInt32(dr["Average"]))
                     {
                         _averageperiods = Convert.ToInt32(dr["Average"]);
                         Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
+                        _isChange = true;
                     }
                     if (_magnify != Convert.ToDouble(dr["Magnify"]))
                     {
                         _magnify = Convert.ToDouble(dr["Magnify"]);
                         Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
+                        _isChange = true;
                     }
                     if (_sub != Convert.ToDouble(dr["Sub"]))
                     {
                         _sub = Convert.ToDouble(dr["Sub"]);
                         Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
+                        _isChange = true;
                     }
                     break;
                 }
