@@ -12,7 +12,7 @@ namespace cAlgo
         [Parameter("Data Source", DefaultValue = "tcp:leeinfo.database.windows.net,1433")]
         public string DataSource { get; set; }
 
-        [Parameter("Initial Catalog", DefaultValue = "LeeInfo")]
+        [Parameter("Initial Catalog", DefaultValue = "LeeInfoDb")]
         public string InitialCatalog { get; set; }
 
         [Parameter("User ID", DefaultValue = "lee890720")]
