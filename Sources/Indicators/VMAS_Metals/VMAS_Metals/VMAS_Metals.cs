@@ -228,7 +228,7 @@ namespace cAlgo
             var list_data = JsonConvert.DeserializeObject<List<FrxCbotset>>(data);
             foreach (var d in list_data)
             {
-                if (d.Symbol == Symbol.Code)
+                if (d.Symbol == "XAUXAG")
                 {
                     if (_resultperiods != d.Result)
                     {
@@ -261,6 +261,8 @@ namespace cAlgo
 
         private string ReadFileData()
         {
+            if (!File.Exists(_fileName))
+                return null;
             FileStream stream = null;
             StreamReader streamReader = null;
             //StreamWriter streamWriter = null;
@@ -275,6 +277,8 @@ namespace cAlgo
 
         private void WriteFileData(string data)
         {
+            if (!File.Exists(_fileName))
+                return;
             FileStream stream = null;
             StreamWriter streamWriter = null;
             stream = new FileStream(_fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);

@@ -45,8 +45,11 @@
     <Reference Include="cAlgo.Lib">
       <HintPath>..\..\..\..\API\cAlgo.Lib.dll</HintPath>
     </Reference>
-    <Reference Include="CSVLib">
-      <HintPath>..\..\..\..\API\CSVLib.dll</HintPath>
+    <Reference Include="JsonLib">
+      <HintPath>..\..\..\..\API\JsonLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\API\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

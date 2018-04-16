@@ -1,11 +1,13 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
 using cAlgo.Lib;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
+
 
 namespace cAlgo
 {
@@ -25,8 +27,9 @@ namespace cAlgo
         private double _magnify;
         private double _sub;
         #endregion
-        private string _datadir;
-        private string _filename;
+        private string _filePath;
+        private string _fileName;
+        private bool _isChange;
         private Oil_MAC _mac;
         private Oil_MAS _mas;
         private Symbol _xbrsymbol;
@@ -38,83 +41,11 @@ namespace cAlgo
         private List<string> _marklist = new List<string>();
         private OrderParams _init;
 
-        private void SetParams()
-        {
-            DataTable dt = new DataTable();
-            if (File.Exists(_filename))
-                dt = CSVLib.CsvParsingHelper.CsvToDataTable(_filename, true);
-            if (dt != null)
-            {
-                foreach (DataRow dr in dt.Rows)
-                {
-                    if (dr["Symbol"].ToString() == "XBRXTI")
-                    {
-                        if (_initvolume != Convert.ToDouble(dr["InitVolume"]))
-                        {
-                            _initvolume = Convert.ToDouble(dr["InitVolume"]);
-                            Print("Init_Volume: " + _initvolume.ToString() + "-" + _initvolume.GetType().ToString());
-                        }
-                        if (_timer != Convert.ToInt32(dr["Tmr"]))
-                        {
-                            _timer = Convert.ToInt32(dr["Tmr"]);
-                            Print("Timer: " + _timer.ToString() + "-" + _timer.GetType().ToString());
-                        }
-                        if (_break != Convert.ToDouble(dr["Brk"]))
-                        {
-                            _break = Convert.ToDouble(dr["Brk"]);
-                            Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
-                        }
-                        if (_distance != Convert.ToDouble(dr["Distance"]))
-                        {
-                            _distance = Convert.ToDouble(dr["Distance"]);
-                            Print("Distance: " + _distance.ToString() + "-" + _distance.GetType().ToString());
-                        }
-                        if (_istrade != Convert.ToBoolean(dr["IsTrade"]))
-                        {
-                            _istrade = Convert.ToBoolean(dr["IsTrade"]);
-                            Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
-                        }
-                        if (_isbreak != Convert.ToBoolean(dr["IsBreak"]))
-                        {
-                            _isbreak = Convert.ToBoolean(dr["IsBreak"]);
-                            Print("IsBreak: " + _isbreak.ToString() + "-" + _isbreak.GetType().ToString());
-                        }
-                        if (_isbrkfirst != Convert.ToBoolean(dr["IsBrkFirst"]))
-                        {
-                            _isbrkfirst = Convert.ToBoolean(dr["IsBrkFirst"]);
-                            Print("BreakFirst: " + _isbrkfirst.ToString() + "-" + _isbrkfirst.GetType().ToString());
-                        }
-                        if (_resultperiods != Convert.ToInt32(dr["Result"]))
-                        {
-                            _resultperiods = Convert.ToInt32(dr["Result"]);
-                            Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
-                        }
-                        if (_averageperiods != Convert.ToInt32(dr["Average"]))
-                        {
-                            _averageperiods = Convert.ToInt32(dr["Average"]);
-                            Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
-                        }
-                        if (_magnify != Convert.ToDouble(dr["Magnify"]))
-                        {
-                            _magnify = Convert.ToDouble(dr["Magnify"]);
-                            Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
-                        }
-                        if (_sub != Convert.ToDouble(dr["Sub"]))
-                        {
-                            _sub = Convert.ToDouble(dr["Sub"]);
-                            Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-
         protected override void OnStart()
         {
-            _datadir = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
-            _filename = _datadir + "\\" + "cBotSet.csv";
-            Print("fiName=" + _filename);
+            _filePath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\cAlgo\\cbotset\\";
+            _fileName = _filePath + "cbotset.json";
+            Print("fiName=" + _fileName);
             SetParams();
             if (_magnify != 1)
             {
@@ -181,6 +112,11 @@ namespace cAlgo
             #region Parameter
             GetRisk();
             SetParams();
+            if (_isChange)
+            {
+                _mac = Indicators.GetIndicator<Oil_MAC>(_resultperiods, _averageperiods, _sub);
+                _mas = Indicators.GetIndicator<Oil_MAS>(_resultperiods, _averageperiods, _sub);
+            }
             var cr = _mac.Result.LastValue;
             var ca = _mac.Average.LastValue;
             var sr = _mas.Result.LastValue;
@@ -586,5 +522,128 @@ namespace cAlgo
                 _risk = false;
             }
         }
+
+        private void SetParams()
+        {
+            string data = ReadFileData();
+            var list_data = JsonConvert.DeserializeObject<List<FrxCbotset>>(data);
+            foreach (var d in list_data)
+            {
+                if (d.Symbol == "XBRXTI")
+                {
+                    if (_initvolume != d.InitVolume)
+                    {
+                        _initvolume = d.InitVolume;
+                        Print("InitVolume: " + _initvolume.ToString() + "-" + _initvolume.GetType().ToString());
+                    }
+                    if (_timer != d.Tmr)
+                    {
+                        _timer = d.Tmr;
+                        Print("Timer: " + _timer.ToString() + "-" + _timer.GetType().ToString());
+                    }
+                    if (_break != d.Brk)
+                    {
+                        _break = d.Brk;
+                        Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
+                    }
+                    if (_distance != d.Distance)
+                    {
+                        _distance = d.Distance;
+                        Print("Distance: " + _distance.ToString() + "-" + _distance.GetType().ToString());
+                    }
+                    if (_istrade != d.IsTrade)
+                    {
+                        _istrade = d.IsTrade;
+                        Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
+                    }
+                    if (_isbreak != d.IsBreak)
+                    {
+                        _isbreak = d.IsBreak;
+                        Print("IsBreak: " + _isbreak.ToString() + "-" + _isbreak.GetType().ToString());
+                    }
+                    if (_isbrkfirst != d.IsBrkFirst)
+                    {
+                        _isbrkfirst = d.IsBrkFirst;
+                        Print("BreakFirst: " + _isbrkfirst.ToString() + "-" + _isbrkfirst.GetType().ToString());
+                    }
+                    if (_resultperiods != d.Result)
+                    {
+                        _resultperiods = d.Result;
+                        Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
+                        _isChange = true;
+                    }
+                    if (_averageperiods != d.Average)
+                    {
+                        _averageperiods = d.Average;
+                        Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
+                        _isChange = true;
+                    }
+                    if (_magnify != d.Magnify)
+                    {
+                        _magnify = d.Magnify;
+                        Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
+                        _isChange = true;
+                    }
+                    if (_sub != d.Sub)
+                    {
+                        _sub = d.Sub;
+                        Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
+                        _isChange = true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        private string ReadFileData()
+        {
+            if (!File.Exists(_fileName))
+                return null;
+            FileStream stream = null;
+            StreamReader streamReader = null;
+            //StreamWriter streamWriter = null;
+            stream = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            streamReader = new StreamReader(stream);
+            //streamWriter = new StreamWriter(stream,Encoding.Default);
+            string data = streamReader.ReadToEnd();
+            streamReader.Close();
+            stream.Close();
+            return data;
+        }
+
+        private void WriteFileData(string data)
+        {
+            if (!File.Exists(_fileName))
+                return;
+            FileStream stream = null;
+            StreamWriter streamWriter = null;
+            stream = new FileStream(_fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            streamWriter = new StreamWriter(stream, Encoding.Default);
+            streamWriter.Write(data);
+            streamWriter.Close();
+            stream.Close();
+        }
+    }
+    public class FrxCbotset
+    {
+        public int Id { get; set; }
+        public string Symbol { get; set; }
+        public int InitVolume { get; set; }
+        public int Tmr { get; set; }
+        public double Brk { get; set; }
+        public double Distance { get; set; }
+        public bool IsTrade { get; set; }
+        public bool IsBreak { get; set; }
+        public bool IsBrkFirst { get; set; }
+        public int Result { get; set; }
+        public int Average { get; set; }
+        public double Magnify { get; set; }
+        public double Sub { get; set; }
+        public double? Cr { get; set; }
+        public double? Ca { get; set; }
+        public double? Sr { get; set; }
+        public double? Sa { get; set; }
+        public string Signal { get; set; }
+        public string Alike { get; set; }
     }
 }

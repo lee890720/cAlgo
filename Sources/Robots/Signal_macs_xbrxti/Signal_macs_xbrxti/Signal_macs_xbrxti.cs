@@ -110,6 +110,8 @@ namespace cAlgo
 
         private string ReadFileData()
         {
+            if (!File.Exists(_fileName))
+                return null;
             FileStream stream = null;
             StreamReader streamReader = null;
             //StreamWriter streamWriter = null;
@@ -124,6 +126,8 @@ namespace cAlgo
 
         private void WriteFileData(string data)
         {
+            if (!File.Exists(_fileName))
+                return;
             FileStream stream = null;
             StreamWriter streamWriter = null;
             stream = new FileStream(_fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);

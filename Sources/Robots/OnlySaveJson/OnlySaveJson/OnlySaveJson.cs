@@ -80,7 +80,7 @@ namespace cAlgo
                 var list_cbotset_server = JsonConvert.DeserializeObject<List<FrxCbotset>>(cbotset_server);
                 string cbotset_local = ReadFileData();
                 var list_cbotset_local = JsonConvert.DeserializeObject<List<FrxCbotset>>(cbotset_local);
-                if(list_cbotset_local.Count!=list_cbotset_server.Count)
+                if (list_cbotset_local.Count != list_cbotset_server.Count)
                 {
                     Json.SaveJson(dt, _fileName);
                     cbotset_local = ReadFileData();
@@ -217,6 +217,8 @@ namespace cAlgo
 
         private string ReadFileData()
         {
+            if (!File.Exists(_fileName))
+                return null;
             FileStream stream = null;
             StreamReader streamReader = null;
             //StreamWriter streamWriter = null;
@@ -231,6 +233,8 @@ namespace cAlgo
 
         private void WriteFileData(string data)
         {
+            if (!File.Exists(_fileName))
+                return;
             FileStream stream = null;
             StreamWriter streamWriter = null;
             stream = new FileStream(_fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
