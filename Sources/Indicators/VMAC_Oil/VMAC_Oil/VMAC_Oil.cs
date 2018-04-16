@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using JsonLib;
 
 namespace cAlgo
 {
@@ -105,7 +106,7 @@ namespace cAlgo
 
         private void SetParams()
         {
-            string data = ReadFileData();
+            string data = Json.ReadJsonFile(_fileName);
             var list_data = JsonConvert.DeserializeObject<List<FrxCbotset>>(data);
             foreach (var d in list_data)
             {
@@ -138,35 +139,6 @@ namespace cAlgo
                     break;
                 }
             }
-        }
-
-        private string ReadFileData()
-        {
-            if (!File.Exists(_fileName))
-                return null;
-            FileStream stream = null;
-            StreamReader streamReader = null;
-            //StreamWriter streamWriter = null;
-            stream = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            streamReader = new StreamReader(stream);
-            //streamWriter = new StreamWriter(stream,Encoding.Default);
-            string data = streamReader.ReadToEnd();
-            streamReader.Close();
-            stream.Close();
-            return data;
-        }
-
-        private void WriteFileData(string data)
-        {
-            if (!File.Exists(_fileName))
-                return;
-            FileStream stream = null;
-            StreamWriter streamWriter = null;
-            stream = new FileStream(_fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-            streamWriter = new StreamWriter(stream, Encoding.Default);
-            streamWriter.Write(data);
-            streamWriter.Close();
-            stream.Close();
         }
     }
 

@@ -15,18 +15,6 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class OnlySaveJson : Robot
     {
-        [Parameter("Data Source", DefaultValue = "tcp:leeinfo.database.windows.net,1433")]
-        public string DataSource { get; set; }
-
-        [Parameter("Initial Catalog", DefaultValue = "LeeInfoDb")]
-        public string InitialCatalog { get; set; }
-
-        [Parameter("User ID", DefaultValue = "lee890720")]
-        public string UserID { get; set; }
-
-        [Parameter("Password", DefaultValue = "Lee37355175")]
-        public string Password { get; set; }
-
         private string _filePath;
         private string _fileName;
         private System.Timers.Timer _timer1;
@@ -57,11 +45,11 @@ namespace cAlgo
         {
             try
             {
-                string strcon = "Data Source=";
-                strcon += DataSource + ";Initial Catalog=";
-                strcon += InitialCatalog + ";User ID=";
-                strcon += UserID + ";Password=";
-                strcon += Password + ";Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
+                string strcon = "Data Source=tcp:leeinfo.database.windows.net,1433;";
+                strcon += "Initial Catalog=LeeInfoDb;";
+                strcon += "User ID=lee890720;";
+                strcon += "Password=Lee37355175;";
+                strcon += "Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
                 SqlConnection sqlCon = new SqlConnection();
                 sqlCon.ConnectionString = strcon;
                 sqlCon.Open();
@@ -78,16 +66,14 @@ namespace cAlgo
                     Json.SaveJson(dt, _fileName);
                 string cbotset_server = Json.ToJson(dt);
                 var list_cbotset_server = JsonConvert.DeserializeObject<List<FrxCbotset>>(cbotset_server);
-                string cbotset_local = ReadFileData();
+                string cbotset_local = Json.ReadJsonFile(_fileName);
                 var list_cbotset_local = JsonConvert.DeserializeObject<List<FrxCbotset>>(cbotset_local);
                 if (list_cbotset_local.Count != list_cbotset_server.Count)
                 {
                     Json.SaveJson(dt, _fileName);
-                    cbotset_local = ReadFileData();
+                    cbotset_local = Json.ReadJsonFile(_fileName);
                     list_cbotset_local = JsonConvert.DeserializeObject<List<FrxCbotset>>(cbotset_local);
                 }
-
-                var serverChanged = false;
                 var localChanged = false;
                 foreach (var s in list_cbotset_server)
                 {
@@ -167,23 +153,6 @@ namespace cAlgo
                                 Print(l.Symbol + "-Alike is changed.");
                                 localChanged = true;
                             }
-                            if (l.Cr != s.Cr || l.Ca != s.Ca || l.Sr != s.Sr || l.Sa != s.Sa || l.Signal != s.Signal)
-                            {
-                                dt.PrimaryKey = new DataColumn[] 
-                                {
-                                    dt.Columns["Id"]
-                                };
-                                DataRow dr = dt.Rows.Find(s.Id);
-                                if (dr != null)
-                                {
-                                    dr["Cr"] = l.Cr;
-                                    dr["Ca"] = l.Ca;
-                                    dr["Sr"] = l.Sr;
-                                    dr["Sa"] = l.Sa;
-                                    dr["Signal"] = l.Signal;
-                                    serverChanged = true;
-                                }
-                            }
                         }
                     }
                 }
@@ -194,15 +163,6 @@ namespace cAlgo
                 }
                 else
                     Print("Local No Change.");
-                if (serverChanged)
-                {
-                    var result = sqlData.Update(dataset, "cbotset");
-                    Print(result.ToString() + " has been changed.");
-                }
-                else
-                {
-                    Print("Server No Change.");
-                }
                 dataset.Dispose();
                 sqlCom.Dispose();
                 sqlData.Dispose();
@@ -215,35 +175,6 @@ namespace cAlgo
             }
         }
 
-        private string ReadFileData()
-        {
-            if (!File.Exists(_fileName))
-                return null;
-            FileStream stream = null;
-            StreamReader streamReader = null;
-            //StreamWriter streamWriter = null;
-            stream = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            streamReader = new StreamReader(stream);
-            //streamWriter = new StreamWriter(stream,Encoding.Default);
-            string data = streamReader.ReadToEnd();
-            streamReader.Close();
-            stream.Close();
-            return data;
-        }
-
-        private void WriteFileData(string data)
-        {
-            if (!File.Exists(_fileName))
-                return;
-            FileStream stream = null;
-            StreamWriter streamWriter = null;
-            stream = new FileStream(_fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
-            streamWriter = new StreamWriter(stream, Encoding.Default);
-            streamWriter.Write(data);
-            streamWriter.Close();
-            stream.Close();
-        }
-
         protected override void OnStop()
         {
             _timer1.Stop();
@@ -251,6 +182,7 @@ namespace cAlgo
             // Put your deinitialization logic here
         }
     }
+
     public class FrxCbotset
     {
         public int Id { get; set; }

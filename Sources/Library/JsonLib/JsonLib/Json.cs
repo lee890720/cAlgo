@@ -12,6 +12,35 @@ namespace JsonLib
 {
     public static class Json
     {
+        public static string ReadJsonFile(string _fileName)
+        {
+            if (!File.Exists(_fileName))
+                return null;
+            FileStream stream = null;
+            StreamReader streamReader = null;
+            //StreamWriter streamWriter = null;
+            stream = new FileStream(_fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            streamReader = new StreamReader(stream);
+            //streamWriter = new StreamWriter(stream,Encoding.Default);
+            string data = streamReader.ReadToEnd();
+            streamReader.Close();
+            stream.Close();
+            return data;
+        }
+
+        public static void WriteJsonFile(string data,string _fileName)
+        {
+            if (!File.Exists(_fileName))
+                return;
+            FileStream stream = null;
+            StreamWriter streamWriter = null;
+            stream = new FileStream(_fileName, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            streamWriter = new StreamWriter(stream, Encoding.Default);
+            streamWriter.Write(data);
+            streamWriter.Close();
+            stream.Close();
+        }
+
         public static void SaveJson(DataTable dt,string fileName)
         {
             FileStream fs = null;
