@@ -66,12 +66,6 @@
   </Target>
   -->
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Indicators\Metals_MAC\Metals_MAC\Metals_MAC.csproj">
       <Project>{63FCCF06-7483-45F7-A378-8300DEDF5879}</Project>
       <Name>Metals_MAC</Name>

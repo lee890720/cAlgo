@@ -66,12 +66,6 @@
   </Target>
   -->
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Indicators\Oil_MAC\Oil_MAC\Oil_MAC.csproj">
       <Project>{EB30E95F-0A01-45D6-9BE9-7152A194B8DA}</Project>
       <Name>Oil_MAC</Name>

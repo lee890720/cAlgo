@@ -1,13 +1,11 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
 using cAlgo.Lib;
+using JsonLib;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using JsonLib;
 
 namespace cAlgo
 {

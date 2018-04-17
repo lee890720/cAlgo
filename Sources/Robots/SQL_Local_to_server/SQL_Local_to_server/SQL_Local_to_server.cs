@@ -46,10 +46,10 @@ namespace cAlgo
                 SqlDataAdapter sqlData_local = new SqlDataAdapter(strsql, sqlCon_local);
                 SqlDataAdapter sqlData = new SqlDataAdapter(strsql, sqlCon);
                 SqlCommandBuilder sqlCom = new SqlCommandBuilder(sqlData);
-                sqlData_local.Fill(dataset, "cBotSet_local");
-                DataTable dt_local = dataset.Tables["cBotSet_local"];
-                sqlData.Fill(dataset, "cBotSet");
-                DataTable dt = dataset.Tables["cBotSet"];
+                sqlData_local.Fill(dataset, "cbotset_local");
+                DataTable dt_local = dataset.Tables["cbotset_local"];
+                sqlData.Fill(dataset, "cbotset");
+                DataTable dt = dataset.Tables["cbotset"];
                 dt_local.PrimaryKey = new DataColumn[] 
                 {
                     dt_local.Columns["Id"]
@@ -70,7 +70,7 @@ namespace cAlgo
                         dr["Signal"] = dr_local["Signal"];
                     }
                 }
-                var result = sqlData.Update(dataset, "cBotSet");
+                var result = sqlData.Update(dataset, "cbotset");
                 Print(result.ToString() + " has been changed.");
                 dataset.Dispose();
                 sqlData_local.Dispose();
