@@ -34,7 +34,7 @@ namespace cAlgo
             try
             {
                 string strcon_local = "Data Source=.;Initial Catalog=LeeInfoDb;User ID=lee890720;Password=Lee37355175;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
-                string strcon = "Server=tcp:leeinfo.database.windows.net,1433;Initial Catalog=LeeInfoDb;Persist Security Info=False;User ID=lee890720;Password=Lee37355175;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
+                string strcon = "Server=tcp:leeinfodb.database.windows.net,1433;Initial Catalog=LeeInfoDb;Persist Security Info=False;User ID=lee890720;Password=Lee37355175;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False;MultipleActiveResultSets=True";
                 SqlConnection sqlCon_local = new SqlConnection();
                 sqlCon_local.ConnectionString = strcon_local;
                 sqlCon_local.Open();

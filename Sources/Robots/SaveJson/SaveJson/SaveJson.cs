@@ -42,7 +42,7 @@ namespace cAlgo
         {
             try
             {
-                string strcon = "Data Source=tcp:leeinfo.database.windows.net,1433;";
+                string strcon = "Data Source=tcp:leeinfodb.database.windows.net,1433;";
                 strcon += "Initial Catalog=LeeInfoDb;";
                 strcon += "User ID=lee890720;";
                 strcon += "Password=Lee37355175;";
