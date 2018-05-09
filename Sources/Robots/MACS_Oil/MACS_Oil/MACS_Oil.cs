@@ -63,18 +63,20 @@ namespace cAlgo
             {
                 _abovecross = true;
                 _belowcross = true;
-                Print(_abovecross.ToString());
-                Print(_belowcross.ToString());
+                Print("abovecross: " + _abovecross.ToString());
+                Print("belowcross: " + _belowcross.ToString());
             }
             else
             {
                 _abovecross = false;
                 _belowcross = false;
-                Print(_abovecross.ToString());
-                Print(_belowcross.ToString());
+                Print("abovecross: " + _abovecross.ToString());
+                Print("belowcross: " + _belowcross.ToString());
             }
 
             _risk = false;
+            Print("risk: " + _risk.ToString());
+
             _abovelabel = "Above" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
             _init = new OrderParams(null, null, null, null, null, null, null, null, null, new System.Collections.Generic.List<double> 
@@ -157,28 +159,40 @@ namespace cAlgo
             #region Cross
             if (pos_above.Length == 0)
             {
-                _abovecross = true;
-                Print(_abovecross.ToString());
+                if (_abovecross == false)
+                {
+                    _abovecross = true;
+                    Print("abovecross: " + _abovecross.ToString());
+                }
             }
             else
             {
                 if (sr > sa)
                 {
-                    _abovecross = true;
-                    Print(_abovecross.ToString());
+                    if (_abovecross == false)
+                    {
+                        _abovecross = true;
+                        Print("abovecross: " + _abovecross.ToString());
+                    }
                 }
             }
             if (pos_below.Length == 0)
             {
-                _belowcross = true;
-                Print(_belowcross.ToString());
+                if (_belowcross == false)
+                {
+                    _belowcross = true;
+                    Print("_belowcross: " + _belowcross.ToString());
+                }
             }
             else
             {
                 if (sr < sa)
                 {
-                    _belowcross = true;
-                    Print(_belowcross.ToString());
+                    if (_belowcross == false)
+                    {
+                        _belowcross = true;
+                        Print("_belowcross: " + _belowcross.ToString());
+                    }
                 }
             }
             #endregion
@@ -187,7 +201,7 @@ namespace cAlgo
             //Risk
             if (_risk)
             {
-                Print("There is a risk for the current symbol.");
+                //Print("There is a risk for the current symbol.");
                 if (poss_xbr.Count >= 2 && poss_xti.Count >= 2)
                 {
                     var first_xbr = poss_xbr[0];
@@ -209,6 +223,7 @@ namespace cAlgo
                         this.ClosePosition(first_xbr);
                         this.ClosePosition(first_xti);
                         _risk = false;
+                        Print("risk: " + _risk.ToString());
                         return;
                     }
                     else if (last1_net > 0)
@@ -216,6 +231,7 @@ namespace cAlgo
                         this.ClosePosition(last0_xbr);
                         this.ClosePosition(last0_xti);
                         _risk = false;
+                        Print("risk: " + _risk.ToString());
                         return;
                     }
                 }
@@ -228,6 +244,7 @@ namespace cAlgo
                     {
                         this.closeAllLabel(_abovelabel);
                         _risk = false;
+                        Print("risk: " + _risk.ToString());
                     }
                 }
                 else
@@ -236,6 +253,7 @@ namespace cAlgo
                     {
                         this.closeAllLabel(_abovelabel);
                         _risk = false;
+                        Print("risk: " + _risk.ToString());
                     }
                 }
             }
@@ -247,6 +265,7 @@ namespace cAlgo
                     {
                         this.closeAllLabel(_belowlabel);
                         _risk = false;
+                        Print("risk: " + _risk.ToString());
                     }
                 }
                 else
@@ -255,6 +274,7 @@ namespace cAlgo
                     {
                         this.closeAllLabel(_belowlabel);
                         _risk = false;
+                        Print("risk: " + _risk.ToString());
                     }
                 }
             }
@@ -287,6 +307,7 @@ namespace cAlgo
                         this.executeOrder(_init);
                     }
                     _abovecross = false;
+                    Print("abovecross: " + _abovecross.ToString());
                 }
                 if (GetOpen() == "above_br" && _isbreak)
                 {
@@ -336,6 +357,7 @@ namespace cAlgo
                         this.executeOrder(_init);
                     }
                     _belowcross = false;
+                    Print("belowcross: " + _belowcross.ToString());
                 }
                 if (GetOpen() == "below_br" && _isbreak)
                 {
@@ -541,11 +563,19 @@ namespace cAlgo
             }
             if (list_poss.Count > 1)
             {
-                _risk = true;
+                if (_risk == false)
+                {
+                    _risk = true;
+                    Print("risk: " + _risk.ToString());
+                }
             }
             else
             {
-                _risk = false;
+                if (_risk == true)
+                {
+                    _risk = false;
+                    Print("risk: " + _risk.ToString());
+                }
             }
         }
 
