@@ -63,11 +63,15 @@ namespace cAlgo
             {
                 _abovecross = true;
                 _belowcross = true;
+                Print(_abovecross.ToString());
+                Print(_belowcross.ToString());
             }
             else
             {
                 _abovecross = false;
                 _belowcross = false;
+                Print(_abovecross.ToString());
+                Print(_belowcross.ToString());
             }
 
             _risk = false;
@@ -152,18 +156,30 @@ namespace cAlgo
 
             #region Cross
             if (pos_above.Length == 0)
+            {
                 _abovecross = true;
+                Print(_abovecross.ToString());
+            }
             else
             {
                 if (sr > sa)
+                {
                     _abovecross = true;
+                    Print(_abovecross.ToString());
+                }
             }
             if (pos_below.Length == 0)
+            {
                 _belowcross = true;
+                Print(_belowcross.ToString());
+            }
             else
             {
                 if (sr < sa)
+                {
                     _belowcross = true;
+                    Print(_belowcross.ToString());
+                }
             }
             #endregion
 
