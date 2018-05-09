@@ -181,7 +181,7 @@ namespace cAlgo
                 if (_belowcross == false)
                 {
                     _belowcross = true;
-                    Print("_belowcross: " + _belowcross.ToString());
+                    Print("belowcross: " + _belowcross.ToString());
                 }
             }
             else
@@ -191,7 +191,7 @@ namespace cAlgo
                     if (_belowcross == false)
                     {
                         _belowcross = true;
-                        Print("_belowcross: " + _belowcross.ToString());
+                        Print("belowcross: " + _belowcross.ToString());
                     }
                 }
             }
