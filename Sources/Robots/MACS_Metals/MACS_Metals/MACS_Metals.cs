@@ -12,6 +12,8 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class MACS_Metals : Robot
     {
+        [Parameter("FirstCross", DefaultValue = false)]
+        public bool _firstCross { get; set; }
         #region Parameter
         private double _initvolume;
         private int _timer;
@@ -58,8 +60,18 @@ namespace cAlgo
             _ratio = 80;
             _xausymbol = MarketData.GetSymbol("XAUUSD");
             _xagsymbol = MarketData.GetSymbol("XAGUSD");
-            _abovecross = true;
-            _belowcross = true;
+
+            if (_firstCross)
+            {
+                _abovecross = true;
+                _belowcross = true;
+            }
+            else
+            {
+                _abovecross = false;
+                _belowcross = false;
+            }
+
             _risk = false;
             _abovelabel = "Above" + "-" + "XAUXAG" + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + "XAUXAG" + "-" + MarketSeries.TimeFrame.ToString();

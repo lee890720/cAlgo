@@ -12,6 +12,8 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class MACS_Oil : Robot
     {
+        [Parameter("FirstCross", DefaultValue = false)]
+        public bool _firstCross { get; set; }
         #region Parameter
         private double _initvolume;
         private int _timer;
@@ -56,8 +58,18 @@ namespace cAlgo
             _mas = Indicators.GetIndicator<Oil_MAS>(_resultperiods, _averageperiods, _sub);
             _xbrsymbol = MarketData.GetSymbol("XBRUSD");
             _xtisymbol = MarketData.GetSymbol("XTIUSD");
-            _abovecross = true;
-            _belowcross = true;
+
+            if (_firstCross)
+            {
+                _abovecross = true;
+                _belowcross = true;
+            }
+            else
+            {
+                _abovecross = false;
+                _belowcross = false;
+            }
+
             _risk = false;
             _abovelabel = "Above" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + "XBRXTI" + "-" + MarketSeries.TimeFrame.ToString();

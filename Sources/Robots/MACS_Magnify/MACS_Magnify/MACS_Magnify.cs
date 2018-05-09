@@ -12,6 +12,8 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class MACS_Magnify : Robot
     {
+        [Parameter("FirstCross", DefaultValue = false)]
+        public bool _firstCross { get; set; }
         #region Parameter
         private double _initvolume;
         private int _timer;
@@ -52,8 +54,18 @@ namespace cAlgo
             Positions.Closed += OnPositionsClosed;
             _mac = Indicators.GetIndicator<_Magnify_MAC>(_resultperiods, _averageperiods, _magnify, _sub);
             _mas = Indicators.GetIndicator<_Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub);
-            _abovecross = true;
-            _belowcross = true;
+
+            if (_firstCross)
+            {
+                _abovecross = true;
+                _belowcross = true;
+            }
+            else
+            {
+                _abovecross = false;
+                _belowcross = false;
+            }
+
             _risk = false;
             _abovelabel = "Above" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
             _belowlabel = "Below" + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
