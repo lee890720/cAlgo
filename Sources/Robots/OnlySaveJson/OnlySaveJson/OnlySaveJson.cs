@@ -144,12 +144,6 @@ namespace cAlgo
                                 Print(l.Symbol + "-Sub is changed.");
                                 localChanged = true;
                             }
-                            if (l.Alike != s.Alike)
-                            {
-                                l.Alike = s.Alike;
-                                Print(l.Symbol + "-Alike is changed.");
-                                localChanged = true;
-                            }
                         }
                     }
                 }

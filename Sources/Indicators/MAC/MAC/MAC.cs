@@ -1,5 +1,6 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
+using System;
 
 namespace cAlgo
 {
@@ -50,7 +51,6 @@ namespace cAlgo
                 SigOne_A[index] = _mac.Result[index];
             if (sigone == "below")
                 SigOne_B[index] = _mac.Result[index];
-
             #region Chart
             SignalOne = sigone;
             BarsAgo = GetBarsAgo(index);

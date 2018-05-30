@@ -68,6 +68,7 @@ namespace cAlgo
                         dr["Sr"] = dr_local["Sr"];
                         dr["Sa"] = dr_local["Sa"];
                         dr["Signal"] = dr_local["Signal"];
+                        dr["Signal2"] = dr_local["Signal2"];
                     }
                 }
                 var result = sqlData.Update(dataset, "cbotset");

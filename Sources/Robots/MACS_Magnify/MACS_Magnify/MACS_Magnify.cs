@@ -53,7 +53,7 @@ namespace cAlgo
             Positions.Opened += OnPositionsOpened;
             Positions.Closed += OnPositionsClosed;
             _mac = Indicators.GetIndicator<_Magnify_MAC>(_resultperiods, _averageperiods, _magnify, _sub);
-            _mas = Indicators.GetIndicator<_Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub);
+            _mas = Indicators.GetIndicator<_Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub, _break);
 
             if (_firstCross)
             {
@@ -127,7 +127,7 @@ namespace cAlgo
             if (_isChange)
             {
                 _mac = Indicators.GetIndicator<_Magnify_MAC>(_resultperiods, _averageperiods, _magnify, _sub);
-                _mas = Indicators.GetIndicator<_Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub);
+                _mas = Indicators.GetIndicator<_Magnify_MAS>(_resultperiods, _averageperiods, _magnify, _sub, _break);
             }
             var cr = _mac.Result.LastValue;
             var ca = _mac.Average.LastValue;
@@ -183,7 +183,6 @@ namespace cAlgo
             //Risk
             if (_risk)
             {
-                //Print("There is a risk for the current symbol.");
                 if (poss.Length >= 2)
                 {
                     var first = poss[0];
@@ -259,7 +258,7 @@ namespace cAlgo
                 {
                     var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Sell;
-                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolumeInUnits(volume, RoundingMode.ToNearest);
                     _init.Label = _abovelabel;
                     _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_000" + "<";
@@ -276,7 +275,7 @@ namespace cAlgo
                 {
                     var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Sell;
-                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolumeInUnits(volume, RoundingMode.ToNearest);
                     _init.Label = _abovelabel;
                     _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_abovelabel) + _distance) + "<";
@@ -293,7 +292,7 @@ namespace cAlgo
                 {
                     var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Buy;
-                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolumeInUnits(volume, RoundingMode.ToNearest);
                     _init.Label = _belowlabel;
                     _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_000" + "<";
@@ -310,7 +309,7 @@ namespace cAlgo
                 {
                     var volume = GetOpenVolume(GetOpen());
                     _init.TradeType = TradeType.Buy;
-                    _init.Volume = Symbol.NormalizeVolume(volume, RoundingMode.ToNearest);
+                    _init.Volume = Symbol.NormalizeVolumeInUnits(volume, RoundingMode.ToNearest);
                     _init.Label = _belowlabel;
                     _init.Comment = "CR_" + string.Format("{0:000000}", Math.Round(cr)) + "<";
                     _init.Comment += "BR_" + string.Format("{0:000}", GetBreak(_belowlabel) + _distance) + "<";
@@ -350,38 +349,64 @@ namespace cAlgo
 
             if (DateTime.Compare(nowtime, pos_lasttime) < 0)
                 return null;
-            if ((_isbreak && poss.Length != 0) || (_isbreak && _isbrkfirst))
+            string sig2 = _mas.SignalTwo;
+            var mas_brk = _mas.SigTwo.LastValue;
+            if (!string.IsNullOrEmpty(sig2))
             {
-                if (sr >= GetBreak(_abovelabel))
-                    return signal = "above_br";
-                if (sr <= -GetBreak(_belowlabel))
-                    return signal = "below_br";
+                if ((_isbreak && poss.Length != 0) || (_isbreak && _isbrkfirst))
+                {
+                    if (!double.IsNaN(mas_brk))
+                    {
+                        if (mas_brk >= GetBreak(_abovelabel) && sig2 == "aboveBreak")
+                        {
+                            signal = "above_br";
+                            if (pos_above.Length != 0)
+                            {
+                                var idx = this.LastPosition(pos_above).Comment.IndexOf("CR_") + 3;
+                                if (cr - _distance < Convert.ToDouble(this.LastPosition(pos_above).Comment.Substring(idx, 6)))
+                                    signal = null;
+                            }
+                        }
+                        if (mas_brk >= GetBreak(_belowlabel) && sig2 == "belowBreak")
+                        {
+                            signal = "below_br";
+                            if (pos_below.Length != 0)
+                            {
+                                var idx = this.LastPosition(pos_below).Comment.IndexOf("CR_") + 3;
+                                if (cr + _distance > Convert.ToDouble(this.LastPosition(pos_below).Comment.Substring(idx, 6)))
+                                    signal = null;
+                            }
+                        }
+                        if (!string.IsNullOrEmpty(signal))
+                            return signal;
+                    }
+                }
             }
-            var sig = _mas.SignalOne;
-            if (sig == null)
+            string sig1 = _mas.SignalOne;
+            if (string.IsNullOrEmpty(sig1))
             {
                 return null;
             }
 
             if (!_marklist.Contains(_mas.Mark))
             {
-                if (sig == "above" && _abovecross)
+                if (sig1 == "above" && _abovecross)
                 {
                     signal = "above";
                     if (pos_above.Length != 0)
                     {
                         var idx = this.LastPosition(pos_above).Comment.IndexOf("CR_") + 3;
-                        if (cr - GetDistance() < Convert.ToDouble(this.LastPosition(pos_above).Comment.Substring(idx, 6)))
+                        if (cr - _distance < Convert.ToDouble(this.LastPosition(pos_above).Comment.Substring(idx, 6)))
                             signal = null;
                     }
                 }
-                if (sig == "below" && _belowcross)
+                if (sig1 == "below" && _belowcross)
                 {
                     signal = "below";
                     if (pos_below.Length != 0)
                     {
                         var idx = this.LastPosition(pos_below).Comment.IndexOf("CR_") + 3;
-                        if (cr + GetDistance() > Convert.ToDouble(this.LastPosition(pos_below).Comment.Substring(idx, 6)))
+                        if (cr + _distance > Convert.ToDouble(this.LastPosition(pos_below).Comment.Substring(idx, 6)))
                             signal = null;
                     }
                 }
@@ -417,20 +442,15 @@ namespace cAlgo
             {
                 foreach (var p in list_poss)
                 {
-                    volume += p.Volume * 2;
+                    volume += p.VolumeInUnits * 2;
                 }
             }
 
-            if (this.LastPosition(poss).Volume > volume)
-                volume = this.LastPosition(poss).Volume;
+            if (this.LastPosition(poss).VolumeInUnits > volume)
+                volume = this.LastPosition(poss).VolumeInUnits;
             if (_initvolume > volume)
                 volume = _initvolume;
             return volume;
-        }
-
-        private double GetDistance()
-        {
-            return _distance;
         }
 
         private bool GetClose(string label)
@@ -448,10 +468,16 @@ namespace cAlgo
         private double GetBreak(string label)
         {
             var poss = this.GetPositions(label);
-            var sr = Math.Abs(_mas.Result.LastValue);
+            double mas_brk = _break;
+            if (!double.IsNaN(_mas.SigTwo.LastValue))
+                mas_brk = _mas.SigTwo.LastValue;
             double br = _break;
-            if (br < sr)
-                br = Math.Floor(sr);
+            if (br < mas_brk)
+                br = Math.Floor(mas_brk);
+            if (!_marklist.Contains(_mas.Mark))
+            {
+                return br;
+            }
             if (poss.Length != 0)
             {
                 foreach (var p in poss)

@@ -22,6 +22,9 @@ namespace cAlgo
         [Output("SigOne_B", Color = Colors.OrangeRed, PlotType = PlotType.Histogram, LineStyle = LineStyle.LinesDots, Thickness = 1)]
         public IndicatorDataSeries SigOne_B { get; set; }
 
+        [Output("SigTwo", Color = Colors.Yellow, PlotType = PlotType.Histogram, LineStyle = LineStyle.Dots, Thickness = 1)]
+        public IndicatorDataSeries SigTwo { get; set; }
+
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
 
@@ -31,7 +34,11 @@ namespace cAlgo
         [Parameter("Sub", DefaultValue = 30)]
         public double Sub { get; set; }
 
+        [Parameter("Break", DefaultValue = 100)]
+        public double Brk { get; set; }
+
         public string SignalOne;
+        public string SignalTwo;
         public int BarsAgo;
         public string Mark;
         private Metals_MaCross _mac;
@@ -49,6 +56,41 @@ namespace cAlgo
         {
             Result[index] = _mas.Result[index];
             Average[index] = _mas.Average[index];
+
+            string sigtwo = "";
+            if (Result[index] > 0)
+            {
+                if (Average[index] > 0)
+                {
+                    if (Result[index] > Average[index])
+                    {
+                        SigTwo[index] = Result[index] - Average[index];
+                        if (SigTwo[index] > Brk)
+                            sigtwo = "aboveBreak";
+                    }
+                    else
+                        SigTwo[index] = 0;
+                }
+                else
+                    SigTwo[index] = 0;
+            }
+            else
+            {
+                if (Average[index] < 0)
+                {
+                    if (Result[index] < Average[index])
+                    {
+                        SigTwo[index] = Math.Abs(Result[index] - Average[index]);
+                        if (SigTwo[index] > Brk)
+                            sigtwo = "belowBreak";
+                    }
+                    else
+                        SigTwo[index] = 0;
+                }
+                else
+                    SigTwo[index] = 0;
+            }
+
             string sigone = GetSigOne(index);
             if (sigone == "below")
                 SigOne_B[index] = _mas.Result[index];
@@ -61,15 +103,21 @@ namespace cAlgo
 
             #region Chart
             SignalOne = sigone;
+            SignalTwo = sigtwo;
             BarsAgo = GetBarsAgo(index);
             Mark = GetMark(index).ToString("yyyy-MM-dd") + "-" + GetMark(index).ToString("HH");
-            if (SignalOne == null)
-                ChartObjects.DrawText("sigone", "NoSignal", StaticPosition.TopLeft, _nocorel);
+            if (string.IsNullOrEmpty(SignalOne))
+                ChartObjects.DrawText("sigone", "NoSignal-1", StaticPosition.TopLeft, _nocorel);
             else
-                ChartObjects.DrawText("sigone", "Signal_(" + SignalOne + ")", StaticPosition.TopLeft, _nocorel);
-            ChartObjects.DrawText("barsago", "\nCross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
-            ChartObjects.DrawText("mark", "\n\nMark_(" + Mark + ")", StaticPosition.TopLeft, _nocorel);
-            ChartObjects.DrawText("break", "\n\n\n" + GetBreak(index), StaticPosition.TopLeft, _nocorel);
+                ChartObjects.DrawText("sigone", "Signal1_(" + SignalOne + ")", StaticPosition.TopLeft, _nocorel);
+            if (string.IsNullOrEmpty(SignalTwo))
+                ChartObjects.DrawText("sigtwo", "\nNoSignal-2", StaticPosition.TopLeft, _nocorel);
+            else
+                ChartObjects.DrawText("sigtwo", "\nSignal2_(" + SignalTwo + ")", StaticPosition.TopLeft, _nocorel);
+            ChartObjects.DrawText("barsago", "\n\nCross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
+            ChartObjects.DrawText("mark", "\n\n\nMark_(" + Mark + ")", StaticPosition.TopLeft, _nocorel);
+            ChartObjects.DrawText("break", "\n\n\n\n" + GetBreak(index), StaticPosition.TopLeft, _nocorel);
+            ChartObjects.DrawHorizontalLine("breakLine", Brk, Colors.DarkCyan);
             #endregion
         }
 

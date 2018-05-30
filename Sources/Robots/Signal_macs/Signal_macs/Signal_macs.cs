@@ -17,6 +17,7 @@ namespace cAlgo
         private int _averageperiods;
         private double _magnify;
         private double _sub;
+        private double _break;
         private string _filePath;
         private string _fileName;
         private MAC _mac;
@@ -36,7 +37,7 @@ namespace cAlgo
                 this.Stop();
             }
             _mac = Indicators.GetIndicator<MAC>(_resultperiods, _averageperiods, _sub);
-            _mas = Indicators.GetIndicator<MAS>(_resultperiods, _averageperiods, _sub);
+            _mas = Indicators.GetIndicator<MAS>(_resultperiods, _averageperiods, _sub, _break);
             _isChange = false;
             InitTimer1();
             _timer1.Start();
@@ -62,7 +63,7 @@ namespace cAlgo
             if (_isChange)
             {
                 _mac = Indicators.GetIndicator<MAC>(_resultperiods, _averageperiods, _sub);
-                _mas = Indicators.GetIndicator<MAS>(_resultperiods, _averageperiods, _sub);
+                _mas = Indicators.GetIndicator<MAS>(_resultperiods, _averageperiods, _sub, _break);
                 _isChange = false;
             }
             #region Parameter
@@ -71,6 +72,7 @@ namespace cAlgo
             var sr = Math.Round(_mas.Result.LastValue);
             var sa = Math.Round(_mas.Average.LastValue);
             var sig = _mas.SignalOne;
+            var sig2 = _mas.SignalTwo;
             #endregion
             try
             {
@@ -101,6 +103,7 @@ namespace cAlgo
                     dr["Sr"] = sr;
                     dr["Sa"] = sa;
                     dr["Signal"] = sig;
+                    dr["Signal2"] = sig2;
                     serverChanged = true;
                 }
                 if (serverChanged)
@@ -156,6 +159,11 @@ namespace cAlgo
                         _sub = d.Sub;
                         Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
                         _isChange = true;
+                    }
+                    if (_break != d.Brk)
+                    {
+                        _break = d.Brk;
+                        Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
                     }
                     break;
                 }
