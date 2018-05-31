@@ -14,6 +14,10 @@ namespace cAlgo
     {
         [Parameter("FirstCross", DefaultValue = false)]
         public bool _firstCross { get; set; }
+
+        [Parameter("StopClose", DefaultValue = false)]
+        public bool _stopClose { get; set; }
+
         #region Parameter
         private double _initvolume;
         private int _timer;
@@ -180,76 +184,80 @@ namespace cAlgo
             #endregion
 
             #region Close
-            //Risk
-            if (_risk)
+            if (!_stopClose)
             {
-                if (poss.Length >= 2)
+                //Risk
+                if (_risk)
                 {
-                    var first = poss[0];
-                    var second = poss[1];
-                    var last0 = poss.OrderByDescending(p => p.EntryTime).ToArray()[0];
-                    var last1 = poss.OrderByDescending(p => p.EntryTime).ToArray()[1];
-                    if (last1.NetProfit < 0 && first.NetProfit + last0.NetProfit > 0)
+                    if (poss.Length >= 2)
                     {
-                        this.ClosePosition(last0);
-                        this.ClosePosition(first);
-                        _risk = false;
-                        Print("risk: " + _risk.ToString());
-                        return;
-                    }
-                    else if (last1.NetProfit > 0)
-                    {
-                        this.ClosePosition(last0);
-                        _risk = false;
-                        Print("risk: " + _risk.ToString());
-                        return;
-                    }
-                }
-            }
-            if (pos_above.Length != 0)
-            {
-                if (GetClose(_abovelabel))
-                {
-                    if (sr <= _sub / 5)
-                    {
-                        this.closeAllLabel(_abovelabel);
-                        _risk = false;
-                        Print("risk: " + _risk.ToString());
+                        var first = poss[0];
+                        var second = poss[1];
+                        var last0 = poss.OrderByDescending(p => p.EntryTime).ToArray()[0];
+                        var last1 = poss.OrderByDescending(p => p.EntryTime).ToArray()[1];
+                        if (last1.NetProfit < 0 && first.NetProfit + last0.NetProfit > 0)
+                        {
+                            this.ClosePosition(last0);
+                            this.ClosePosition(first);
+                            _risk = false;
+                            Print("risk: " + _risk.ToString());
+                            return;
+                        }
+                        else if (last1.NetProfit > 0)
+                        {
+                            this.ClosePosition(last0);
+                            _risk = false;
+                            Print("risk: " + _risk.ToString());
+                            return;
+                        }
                     }
                 }
-                else
+                if (pos_above.Length != 0)
                 {
-                    if (sr <= 0)
+                    if (GetClose(_abovelabel))
                     {
-                        this.closeAllLabel(_abovelabel);
-                        _risk = false;
-                        Print("risk: " + _risk.ToString());
+                        if (sr <= _sub / 5)
+                        {
+                            this.closeAllLabel(_abovelabel);
+                            _risk = false;
+                            Print("risk: " + _risk.ToString());
+                        }
+                    }
+                    else
+                    {
+                        if (sr <= 0)
+                        {
+                            this.closeAllLabel(_abovelabel);
+                            _risk = false;
+                            Print("risk: " + _risk.ToString());
+                        }
                     }
                 }
-            }
-            if (pos_below.Length != 0)
-            {
-                if (GetClose(_belowlabel))
+                if (pos_below.Length != 0)
                 {
-                    if (sr >= -_sub / 5)
+                    if (GetClose(_belowlabel))
                     {
-                        this.closeAllLabel(_belowlabel);
-                        _risk = false;
-                        Print("risk: " + _risk.ToString());
+                        if (sr >= -_sub / 5)
+                        {
+                            this.closeAllLabel(_belowlabel);
+                            _risk = false;
+                            Print("risk: " + _risk.ToString());
+                        }
                     }
-                }
-                else
-                {
-                    if (sr >= 0)
+                    else
                     {
-                        this.closeAllLabel(_belowlabel);
-                        _risk = false;
-                        Print("risk: " + _risk.ToString());
+                        if (sr >= 0)
+                        {
+                            this.closeAllLabel(_belowlabel);
+                            _risk = false;
+                            Print("risk: " + _risk.ToString());
+                        }
                     }
                 }
             }
             #endregion
 
+            #region Trade
             if (_istrade)
             {
                 #region Open
@@ -323,6 +331,7 @@ namespace cAlgo
                 #endregion
                 #endregion
             }
+            #endregion
         }
 
         private string GetOpen()
