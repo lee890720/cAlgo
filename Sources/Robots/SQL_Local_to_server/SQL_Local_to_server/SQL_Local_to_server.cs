@@ -67,6 +67,7 @@ namespace cAlgo
                         dr["Ca"] = dr_local["Ca"];
                         dr["Sr"] = dr_local["Sr"];
                         dr["Sa"] = dr_local["Sa"];
+                        dr["SrSa"] = dr_local["SrSa"];
                         dr["Signal"] = dr_local["Signal"];
                         dr["Signal2"] = dr_local["Signal2"];
                     }

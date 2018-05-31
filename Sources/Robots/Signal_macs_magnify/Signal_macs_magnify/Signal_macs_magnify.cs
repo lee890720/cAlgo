@@ -71,6 +71,7 @@ namespace cAlgo
             var ca = Math.Round(_mac.Average.LastValue);
             var sr = Math.Round(_mas.Result.LastValue);
             var sa = Math.Round(_mas.Average.LastValue);
+            var srsa = Math.Round(_mas.SigTwo.LastValue);
             var sig = _mas.SignalOne;
             var sig2 = _mas.SignalTwo;
             #endregion
@@ -102,6 +103,7 @@ namespace cAlgo
                     dr["Ca"] = ca;
                     dr["Sr"] = sr;
                     dr["Sa"] = sa;
+                    dr["SrSa"] = srsa;
                     dr["Signal"] = sig;
                     dr["Signal2"] = sig2;
                     serverChanged = true;
