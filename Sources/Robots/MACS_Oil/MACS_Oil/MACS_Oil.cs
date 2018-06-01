@@ -18,6 +18,9 @@ namespace cAlgo
         [Parameter("StopClose", DefaultValue = false)]
         public bool _stopClose { get; set; }
 
+        [Parameter("StopTrade", DefaultValue = false)]
+        public bool _stopTrade { get; set; }
+
         #region Parameter
         private double _initvolume;
         private int _timer;
@@ -51,6 +54,9 @@ namespace cAlgo
             _fileName = _filePath + "cbotset.json";
             Print("fiName=" + _fileName);
             SetParams();
+            _istrade = !_stopTrade;
+            Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
+
             if (_magnify != 1)
             {
                 Print("Please choose the MACS_Magnify.");
@@ -393,6 +399,15 @@ namespace cAlgo
                 #endregion
             }
             #endregion
+
+            #region Draw
+            ChartObjects.DrawText("stop1", "fCross: " + "\t\tsClose: " + "\t\tsTrade: ", StaticPosition.TopLeft);
+            ChartObjects.DrawText("stop2", "\t" + _firstCross.ToString() + "\t\t" + _stopClose.ToString() + "\t\t" + _stopTrade.ToString(), StaticPosition.TopLeft, Colors.Red);
+            ChartObjects.DrawText("Cross1", "\naCross: " + "\t\tbCross: " + "\t\trisk: ", StaticPosition.TopLeft);
+            ChartObjects.DrawText("Cross2", "\n\t" + _abovecross.ToString() + "\t\t" + _belowcross.ToString() + "\t\t" + _risk.ToString(), StaticPosition.TopLeft, Colors.Red);
+            ChartObjects.DrawText("Close1", "\n\naCount: " + "\t\taClose: " + "\t\tbCount: " + "\t\tbClose: ", StaticPosition.TopLeft);
+            ChartObjects.DrawText("Close2", "\n\n\t" + pos_above.Length.ToString() + "\t\t" + GetClose(_abovelabel).ToString() + "\t\t" + pos_below.Length.ToString() + "\t\t" + GetClose(_belowlabel).ToString(), StaticPosition.TopLeft, Colors.Red);
+            #endregion
         }
 
         private string GetOpen()
@@ -642,11 +657,11 @@ namespace cAlgo
                         _distance = d.Distance;
                         Print("Distance: " + _distance.ToString() + "-" + _distance.GetType().ToString());
                     }
-                    if (_istrade != d.IsTrade)
-                    {
-                        _istrade = d.IsTrade;
-                        Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
-                    }
+                    //if (_istrade != d.IsTrade)
+                    //{
+                    //    _istrade = d.IsTrade;
+                    //    Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
+                    //}
                     if (_isbreak != d.IsBreak)
                     {
                         _isbreak = d.IsBreak;

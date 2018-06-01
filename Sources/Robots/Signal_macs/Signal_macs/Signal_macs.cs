@@ -71,7 +71,9 @@ namespace cAlgo
             var ca = Math.Round(_mac.Average.LastValue);
             var sr = Math.Round(_mas.Result.LastValue);
             var sa = Math.Round(_mas.Average.LastValue);
-            var srsa = Math.Round(_mas.SigTwo.LastValue);
+            double srsa = 0;
+            if (!double.IsNaN(Math.Round(_mas.SigTwo.LastValue)) && !double.IsInfinity(Math.Round(_mas.SigTwo.LastValue)))
+                srsa = Math.Round(_mas.SigTwo.LastValue);
             var sig = _mas.SignalOne;
             var sig2 = _mas.SignalTwo;
             #endregion
@@ -103,7 +105,7 @@ namespace cAlgo
                     dr["Ca"] = ca;
                     dr["Sr"] = sr;
                     dr["Sa"] = sa;
-                    dr["SrSa"] = srsa;
+                    dr["SrSa"] = Math.Round(srsa);
                     dr["Signal"] = sig;
                     dr["Signal2"] = sig2;
                     serverChanged = true;
@@ -196,6 +198,7 @@ namespace cAlgo
         public double? Ca { get; set; }
         public double? Sr { get; set; }
         public double? Sa { get; set; }
+        public double? SrSa { get; set; }
         public string Signal { get; set; }
         public string Alike { get; set; }
     }
