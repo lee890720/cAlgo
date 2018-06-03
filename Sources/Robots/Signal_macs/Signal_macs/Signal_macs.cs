@@ -67,10 +67,22 @@ namespace cAlgo
                 _isChange = false;
             }
             #region Parameter
-            var cr = Math.Round(_mac.Result.LastValue);
-            var ca = Math.Round(_mac.Average.LastValue);
-            var sr = Math.Round(_mas.Result.LastValue);
-            var sa = Math.Round(_mas.Average.LastValue);
+            //var cr = Math.Round(_mac.Result.LastValue);
+            //var ca = Math.Round(_mac.Average.LastValue);
+            //var sr = Math.Round(_mas.Result.LastValue);
+            //var sa = Math.Round(_mas.Average.LastValue);
+            double cr = 0;
+            if (!double.IsNaN(Math.Round(_mac.Result.LastValue)) && !double.IsInfinity(Math.Round(_mac.Result.LastValue)))
+                cr = Math.Round(_mac.Result.LastValue);
+            double ca = 0;
+            if (!double.IsNaN(Math.Round(_mac.Average.LastValue)) && !double.IsInfinity(Math.Round(_mac.Average.LastValue)))
+                ca = Math.Round(_mac.Average.LastValue);
+            double sr = 0;
+            if (!double.IsNaN(Math.Round(_mas.Result.LastValue)) && !double.IsInfinity(Math.Round(_mas.Result.LastValue)))
+                sr = Math.Round(_mas.Result.LastValue);
+            double sa = 0;
+            if (!double.IsNaN(Math.Round(_mas.Average.LastValue)) && !double.IsInfinity(Math.Round(_mas.Average.LastValue)))
+                sa = Math.Round(_mas.Average.LastValue);
             double srsa = 0;
             if (!double.IsNaN(Math.Round(_mas.SigTwo.LastValue)) && !double.IsInfinity(Math.Round(_mas.SigTwo.LastValue)))
                 srsa = Math.Round(_mas.SigTwo.LastValue);
@@ -101,10 +113,10 @@ namespace cAlgo
                 bool serverChanged = false;
                 if (dr != null)
                 {
-                    dr["Cr"] = cr;
-                    dr["Ca"] = ca;
-                    dr["Sr"] = sr;
-                    dr["Sa"] = sa;
+                    dr["Cr"] = Math.Round(cr);
+                    dr["Ca"] = Math.Round(ca);
+                    dr["Sr"] = Math.Round(sr);
+                    dr["Sa"] = Math.Round(sa);
                     dr["SrSa"] = Math.Round(srsa);
                     dr["Signal"] = sig;
                     dr["Signal2"] = sig2;

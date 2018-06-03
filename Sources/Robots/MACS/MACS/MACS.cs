@@ -12,8 +12,8 @@ namespace cAlgo
     [Robot(TimeZone = TimeZones.UTC, AccessRights = AccessRights.FullAccess)]
     public class MACS : Robot
     {
-        [Parameter("FirstCross", DefaultValue = false)]
-        public bool _firstCross { get; set; }
+        [Parameter("OpenCross", DefaultValue = false)]
+        public bool _openCross { get; set; }
 
         [Parameter("StopClose", DefaultValue = false)]
         public bool _stopClose { get; set; }
@@ -65,7 +65,7 @@ namespace cAlgo
             _mac = Indicators.GetIndicator<MAC>(_resultperiods, _averageperiods, _sub);
             _mas = Indicators.GetIndicator<MAS>(_resultperiods, _averageperiods, _sub, _break);
 
-            if (_firstCross)
+            if (_openCross)
             {
                 _abovecross = true;
                 _belowcross = true;
@@ -341,7 +341,7 @@ namespace cAlgo
 
             #region Draw
             ChartObjects.DrawText("stop1", "fCross: " + "\t\tsClose: " + "\t\tsTrade: ", StaticPosition.TopLeft);
-            ChartObjects.DrawText("stop2", "\t" + _firstCross.ToString() + "\t\t" + _stopClose.ToString() + "\t\t" + _stopTrade.ToString(), StaticPosition.TopLeft, Colors.Red);
+            ChartObjects.DrawText("stop2", "\t" + _openCross.ToString() + "\t\t" + _stopClose.ToString() + "\t\t" + _stopTrade.ToString(), StaticPosition.TopLeft, Colors.Red);
             ChartObjects.DrawText("Cross1", "\naCross: " + "\t\tbCross: " + "\t\trisk: ", StaticPosition.TopLeft);
             ChartObjects.DrawText("Cross2", "\n\t" + _abovecross.ToString() + "\t\t" + _belowcross.ToString() + "\t\t" + _risk.ToString(), StaticPosition.TopLeft, Colors.Red);
             ChartObjects.DrawText("Close1", "\n\naCount: " + "\t\taClose: " + "\t\tbCount: " + "\t\tbClose: ", StaticPosition.TopLeft);
