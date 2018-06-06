@@ -108,11 +108,11 @@ namespace cAlgo
                 bool serverChanged = false;
                 if (dr != null)
                 {
-                    dr["Cr"] = Math.Round(cr);
-                    dr["Ca"] = Math.Round(ca);
-                    dr["Sr"] = Math.Round(sr);
-                    dr["Sa"] = Math.Round(sa);
-                    dr["SrSa"] = Math.Round(srsa);
+                    dr["Cr"] = cr;
+                    dr["Ca"] = ca;
+                    dr["Sr"] = sr;
+                    dr["Sa"] = sa;
+                    dr["SrSa"] = srsa;
                     dr["Signal"] = sig;
                     dr["Signal2"] = sig2;
                     serverChanged = true;
@@ -175,6 +175,7 @@ namespace cAlgo
                     {
                         _break = d.Brk;
                         Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
+                        _isChange = true;
                     }
                     break;
                 }
