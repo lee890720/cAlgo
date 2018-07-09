@@ -1,6 +1,5 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
-using System;
 
 namespace cAlgo
 {
@@ -30,6 +29,7 @@ namespace cAlgo
 
         //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
         public string SignalOne;
+        public string SignalTwo;
         public int BarsAgo;
         private MaCross _mac;
         private MaSub _mas;
@@ -46,14 +46,14 @@ namespace cAlgo
         {
             Result[index] = _mac.Result[index];
             Average[index] = _mac.Average[index];
-            string sigone = GetSigOne(index);
-            if (sigone == "above")
+            SignalOne = GetSigOne(index);
+            if (SignalOne == "above")
                 SigOne_A[index] = _mac.Result[index];
-            if (sigone == "below")
+            if (SignalOne == "below")
                 SigOne_B[index] = _mac.Result[index];
+
             #region Chart
-            SignalOne = sigone;
-            BarsAgo = GetBarsAgo(index);
+            BarsAgo = _mac.BarsAgo;
             ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
             #endregion
         }
@@ -71,23 +71,14 @@ namespace cAlgo
             return null;
         }
 
-        private int GetBarsAgo(int index)
+        private string GetSigTwo(int index)
         {
             double cr = _mac.Result[index];
             double ca = _mac.Average[index];
-            if (cr > ca)
-                for (int i = index - 1; i > 0; i--)
-                {
-                    if (_mac.Result[i] <= _mac.Average[i])
-                        return index - i;
-                }
-            if (cr < ca)
-                for (int i = index - 1; i > 0; i--)
-                {
-                    if (_mac.Result[i] >= _mac.Average[i])
-                        return index - i;
-                }
-            return -1;
+            double sr = _mas.Result[index];
+            double sa = _mas.Average[index];
+            double bago = _mac.BarsAgo;
+
         }
     }
 }

@@ -1,12 +1,10 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
+using cAlgo.Lib;
+using JsonLib;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using JsonLib;
-using cAlgo.Lib;
 
 namespace cAlgo
 {
@@ -66,7 +64,7 @@ namespace cAlgo
             Result[index] = _mas.Result[index];
             Average[index] = _mas.Average[index];
 
-            string sigtwo = "";
+            SignalTwo = "";
             if (Result[index] > 0)
             {
                 if (Average[index] > 0)
@@ -75,13 +73,13 @@ namespace cAlgo
                     {
                         SigTwo[index] = Result[index] - Average[index];
                         if (SigTwo[index] > _brk)
-                            sigtwo = "aboveBreak";
+                            SignalTwo = "aboveBreak";
                     }
                     else
                         SigTwo[index] = 0;
                 }
                 else
-                    SigTwo[index] = 0;
+                    SigTwo[index] = -(Result[index] - Average[index]);
             }
             else
             {
@@ -91,38 +89,36 @@ namespace cAlgo
                     {
                         SigTwo[index] = Math.Abs(Result[index] - Average[index]);
                         if (SigTwo[index] > _brk)
-                            sigtwo = "belowBreak";
+                            SignalTwo = "belowBreak";
                     }
                     else
                         SigTwo[index] = 0;
                 }
                 else
-                    SigTwo[index] = 0;
+                    SigTwo[index] = Result[index] - Average[index];
             }
 
-            string sigone = GetSigOne(index);
-            if (sigone == "below")
+            SignalOne = GetSigOne(index);
+            if (SignalOne == "below")
                 SigOne_B[index] = _mas.Result[index];
             else
                 SigOne_B[index] = 0;
-            if (sigone == "above")
+            if (SignalOne == "above")
                 SigOne_A[index] = _mas.Result[index];
             else
                 SigOne_A[index] = 0;
 
             #region Chart
-            SignalOne = sigone;
-            SignalTwo = sigtwo;
-            BarsAgo = GetBarsAgo(index);
+            BarsAgo = _mas.BarsAgo;
             Mark = GetMark(index).ToString("yyyy-MM-dd") + "-" + GetMark(index).ToString("HH");
             if (string.IsNullOrEmpty(SignalOne))
-                ChartObjects.DrawText("sigone", "NoSignal-1", StaticPosition.TopLeft, _nocorel);
+                ChartObjects.DrawText("SignalOne", "NoSignal-1", StaticPosition.TopLeft, _nocorel);
             else
-                ChartObjects.DrawText("sigone", "Signal1_(" + SignalOne + ")", StaticPosition.TopLeft, _nocorel);
+                ChartObjects.DrawText("SignalOne", "Signal1_(" + SignalOne + ")", StaticPosition.TopLeft, _nocorel);
             if (string.IsNullOrEmpty(SignalTwo))
-                ChartObjects.DrawText("sigtwo", "\nNoSignal-2", StaticPosition.TopLeft, _nocorel);
+                ChartObjects.DrawText("SignalTwo", "\nNoSignal-2", StaticPosition.TopLeft, _nocorel);
             else
-                ChartObjects.DrawText("sigtwo", "\nSignal2_(" + SignalTwo + ")", StaticPosition.TopLeft, _nocorel);
+                ChartObjects.DrawText("SignalTwo", "\nSignal2_(" + SignalTwo + ")", StaticPosition.TopLeft, _nocorel);
             ChartObjects.DrawText("barsago", "\n\nCross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
             ChartObjects.DrawText("mark", "\n\n\nMark_(" + Mark + ")", StaticPosition.TopLeft, _nocorel);
             ChartObjects.DrawText("break", "\n\n\n\n" + GetBreak(index), StaticPosition.TopLeft, _nocorel);
@@ -141,25 +137,6 @@ namespace cAlgo
             if (_sub < sr && sr < sa && cr > ca)
                 return "above";
             return null;
-        }
-
-        private int GetBarsAgo(int index)
-        {
-            double sr = _mas.Result[index];
-            double sa = _mas.Average[index];
-            if (sr > sa)
-                for (int i = index - 1; i > 0; i--)
-                {
-                    if (_mas.Result[i] <= _mas.Average[i])
-                        return index - i;
-                }
-            if (sr < sa)
-                for (int i = index - 1; i > 0; i--)
-                {
-                    if (_mas.Result[i] >= _mas.Average[i])
-                        return index - i;
-                }
-            return -1;
         }
 
         private DateTime GetMark(int index)
@@ -332,7 +309,8 @@ namespace cAlgo
         public double? Ca { get; set; }
         public double? Sr { get; set; }
         public double? Sa { get; set; }
+        public double? SrSa { get; set; }
         public string Signal { get; set; }
-        public string Alike { get; set; }
+        public string Signal2 { get; set; }
     }
 }
