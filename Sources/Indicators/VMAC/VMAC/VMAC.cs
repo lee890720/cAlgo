@@ -1,11 +1,9 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
+using JsonLib;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using JsonLib;
 
 namespace cAlgo
 {
@@ -24,19 +22,24 @@ namespace cAlgo
         [Output("SigOne_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
         public IndicatorDataSeries SigOne_B { get; set; }
 
+        [Output("SigTwo", Color = Colors.Yellow, PlotType = PlotType.Points, Thickness = 2)]
+        public IndicatorDataSeries SigTwo { get; set; }
+
         private int _resultperiods;
         private int _averageperiods;
         private double _magnify;
         private double _sub;
         private string _filePath;
         private string _fileName;
-        private bool _isChange;
 
-        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
-        public string SignalOne;
-        public int BarsAgo;
         private MaCross _mac;
         private MaSub _mas;
+
+        public string SignalOne;
+        public string SignalTwo;
+        public int BarsAgo;
+
+        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
         private Colors _nocorel;
 
         protected override void Initialize()
@@ -51,12 +54,6 @@ namespace cAlgo
 
         public override void Calculate(int index)
         {
-            if (_isChange)
-            {
-                _mac = Indicators.GetIndicator<MaCross>(_resultperiods, _averageperiods);
-                _mas = Indicators.GetIndicator<MaSub>(_resultperiods, _averageperiods);
-                _isChange = false;
-            }
             Result[index] = _mac.Result[index];
             Average[index] = _mac.Average[index];
             SignalOne = GetSigOne(index);
@@ -64,7 +61,9 @@ namespace cAlgo
                 SigOne_A[index] = _mac.Result[index];
             if (SignalOne == "below")
                 SigOne_B[index] = _mac.Result[index];
-
+            SignalTwo = GetSigTwo(index);
+            if (SignalTwo != null)
+                SigTwo[index] = _mac.Result[index];
             #region Chart
             BarsAgo = _mac.BarsAgo;
             ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
@@ -84,6 +83,41 @@ namespace cAlgo
             return null;
         }
 
+        private string GetSigTwo(int index)
+        {
+            double cr = _mac.Result[index];
+            double ca = _mac.Average[index];
+            double sr = _mas.Result[index];
+            double sa = _mas.Average[index];
+            double sr1 = _mas.Result[index - 1];
+            double cBarsAgo = _mac.BarsAgo;
+            if (sa > 0)
+            {
+                if (sr <= -_sub && sr1 > -_sub)
+                {
+                    for (int i = index - (int)cBarsAgo - 1; i < index; i++)
+                    {
+                        if (sr > _mas.Result[i])
+                            return null;
+                    }
+                    return "belowTrend";
+                }
+            }
+            if (sa < 0)
+            {
+                if (sr >= _sub && sr1 < _sub)
+                {
+                    for (int i = index - (int)cBarsAgo - 1; i < index; i++)
+                    {
+                        if (sr < _mas.Result[i])
+                            return null;
+                    }
+                    return "aboveTrend";
+                }
+            }
+            return null;
+        }
+
         private void SetParams()
         {
             string data = Json.ReadJsonFile(_fileName);
@@ -96,25 +130,21 @@ namespace cAlgo
                     {
                         _resultperiods = d.Result;
                         Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_averageperiods != d.Average)
                     {
                         _averageperiods = d.Average;
                         Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_magnify != d.Magnify)
                     {
                         _magnify = d.Magnify;
                         Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_sub != d.Sub)
                     {
                         _sub = d.Sub;
                         Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
-                        _isChange = true;
                     }
                     break;
                 }

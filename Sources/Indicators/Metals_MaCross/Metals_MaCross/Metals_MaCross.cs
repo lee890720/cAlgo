@@ -1,5 +1,4 @@
 ﻿using cAlgo.API;
-using cAlgo.API.Indicators;
 using cAlgo.API.Internals;
 using cAlgo.Lib;
 using System;
@@ -29,6 +28,10 @@ namespace cAlgo
         private MarketSeries _xauseries, _xagseries;
         private int _xauindex, _xagindex;
 
+        public int BarsAgo;
+
+        private Colors _nocorel;
+
         protected override void Initialize()
         {
             _ratio = 80;
@@ -36,6 +39,7 @@ namespace cAlgo
             _xagsymbol = MarketData.GetSymbol("XAGUSD");
             _xauseries = MarketData.GetSeries(_xausymbol, TimeFrame);
             _xagseries = MarketData.GetSeries(_xagsymbol, TimeFrame);
+            _nocorel = Colors.Gray;
         }
 
         public override void Calculate(int index)
@@ -61,6 +65,30 @@ namespace cAlgo
                 sum += Result[i];
             }
             Average[index] = sum / AveragePeriods;
+
+            #region Chart
+            BarsAgo = GetBarsAgo(index);
+            ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
+            #endregion
+        }
+
+        private int GetBarsAgo(int index)
+        {
+            double cr = Result[index];
+            double ca = Average[index];
+            if (cr > ca)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (Result[i] <= Average[i])
+                        return index - i;
+                }
+            if (cr < ca)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (Result[i] >= Average[i])
+                        return index - i;
+                }
+            return -1;
         }
     }
 }

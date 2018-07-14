@@ -22,7 +22,6 @@ namespace cAlgo
         private string _fileName;
         private Metals_MAC _mac;
         private Metals_MAS _mas;
-        private bool _isChange;
         private System.Timers.Timer _timer1;
 
         protected override void OnStart()
@@ -33,7 +32,6 @@ namespace cAlgo
             SetParams();
             _mac = Indicators.GetIndicator<Metals_MAC>(_resultperiods, _averageperiods, _sub);
             _mas = Indicators.GetIndicator<Metals_MAS>(_resultperiods, _averageperiods, _sub, _break);
-            _isChange = false;
             InitTimer1();
             _timer1.Start();
             Print("Done OnStart()");
@@ -55,12 +53,6 @@ namespace cAlgo
         private void OnTimer1(object sender, System.Timers.ElapsedEventArgs e)
         {
             SetParams();
-            if (_isChange)
-            {
-                _mac = Indicators.GetIndicator<Metals_MAC>(_resultperiods, _averageperiods, _sub);
-                _mas = Indicators.GetIndicator<Metals_MAS>(_resultperiods, _averageperiods, _sub, _break);
-                _isChange = false;
-            }
             #region Parameter
             //var cr = Math.Round(_mac.Result.LastValue);
             //var ca = Math.Round(_mac.Average.LastValue);
@@ -151,31 +143,26 @@ namespace cAlgo
                     {
                         _resultperiods = d.Result;
                         Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_averageperiods != d.Average)
                     {
                         _averageperiods = d.Average;
                         Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_magnify != d.Magnify)
                     {
                         _magnify = d.Magnify;
                         Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_sub != d.Sub)
                     {
                         _sub = d.Sub;
                         Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_break != d.Brk)
                     {
                         _break = d.Brk;
                         Print("Break: " + _break.ToString() + "-" + _break.GetType().ToString());
-                        _isChange = true;
                     }
                     break;
                 }
@@ -208,6 +195,6 @@ namespace cAlgo
         public double? Sa { get; set; }
         public double? SrSa { get; set; }
         public string Signal { get; set; }
-        public string Alike { get; set; }
+        public string Signal2 { get; set; }
     }
 }

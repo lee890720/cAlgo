@@ -596,11 +596,6 @@ namespace cAlgo
                         _distance = d.Distance;
                         Print("Distance: " + _distance.ToString() + "-" + _distance.GetType().ToString());
                     }
-                    //if (_istrade != d.IsTrade)
-                    //{
-                    //    _istrade = d.IsTrade;
-                    //    Print("IsTrade: " + _istrade.ToString() + "-" + _istrade.GetType().ToString());
-                    //}
                     if (_isbreak != d.IsBreak)
                     {
                         _isbreak = d.IsBreak;
@@ -659,7 +654,8 @@ namespace cAlgo
         public double? Ca { get; set; }
         public double? Sr { get; set; }
         public double? Sa { get; set; }
+        public double? SrSa { get; set; }
         public string Signal { get; set; }
-        public string Alike { get; set; }
+        public string Signal2 { get; set; }
     }
 }

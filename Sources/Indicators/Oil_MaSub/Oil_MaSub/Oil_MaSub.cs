@@ -1,7 +1,5 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
-using cAlgo.API.Indicators;
-using cAlgo.Indicators;
 
 namespace cAlgo
 {
@@ -22,9 +20,14 @@ namespace cAlgo
 
         private Oil_MaCross _macross;
 
+        public int BarsAgo;
+
+        private Colors _nocorel;
+
         protected override void Initialize()
         {
             _macross = Indicators.GetIndicator<Oil_MaCross>(ResultPeriods, AveragePeriods);
+            _nocorel = Colors.Gray;
         }
 
         public override void Calculate(int index)
@@ -36,6 +39,30 @@ namespace cAlgo
                 sum += Result[i];
             }
             Average[index] = sum / AveragePeriods;
+
+            #region Chart
+            BarsAgo = GetBarsAgo(index);
+            ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
+            #endregion
+        }
+
+        private int GetBarsAgo(int index)
+        {
+            double sr = Result[index];
+            double sa = Average[index];
+            if (sr > sa)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (Result[i] <= Average[i])
+                        return index - i;
+                }
+            if (sr < sa)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (Result[i] >= Average[i])
+                        return index - i;
+                }
+            return -1;
         }
     }
 }

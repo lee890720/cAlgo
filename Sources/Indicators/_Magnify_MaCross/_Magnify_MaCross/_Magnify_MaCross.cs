@@ -25,16 +25,45 @@ namespace cAlgo
         private SimpleMovingAverage _result;
         private SimpleMovingAverage _average;
 
+        public int BarsAgo;
+
+        private Colors _nocorel;
+
         protected override void Initialize()
         {
             _result = Indicators.SimpleMovingAverage(MarketSeries.Close, ResultPeriods);
             _average = Indicators.SimpleMovingAverage(MarketSeries.Close, AveragePeriods);
+            _nocorel = Colors.Gray;
         }
 
         public override void Calculate(int index)
         {
             Result[index] = _result.Result[index] / Symbol.PipSize / Magnify;
             Average[index] = _average.Result[index] / Symbol.PipSize / Magnify;
+
+            #region Chart
+            BarsAgo = GetBarsAgo(index);
+            ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
+            #endregion
+        }
+
+        private int GetBarsAgo(int index)
+        {
+            double cr = _result.Result[index];
+            double ca = _average.Result[index];
+            if (cr > ca)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (_result.Result[i] <= _average.Result[i])
+                        return index - i;
+                }
+            if (cr < ca)
+                for (int i = index - 1; i > 0; i--)
+                {
+                    if (_result.Result[i] >= _average.Result[i])
+                        return index - i;
+                }
+            return -1;
         }
     }
 }

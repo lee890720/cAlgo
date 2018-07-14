@@ -18,6 +18,9 @@ namespace cAlgo
         [Output("SigOne_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
         public IndicatorDataSeries SigOne_B { get; set; }
 
+        [Output("SigTwo", Color = Colors.Yellow, PlotType = PlotType.Points, Thickness = 2)]
+        public IndicatorDataSeries SigTwo { get; set; }
+
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
 
@@ -27,12 +30,14 @@ namespace cAlgo
         [Parameter("Sub", DefaultValue = 30)]
         public double Sub { get; set; }
 
-        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
+        private MaCross _mac;
+        private MaSub _mas;
+
         public string SignalOne;
         public string SignalTwo;
         public int BarsAgo;
-        private MaCross _mac;
-        private MaSub _mas;
+
+        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
         private Colors _nocorel;
 
         protected override void Initialize()
@@ -51,7 +56,9 @@ namespace cAlgo
                 SigOne_A[index] = _mac.Result[index];
             if (SignalOne == "below")
                 SigOne_B[index] = _mac.Result[index];
-
+            SignalTwo = GetSigTwo(index);
+            if (SignalTwo != null)
+                SigTwo[index] = _mac.Result[index];
             #region Chart
             BarsAgo = _mac.BarsAgo;
             ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
@@ -77,8 +84,33 @@ namespace cAlgo
             double ca = _mac.Average[index];
             double sr = _mas.Result[index];
             double sa = _mas.Average[index];
-            double bago = _mac.BarsAgo;
-
+            double sr1 = _mas.Result[index - 1];
+            double cBarsAgo = _mac.BarsAgo;
+            if (sa > 0)
+            {
+                if (sr <= -Sub && sr1 > -Sub)
+                {
+                    for (int i = index - (int)cBarsAgo - 1; i < index; i++)
+                    {
+                        if (sr > _mas.Result[i])
+                            return null;
+                    }
+                    return "belowTrend";
+                }
+            }
+            if (sa < 0)
+            {
+                if (sr >= Sub && sr1 < Sub)
+                {
+                    for (int i = index - (int)cBarsAgo - 1; i < index; i++)
+                    {
+                        if (sr < _mas.Result[i])
+                            return null;
+                    }
+                    return "aboveTrend";
+                }
+            }
+            return null;
         }
     }
 }

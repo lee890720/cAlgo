@@ -19,9 +19,11 @@ namespace cAlgo
         [Parameter("Average Periods", DefaultValue = 120)]
         public int AveragePeriods { get; set; }
 
-        public int BarsAgo;
         private SimpleMovingAverage _result;
         private SimpleMovingAverage _average;
+
+        public int BarsAgo;
+
         private Colors _nocorel;
 
         protected override void Initialize()

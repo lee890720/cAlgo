@@ -1,7 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMAC_Magnify", "VMAC_Magnify\VMAC_Magnify.csproj", "{5696929D-AA3B-4792-8FAC-4A3DB4A6E987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MaCross", "..\_Magnify_MaCross\_Magnify_MaCross\_Magnify_MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MaSub", "..\_Magnify_MaSub\_Magnify_MaSub\_Magnify_MaSub.csproj", "{A6D51FB1-E1AA-4C03-8DA2-E71510895742}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,13 +19,19 @@ Global
 		{5696929D-AA3B-4792-8FAC-4A3DB4A6E987}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5696929D-AA3B-4792-8FAC-4A3DB4A6E987}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5696929D-AA3B-4792-8FAC-4A3DB4A6E987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D51FB1-E1AA-4C03-8DA2-E71510895742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D51FB1-E1AA-4C03-8DA2-E71510895742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D51FB1-E1AA-4C03-8DA2-E71510895742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D51FB1-E1AA-4C03-8DA2-E71510895742}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {52C63307-5262-48DC-8AE0-B39B35FA713C}
+	EndGlobalSection
 EndGlobal
-
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MaCross", "..\_Magnify_MaCross\_Magnify_MaCross\_Magnify_MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Magnify_MaSub", "..\_Magnify_MaSub\_Magnify_MaSub\_Magnify_MaSub.csproj", "{A6D51FB1-E1AA-4C03-8DA2-E71510895742}"
-EndProject

@@ -1,7 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VMAS_Metals", "VMAS_Metals\VMAS_Metals.csproj", "{ABC58948-70CB-4CDE-8F0B-3B0CC77A05CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MaCross", "..\Metals_MaCross\Metals_MaCross\Metals_MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MaSub", "..\Metals_MaSub\Metals_MaSub\Metals_MaSub.csproj", "{89927847-818D-4958-9712-A89162D99D19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,13 +19,19 @@ Global
 		{ABC58948-70CB-4CDE-8F0B-3B0CC77A05CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABC58948-70CB-4CDE-8F0B-3B0CC77A05CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABC58948-70CB-4CDE-8F0B-3B0CC77A05CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ADA415-2333-4325-8902-D979C6B9663C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89927847-818D-4958-9712-A89162D99D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89927847-818D-4958-9712-A89162D99D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89927847-818D-4958-9712-A89162D99D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89927847-818D-4958-9712-A89162D99D19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47A8CC58-9F8A-40B6-A859-5235971AB706}
+	EndGlobalSection
 EndGlobal
-
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MaCross", "..\Metals_MaCross\Metals_MaCross\Metals_MaCross.csproj", "{77ADA415-2333-4325-8902-D979C6B9663C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metals_MaSub", "..\Metals_MaSub\Metals_MaSub\Metals_MaSub.csproj", "{89927847-818D-4958-9712-A89162D99D19}"
-EndProject

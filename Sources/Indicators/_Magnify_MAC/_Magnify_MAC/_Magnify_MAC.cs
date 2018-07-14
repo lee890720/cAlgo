@@ -18,6 +18,9 @@ namespace cAlgo
         [Output("SigOne_B", Color = Colors.OrangeRed, PlotType = PlotType.Points, Thickness = 2)]
         public IndicatorDataSeries SigOne_B { get; set; }
 
+        [Output("SigTwo", Color = Colors.Yellow, PlotType = PlotType.Points, Thickness = 2)]
+        public IndicatorDataSeries SigTwo { get; set; }
+
         [Parameter("Result Periods", DefaultValue = 1)]
         public int ResultPeriods { get; set; }
 
@@ -30,11 +33,14 @@ namespace cAlgo
         [Parameter("Sub", DefaultValue = 30)]
         public double Sub { get; set; }
 
-        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
-        public string SignalOne;
-        public int BarsAgo;
         private _Magnify_MaCross _mac;
         private _Magnify_MaSub _mas;
+
+        public string SignalOne;
+        public string SignalTwo;
+        public int BarsAgo;
+
+        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
         private Colors _nocorel;
 
         protected override void Initialize()
@@ -48,15 +54,16 @@ namespace cAlgo
         {
             Result[index] = _mac.Result[index];
             Average[index] = _mac.Average[index];
-            string sigone = GetSigOne(index);
-            if (sigone == "above")
+            SignalOne = GetSigOne(index);
+            if (SignalOne == "above")
                 SigOne_A[index] = _mac.Result[index];
-            if (sigone == "below")
+            if (SignalOne == "below")
                 SigOne_B[index] = _mac.Result[index];
-
+            SignalTwo = GetSigTwo(index);
+            if (SignalTwo != null)
+                SigTwo[index] = _mac.Result[index];
             #region Chart
-            SignalOne = sigone;
-            BarsAgo = GetBarsAgo(index);
+            BarsAgo = _mac.BarsAgo;
             ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
             #endregion
         }
@@ -74,23 +81,39 @@ namespace cAlgo
             return null;
         }
 
-        private int GetBarsAgo(int index)
+        private string GetSigTwo(int index)
         {
             double cr = _mac.Result[index];
             double ca = _mac.Average[index];
-            if (cr > ca)
-                for (int i = index - 1; i > 0; i--)
+            double sr = _mas.Result[index];
+            double sa = _mas.Average[index];
+            double sr1 = _mas.Result[index - 1];
+            double cBarsAgo = _mac.BarsAgo;
+            if (sa > 0)
+            {
+                if (sr <= -Sub && sr1 > -Sub)
                 {
-                    if (_mac.Result[i] <= _mac.Average[i])
-                        return index - i;
+                    for (int i = index - (int)cBarsAgo - 1; i < index; i++)
+                    {
+                        if (sr > _mas.Result[i])
+                            return null;
+                    }
+                    return "belowTrend";
                 }
-            if (cr < ca)
-                for (int i = index - 1; i > 0; i--)
+            }
+            if (sa < 0)
+            {
+                if (sr >= Sub && sr1 < Sub)
                 {
-                    if (_mac.Result[i] >= _mac.Average[i])
-                        return index - i;
+                    for (int i = index - (int)cBarsAgo - 1; i < index; i++)
+                    {
+                        if (sr < _mas.Result[i])
+                            return null;
+                    }
+                    return "aboveTrend";
                 }
-            return -1;
+            }
+            return null;
         }
     }
 }

@@ -33,14 +33,16 @@ namespace cAlgo
         private double _brk;
         private string _filePath;
         private string _fileName;
-        private bool _isChange;
+
+        private MaCross _mac;
+        private MaSub _mas;
 
         public string SignalOne;
         public string SignalTwo;
         public int BarsAgo;
         public string Mark;
-        private MaCross _mac;
-        private MaSub _mas;
+
+        //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
         private Colors _nocorel;
 
         protected override void Initialize()
@@ -55,12 +57,6 @@ namespace cAlgo
 
         public override void Calculate(int index)
         {
-            if (_isChange)
-            {
-                _mac = Indicators.GetIndicator<MaCross>(_resultperiods, _averageperiods);
-                _mas = Indicators.GetIndicator<MaSub>(_resultperiods, _averageperiods);
-                _isChange = false;
-            }
             Result[index] = _mas.Result[index];
             Average[index] = _mas.Average[index];
 
@@ -258,31 +254,26 @@ namespace cAlgo
                     {
                         _resultperiods = d.Result;
                         Print("ResultPeriods: " + _resultperiods.ToString() + "-" + _resultperiods.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_averageperiods != d.Average)
                     {
                         _averageperiods = d.Average;
                         Print("AveragePeriods: " + _averageperiods.ToString() + "-" + _averageperiods.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_magnify != d.Magnify)
                     {
                         _magnify = d.Magnify;
                         Print("Magnify: " + _magnify.ToString() + "-" + _magnify.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_sub != d.Sub)
                     {
                         _sub = d.Sub;
                         Print("Sub: " + _sub.ToString() + "-" + _sub.GetType().ToString());
-                        _isChange = true;
                     }
                     if (_brk != d.Brk)
                     {
                         _brk = d.Brk;
                         Print("Brk: " + _brk.ToString() + "-" + _brk.GetType().ToString());
-                        _isChange = true;
                     }
                     break;
                 }

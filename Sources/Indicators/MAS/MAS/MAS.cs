@@ -35,12 +35,14 @@ namespace cAlgo
         [Parameter("Break", DefaultValue = 100)]
         public double Brk { get; set; }
 
+        private MaCross _mac;
+        private MaSub _mas;
+
         public string SignalOne;
         public string SignalTwo;
         public int BarsAgo;
         public string Mark;
-        private MaCross _mac;
-        private MaSub _mas;
+
         private Colors _nocorel;
 
         protected override void Initialize()
