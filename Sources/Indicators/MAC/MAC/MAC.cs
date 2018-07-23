@@ -1,5 +1,6 @@
 ﻿using cAlgo.API;
 using cAlgo.API.Internals;
+using System;
 
 namespace cAlgo
 {
@@ -36,6 +37,7 @@ namespace cAlgo
         public string SignalOne;
         public string SignalTwo;
         public int BarsAgo;
+        public string Mark;
 
         //PCorel=Colors.Lime;NCorel=Colors.OrangeRed;NoCorel=Colors.Gray;
         private Colors _nocorel;
@@ -61,7 +63,9 @@ namespace cAlgo
                 SigTwo[index] = _mac.Result[index];
             #region Chart
             BarsAgo = _mac.BarsAgo;
+            Mark = GetMark(index).ToString("yyyy-MM-dd") + "-" + GetMark(index).ToString("HH");
             ChartObjects.DrawText("barsago", "Cross_(" + BarsAgo.ToString() + ")", StaticPosition.TopLeft, _nocorel);
+            ChartObjects.DrawText("mark", "\nMark_(" + Mark + ")", StaticPosition.TopLeft, _nocorel);
             #endregion
         }
 
@@ -111,6 +115,13 @@ namespace cAlgo
                 }
             }
             return null;
+        }
+
+        private DateTime GetMark(int index)
+        {
+            int idx = index - BarsAgo;
+            DateTime dt = MarketSeries.OpenTime[idx];
+            return dt;
         }
     }
 }
