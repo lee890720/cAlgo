@@ -42,7 +42,7 @@ namespace cAlgo.Lib
 			//Robot = robot;
 			TradeType = p.TradeType;
 			Symbol = (new Robot()).MarketData.GetSymbol(p.SymbolCode);
-			Volume = p.Volume;
+            Volume = p.VolumeInUnits;
 			Label = p.Label;
 			StopLoss = p.StopLoss;
 			TakeProfit = p.TakeProfit;

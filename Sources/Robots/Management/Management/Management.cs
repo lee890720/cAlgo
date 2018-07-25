@@ -4,9 +4,9 @@ using cAlgo.Lib;
 using FormLib;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace cAlgo
 {
@@ -33,9 +33,12 @@ namespace cAlgo
             string str;
             foreach (var p in Positions)
             {
-                str = p.SymbolCode + "-(" + p.Label + ")-[" + (this.TotalLots(p.Label, MarketData.GetSymbol(p.SymbolCode))).ToString() + "]-<" + this.LastPosition(this.GetPositions(p.Label)).Comment + ">";
-                if (!list_str.Contains(str))
-                    list_str.Add(str);
+                if (!string.IsNullOrEmpty(p.Label))
+                {
+                    str = p.SymbolCode + "-(" + p.Label + ")-[" + (this.TotalLots(p.Label, MarketData.GetSymbol(p.SymbolCode))).ToString() + "]-<" + this.LastPosition(this.GetPositions(p.Label)).Comment + ">";
+                    if (!list_str.Contains(str))
+                        list_str.Add(str);
+                }
             }
             var b = Math.Round(this.Account.Balance, 2).ToString();
             var e = Math.Round(this.Account.Equity, 2).ToString();
@@ -57,7 +60,8 @@ namespace cAlgo
             string cr_comment = null;
             #region GetComment
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
+            //con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
+            con.ConnectionString = "Data Source=leeinfodb.database.windows.net;Initial Catalog=LeeInfoDb;User ID=Lee890720;Password=Lee37355175";
             try
             {
                 con.Open();
@@ -84,7 +88,7 @@ namespace cAlgo
             }
             #endregion
             var p_label = list_p[1];
-            var p_volume = p_symbol.NormalizeVolume(Convert.ToDouble(list_p[2]), RoundingMode.ToNearest);
+            var p_volume = p_symbol.NormalizeVolumeInUnits(Convert.ToDouble(list_p[2]), RoundingMode.ToNearest);
             var p_comment = list_p[3].Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
             p_comment = p_comment.Remove(0, 9);
             p_comment = cr_comment + p_comment;
@@ -93,7 +97,8 @@ namespace cAlgo
                 p_trade = TradeType.Sell;
             if (p_label.Contains("Below"))
                 p_trade = TradeType.Buy;
-            if (p_symbol.Code != p_label.Substring(6, 6))
+            //if (p_symbol.Code != p_label.Substring(6, 6))
+            if(!p_label.Contains(p_symbol.Code))
                 if (p_symbol.Code.Contains("USD"))
                 {
                     Symbol _firstsymbol = MarketData.GetSymbol(p_label.Substring(6, 3) + "USD");
@@ -135,13 +140,14 @@ namespace cAlgo
             var list_p = _threadhandler.positionParam();
             var p_symbol = MarketData.GetSymbol(list_p[0]);
             var p_label = list_p[1];
-            var p_volume = p_symbol.NormalizeVolume(Convert.ToDouble(list_p[2]), RoundingMode.ToNearest);
+            var p_volume = p_symbol.NormalizeVolumeInUnits(Convert.ToDouble(list_p[2]), RoundingMode.ToNearest);
             var p_comment = list_p[3];
-            if (string.IsNullOrEmpty(p_label))
-            {
-                this.closeAllPositions();
-            }
-            this.closeAllLabel(p_label);
+            //if (string.IsNullOrEmpty(p_label))
+            //{
+            //    this.closeAllPositions();
+            //}
+            if (!string.IsNullOrEmpty(p_label))
+                this.closeAllLabel(p_label);
         }
     }
 }

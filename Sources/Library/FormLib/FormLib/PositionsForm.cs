@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using cAlgo.API;
-using cAlgo.Lib;
-using cAlgo.API.Internals;
-using cAlgo.Indicators;
-using cAlgo.API.Indicators;
-using System.Data.SqlClient;
-using System.Reflection;
 using System.Media;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace FormLib
 {
@@ -45,40 +38,40 @@ namespace FormLib
                     ctrl.Click += new EventHandler(lblclick);
                 ctrl.Visible = false;
             }
-            System.Timers.Timer timer = new System.Timers.Timer(5500);
-            timer.Enabled = true;
-            timer.Elapsed += T_Elapsed;
+            //System.Timers.Timer timer = new System.Timers.Timer(5500);
+            //timer.Enabled = true;
+            //timer.Elapsed += T_Elapsed;
         }
 
-        private void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source=bds121909490.my3w.com;Initial Catalog=bds121909490_db;User ID=bds121909490;Password=lee37355175";
-            con.Open();
-            DataSet dataset = new DataSet();
-            string strsql = "select * from Person where PersonID=1";
-            SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
-            SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
-            objdataadpater.Fill(dataset, "cBot");
-            DateTime time = Convert.ToDateTime(dataset.Tables["cBot"].Rows[0][3]);
-            con.Close();
-            var utctime = DateTime.UtcNow;
-            string namespaceName = Assembly.GetExecutingAssembly().GetName().Name.ToString();
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            SoundPlayer sp = new SoundPlayer(assembly.GetManifestResourceStream(namespaceName + ".Resources" + ".Alarm.wav"));
-            sp.Stop();
-            if (DateTime.Compare(utctime.AddSeconds(-120), time) > 0)
-            {
-                this.label_vps.ForeColor = Color.Red;
-                this.label_vps.Text = "ERROR!!!";
-                sp.Play();
-            }
-            else
-            {
-                this.label_vps.ForeColor = Color.White;
-                this.label_vps.Text = "VPS IS OK";
-            }
-        }
+        //private void T_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        //{
+        //    SqlConnection con = new SqlConnection();
+        //    con.ConnectionString = "Data Source=leeinfodb.database.windows.net;Initial Catalog=LeeInfoDb;User ID=Lee890720;Password=Lee37355175";
+        //    con.Open();
+        //    DataSet dataset = new DataSet();
+        //    string strsql = "select * from Person where PersonID=1";
+        //    SqlDataAdapter objdataadpater = new SqlDataAdapter(strsql, con);
+        //    SqlCommandBuilder sql = new SqlCommandBuilder(objdataadpater);
+        //    objdataadpater.Fill(dataset, "cBot");
+        //    DateTime time = Convert.ToDateTime(dataset.Tables["cBot"].Rows[0][3]);
+        //    con.Close();
+        //    var utctime = DateTime.UtcNow;
+        //    string namespaceName = Assembly.GetExecutingAssembly().GetName().Name.ToString();
+        //    Assembly assembly = Assembly.GetExecutingAssembly();
+        //    SoundPlayer sp = new SoundPlayer(assembly.GetManifestResourceStream(namespaceName + ".Resources" + ".Alarm.wav"));
+        //    sp.Stop();
+        //    if (DateTime.Compare(utctime.AddSeconds(-120), time) > 0)
+        //    {
+        //        this.label_vps.ForeColor = Color.Red;
+        //        this.label_vps.Text = "ERROR!!!";
+        //        sp.Play();
+        //    }
+        //    else
+        //    {
+        //        this.label_vps.ForeColor = Color.White;
+        //        this.label_vps.Text = "VPS IS OK";
+        //    }
+        //}
 
         public void SetAccountInfo(string b, string e, string m, string n)
         {

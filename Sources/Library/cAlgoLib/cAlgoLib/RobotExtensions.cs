@@ -99,7 +99,7 @@ namespace cAlgo.Lib
             if (volume == 0)
                 result = robot.ClosePosition(position);
             else
-                result = robot.ClosePosition(position, robot.Symbol.NormalizeVolume(volume, RoundingMode.ToNearest));
+                result = robot.ClosePosition(position, robot.Symbol.NormalizeVolumeInUnits(volume, RoundingMode.ToNearest));
 
             return result;
         }
@@ -310,7 +310,7 @@ namespace cAlgo.Lib
                 op.Comment = string.Format("{0}-{1}", position.Comment, "Mart");
                 if (inversePosition)
                     op.TradeType = position.TradeType.inverseTradeType();
-                op.Volume = position.Volume * martingaleCoeff;
+                op.Volume = position.VolumeInUnits * martingaleCoeff;
 
                 return op;
             }
@@ -362,7 +362,7 @@ namespace cAlgo.Lib
                 poss.AddRange(robot.GetPositions(label));
             if (poss.Count == 0)
                 return 0;
-            long maxlot = poss.OrderByDescending(p => p.Volume).ToArray()[0].Volume;
+            long maxlot = (long)poss.OrderByDescending(p => p.VolumeInUnits).ToArray()[0].VolumeInUnits;
             return maxlot;
         }
 
@@ -375,7 +375,7 @@ namespace cAlgo.Lib
                 poss.AddRange(robot.GetPositions(label));
             if (poss.Count == 0)
                 return 0;
-            long minlot = poss.OrderBy(p => p.Volume).ToArray()[0].Volume;
+            long minlot = (long)poss.OrderBy(p => p.VolumeInUnits).ToArray()[0].VolumeInUnits;
             return minlot;
         }
 
@@ -407,7 +407,7 @@ namespace cAlgo.Lib
                 return 0;
             if (IsBorS == "sell" && robot.AveragePrice(label) > goalprice)
                 return 0;
-            marlot = (long)robot.Symbol.NormalizeVolume((robot.AveragePrice(label) * robot.TotalLots(label) - goalprice * robot.TotalLots(label)) / (goalprice - robot.Symbol.Mid()), RoundingMode.ToNearest);
+            marlot = (long)robot.Symbol.NormalizeVolumeInUnits((robot.AveragePrice(label) * robot.TotalLots(label) - goalprice * robot.TotalLots(label)) / (goalprice - robot.Symbol.Mid()), RoundingMode.ToNearest);
             return marlot;
         }
 

@@ -86,7 +86,7 @@ namespace cAlgo.Lib
 		public static double? potentialProfit(this Position position)
 		{
 			if (position.TakeProfit.HasValue)
-				return (position.isBuy() ? position.TakeProfit.Value - position.EntryPrice : position.EntryPrice - position.TakeProfit.Value) * position.Volume;
+				return (position.isBuy() ? position.TakeProfit.Value - position.EntryPrice : position.EntryPrice - position.TakeProfit.Value) * position.VolumeInUnits;
 			else
 				return null;
 
@@ -95,7 +95,7 @@ namespace cAlgo.Lib
 		public static double? potentialLoss(this Position position)
 		{
 			if (position.StopLoss.HasValue)
-				return (position.isBuy() ? position.EntryPrice - position.StopLoss.Value : position.StopLoss.Value - position.EntryPrice) * position.Volume;
+				return (position.isBuy() ? position.EntryPrice - position.StopLoss.Value : position.StopLoss.Value - position.EntryPrice) * position.VolumeInUnits;
 			else
 				return null;
 
@@ -149,7 +149,7 @@ namespace cAlgo.Lib
 												robot.Server.Time.Day,
 												robot.Server.Time.DayOfWeek,
 												position.EntryTime,
-												position.Volume,
+												position.VolumeInUnits,
 												position.TradeType,
 												position.EntryPrice,
 												position.StopLoss,

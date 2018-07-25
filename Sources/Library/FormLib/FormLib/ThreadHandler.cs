@@ -1,6 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace FormLib
 {
