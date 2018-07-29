@@ -47,6 +47,8 @@ namespace cAlgo
         private string _t_abovelabel, _t_belowlabel;
         private List<string> _h_marklist = new List<string>();
         private List<string> _t_marklist = new List<string>();
+        private List<string> _t_a_marklist = new List<string>();
+        private List<string> _t_b_marklist = new List<string>();
         private OrderParams _init;
 
         protected override void OnStart()
@@ -117,20 +119,25 @@ namespace cAlgo
                 foreach (var p in t_pos_above)
                 {
                     var idx = p.Comment.IndexOf("M_") + 2;
-                    if (!_t_marklist.Contains(p.Comment.Substring(idx, 13)))
-                        _t_marklist.Add(p.Comment.Substring(idx, 13));
+                    if (!_t_a_marklist.Contains(p.Comment.Substring(idx, 13)))
+                        _t_a_marklist.Add(p.Comment.Substring(idx, 13));
                 }
             if (t_pos_below.Length != 0)
                 foreach (var p in t_pos_below)
                 {
                     var idx = p.Comment.IndexOf("M_") + 2;
-                    if (!_t_marklist.Contains(p.Comment.Substring(idx, 13)))
-                        _t_marklist.Add(p.Comment.Substring(idx, 13));
+                    if (!_t_b_marklist.Contains(p.Comment.Substring(idx, 13)))
+                        _t_b_marklist.Add(p.Comment.Substring(idx, 13));
                 }
-            if (_t_marklist.Count != 0)
+            if (_t_a_marklist.Count != 0)
             {
-                foreach (var mar in _t_marklist)
-                    Print("t: " + mar);
+                foreach (var mar in _t_a_marklist)
+                    Print("t_a: " + mar);
+            }
+            if (_t_b_marklist.Count != 0)
+            {
+                foreach (var mar in _t_b_marklist)
+                    Print("t_b: " + mar);
             }
             #endregion
             Print("Done OnStart()");
@@ -139,11 +146,17 @@ namespace cAlgo
         private void OnPositionsOpened(PositionOpenedEventArgs obj)
         {
             Position pos = obj.Position;
-            if (pos.Label == _t_abovelabel || pos.Label == _t_belowlabel)
+            if (pos.Label == _t_abovelabel)
             {
                 var t_idx = pos.Comment.IndexOf("M_") + 2;
-                _t_marklist.Add(pos.Comment.Substring(t_idx, 13));
-                Print("It's successful to add a mark for T-" + Symbol.Code + ".");
+                _t_a_marklist.Add(pos.Comment.Substring(t_idx, 13));
+                Print("It's successful to add a mark for T-A-" + Symbol.Code + ".");
+            }
+            if (pos.Label == _t_belowlabel)
+            {
+                var t_idx = pos.Comment.IndexOf("M_") + 2;
+                _t_b_marklist.Add(pos.Comment.Substring(t_idx, 13));
+                Print("It's successful to add a mark for T-B-" + Symbol.Code + ".");
             }
             if (pos.Label != _h_abovelabel && pos.Label != _h_belowlabel)
                 return;
@@ -155,11 +168,17 @@ namespace cAlgo
         private void OnPositionsClosed(PositionClosedEventArgs obj)
         {
             Position pos = obj.Position;
-            if (pos.Label == _t_abovelabel || pos.Label == _t_belowlabel)
+            if (pos.Label == _t_abovelabel)
             {
                 var t_idx = pos.Comment.IndexOf("M_") + 2;
-                if (_t_marklist.Remove(pos.Comment.Substring(t_idx, 13)))
-                    Print("It's successful to remove a mark for T-" + Symbol.Code + ".");
+                if (_t_a_marklist.Remove(pos.Comment.Substring(t_idx, 13)))
+                    Print("It's successful to remove a mark for T-A-" + Symbol.Code + ".");
+            }
+            if (pos.Label == _t_belowlabel)
+            {
+                var t_idx = pos.Comment.IndexOf("M_") + 2;
+                if (_t_b_marklist.Remove(pos.Comment.Substring(t_idx, 13)))
+                    Print("It's successful to remove a mark for T-B-" + Symbol.Code + ".");
             }
             if (pos.Label != _h_abovelabel && pos.Label != _h_belowlabel)
                 return;
@@ -460,8 +479,8 @@ namespace cAlgo
                 return signal;
             if (t_pos_above.Length == 0 && t_pos_below.Length == 0)
                 return null;
-            if (_t_marklist.Contains(_mac.Mark))
-                return null;
+            //if (_t_marklist.Contains(_mac.Mark))
+            //    return null;
             var cr = _mac.Result.LastValue;
             var ca = _mac.Average.LastValue;
             var sr = _mas.Result.LastValue;
@@ -477,39 +496,39 @@ namespace cAlgo
 
             if (DateTime.Compare(nowtime, pos_lasttime) < 0)
                 return null;
-            string sig2 = _mas.SignalTwo;
-            var mas_brk = _mas.SigTwo.LastValue;
-            if (!string.IsNullOrEmpty(sig2))
-            {
-                if ((_isbreak && h_poss.Length != 0) || (_isbreak && _isbrkfirst))
-                {
-                    if (!double.IsNaN(mas_brk))
-                    {
-                        if (mas_brk >= GetBreak(_h_abovelabel) && sig2 == "aboveBreak" && t_pos_below.Length != 0)
-                        {
-                            signal = "above_br";
-                            if (h_pos_above.Length != 0)
-                            {
-                                var idx = this.LastPosition(h_pos_above).Comment.IndexOf("CR_") + 3;
-                                if (cr - _distance < Convert.ToDouble(this.LastPosition(h_pos_above).Comment.Substring(idx, 6)))
-                                    signal = null;
-                            }
-                        }
-                        if (mas_brk >= GetBreak(_h_belowlabel) && sig2 == "belowBreak" && t_pos_above.Length != 0)
-                        {
-                            signal = "below_br";
-                            if (h_pos_below.Length != 0)
-                            {
-                                var idx = this.LastPosition(h_pos_below).Comment.IndexOf("CR_") + 3;
-                                if (cr + _distance > Convert.ToDouble(this.LastPosition(h_pos_below).Comment.Substring(idx, 6)))
-                                    signal = null;
-                            }
-                        }
-                        if (!string.IsNullOrEmpty(signal))
-                            return signal;
-                    }
-                }
-            }
+            //string sig2 = _mas.SignalTwo;
+            //var mas_brk = _mas.SigTwo.LastValue;
+            //if (!string.IsNullOrEmpty(sig2))
+            //{
+            //    if ((_isbreak && h_poss.Length != 0) || (_isbreak && _isbrkfirst))
+            //    {
+            //        if (!double.IsNaN(mas_brk))
+            //        {
+            //            if (mas_brk >= GetBreak(_h_abovelabel) && sig2 == "aboveBreak" && t_pos_below.Length != 0)
+            //            {
+            //                signal = "above_br";
+            //                if (h_pos_above.Length != 0)
+            //                {
+            //                    var idx = this.LastPosition(h_pos_above).Comment.IndexOf("CR_") + 3;
+            //                    if (cr - _distance < Convert.ToDouble(this.LastPosition(h_pos_above).Comment.Substring(idx, 6)))
+            //                        signal = null;
+            //                }
+            //            }
+            //            if (mas_brk >= GetBreak(_h_belowlabel) && sig2 == "belowBreak" && t_pos_above.Length != 0)
+            //            {
+            //                signal = "below_br";
+            //                if (h_pos_below.Length != 0)
+            //                {
+            //                    var idx = this.LastPosition(h_pos_below).Comment.IndexOf("CR_") + 3;
+            //                    if (cr + _distance > Convert.ToDouble(this.LastPosition(h_pos_below).Comment.Substring(idx, 6)))
+            //                        signal = null;
+            //                }
+            //            }
+            //            if (!string.IsNullOrEmpty(signal))
+            //                return signal;
+            //        }
+            //    }
+            //}
             string sig1 = _mas.SignalOne;
             if (string.IsNullOrEmpty(sig1))
             {
@@ -518,7 +537,7 @@ namespace cAlgo
 
             if (!_h_marklist.Contains(_mas.Mark))
             {
-                if (sig1 == "above" && _abovecross && t_pos_below.Length != 0)
+                if (sig1 == "above" && _abovecross && t_pos_below.Length != 0 && !_t_b_marklist.Contains(_mac.Mark))
                 {
                     signal = "above";
                     if (h_pos_above.Length != 0)
@@ -528,7 +547,7 @@ namespace cAlgo
                             signal = null;
                     }
                 }
-                if (sig1 == "below" && _belowcross && t_pos_above.Length != 0)
+                if (sig1 == "below" && _belowcross && t_pos_above.Length != 0 && !_t_a_marklist.Contains(_mac.Mark))
                 {
                     signal = "below";
                     if (h_pos_below.Length != 0)
@@ -547,7 +566,7 @@ namespace cAlgo
             double volume = 0;
             if (opensignal == null || opensignal == "above_t" || opensignal == "below_t")
                 return _initvolume;
-            string label = opensignal.Substring(0, 1).ToUpper() + opensignal.Substring(1, 4);
+            string label = "H" + opensignal.Substring(0, 1).ToUpper() + opensignal.Substring(1, 4);
             label = label + "-" + Symbol.Code + "-" + MarketSeries.TimeFrame.ToString();
             var h_poss = this.GetPositions(label);
             if (h_poss.Length == 0)
